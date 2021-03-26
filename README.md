@@ -1,4 +1,3 @@
-![image](https://user-images.githubusercontent.com/79026235/112673548-3ba7cf00-8e3b-11eb-9e11-45968c0908c7.png)
 # WinSetView
 
 ## Globally Set Explorer Folder Views
