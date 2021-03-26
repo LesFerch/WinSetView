@@ -1,0 +1,292 @@
+<!--
+WinSetView (Globally Set Explorer Folder Views)
+Les Ferch, lesferch@gmail.com, GitHub repository created 2021-03-26
+File 1 of 2: WinSetView.hta (GUI tool to select desired views)
+-->
+
+<html>
+<head>
+<hta:application
+  applicationname=WinSetView
+  border=dialog
+  maximizebutton=no
+  scroll=no
+  selection=no
+  singleinstance=yes
+>
+<style>
+  body  {font-size:10pt; font-family:Arial}
+  table {font-size:10pt; font-family:Arial; border-collapse:collapse}
+  td    {padding: 0 15 0 0}
+  .spc1 {font-size:5pt}
+  .spc2 {font-size:5pt}
+  .spc3 {font-size:5pt}
+  .lb   {float:left; width:80px}
+  .hb   {float:right; background:transparent; border:none}
+  .rb   {float:right; width:150px}
+  .xb   {float:right; width:100px}
+  .yb   {float:right; width:130px}
+</style>
+<title>Globally Set Explorer Folder Views</title>
+</head>
+
+<script language=VBScript>
+Option Explicit
+Dim Mode, NoGroup, Generic, TPMode, TPNoGrp, ShowExt, Columns, Msg, Choice, oFolder, oFiles
+Dim MyPath, CmdLine, Params, RunThis, oShell, Visible, oFSO, i, Chk, ArrCB, j, AppData, rbShow
+Dim ColShow, ColMore, Label, Delim, CSVData, ArrCSV, CSVFile, oFile, DefData, UserData
+
+Set oFSO = CreateObject("Scripting.FileSystemObject")
+Set oShell = CreateObject("Wscript.Shell")
+
+MyPath = LCase(document.location.pathname)
+MyPath = Left(MyPath,InStrRev(MyPath,"\"))
+AppData = oShell.ExpandEnvironmentStrings("%APPDATA%") & "\WinSetView"
+CSVFile = AppData & "\WinSetView.csv"
+ColShow = "DateModified Size ItemType"
+ColMore = "FileExtension ItemTypeText ContentType PerceivedType Kind DateCreated DateAccessed FileAttributes FileVersion ItemFolderNameDisplay ItemFolderPathDisplay ItemFolderPathDisplayNarrow ItemPathDisplay"
+DefData = "True,False,False,False,False,False,False,False,False,True,False,False,False,False,False,True,True,True,True,True,True,True,False,False,False,False,False,False,False,False,False,False,False,False,False,True,True"
+DefData = DefData & "," & ColShow & "," & ColMore
+UserData = DefData
+ArrCB = Split("se,ng,gn,ch,dm,sz,ti,fe,tt,tc,tp,tk,dc,da,fa,fv,fn,fp,ff,pi,pc,xg",",")
+
+If Not oFSO.FolderExists(AppData) Then oFSO.CreateFolder(AppData)
+
+'Read in previous user selections
+If oFSO.FileExists(CSVFile) Then
+  Set oFile = oFSO.OpenTextFile(CSVFile,1)
+  UserData = oFile.ReadAll
+  oFile.Close
+End If
+
+'See if there are any reg files in the backup folder
+Set oFolder = oFSO.GetFolder(AppData)
+Set oFiles = oFolder.Files
+rbShow = False
+For Each oFile In oFiles
+  If LCase(oFSO.GetExtensionName(oFile.Name)) = "reg" Then rbShow = True
+Next
+
+'Center dialog, Restore any user settings, Disable NA buttons
+Sub Window_onLoad
+  CenterWindow 560,520
+  HTAStateRestore UserData
+  If UserData = DefData Then yb.Disabled = True
+  If Not rbShow Then rb.Disabled = True
+End Sub
+
+Sub CenterWindow( widthX, heightY )
+  self.ResizeTo widthX, heightY 
+  self.MoveTo (screen.Width - widthX)/2, (screen.Height - heightY)/2
+End Sub
+
+'Set interface to values from CSVData
+Sub HTAStateRestore(CSVData)
+  ArrCSV = Split(CSVData,",")
+  j = 0
+  For i = 0 to 7
+    vm(i).Checked = ArrCSV(j)
+    j = j + 1
+  Next 
+  For i = 0 to 6
+    xm(i).Checked = ArrCSV(j)
+    j = j + 1
+  Next
+  For Each Chk in ArrCB
+    Eval(Chk).Checked = ArrCSV(j)
+    j = j + 1
+  Next
+  ColShow = ArrCSV(j)
+  ColMore = ArrCSV(j+1)
+  ViewOps
+  cs.Value = ColShow
+End Sub
+
+'Save interface values to file
+Sub HTAStateSave
+  CSVData = ""
+  For i = 0 to 7
+    CSVData = CSVData & vm(i).Checked & ","
+  Next 
+  For i = 0 to 6
+    CSVData = CSVData & xm(i).Checked & ","
+  Next
+  For Each Chk in ArrCB
+    CSVData = CSVData & Eval(Chk).Checked & ","
+  Next
+  CSVData = CSVData & ColShow & ","
+  CSVData = CSVData & ColMore
+  Set oFile = oFSO.OpenTextFile(CSVFile,2,True)
+  oFile.Write CSVData
+  oFile.Close
+End Sub
+
+'Run WinSetView.ps1 with parameters based on user selections
+Sub Submit
+  HTAStateSave
+  ColShow = Replace(ColShow," ",",")
+  ColMore = Replace(ColMore," ",",")
+
+  If vm(0).Checked Then Mode = 1
+  If vm(1).Checked Then Mode = 4
+  If vm(2).Checked Then Mode = 2
+  If vm(3).Checked Then Mode = 5
+  If vm(4).Checked Then Mode = 3
+  If vm(5).Checked Then Mode = 6
+  If vm(6).Checked Then Mode = 7
+  If vm(7).Checked Then Mode = 0
+
+  If pc.Checked Then 
+    If xm(0).Checked Then TPMode = 1
+    If xm(1).Checked Then TPMode = 4
+    If xm(2).Checked Then TPMode = 2
+    If xm(3).Checked Then TPMode = 5
+    If xm(4).Checked Then TPMode = 3
+    If xm(5).Checked Then TPMode = 6
+    If xm(6).Checked Then TPMode = 7
+  Else
+    TPMode = 0
+  End If
+  
+  If ng.Checked Then NoGroup=1 Else NoGroup=0
+  If xg.Checked Then TPNoGrp=1 Else TPNoGrp=0
+  If gn.Checked Then Generic=1 Else Generic=0
+  If se.Checked Then ShowExt=1 Else ShowExt=0
+  If ch.Checked Then Columns=1 Else Columns=0
+
+  ColShow = "'" & ColShow & "'"
+  ColMore = "'" & ColMore & "'"
+  Params = Mode & " " & ShowExt & " " & NoGroup & " " & Generic & " " & TPMode & " " & TPNoGrp & " " & Columns & " " & ColShow & " " & ColMore
+  Visible = 0
+  RunScript
+End Sub
+
+Sub RunScript
+  CmdLine = "Powershell.exe -ExecutionPolicy Bypass " & Chr(34) & MyPath & "WinSetView.ps1" & Chr(34) & " " & Params
+  oShell.Run CmdLine,Visible,False
+  Window.Close
+End Sub
+
+'Restore Explorer foder views from backup reg file
+'WinSetView.ps1 creates a unique backup file on each run
+Sub Restore
+  Params = "9"
+  Visible = 1
+  RunScript
+End Sub
+
+'Hide or show options based on current selections
+Sub ViewOps
+  If vm(7).Checked Then
+    op.style.visibility = "hidden"
+    co.style.visibility = "hidden"  
+    th.style.visibility = "hidden"  
+    mc.style.visibility = "hidden"
+    Exit Sub
+  End If  
+  op.style.visibility = "visible"
+  th.style.visibility = "visible"  
+  mc.style.visibility = "visible"  
+  If ch.Checked Then
+    co.style.visibility = "visible"
+  Else
+    co.style.visibility = "hidden"  
+  End If
+  If pc.Checked Then
+    mc.style.visibility = "visible"
+  Else
+    mc.style.visibility = "hidden"  
+  End If
+End Sub
+
+'ColShow contains column headings to be displayed in Details view
+'ColMore contains additional right-click column heading options
+Sub Mux(Label,Checked)
+  ColShow = " " & Replace(ColShow,","," ") & " "
+  ColMore = " " & Replace(ColMore,","," ") & " "
+  If Checked Then
+    ColShow = ColShow & " " & Label
+    ColMore = Replace(ColMore," " & Label & " "," ")
+  Else
+    ColMore = ColMore & " " & Label
+    ColShow = Replace(ColShow," " & Label & " "," ")
+  End If
+  ColShow = Trim(ColShow)
+  ColMore = Trim(ColMore)
+  ColShow = Replace(ColShow,"  "," ")
+  ColMore = Replace(ColMore,"  "," ")
+  cs.Value = ColShow
+End Sub
+</script>
+
+<body>
+<input type=radio name=vm Checked onclick=ViewOps >Details
+<input type=radio name=vm onclick=ViewOps >List
+<input type=radio name=vm onclick=ViewOps >Tiles
+<input type=radio name=vm onclick=ViewOps >Content
+<input type=radio name=vm onclick=ViewOps >Small Icons
+<input type=radio name=vm onclick=ViewOps >Medium Icons
+<input type=radio name=vm onclick=ViewOps >Large Icons<p>
+<input type=radio name=vm onclick=ViewOps >Reset Views to Windows Defaults<p>
+<input type=checkbox name=se Checked >Show File Extensions
+<div id=op>
+  <input type=checkbox name=ng Checked >No Grouping
+  <input type=checkbox name=gn Checked >Make All Folders Generic<p>
+  <input type=checkbox name=ch Checked onclick=ViewOps >Set Global Column Headings:<br>
+</div>
+<div class=spc1>
+  <br>
+</div>
+<div id=co>
+  <table>
+  <tr><td>
+  <input type=checkbox name=dm Checked onclick='Mux "DateModified",dm.Checked' >Date modified</td><td>
+  <input type=checkbox name=sz Checked onclick='Mux "Size",sz.Checked' >Size</td><td>
+  <input type=checkbox name=ti Checked onclick='Mux "ItemType",ti.Checked' >Item type</td><td>
+  <input type=checkbox name=fn onclick='Mux "ItemFolderNameDisplay",fn.Checked' >Folder name</td><tr>
+  <tr><td>
+  <input type=checkbox name=dc onclick='Mux "DateCreated",dc.Checked' >Date created</td><td>
+  <input type=checkbox name=fv onclick='Mux "FileVersion",fv.Checked' >File version</td><td>
+  <input type=checkbox name=tt onclick='Mux "ItemTypeText",tt.Checked' >Type</td><td>
+  <input type=checkbox name=fp onclick='Mux "ItemFolderPathDisplay",fp.Checked' >Folder path</td><tr>
+  <tr><td>
+  <input type=checkbox name=da onclick='Mux "DateAccessed",da.Checked' >Date accessed</td><td>
+  <input type=checkbox name=fe onclick='Mux "FileExtension",fe.Checked' >File extension</td><td>
+  <input type=checkbox name=tc onclick='Mux "ContentType",tc.Checked' >Content type</td><td>
+  <input type=checkbox name=ff onclick='Mux "ItemFolderPathDisplayNarrow",ff.Checked' >Folder</td><tr>
+  <tr><td>
+  <input type=checkbox name=fa onclick='Mux "FileAttributes",fa.Checked' >Attributes</td><td>
+  <input type=checkbox name=tk onclick='Mux "Kind",tk.Checked' >Kind</td><td>
+  <input type=checkbox name=tp onclick='Mux "PerceivedType",tp.Checked' >Perceived type</td><td>
+  <input type=checkbox name=pi onclick='Mux "ItemPathDisplay",pi.Checked' >Path</td><tr>
+  </table>
+  <p>
+  <textarea style="width:520; height:70; overflow:auto" wrap=hard name=cs readOnly=True></textarea><br>
+</div>
+<div class=spc2>
+  <br>
+</div>
+<div id=th>
+  <input type=checkbox name=pc Checked onclick=ViewOps >Set views for "This PC" and "Network":<br>
+</div>
+<div class=spc3>
+  <br>
+</div>
+<div id=mc>
+  <input type=radio name=xm >Details
+  <input type=radio name=xm Checked >List
+  <input type=radio name=xm >Tiles
+  <input type=radio name=xm >Content
+  <input type=radio name=xm >Small Icons
+  <input type=radio name=xm >Medium Icons
+  <input type=radio name=xm >Large Icons<br>
+  <input type=checkbox name=xg Checked >No Grouping<p>
+</div>
+<input type=button class=lb value=Submit onclick=Submit>
+<input type=button class=rb id=rb value="Restore from Backup" onclick=Restore>
+<input type=button class=hb value="  ">
+<input type=button class=xb value="App Defaults" onclick='HTAStateRestore DefData'>
+<input type=button class=hb value="  ">
+<input type=button class=yb id=yb value="Last Run Settings" onclick='HTAStateRestore UserData'>
+</body>
+</html>
