@@ -34,7 +34,7 @@ This option turns off grouping in all folder views. This is most often desired f
 
 ## Make All folders Generic
 
-This option disables "Folder Type Discovery". That's the windows feature that automatically changes a folder's view based on its contents. If you want your folder views to change with content, don't check this item. If you want a consistent view across all folders, regardless of content, check this option. This option also makes the Documents, Music, Pictures, and Videos folders generic. Those four folder will retain their special icons, but they will behave like a generic folder (i.e. column headings in Details view will be generic). This option has no effect on the Downloads folder.
+This option disables "Folder Type Discovery". That's the windows feature that automatically changes a folder's view based on its contents. If you want your folder views to change with content, don't check this item. If you want a consistent view across all folders, regardless of content, check this option. This option also makes the **Documents**, **Music**, **Pictures**, and **Videos** folders generic. Those four folder will retain their special icons, but they will behave like a generic folder (i.e. column headings in Details view will be generic). This option has no effect on the **Downloads** folder.
 
 ## Set Global Column Headings
 
