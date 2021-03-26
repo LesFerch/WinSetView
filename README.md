@@ -21,6 +21,7 @@ All changes made by this tool are per-user within the HKEY_CURRENT_USER hive in 
 ## View Radio Buttons:
 For your global Explorer view, you can select one of:
 **Details, List, Tiles, Content, Small Icons, Medium Icons, Large Icons**
+
 Your selection will apply to all folders except "This PC" and "Network". 
 
 ## Reset Views to Windows Defaults
