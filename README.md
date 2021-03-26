@@ -10,7 +10,7 @@ This tool provides an easy way to globally set Windows Explorer folder views. Fo
 
 The tool is comprised of two files: **WinSetView.hta** (HTML GUI with VBScript code) and **WinSetView.ps1** (Powershell command line script).
 
-Double-click WinSetView.hta to open the GUI. When you click Submit, the hta/vbs script will pass your choices as parameters to WinSetView.ps1, which will make the changes and then restart Explorer.
+Double-click WinSetView.hta to open the GUI. When you click **Submit**, the hta/vbs script will pass your choices as parameters to WinSetView.ps1, which will make the changes and then restart Explorer.
 
 Each option, and related Explorer background information, is detailed below, but if you just want to get to it, the dialog is pretty much self-explanatory. For best results, close all open applications before running this tool. Open applications can prevent open/save dialog views from being updated.
 
