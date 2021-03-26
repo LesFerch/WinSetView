@@ -105,8 +105,8 @@ Another confusion is over the "Apply to folders" button. This can be found in **
 
 Explorer provides no option to set all folders and virtual folders to one global view. You can set a generic folder, such as C:\, to your desired views and then use the "Apply to folders" button to set all other generic folders the same. But, as explained, there are plenty of folders that are not generic folders. You can make the "Apply to folders" button apply to more folders by setting a registry value that tells Explorer to treat "all folders" as "Generic". That registry value is:
 
-[HKEY_CURRENT_USER\SOFTWARE\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags\AllFolders\Shell]
-"FolderType"="Generic"
+    [HKEY_CURRENT_USER\SOFTWARE\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags\AllFolders\Shell]
+    "FolderType"="Generic"
 
 Note: You can substitute "Generic" with "NotSpecified" and get the same result.
 
@@ -148,22 +148,22 @@ To answer that question, let's first look at how Explorer selects the views for 
 
 When a folder is opened, Explorer looks for existing view settings in the BagMRU/Bags keys:
 
-HKCU\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\BagMRU
-HKCU\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags
+    HKCU\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\BagMRU
+    HKCU\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags
 
 If no settings exist there, it then checks the Streams key for any default settings that have been applied using the "Apply to folders" button:
 
-HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Streams\Defaults
+    HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Streams\Defaults
 
 If the view settings are not in the Streams key, it checks the FolderTypes key in HKEY_LOCAL_MACHINE for the default view settings for the folder type that was just opened and applies those settings:
 
-HKLM\Software\Microsoft\Windows\CurrentVersion\Explorer\FolderTypes
+    HKLM\Software\Microsoft\Windows\CurrentVersion\Explorer\FolderTypes
 
 Explorer then saves the settings in an entry in the user's BagMRU/Bags keys that will be updated whenever the user changes the view for that folder.
 
 Fortunately for us, Explorer will also look for the FolderTypes key in HKEY_CURRENT_USER and, if it exists, use that instead of the one in HKLM:
 
-HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\FolderTypes
+    HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\FolderTypes
 
 This provides an opportunity to inject our desired default settings without touching the base defaults for the machine and all other users (and not requiring admin privileges).
 
