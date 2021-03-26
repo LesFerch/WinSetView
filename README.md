@@ -44,30 +44,30 @@ Sixteen of Explorer's column headings are provided. There are many more heading 
 
 ## Date headings:
 
-**Date Modified**: The last date/time the file was updated on this file system.
-**Date Created**: This is the date/time the file was initially written to storage.
+**Date Modified**: The last date/time the file was updated on this file system.\
+**Date Created**: This is the date/time the file was initially written to storage.\
 **Date accessed**: Date file was last opened (rarely accurate due to deferred updates).
 
 ## General purpose headings:
 
-**Size**: The file size in KB
-**Attributes**: File attributes such as Archive[A], Hidden[H], System[S], Read-only[R]
+**Size**: The file size in KB\
+**Attributes**: File attributes such as Archive[A], Hidden[H], System[S], Read-only[R]\
 **File Version**: Applicable to files that have a version header, such as .exe files
 
 ## File type headings:
 
-**Item type**: The file's type based on file extension. Example: MPEG Layer 3
-**Type**: Usually same as File type, but may show associated app name in search results.
-**Perceived type**: File category. Examples: Audio, Video
-**Kind**: Similar to Perceived type. Examples: Music, Video
-**Content type**: Essentially Perceived type + Item type. Example: audio/mpeg
+**Item type**: The file's type based on file extension. Example: MPEG Layer 3\
+**Type**: Usually same as File type, but may show associated app name in search results.\
+**Perceived type**: File category. Examples: Audio, Video\
+**Kind**: Similar to Perceived type. Examples: Music, Video\
+**Content type**: Essentially Perceived type + Item type. Example: audio/mpeg\
 **File extension**: Example: .mp3 (handy for sorting if you don't need a type field)
 
 ## Path headings (useful in search results):
 
-**Folder name**: The folder name only. Example: Ghibli
-**Folder path**: Full path to the folder. Example: C:\Movies\Ghibli
-**Folder**: Folder name followed by preceding path. Example: Ghibli (C:\Movies)
+**Folder name**: The folder name only. Example: Ghibli\
+**Folder path**: Full path to the folder. Example: C:\Movies\Ghibli\
+**Folder**: Folder name followed by preceding path. Example: Ghibli (C:\Movies)\
 **Path**: Full path to the file. Example: C:\Movies\Ghibli\Ponyo.mkv
 
 ## Set views for "This PC" and "Network"
