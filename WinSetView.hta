@@ -8,7 +8,6 @@ File 1 of 2: WinSetView.hta (GUI tool to select desired views)
 <head>
 <hta:application
   applicationname=WinSetView
-  border=dialog
   maximizebutton=no
   scroll=no
   selection=no
@@ -21,11 +20,6 @@ File 1 of 2: WinSetView.hta (GUI tool to select desired views)
   .spc1 {font-size:5pt}
   .spc2 {font-size:5pt}
   .spc3 {font-size:5pt}
-  .lb   {float:left; width:80px}
-  .hb   {float:right; background:transparent; border:none}
-  .rb   {float:right; width:150px}
-  .xb   {float:right; width:100px}
-  .yb   {float:right; width:130px}
 </style>
 <title>Globally Set Explorer Folder Views</title>
 </head>
@@ -35,47 +29,84 @@ Option Explicit
 Dim Mode, NoGroup, Generic, TPMode, TPNoGrp, ShowExt, Columns, Msg, Choice, oFolder, oFiles
 Dim MyPath, CmdLine, Params, RunThis, oShell, Visible, oFSO, i, Chk, ArrCB, j, AppData, rbShow
 Dim ColShow, ColMore, Label, Delim, CSVData, ArrCSV, CSVFile, oFile, DefData, UserData
+Dim oReg, Key, SubKey, ArrKeys, Value, WinWidth, WinHeight, ScaleWidth, Resize
 
-Set oFSO = CreateObject("Scripting.FileSystemObject")
-Set oShell = CreateObject("Wscript.Shell")
-
-MyPath = LCase(document.location.pathname)
-MyPath = Left(MyPath,InStrRev(MyPath,"\"))
-AppData = oShell.ExpandEnvironmentStrings("%APPDATA%") & "\WinSetView"
-CSVFile = AppData & "\WinSetView.csv"
 ColShow = "DateModified Size ItemType"
 ColMore = "FileExtension ItemTypeText ContentType PerceivedType Kind DateCreated DateAccessed FileAttributes FileVersion ItemFolderNameDisplay ItemFolderPathDisplay ItemFolderPathDisplayNarrow ItemPathDisplay"
 DefData = "True,False,False,False,False,False,False,False,False,True,False,False,False,False,False,True,True,True,True,True,True,True,False,False,False,False,False,False,False,False,False,False,False,False,False,True,True"
 DefData = DefData & "," & ColShow & "," & ColMore
 UserData = DefData
-ArrCB = Split("se,ng,gn,ch,dm,sz,ti,fe,tt,tc,tp,tk,dc,da,fa,fv,fn,fp,ff,pi,pc,xg",",")
+Set oShell = CreateObject("Wscript.Shell")
+Set oFSO = CreateObject("Scripting.FileSystemObject")
+WinWidth = 580
+WinHeight = 520
 
-If Not oFSO.FolderExists(AppData) Then oFSO.CreateFolder(AppData)
-
-'Read in previous user selections
-If oFSO.FileExists(CSVFile) Then
-  Set oFile = oFSO.OpenTextFile(CSVFile,1)
-  UserData = oFile.ReadAll
-  oFile.Close
-End If
-
-'See if there are any reg files in the backup folder
-Set oFolder = oFSO.GetFolder(AppData)
-Set oFiles = oFolder.Files
-rbShow = False
-For Each oFile In oFiles
-  If LCase(oFSO.GetExtensionName(oFile.Name)) = "reg" Then rbShow = True
-Next
-
-'Center dialog, Restore any user settings, Disable NA buttons
 Sub Window_onLoad
-  CenterWindow 560,520
+
+  CenterWindow WinWidth,WinHeight
+
+  'Resize window if not 96 dpi
+  Resize = False
+  Value = oShell.RegRead("HKCU\Control Panel\Desktop\WindowMetrics\AppliedDPI")
+  If Value > 96 Then
+    'Custom scaling is set
+    Resize = True
+    ScaleWidth = Value/96
+  Else
+    'See if standard (125 or 150 percent) scaling is set
+    Set oReg = GetObject("winmgmts://./root/default:StdRegProv")
+    Key = "Control Panel\Desktop\PerMonitorSettings"
+    Const HKEY_CURRENT_USER = &H80000001
+    oReg.EnumKey HKEY_CURRENT_USER, Key, ArrKeys
+    'Assume first monitor in list is the one we want
+    For Each SubKey In ArrKeys
+      Exit For
+    Next
+    Value = oShell.RegRead("HKCU\" & Key & "\" & SubKey & "\DPIValue")
+    If Not Value=0 Then
+      Resize = True
+      If Value=1 Then ScaleWidth = 1.25
+      If Value=2 Then ScaleWidth = 1.50
+    End If
+  End If
+  If Resize Then
+    WinWidth = WinWidth * ScaleWidth
+    CenterWindow WinWidth,WinHeight
+    WinHeight = Document.GetElementByID("all").ScrollHeight * 1.15
+    CenterWindow WinWidth,WinHeight
+  End If
+
+  'Set up paths
+  AppData = oShell.ExpandEnvironmentStrings("%APPDATA%") & "\WinSetView"
+  If Not oFSO.FolderExists(AppData) Then oFSO.CreateFolder(AppData)
+  CSVFile = AppData & "\WinSetView.csv"
+
+  'Read in previous user selections
+  If oFSO.FileExists(CSVFile) Then
+    Set oFile = oFSO.OpenTextFile(CSVFile,1)
+    UserData = oFile.ReadAll
+    oFile.Close
+  End If
+
+  'See if there are any reg files in the backup folder
+  Set oFolder = oFSO.GetFolder(AppData)
+  Set oFiles = oFolder.Files
+  rbShow = False
+  For Each oFile In oFiles
+    If LCase(oFSO.GetExtensionName(oFile.Name)) = "reg" Then rbShow = True
+  Next
+
+  'Set up an array of checkbox object names
+  ArrCB = Split("se,ng,gn,ch,dm,sz,ti,fe,tt,tc,tp,tk,dc,da,fa,fv,fn,fp,ff,pi,pc,xg",",")
+
+  'Update interface
   HTAStateRestore UserData
   If UserData = DefData Then yb.Disabled = True
   If Not rbShow Then rb.Disabled = True
+
 End Sub
 
-Sub CenterWindow( widthX, heightY )
+Sub CenterWindow(widthX, heightY)
   self.ResizeTo widthX, heightY 
   self.MoveTo (screen.Width - widthX)/2, (screen.Height - heightY)/2
 End Sub
@@ -162,6 +193,8 @@ Sub Submit
 End Sub
 
 Sub RunScript
+  MyPath = LCase(document.location.pathname)
+  MyPath = Left(MyPath,InStrRev(MyPath,"\"))
   CmdLine = "Powershell.exe -ExecutionPolicy Bypass " & Chr(34) & MyPath & "WinSetView.ps1" & Chr(34) & " " & Params
   oShell.Run CmdLine,Visible,False
   Window.Close
@@ -220,73 +253,73 @@ End Sub
 </script>
 
 <body>
-<input type=radio name=vm Checked onclick=ViewOps >Details
-<input type=radio name=vm onclick=ViewOps >List
-<input type=radio name=vm onclick=ViewOps >Tiles
-<input type=radio name=vm onclick=ViewOps >Content
-<input type=radio name=vm onclick=ViewOps >Small Icons
-<input type=radio name=vm onclick=ViewOps >Medium Icons
-<input type=radio name=vm onclick=ViewOps >Large Icons<p>
-<input type=radio name=vm onclick=ViewOps >Reset Views to Windows Defaults<p>
-<input type=checkbox name=se Checked >Show File Extensions
-<div id=op>
-  <input type=checkbox name=ng Checked >No Grouping
-  <input type=checkbox name=gn Checked >Make All Folders Generic<p>
-  <input type=checkbox name=ch Checked onclick=ViewOps >Set Global Column Headings:<br>
+<div id=all>
+  <input type=radio name=vm Checked onclick=ViewOps >Details
+  <input type=radio name=vm onclick=ViewOps >List
+  <input type=radio name=vm onclick=ViewOps >Tiles
+  <input type=radio name=vm onclick=ViewOps >Content
+  <input type=radio name=vm onclick=ViewOps >Small Icons
+  <input type=radio name=vm onclick=ViewOps >Medium Icons
+  <input type=radio name=vm onclick=ViewOps >Large Icons<p>
+  <input type=radio name=vm onclick=ViewOps >Reset Views to Windows Defaults<p>
+  <input type=checkbox name=se Checked >Show File Extensions
+  <div id=op>
+    <input type=checkbox name=ng Checked >No Grouping
+    <input type=checkbox name=gn Checked >Make All Folders Generic<p>
+    <input type=checkbox name=ch Checked onclick=ViewOps >Set Global Column Headings:<br>
+  </div>
+  <div class=spc1>
+    <br>
+  </div>
+  <div id=co>
+    <table>
+    <tr><td>
+    <input type=checkbox name=dm Checked onclick='Mux "DateModified",dm.Checked' >Date modified</td><td>
+    <input type=checkbox name=sz Checked onclick='Mux "Size",sz.Checked' >Size</td><td>
+    <input type=checkbox name=ti Checked onclick='Mux "ItemType",ti.Checked' >Item type</td><td>
+    <input type=checkbox name=fn onclick='Mux "ItemFolderNameDisplay",fn.Checked' >Folder name</td><tr>
+    <tr><td>
+    <input type=checkbox name=dc onclick='Mux "DateCreated",dc.Checked' >Date created</td><td>
+    <input type=checkbox name=fv onclick='Mux "FileVersion",fv.Checked' >File version</td><td>
+    <input type=checkbox name=tt onclick='Mux "ItemTypeText",tt.Checked' >Type</td><td>
+    <input type=checkbox name=fp onclick='Mux "ItemFolderPathDisplay",fp.Checked' >Folder path</td><tr>
+    <tr><td>
+    <input type=checkbox name=da onclick='Mux "DateAccessed",da.Checked' >Date accessed</td><td>
+    <input type=checkbox name=fe onclick='Mux "FileExtension",fe.Checked' >File extension</td><td>
+    <input type=checkbox name=tc onclick='Mux "ContentType",tc.Checked' >Content type</td><td>
+    <input type=checkbox name=ff onclick='Mux "ItemFolderPathDisplayNarrow",ff.Checked' >Folder</td><tr>
+    <tr><td>
+    <input type=checkbox name=fa onclick='Mux "FileAttributes",fa.Checked' >Attributes</td><td>
+    <input type=checkbox name=tk onclick='Mux "Kind",tk.Checked' >Kind</td><td>
+    <input type=checkbox name=tp onclick='Mux "PerceivedType",tp.Checked' >Perceived type</td><td>
+    <input type=checkbox name=pi onclick='Mux "ItemPathDisplay",pi.Checked' >Path</td><tr>
+    </table>
+    <p>
+    <textarea style="width:100%; height:70; overflow:auto" wrap=hard name=cs readOnly=True></textarea><br>
+  </div>
+  <div class=spc2>
+    <br>
+  </div>
+  <div id=th>
+    <input type=checkbox name=pc Checked onclick=ViewOps >Set views for "This PC" and "Network":<br>
+  </div>
+  <div class=spc3>
+    <br>
+  </div>
+  <div id=mc>
+    <input type=radio name=xm >Details
+    <input type=radio name=xm Checked >List
+    <input type=radio name=xm >Tiles
+    <input type=radio name=xm >Content
+    <input type=radio name=xm >Small Icons
+    <input type=radio name=xm >Medium Icons
+    <input type=radio name=xm >Large Icons<br>
+    <input type=checkbox name=xg Checked >No Grouping<p>
+  </div>
+  <input type=button value=Submit onclick=Submit>
+  <input type=button id=yb value="Last Run Settings" onclick='HTAStateRestore UserData'>
+  <input type=button value="App Defaults" onclick='HTAStateRestore DefData'>
+  <input type=button id=rb value="Restore from Backup" onclick=Restore>
 </div>
-<div class=spc1>
-  <br>
-</div>
-<div id=co>
-  <table>
-  <tr><td>
-  <input type=checkbox name=dm Checked onclick='Mux "DateModified",dm.Checked' >Date modified</td><td>
-  <input type=checkbox name=sz Checked onclick='Mux "Size",sz.Checked' >Size</td><td>
-  <input type=checkbox name=ti Checked onclick='Mux "ItemType",ti.Checked' >Item type</td><td>
-  <input type=checkbox name=fn onclick='Mux "ItemFolderNameDisplay",fn.Checked' >Folder name</td><tr>
-  <tr><td>
-  <input type=checkbox name=dc onclick='Mux "DateCreated",dc.Checked' >Date created</td><td>
-  <input type=checkbox name=fv onclick='Mux "FileVersion",fv.Checked' >File version</td><td>
-  <input type=checkbox name=tt onclick='Mux "ItemTypeText",tt.Checked' >Type</td><td>
-  <input type=checkbox name=fp onclick='Mux "ItemFolderPathDisplay",fp.Checked' >Folder path</td><tr>
-  <tr><td>
-  <input type=checkbox name=da onclick='Mux "DateAccessed",da.Checked' >Date accessed</td><td>
-  <input type=checkbox name=fe onclick='Mux "FileExtension",fe.Checked' >File extension</td><td>
-  <input type=checkbox name=tc onclick='Mux "ContentType",tc.Checked' >Content type</td><td>
-  <input type=checkbox name=ff onclick='Mux "ItemFolderPathDisplayNarrow",ff.Checked' >Folder</td><tr>
-  <tr><td>
-  <input type=checkbox name=fa onclick='Mux "FileAttributes",fa.Checked' >Attributes</td><td>
-  <input type=checkbox name=tk onclick='Mux "Kind",tk.Checked' >Kind</td><td>
-  <input type=checkbox name=tp onclick='Mux "PerceivedType",tp.Checked' >Perceived type</td><td>
-  <input type=checkbox name=pi onclick='Mux "ItemPathDisplay",pi.Checked' >Path</td><tr>
-  </table>
-  <p>
-  <textarea style="width:520; height:70; overflow:auto" wrap=hard name=cs readOnly=True></textarea><br>
-</div>
-<div class=spc2>
-  <br>
-</div>
-<div id=th>
-  <input type=checkbox name=pc Checked onclick=ViewOps >Set views for "This PC" and "Network":<br>
-</div>
-<div class=spc3>
-  <br>
-</div>
-<div id=mc>
-  <input type=radio name=xm >Details
-  <input type=radio name=xm Checked >List
-  <input type=radio name=xm >Tiles
-  <input type=radio name=xm >Content
-  <input type=radio name=xm >Small Icons
-  <input type=radio name=xm >Medium Icons
-  <input type=radio name=xm >Large Icons<br>
-  <input type=checkbox name=xg Checked >No Grouping<p>
-</div>
-<input type=button class=lb value=Submit onclick=Submit>
-<input type=button class=rb id=rb value="Restore from Backup" onclick=Restore>
-<input type=button class=hb value="  ">
-<input type=button class=xb value="App Defaults" onclick='HTAStateRestore DefData'>
-<input type=button class=hb value="  ">
-<input type=button class=yb id=yb value="Last Run Settings" onclick='HTAStateRestore UserData'>
 </body>
 </html>
