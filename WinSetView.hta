@@ -58,7 +58,6 @@ Sub Window_onLoad
     Key = "Control Panel\Desktop\PerMonitorSettings"
     Const HKEY_CURRENT_USER = &H80000001
     Result = oReg.EnumKey(HKEY_CURRENT_USER, Key, ArrKeys)
-    Msgbox Result
     If Result=0 Then
       'Assume first monitor in list is the one we want
       For Each SubKey In ArrKeys
