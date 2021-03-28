@@ -29,7 +29,7 @@ Option Explicit
 Dim Mode, NoGroup, Generic, TPMode, TPNoGrp, ShowExt, Columns, Msg, Choice, oFolder, oFiles
 Dim MyPath, CmdLine, Params, RunThis, oShell, Visible, oFSO, i, Chk, ArrCB, j, AppData, rbShow
 Dim ColShow, ColMore, Label, Delim, CSVData, ArrCSV, CSVFile, oFile, DefData, UserData
-Dim oReg, Key, SubKey, ArrKeys, Value, WinWidth, WinHeight, ScaleWidth, Resize
+Dim oReg, Key, SubKey, ArrKeys, Value, WinWidth, WinHeight, ScaleWidth, Resize, Result
 
 ColShow = "DateModified Size ItemType"
 ColMore = "FileExtension ItemTypeText ContentType PerceivedType Kind DateCreated DateAccessed FileAttributes FileVersion ItemFolderNameDisplay ItemFolderPathDisplay ItemFolderPathDisplayNarrow ItemPathDisplay"
@@ -57,16 +57,19 @@ Sub Window_onLoad
     Set oReg = GetObject("winmgmts://./root/default:StdRegProv")
     Key = "Control Panel\Desktop\PerMonitorSettings"
     Const HKEY_CURRENT_USER = &H80000001
-    oReg.EnumKey HKEY_CURRENT_USER, Key, ArrKeys
-    'Assume first monitor in list is the one we want
-    For Each SubKey In ArrKeys
-      Exit For
-    Next
-    Value = oShell.RegRead("HKCU\" & Key & "\" & SubKey & "\DPIValue")
-    If Not Value=0 Then
-      Resize = True
-      If Value=1 Then ScaleWidth = 1.25
-      If Value=2 Then ScaleWidth = 1.50
+    Result = oReg.EnumKey(HKEY_CURRENT_USER, Key, ArrKeys)
+    Msgbox Result
+    If Result=0 Then
+      'Assume first monitor in list is the one we want
+      For Each SubKey In ArrKeys
+        Exit For
+      Next
+      Value = oShell.RegRead("HKCU\" & Key & "\" & SubKey & "\DPIValue")
+      If Not Value=0 Then
+        Resize = True
+        If Value=1 Then ScaleWidth = 1.25
+        If Value=2 Then ScaleWidth = 1.50
+      End If
     End If
   End If
   If Resize Then
