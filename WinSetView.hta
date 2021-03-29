@@ -64,11 +64,8 @@ Sub Window_onLoad
         Exit For
       Next
       Value = oShell.RegRead("HKCU\" & Key & "\" & SubKey & "\DPIValue")
-      If Not Value=0 Then
-        Resize = True
-        If Value=1 Then ScaleWidth = 1.25
-        If Value=2 Then ScaleWidth = 1.50
-      End If
+      If Value=1 Then ScaleWidth = 1.25: Resize = True
+      If Value=2 Then ScaleWidth = 1.50: Resize = True
     End If
   End If
   If Resize Then
