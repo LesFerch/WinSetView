@@ -1,3 +1,4 @@
+
 # WinSetView
 
 ## Globally Set Explorer Folder Views
@@ -17,8 +18,7 @@ Each option, and related Explorer background information, is detailed below, but
 All changes made by this tool are per-user within the HKEY_CURRENT_USER hive in the registry. No machine settings are touched and no elevated privileges are required. On each run, the tool makes a unique backup file of the affected registry values. A restore option is provided allowing you to rollback to any of these backups. There's also an option to completely reset all Explorer views to Windows default values.
 
 # Options
-![image](https://user-images.githubusercontent.com/79026235/112769817-283e6480-8ff1-11eb-9fef-d4b03ce8aa46.png)
-
+![image](https://user-images.githubusercontent.com/79026235/112673548-3ba7cf00-8e3b-11eb-9e11-45968c0908c7.png)
 ## View Radio Buttons:
 For your global Explorer view, you can select one of:
 **Details, List, Tiles, Content, Small Icons, Medium Icons, Large Icons**
@@ -53,7 +53,8 @@ Sixteen of Explorer's column headings are provided. There are many more heading 
 
 **Size**: The file size in KB\
 **Attributes**: File attributes such as Archive[A], Hidden[H], System[S], Read-only[R]\
-**File Version**: Applicable to files that have a version header, such as .exe files
+**File Version**: Applicable to files that have a version header, such as .exe files\
+**Owner**: File owner in computer\userid format
 
 ## File type headings:
 
@@ -70,6 +71,15 @@ Sixteen of Explorer's column headings are provided. There are many more heading 
 **Folder path**: Full path to the folder. Example: C:\Movies\Ghibli\
 **Folder**: Folder name followed by preceding path. Example: Ghibli (C:\Movies)\
 **Path**: Full path to the file. Example: C:\Movies\Ghibli\Ponyo.mkv
+
+## Name and Path Column Widths
+The first number sets the width of the name column (first column) in Details view. The second number Sets the width of any path columns enabled in Details view.\
+The value is specified in ems. 1 em ≈ 1 char\
+Em size is relative to screen scaling. For example (at 96 dpi):\
+1 em at 100% = 8 pixels\
+1 em at 125% = 10 pixels\
+1 em at 150% = 12 pixels\
+Explorer uses ems internally for all its default column widths. This keeps the amount of text displayed in each column constant as screen scaling is changed.
 
 ## Set views for "This PC" and "Network"
 
@@ -189,5 +199,7 @@ Here's an overview of the steps the Powershell script performs to set Explorer v
 # Acknowledgements
 
 Thanks to **Keith Miller** at TenForums.com for providing the FolderTypes approach to setting default views.
+
+Thanks to my son **Brian** for helping me debug and clean up my HTML code. If you use Spotify on Android, please check out his [**Trimify**](https://play.google.com/store/apps/details?id=app.web.trimifymusic) app on the Google Play store.
 
 Thanks to my cat Puddles for keeping me company while I worked on this.
