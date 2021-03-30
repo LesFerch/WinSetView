@@ -32,7 +32,9 @@ Param (
   $TPNoGrp = 1,
   $Columns = 1,
   $ColShow = 'DateModified,Size,ItemType',
-  $ColMore = 'FileExtension,ItemTypeText,ContentType,PerceivedType,Kind,DateCreated,DateAccessed,FileAttributes,FileVersion,ItemFolderNameDisplay,ItemFolderPathDisplay,ItemFolderPathDisplayNarrow,ItemPathDisplay'
+  $ColMore = 'FileExtension,ItemTypeText,ContentType,PerceivedType,Kind,DateCreated,DateAccessed,FileAttributes,FileVersion,ItemFolderNameDisplay,ItemFolderPathDisplay,ItemFolderPathDisplayNarrow,ItemPathDisplay,FileOwner',
+  $NameWid = 34,
+  $PathWid = 34
 )
 
 If ($Mode -IsNot [int]) {$Mode = 1}
@@ -42,10 +44,14 @@ If ($Generic -IsNot [int]) {$Generic = 1}
 If ($TPMode -IsNot [int]) {$TPMode = 4}
 If ($TPNoGrp -IsNot [int]) {$TPNoGrp = 1}
 If ($Columns -IsNot [int]) {$Columns = 0}
+If ($NameWid -IsNot [int]) {$NameWid = 34}
+If ($PathWid -IsNot [int]) {$PathWid = 34}
 
 If ($Mode -gt 9) {$Mode = 1}
 If ($ShowExt -gt 1) {$ShowExt = 1}
 If ($TPMode -gt 8) {$TPMode = 4}
+If ($NameWid -lt 1) {$NameWid = 34}
+If ($PathWid -lt 1) {$PathWid = 34}
 
 If ($Mode -eq 3) {$IconSize = '010'}
 If ($Mode -eq 6) {$Mode = 3; $IconSize = '030'}
@@ -55,6 +61,10 @@ If ($Mode -eq 8) {$Mode = 3; $IconSize = '100'}
 $ColShow  = (';0System.' + $ColShow -replace ',',';0System.')
 $ColMore  = (';1System.' + $ColMore -replace ',',';1System.')
 $ColReg   = ('"ColumnList"="prop:0System.ItemNameDisplay' + $ColShow + $ColMore)
+
+$ColReg = $ColReg -replace 'System.ItemNameDisplay',"($NameWid)System.ItemNameDisplay"
+$ColReg = $ColReg -replace 'System.ItemFolderPathDisplay',"($PathWid)System.ItemFolderPathDisplay"
+$ColReg = $ColReg -replace 'System.ItemPathDisplay',"($PathWid)System.ItemPathDisplay"
 
 $BagM = '"HKCU\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\BagMRU"'
 $Bags = '"HKCU\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags"'

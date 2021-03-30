@@ -1,10 +1,11 @@
-<!--
+﻿<!--
 WinSetView (Globally Set Explorer Folder Views)
 Les Ferch, lesferch@gmail.com, GitHub repository created 2021-03-26
 File 1 of 2: WinSetView.hta (GUI tool to select desired views)
 -->
 
 <html>
+<meta charset="UTF-8">
 <head>
 <hta:application
   applicationname=WinSetView
@@ -17,29 +18,40 @@ File 1 of 2: WinSetView.hta (GUI tool to select desired views)
   body  {font-size:10pt; font-family:Arial}
   table {font-size:10pt; font-family:Arial; border-collapse:collapse}
   td    {padding: 0 15 0 0}
-  .spc1 {font-size:5pt}
-  .spc2 {font-size:5pt}
-  .spc3 {font-size:5pt}
+  #op   {margin-bottom:5pt}
+  #th   {margin-bottom:5pt}
+  #cs   {margin-bottom:5pt; margin-top:5pt; width:100%; height:40; white-space:nowrap; overflow:auto}
+  #hb   {width:2em}
+  #wn   {width:2em}
+  #wp   {width:2em}
 </style>
 <title>Globally Set Explorer Folder Views</title>
 </head>
 
 <script language=VBScript>
 Option Explicit
+Const Ver = "1.1"
 Dim Mode, NoGroup, Generic, TPMode, TPNoGrp, ShowExt, Columns, Msg, Choice, oFolder, oFiles
-Dim MyPath, CmdLine, Params, RunThis, oShell, Visible, oFSO, i, Chk, ArrCB, j, AppData, rbShow
-Dim ColShow, ColMore, Label, Delim, CSVData, ArrCSV, CSVFile, oFile, DefData, UserData
-Dim oReg, Key, SubKey, ArrKeys, Value, WinWidth, WinHeight, ScaleWidth, Resize, Result
+Dim MyPath, CmdLine, Params, oShell, Visible, oFSO, i, Chk, ArrCB, j, AppData, rbShow, RBSet, CBSet
+Dim ColShow, ColMore, Label, Delim, CSVData, ArrCSV, CSVFile, oFile, DefData, UserData, OldData
+Dim oReg, Key, SubKey, ArrKeys, Value, WinWidth, WinHeight, ScaleWidth, Resize, Result, NameWid, PathWid
 
+'Set up an array of checkbox object names
+ArrCB = Split("se,ng,gn,ch,dm,sz,ti,fn,dc,fv,tt,fp,da,fe,tc,ff,fa,tk,tp,pi,fo,pc,xg",",")
+
+RBSet = "True,False,False,False,False,False,False,False,False,True,False,False,False,False,False"
+CBSet = "True,True,True,True,True,True,True,False,False,False,False,False,False,False,False,False,False,False,False,False,False,True,True"
 ColShow = "DateModified Size ItemType"
-ColMore = "FileExtension ItemTypeText ContentType PerceivedType Kind DateCreated DateAccessed FileAttributes FileVersion ItemFolderNameDisplay ItemFolderPathDisplay ItemFolderPathDisplayNarrow ItemPathDisplay"
-DefData = "True,False,False,False,False,False,False,False,False,True,False,False,False,False,False,True,True,True,True,True,True,True,False,False,False,False,False,False,False,False,False,False,False,False,False,True,True"
-DefData = DefData & "," & ColShow & "," & ColMore
+ColMore = "FileExtension ItemTypeText ContentType PerceivedType Kind DateCreated DateAccessed FileAttributes FileVersion"
+ColMore = ColMore & " ItemFolderNameDisplay ItemFolderPathDisplay ItemFolderPathDisplayNarrow ItemPathDisplay FileOwner"
+NameWid = "34"
+PathWid = "34"
+DefData = Ver & "," & RBSet & "," & CBSet & "," & NameWid & "," & PathWid & "," & ColShow & "," & ColMore
 UserData = DefData
 Set oShell = CreateObject("Wscript.Shell")
 Set oFSO = CreateObject("Scripting.FileSystemObject")
 WinWidth = 580
-WinHeight = 520
+WinHeight = 530
 
 Sub Window_onLoad
 
@@ -95,12 +107,9 @@ Sub Window_onLoad
     If LCase(oFSO.GetExtensionName(oFile.Name)) = "reg" Then rbShow = True
   Next
 
-  'Set up an array of checkbox object names
-  ArrCB = Split("se,ng,gn,ch,dm,sz,ti,fe,tt,tc,tp,tk,dc,da,fa,fv,fn,fp,ff,pi,pc,xg",",")
-
   'Update interface
   HTAStateRestore UserData
-  If UserData = DefData Then yb.Disabled = True
+  If (UserData=DefData Or OldData) Then yb.Disabled = True
   If Not rbShow Then rb.Disabled = True
 
 End Sub
@@ -113,7 +122,8 @@ End Sub
 'Set interface to values from CSVData
 Sub HTAStateRestore(CSVData)
   ArrCSV = Split(CSVData,",")
-  j = 0
+  If Not ArrCSV(0) = Ver Then OldData=True: Exit Sub
+  j = 1
   For i = 0 to 7
     vm(i).Checked = ArrCSV(j)
     j = j + 1
@@ -126,15 +136,19 @@ Sub HTAStateRestore(CSVData)
     Eval(Chk).Checked = ArrCSV(j)
     j = j + 1
   Next
-  ColShow = ArrCSV(j)
-  ColMore = ArrCSV(j+1)
+  NameWid = ArrCSV(j)
+  PathWid = ArrCSV(j+1)
+  ColShow = ArrCSV(j+2)
+  ColMore = ArrCSV(j+3)
   ViewOps
+  wn.Value = NameWid
+  wp.Value = PathWid
   cs.Value = ColShow
 End Sub
 
 'Save interface values to file
 Sub HTAStateSave
-  CSVData = ""
+  CSVData = Ver & ","
   For i = 0 to 7
     CSVData = CSVData & vm(i).Checked & ","
   Next 
@@ -144,6 +158,7 @@ Sub HTAStateSave
   For Each Chk in ArrCB
     CSVData = CSVData & Eval(Chk).Checked & ","
   Next
+  CSVData = CSVData & wn.Value & "," & wp.Value & ","
   CSVData = CSVData & ColShow & ","
   CSVData = CSVData & ColMore
   Set oFile = oFSO.OpenTextFile(CSVFile,2,True)
@@ -184,9 +199,13 @@ Sub Submit
   If se.Checked Then ShowExt=1 Else ShowExt=0
   If ch.Checked Then Columns=1 Else Columns=0
 
+  NameWid=wn.Value
+  PathWid=wp.Value
+  
   ColShow = "'" & ColShow & "'"
   ColMore = "'" & ColMore & "'"
-  Params = Mode & " " & ShowExt & " " & NoGroup & " " & Generic & " " & TPMode & " " & TPNoGrp & " " & Columns & " " & ColShow & " " & ColMore
+  Params = Mode & " " & ShowExt & " " & NoGroup & " " & Generic & " " & TPMode & " " & TPNoGrp
+  Params = Params & " " & Columns & " " & ColShow & " " & ColMore & " " & NameWid & " " & PathWid
   Visible = 0
   RunScript
 End Sub
@@ -249,6 +268,21 @@ Sub Mux(Label,Checked)
   ColMore = Replace(ColMore,"  "," ")
   cs.Value = ColShow
 End Sub
+
+Sub Help01
+  Dim HH,HT
+  HH = "Help Topic: Name and Path Column Widths"
+  HT = HT & "The first number sets the width of the name column (first column) in Details view." & vbCRLF & vbCRLF
+  HT = HT & "The second number Sets the width of any path columns enabled in Details view." & vbCRLF & vbCRLF
+  HT = HT & "The value is specified in ems. 1 em ≈ 1 char" & vbCRLF & vbCRLF
+  HT = HT & "Em size is relative to screen scaling. For example (at 96 dpi):" & vbCRLF & vbCRLF
+  HT = HT & "1 em at 100% = 8 pixels" & vbCRLF
+  HT = HT & "1 em at 125% = 10 pixels" & vbCRLF
+  HT = HT & "1 em at 150% = 12 pixels" & vbCRLF & vbCRLF
+  HT = HT & "Explorer uses ems internally for all its default column widths. This keeps the amount of text "
+  HT = HT & "displayed in each column constant as screen scaling is changed."
+  MsgBox HT,0+64,HH
+End Sub
 </script>
 
 <body>
@@ -259,51 +293,46 @@ End Sub
   <input type=radio name=vm onclick=ViewOps >Content
   <input type=radio name=vm onclick=ViewOps >Small Icons
   <input type=radio name=vm onclick=ViewOps >Medium Icons
-  <input type=radio name=vm onclick=ViewOps >Large Icons<p>
-  <input type=radio name=vm onclick=ViewOps >Reset Views to Windows Defaults<p>
-  <input type=checkbox name=se Checked >Show File Extensions
+  <input type=radio name=vm onclick=ViewOps >Large Icons<br><br>
+  <input type=radio name=vm onclick=ViewOps >Reset Views to Windows Defaults<br><br>
+  <input type=checkbox id=se Checked >Show File Extensions
   <div id=op>
-    <input type=checkbox name=ng Checked >No Grouping
-    <input type=checkbox name=gn Checked >Make All Folders Generic<p>
-    <input type=checkbox name=ch Checked onclick=ViewOps >Set Global Column Headings:<br>
-  </div>
-  <div class=spc1>
-    <br>
+    <input type=checkbox id=ng Checked >No Grouping
+    <input type=checkbox id=gn Checked >Make All Folders Generic<br><br>
+    <input type=checkbox id=ch Checked onclick=ViewOps >Set Global Column Headings:<br>
   </div>
   <div id=co>
     <table>
     <tr><td>
-    <input type=checkbox name=dm Checked onclick='Mux "DateModified",dm.Checked' >Date modified</td><td>
-    <input type=checkbox name=sz Checked onclick='Mux "Size",sz.Checked' >Size</td><td>
-    <input type=checkbox name=ti Checked onclick='Mux "ItemType",ti.Checked' >Item type</td><td>
-    <input type=checkbox name=fn onclick='Mux "ItemFolderNameDisplay",fn.Checked' >Folder name</td><tr>
+    <input type=checkbox id=dm Checked onclick='Mux "DateModified",dm.Checked' >Date modified</td><td>
+    <input type=checkbox id=sz Checked onclick='Mux "Size",sz.Checked' >Size</td><td>
+    <input type=checkbox id=ti Checked onclick='Mux "ItemType",ti.Checked' >Item type</td><td>
+    <input type=checkbox id=fn onclick='Mux "ItemFolderNameDisplay",fn.Checked' >Folder name</td><tr>
     <tr><td>
-    <input type=checkbox name=dc onclick='Mux "DateCreated",dc.Checked' >Date created</td><td>
-    <input type=checkbox name=fv onclick='Mux "FileVersion",fv.Checked' >File version</td><td>
-    <input type=checkbox name=tt onclick='Mux "ItemTypeText",tt.Checked' >Type</td><td>
-    <input type=checkbox name=fp onclick='Mux "ItemFolderPathDisplay",fp.Checked' >Folder path</td><tr>
+    <input type=checkbox id=dc onclick='Mux "DateCreated",dc.Checked' >Date created</td><td>
+    <input type=checkbox id=fv onclick='Mux "FileVersion",fv.Checked' >File version</td><td>
+    <input type=checkbox id=tt onclick='Mux "ItemTypeText",tt.Checked' >Type</td><td>
+    <input type=checkbox id=fp onclick='Mux "ItemFolderPathDisplay",fp.Checked' >Folder path</td><tr>
     <tr><td>
-    <input type=checkbox name=da onclick='Mux "DateAccessed",da.Checked' >Date accessed</td><td>
-    <input type=checkbox name=fe onclick='Mux "FileExtension",fe.Checked' >File extension</td><td>
-    <input type=checkbox name=tc onclick='Mux "ContentType",tc.Checked' >Content type</td><td>
-    <input type=checkbox name=ff onclick='Mux "ItemFolderPathDisplayNarrow",ff.Checked' >Folder</td><tr>
+    <input type=checkbox id=da onclick='Mux "DateAccessed",da.Checked' >Date accessed</td><td>
+    <input type=checkbox id=fe onclick='Mux "FileExtension",fe.Checked' >File extension</td><td>
+    <input type=checkbox id=tc onclick='Mux "ContentType",tc.Checked' >Content type</td><td>
+    <input type=checkbox id=ff onclick='Mux "ItemFolderPathDisplayNarrow",ff.Checked' >Folder</td><tr>
     <tr><td>
-    <input type=checkbox name=fa onclick='Mux "FileAttributes",fa.Checked' >Attributes</td><td>
-    <input type=checkbox name=tk onclick='Mux "Kind",tk.Checked' >Kind</td><td>
-    <input type=checkbox name=tp onclick='Mux "PerceivedType",tp.Checked' >Perceived type</td><td>
-    <input type=checkbox name=pi onclick='Mux "ItemPathDisplay",pi.Checked' >Path</td><tr>
+    <input type=checkbox id=fa onclick='Mux "FileAttributes",fa.Checked' >Attributes</td><td>
+    <input type=checkbox id=tk onclick='Mux "Kind",tk.Checked' >Kind</td><td>
+    <input type=checkbox id=tp onclick='Mux "PerceivedType",tp.Checked' >Perceived type</td><td>
+    <input type=checkbox id=pi onclick='Mux "ItemPathDisplay",pi.Checked' >Path</td><tr>
+    <tr><td>
+    <input type=checkbox id=fo onclick='Mux "FileOwner",fo.Checked' >Owner</td><tr>
     </table>
-    <p>
-    <textarea style="width:100%; height:70; overflow:auto" wrap=hard name=cs readOnly=True></textarea><br>
-  </div>
-  <div class=spc2>
-    <br>
+    <textarea id=cs readOnly=True></textarea><br>
+    <input type=button id=hb value=? onclick=Help01>
+    Name Column Width:<input type=text id=wn maxlength="2" value="34">
+    Path Column Width:<input type=text id=wp maxlength="2" value="34"><br><br>
   </div>
   <div id=th>
-    <input type=checkbox name=pc Checked onclick=ViewOps >Set views for "This PC" and "Network":<br>
-  </div>
-  <div class=spc3>
-    <br>
+    <input type=checkbox id=pc Checked onclick=ViewOps >Set views for "This PC" and "Network":<br>
   </div>
   <div id=mc>
     <input type=radio name=xm >Details
@@ -313,7 +342,7 @@ End Sub
     <input type=radio name=xm >Small Icons
     <input type=radio name=xm >Medium Icons
     <input type=radio name=xm >Large Icons<br>
-    <input type=checkbox name=xg Checked >No Grouping<p>
+    <input type=checkbox id=xg Checked >No Grouping<br><br>
   </div>
   <input type=button value=Submit onclick=Submit>
   <input type=button id=yb value="Last Run Settings" onclick='HTAStateRestore UserData'>
