@@ -128,7 +128,7 @@ With that value set, changing the view for say, C:\\, and then clicking the "App
 
 ## Apply to Folders "Bug"
 
-Whenever you use the "Apply to folders" button, on any generic folder, such as C:\\, your views for "This PC" and "Network" will revert back to Windows defaults. If you always leave "This PC" and "Network" at their default views, this is not an issue, but if you have changed either view and want to keep it changed, this is a nuisance.
+Whenever you use the "Apply to folders" button, on any *generic* folder, such as C:\\, your views for "This PC" and "Network" will revert back to Windows defaults. If you always leave "This PC" and "Network" at their default views, this is not an issue, but if you have changed either view and want to keep it changed, this is a nuisance.
 
 There is a sort-of-okay workaround. Any folder that is open when "Apply to folders" is used, will not have it's view changed. So, to "protect" your custom views for "This PC" and "Network", be sure to have separate windows open to each of those views when you use the "Apply to folders" button.
 
