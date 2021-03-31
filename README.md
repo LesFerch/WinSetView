@@ -115,7 +115,7 @@ The Downloads folder, for example, has at least four different views. So, if you
 
 Another confusion is over the "Apply to folders" button. This can be found in **View**, **Options**, **Change folder and search options**, **View** tab. Many users interpret this button to mean "Apply to ALL folders". That's not what it means. It actually means "Apply to all folders that are the same type as the current folder". So, in the case of our Downloads example, each of those four views are different folder types, so the "Apply to folders" button will not help to set all Downloads views the same.
 
-Explorer provides no option to set all folders and virtual folders to one global view. You can set a generic folder, such as C:\, to your desired views and then use the "Apply to folders" button to set all other generic folders the same. But, as explained, there are plenty of folders that are not generic folders. You can make the "Apply to folders" button apply to more folders by setting a registry value that tells Explorer to treat "all folders" as "Generic". That registry value is:
+Explorer provides no option to set all folders and virtual folders to one global view. You can set a generic folder, such as C:\\, to your desired views and then use the "Apply to folders" button to set all other generic folders the same. But, as explained, there are plenty of folders that are not generic folders. You can make the "Apply to folders" button apply to more folders by setting a registry value that tells Explorer to treat "all folders" as "Generic". That registry value is:
 
     [HKEY_CURRENT_USER\SOFTWARE\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags\AllFolders\Shell]
     "FolderType"="Generic"
