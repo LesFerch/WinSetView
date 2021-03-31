@@ -27,7 +27,7 @@ Your selection will apply to all folders except "This PC" and "Network".
 
 ## Reset Views to Windows Defaults
 
-This option clears the registry keys that hold Explore views and restarts Explorer, causing all folder views to revert to Windows defaults.
+This option clears the registry keys that hold Explorer views and restarts Explorer, causing all folder views to revert to Windows defaults.
 
 ## No Grouping
 
