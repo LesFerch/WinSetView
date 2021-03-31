@@ -41,7 +41,7 @@ This option disables "Folder Type Discovery". That's the windows feature that au
 
 Check this box if you want to control which column headings are enabled globally for Details view. Uncheck it if you want Windows default column headings. The column heading order is shown in the text box, using the heading names, as they are stored in the registry. To control the order, uncheck all column headings and then check them in the order you want them to appear left to right.
 
-Sixteen of Explorer's column headings are provided. There are many more heading choices in Explorer, but these are the ones that are most likely to be applicable globally. Some of them appear redundant, but they're all different in some way. Each heading is explained below:
+Seventeen of Explorer's column headings are provided (I can add more on request). There are many more heading choices in Explorer, but these are the ones that are most likely to be applicable globally. Some of them appear redundant, but they're all different in some way. Each heading is explained below:
 
 ## Date headings:
 
