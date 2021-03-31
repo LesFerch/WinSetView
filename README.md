@@ -109,7 +109,7 @@ Folder views in Windows Explorer are both flexible and frustrating. Many users h
 
 ## Explorer's Many Views
 
-The Downloads folder, for example, has at least four different views. So, if you want grouping turned off for Downloads, you have to do it at least four times. Those four views are: 1) This PC, Downloads, 2) C:\Users\Username\Downloads, 3) This PC, Downloads via an Open or Save dialog, and 4) C:\Users\Username\Downloads via an Open or Save dialog. Frequently, a user will set one of these views and then encounter the other view and get angry that their view settings "didn't stick".
+The Downloads folder, for example, has at least four different views. So, if you want grouping turned off for Downloads, you have to do it at least four times. Those four views are: 1) This PC, Downloads, 2) C:\Users\Username\Downloads, 3) This PC, Downloads via an Open or Save dialog, and 4) C:\Users\Username\Downloads via an Open or Save dialog. Frequently, a user will set one of these views and then encounter one of the other views and get angry that their view settings "didn't stick".
 
 ## Apply to Folders Explained
 
