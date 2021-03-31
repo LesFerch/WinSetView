@@ -190,7 +190,7 @@ Here's an overview of the steps the Powershell script performs to set Explorer v
 3) Set any direct registry entries, such as Show File Extensions and Make All Folders Generic, for the current user.
 4) If custom "This PC" and "Network" views have been selected, create BagMRU/Bags entries for those views.
 5) Export HKEY_LOCAL_MACHINE FolderTypes key to a file.
-6) Use Replace with regular expresions to change defaults in exported file as per user's selections.
+6) Use Replace with regular expressions to change defaults in exported file as per user's selections.
 7) Import edited FolderTypes key file to HKEY_CURRENT_USER.
 8) Restart Explorer.
 
