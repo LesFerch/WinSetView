@@ -22,15 +22,15 @@ All changes made by this tool are per-user within the HKEY_CURRENT_USER hive in 
 # Options
 ![image](https://user-images.githubusercontent.com/79026235/113469683-9635c200-941d-11eb-8b02-d85254abecd6.png)
 
+## Reset Views to Windows Defaults
+
+This option clears the registry keys that hold Explorer views and restarts Explorer, causing all folder views to revert to Windows defaults.
+
 ## View Radio Buttons:
 For your global Explorer view, you can select one of:
 **Details, List, Tiles, Content, Small Icons, Medium Icons, Large Icons**
 
 Your selection will apply to all folders except "This PC" and "Network". 
-
-## Reset Views to Windows Defaults
-
-This option clears the registry keys that hold Explorer views and restarts Explorer, causing all folder views to revert to Windows defaults.
 
 ## No Grouping
 
