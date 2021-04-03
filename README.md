@@ -18,7 +18,8 @@ Each option, and related Explorer background information, is detailed below, but
 All changes made by this tool are per-user within the HKEY_CURRENT_USER hive in the registry. No machine settings are touched and no elevated privileges are required. On each run, the tool makes a unique backup file of the affected registry values. A restore option is provided allowing you to rollback to any of these backups. There's also an option to completely reset all Explorer views to Windows default values.
 
 # Options
-![image](https://user-images.githubusercontent.com/79026235/113078564-5a8ec400-91a1-11eb-91de-1c3ddc834d79.png)
+![image](https://user-images.githubusercontent.com/79026235/113469700-b8c7db00-941d-11eb-90b6-3bfaa284974e.png)
+
 ## View Radio Buttons:
 For your global Explorer view, you can select one of:
 **Details, List, Tiles, Content, Small Icons, Medium Icons, Large Icons**
