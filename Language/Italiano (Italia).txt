@@ -1,0 +1,54 @@
+﻿Visualizzazioni cartella Explorer impostate a livello globale
+Ripristina le visualizzazioni ai valori predefiniti di Windows
+Dettagli
+Elenco
+Riquadri
+Contenuto
+Icone piccole
+Icone medie
+Icone grandi
+Mostra estensioni di file
+Nessun raggruppamento
+Rendi generiche tutte le cartelle
+Imposta intestazioni di colonna globali:
+Ultima  modifica
+Dimensione
+Tipo elemento
+Nome cartella
+Data creazione
+Versione file
+Tipo
+Percorso cartella
+Data ultimo accesso
+Estensione file
+Tipo contenuto
+Cartella
+Attributi
+Tipologia
+Tipo percepito
+Percorso
+Proprietario
+Nome Larghezza colonna:
+Larghezza colonna percorso:
+Imposta le visualizzazioni per "Questo PC" e "Rete":
+Nessun raggruppamento
+Invia
+Impostazioni dell'ultima esecuzione
+Impostazioni predefinite dell'app
+Ripristinare dal backup
+<>
+Argomento della guida: nome e larghezza delle colonne del percorso
+<>
+Il primo numero imposta la larghezza della colonna del nome (prima colonna) nella visualizzazione Dettagli.
+
+Il secondo numero Imposta la larghezza di tutte le colonne del percorso abilitate nella vista Dettagli.
+
+Il valore è specificato in ems. 1 em ≈ 1 carattere
+
+La dimensione em è relativa al ridimensionamento dello schermo. Ad esempio (a 96 dpi):
+
+1 em al 100% = 8 pixel
+1 em al 125% = 10 pixel
+1 em al 150% = 12 pixel
+
+Explorer utilizza ems internamente per tutte le sue larghezze di colonna predefinite. Ciò mantiene costante la quantità di testo visualizzato in ciascuna colonna quando viene modificato il ridimensionamento dello schermo.

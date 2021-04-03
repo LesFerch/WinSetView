@@ -1,0 +1,54 @@
+﻿Globálně nastavte zobrazení složek průzkumníka
+Obnovte výchozí nastavení zobrazení
+Podrobnosti
+Seznam
+Vedle sebe
+Obsah
+Malé ikony
+Střední ikony
+Velké ikony
+Zobrazit přípony souborů
+Žádné seskupování
+Nastavit všechny složky jako obecné
+Nastavit globální záhlaví sloupců:
+Datum změny
+Velikost
+Typ položky
+Název složky
+Datum vytvoření
+Verze souboru
+Typ
+Cesta ke složce
+Poslední přístupu
+Přípona souboru
+Typ obsahu
+Složka
+Atributy
+Druh
+Pozorovaný typ
+Cesta
+Vlastník
+Šířka sloupce názvu:
+Šířka sloupce cesty:
+Nastavit zobrazení pro „Tento počítač“ a „Síť“:
+Žádné seskupování
+Předložit
+Nastavení posledního spuštění
+Výchozí nastavení aplikace
+Obnovit ze zálohy
+<>
+Téma nápovědy: Šířky sloupců názvů a cest
+<>
+První číslo nastavuje šířku sloupce s názvem (první sloupec) v zobrazení Podrobnosti.
+
+Druhé číslo Nastavuje šířku všech sloupců cesty povolených v zobrazení Podrobnosti.
+
+Hodnota je uvedena v ems. 1 em ≈ 1 znak
+
+Velikost Em je relativní k měřítku obrazovky. Například (při 96 dpi):
+
+1 em na 100% = 8 pixelů
+1 em na 125% = 10 pixelů
+1 em na 150% = 12 pixelů
+
+Průzkumník používá ems interně pro všechny své výchozí šířky sloupců. Tím se udržuje konstantní množství textu zobrazeného v každém sloupci při změně měřítka obrazovky.

@@ -1,0 +1,54 @@
+﻿Definir globalmente as visualizações da pasta do Explorer
+Redefinir visualizações para os padrões do Windows
+Detalhes
+Lista
+Mosaicos
+Conteúdo
+Ícones pequenos
+Ícones médios
+Ícones grandes
+Mostrar extensões de arquivo
+Sem agrupamento
+Tornar todas as pastas genéricas
+Definir cabeçalhos de colunas globais:
+Data de modificação
+Tamanho
+Tipo de item
+Nome da pasta
+Data de criação
+Versão do ficheiro
+Tipo
+Caminho da pasta
+Data do último acesso
+Extensão do ficheiro
+Tipo de conteúdo
+Pasta
+Atributos
+Genéro
+Tipo percetível
+Caminho
+Proprietário
+Largura da coluna de nome:
+Largura da coluna do caminho:
+Definir visualizações para "Este PC" e "Rede":
+Sem agrupamento
+Enviar
+Configurações da última execução
+Padrões de aplicativos
+Restaurar do backup
+<>
+Tópico de ajuda: Larguras de coluna de nome e caminho
+<>
+O primeiro número define a largura da coluna do nome (primeira coluna) na visualização Detalhes.
+
+O segundo número Define a largura de quaisquer colunas de caminho habilitadas na visualização Detalhes.
+
+O valor é especificado em ems. 1 em ≈ 1 char
+
+O tamanho do em é relativo ao dimensionamento da tela. Por exemplo (a 96 dpi):
+
+1 em a 100% = 8 pixels
+1 em a 125% = 10 pixels
+1 em 150% = 12 pixels
+
+O Explorer usa o ems internamente para todas as larguras de coluna padrão. Isso mantém a quantidade de texto exibida em cada coluna constante conforme a escala da tela é alterada.

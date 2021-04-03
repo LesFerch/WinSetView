@@ -1,0 +1,54 @@
+﻿Ordneransichten systemweit festlegen
+Ansichten auf Windows-Standard zurücksetzen
+Details
+Liste
+Kacheln
+Inhalt
+Kleine Symbole
+Mittelgroße Symbole
+Große Symbole
+Dateierweiterungen anzeigen
+Keine Gruppierung
+Alle Ordner generisch machen
+Globaler Spaltenüberschriften festlegen:
+Änderungsdatum
+Größe
+Elementtyp
+Ordnername
+Erstelldatum
+Dateiversion
+Typ
+Ordnerpfad
+Letzter Zugriff
+Dateierweiterung
+Inhaltstyp
+Ordner
+Attribute
+Art
+Erkannter Typ
+Pfad
+Besitzer
+Spaltenbreite für Name:
+Spaltenbreite für Pfad:
+Legen Sie Ansichten für "Dieser PC" und "Netzwerk" fest:
+Keine Gruppierung
+Anwenden
+Letzte Einstellungen 
+App-Standards
+Aus Sicherung wiederherstellen
+<>
+Hilfethema: Spaltenbreiten für Name und Pfad
+<>
+Die erste Zahl legt die Breite der Namensspalte (erste Spalte) in der Detailansicht fest.
+
+Die zweite Zahl Legt die Breite aller in der Detailansicht aktivierten Pfadspalten fest.
+
+Der Wert wird in ems angegeben. 1 em ≈ 1 zeichen
+
+Die Em-Größe ist relativ zur Bildschirmskalierung. Zum Beispiel bei 96 dpi:
+
+1 em bei 100% = 8 Pixel
+1 em bei 125% = 10 Pixel
+1 em bei 150% = 12 Pixel
+
+Der Explorer verwendet ems intern für alle Standardspaltenbreiten. Dadurch bleibt die in jeder Spalte angezeigte Textmenge konstant, wenn die Bildschirmskalierung geändert wird.

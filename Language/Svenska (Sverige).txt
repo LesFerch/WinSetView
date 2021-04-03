@@ -1,0 +1,54 @@
+﻿Globalt ange Explorer-mappvyer
+Återställ vyer till Windows-standardvärden
+Detaljerad Lista
+Lista
+Sammanfattning
+Innehåll
+Små ikoner
+Medelstora ikoner
+Stora ikoner
+Visa filtillägg
+Ingen gruppering
+Gör alla mappar generiska
+Ange globala kolumnrubriker:
+Senast ändrad
+Storlek
+Objekttyp
+Mappnamn
+Skapad den
+Filversion
+Typ
+Mappsökväg
+Senast använd
+Filnamnstillängg
+Innehållstyp
+Mapp
+Attribut
+Sort
+Uppfattad typ
+Sökväg
+Ägare
+Namn Kolumn Bredd:
+Sökvägs kolumnbredd:
+Ställ in vyer för "Den här datorn" och "Nätverk":
+Ingen gruppering
+Skicka in
+Senaste körinställningar
+Appinställningar
+Återställ från säkerhetskopia
+<>
+Hjälpämne: Kolumnbredd för namn och sökväg
+<>
+Den första siffran ställer in bredden på namnskolumnen (första kolumnen) i informationsvyn.
+
+Det andra numret Ställer in bredden på alla sökvägskolumner som är aktiverade i detaljerad vy.
+
+Värdet anges i ems. 1 em ≈ 1 karaktär
+
+Em-storlek är relativt skärmskalning. Till exempel (vid 96 dpi):
+
+1 em vid 100% = 8 pixlar
+1 em vid 125% = 10 pixlar
+1 em vid 150% = 12 pixlar
+
+Explorer använder ems internt för alla sina standardkolumnbredder. Detta håller mängden text som visas i varje kolumn konstant när skärmskalning ändras.

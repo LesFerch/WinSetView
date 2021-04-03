@@ -1,0 +1,54 @@
+﻿Globaal instellen Explorer-mapweergaven
+Weergaven terugzetten naar de standaardinstellingen van Windows
+Details
+Lijst
+Tegels
+Inhoud
+Kleine pictogrammen
+Normale pictogrammen
+Grote pictogrammen
+Toon bestandsextensies
+Geen groepering
+Maak alle mappen algemeen
+Globale kolomkoppen instellen:
+Gewijzigd op
+Grootte
+Itemtype
+Mapnaam
+Aanmaakdatum
+Bestandsversie
+Type
+Pad naar map
+Laatst geopend op
+Bestandsextensie
+Type inhoud
+Map
+Kenmerken
+Soort
+Waargenomen type
+Pad
+Eigenaar
+Naam Kolombreedte:
+Breedte padkolom:
+Stel weergaven in voor 'Deze pc' en 'Netwerk':
+Geen groepering
+Verzenden
+Last Run-instellingen
+App-standaardinstellingen
+Herstellen van backup
+​<>
+Help-onderwerp: naam en pad kolombreedtes
+​<>
+Het eerste getal stelt de breedte van de naamkolom (eerste kolom) in de detailweergave in.
+
+Het tweede getal Stelt de breedte in van alle padkolommen die zijn ingeschakeld in de weergave Details.
+
+De waarde wordt gespecificeerd in ems. 1 em ≈ 1 kar
+
+Em-grootte is relatief ten opzichte van schermschaal. Bijvoorbeeld (bij 96 dpi):
+
+1 em op 100% = 8 pixels
+1 em op 125% = 10 pixels
+1 em op 150% = 12 pixels
+
+Explorer gebruikt intern ems voor al zijn standaard kolombreedtes. Hierdoor blijft de hoeveelheid tekst die in elke kolom wordt weergegeven constant wanneer de schermschaal wordt gewijzigd.

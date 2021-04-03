@@ -1,0 +1,54 @@
+﻿Globally Set Explorer Folder Views
+Reset Views to Windows Defaults
+Details
+List
+Tiles
+Content
+Small Icons
+Medium Icons
+Large Icons
+Show File Extensions
+No Grouping
+Make All Folders Generic
+Set Global Column Headings:
+Date modified
+Size
+Item type
+Folder name
+Date created
+File version
+Type
+Folder path
+Date accessed
+File extension
+Content type
+Folder
+Attributes
+Kind
+Perceived type
+Path
+Owner
+Name Column Width:
+Path Column Width:
+Set views for "This PC" and "Network":
+No Grouping
+Submit
+Last Run Settings
+App Defaults
+Restore from Backup
+<>
+Help Topic: Name and Path Column Widths
+<>
+The first number sets the width of the name column (first column) in Details view.
+
+The second number Sets the width of any path columns enabled in Details view.
+
+The value is specified in ems. 1 em ≈ 1 char
+
+Em size is relative to screen scaling. For example (at 96 dpi):
+
+1 em at 100% = 8 pixels
+1 em at 125% = 10 pixels
+1 em at 150% = 12 pixels
+
+Explorer uses ems internally for all its default column widths. This keeps the amount of text displayed in each column constant as screen scaling is changed.

@@ -1,0 +1,54 @@
+﻿Definir globalmente las vistas de carpetas del explorador
+Restablecer vistas a los valores predeterminados de Windows
+Detalles
+Lista
+Mosaicos
+Contenido
+Iconos pequeños
+Iconos medianos
+Iconos grandes
+Mostrar extensiones de archivo
+Sin agrupamiento
+Convertir todas las carpetas en genéricas
+Establecer encabezados de columna globales:
+Fecha de modificación
+Tamaño
+Tipo de elemento
+Nombre de carpeta
+Fecha de creación
+Versión del archivo
+Tipo
+Ruta de acceso a la carpeta
+Fecha de acceso
+Extensión de archivo
+Tipo de contenido
+Carpeta
+Atributos
+Clase
+Tipo percibido
+Ruta de acceso
+Propietario
+Ancho de la columna de nombre:
+Ancho de la columna de ruta:
+Establecer vistas para "Esta PC" y "Red":
+Sin agrupamiento
+Entregar
+Configuración de la última ejecución
+Valores predeterminados de la aplicación
+Reinstalar desde el respaldo
+<>
+Tema de ayuda: Ancho de columna de nombre y ruta
+<>
+El primer número establece el ancho de la columna de nombre (primera columna) en la vista Detalles.
+
+El segundo número establece el ancho de las columnas de ruta habilitadas en la vista Detalles.
+
+El valor se especifica en ems. 1 em ≈ 1 carácter
+
+El tamaño de em es relativo a la escala de la pantalla. Por ejemplo (a 96 ppp):
+
+1 em al 100% = 8 píxeles
+1 em al 125% = 10 píxeles
+1 em al 150% = 12 píxeles
+
+Explorer usa ems internamente para todos sus anchos de columna predeterminados. Esto mantiene constante la cantidad de texto que se muestra en cada columna a medida que se cambia la escala de la pantalla.

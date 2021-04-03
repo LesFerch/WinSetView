@@ -1,0 +1,54 @@
+﻿Définir globalement les vues des dossiers de l'explorateur
+Réinitialiser les vues aux valeurs par défaut de Windows
+Détails
+Liste
+Mosaïques
+Contenu
+Petites icônes
+Icônes moyennes
+Grandes icônes
+Afficher les extensions de fichier
+Pas de regroupement
+Rendre tous les dossiers génériques
+Définir les en-têtes de colonne globaux:
+Modifiée le
+Taille
+Type d'élément
+NomDossier
+Date de création
+Version du fichier
+Type
+Chemin du dossier
+Date d'accès
+Extension du fichier
+Type de contenu
+Dossier
+Attributs
+Sorte
+Type identifié
+Chemin d'accès
+Propriétaire
+Largeur de colonne de nom:
+Largeur de colonne de chemin:
+Définissez les vues pour "Ce PC" et "Réseau":
+Pas de regroupement
+Soumettre
+Paramètres de la dernière exécution
+Paramètres par défaut de l'application
+Restore depuis une sauvergarde
+<>
+Rubrique d'aide: Largeur des colonnes de nom et de chemin
+<>
+Le premier nombre définit la largeur de la colonne de nom (première colonne) dans la vue Détails.
+
+Le deuxième nombre Définit la largeur de toutes les colonnes de chemin activées dans la vue Détails.
+
+La valeur est spécifiée dans ems. 1 em ≈ 1 caractère
+
+La taille Em est relative à la mise à l'échelle de l'écran. Par exemple (à 96 dpi):
+
+1 em à 100% = 8 pixels
+1 em à 125% = 10 pixels
+1 em à 150% = 12 pixels
+
+Explorer utilise ems en interne pour toutes ses largeurs de colonne par défaut. Cela maintient la quantité de texte affichée dans chaque colonne constante à mesure que la mise à l'échelle de l'écran est modifiée.

@@ -1,0 +1,54 @@
+﻿Globalne ustawienia widoków folderów Eksploratora
+Zresetuj widoki do ustawień domyślnych systemu Windows
+Szczegóły
+Lista
+Kafelki
+Zawartość
+Małe ikony
+Średnie ikony
+Duże ikony
+Pokaż rozszerzenia plików
+Bez grupowania
+Ustaw wszystkie foldery jako ogólne
+Ustaw globalne nagłówki kolumn:
+Data modyfikacji
+Rozmiar
+Typ elementu
+Nazwa folderu
+Data utworzenia
+Wersja pliku
+Typ
+Ścieżkę foldera
+Data dostępu
+Rozszerzenie pliku
+Typ zawartości
+Folder
+Atrybuty
+Rodzaj
+Postrzegany typ
+Ścieżka
+Właściciel
+Nazwa Szerokość kolumny:
+Szerokość kolumny ścieżki:
+Ustaw widoki dla „Ten komputer” i „Sieć”:
+Bez grupowania
+Zatwierdź
+Ustawienia ostatniego uruchomienia
+Ustawienia domyślne aplikacji
+Przywróć z kopii zapasowej
+<>
+Temat pomocy: Nazwy i szerokości kolumn ścieżki
+<>
+Pierwsza liczba określa szerokość kolumny z nazwą (pierwsza kolumna) w widoku szczegółów.
+
+Druga liczba Określa szerokość wszystkich kolumn ścieżek włączonych w widoku szczegółów.
+
+Wartość jest określana w ems. 1 em ≈ 1 znak
+
+Rozmiar Em jest zależny od skalowania ekranu. Na przykład (przy 96 dpi):
+
+1 em przy 100% = 8 pikseli
+1 em przy 125% = 10 pikseli
+1 em przy 150% = 12 pikseli
+
+Explorer używa wewnętrznie ems dla wszystkich domyślnych szerokości kolumn. Dzięki temu ilość tekstu wyświetlanego w każdej kolumnie jest stała, gdy zmienia się skalowanie ekranu.
