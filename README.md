@@ -3,6 +3,8 @@
 
 ## Globally Set Explorer Folder Views
 
+Compatible with Windows 7, Windows 8, and Windows 10.
+
 Les Ferch, lesferch@gmail.com, GitHub repository created 2021-03-26
 
 # Summary
@@ -65,6 +67,8 @@ Seventeen of Explorer's column headings are provided (I can add more on request)
 **Kind**: Similar to Perceived type. Examples: Music, Video\
 **Content type**: Essentially Perceived type + Item type. Example: audio/mpeg\
 **File extension**: Example: .mp3 (handy for sorting if you don't need a type field)
+
+The **File extension** column heading is not available on Windows 7.
 
 ## Path headings (useful in search results):
 
