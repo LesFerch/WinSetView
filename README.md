@@ -1,4 +1,4 @@
-
+﻿
 # WinSetView
 
 ## Globally Set Explorer Folder Views
@@ -18,8 +18,7 @@ Each option, and related Explorer background information, is detailed below, but
 All changes made by this tool are per-user within the HKEY_CURRENT_USER hive in the registry. No machine settings are touched and no elevated privileges are required. On each run, the tool makes a unique backup file of the affected registry values. A restore option is provided allowing you to rollback to any of these backups. There's also an option to completely reset all Explorer views to Windows default values.
 
 # Options
-![image](https://user-images.githubusercontent.com/79026235/113469700-b8c7db00-941d-11eb-90b6-3bfaa284974e.png)
-
+![image](https://user-images.githubusercontent.com/79026235/113078564-5a8ec400-91a1-11eb-91de-1c3ddc834d79.png)
 ## View Radio Buttons:
 For your global Explorer view, you can select one of:
 **Details, List, Tiles, Content, Small Icons, Medium Icons, Large Icons**
@@ -129,7 +128,7 @@ With that value set, changing the view for say, C:\\, and then clicking the "App
 
 ## Apply to Folders "Bug"
 
-Whenever you use the "Apply to folders" button, on any *generic* folder, such as C:\\, your views for "This PC" and "Network" will revert back to Windows defaults. If you always leave "This PC" and "Network" at their default views, this is not an issue, but if you have changed either view and want to keep it changed, this is a nuisance.
+Whenever you use the "Apply to folders" button, on any generic folder, such as C:\\, your views for "This PC" and "Network" will revert back to Windows defaults. If you always leave "This PC" and "Network" at their default views, this is not an issue, but if you have changed either view and want to keep it changed, this is a nuisance.
 
 There is a sort-of-okay workaround. Any folder that is open when "Apply to folders" is used, will not have it's view changed. So, to "protect" your custom views for "This PC" and "Network", be sure to have separate windows open to each of those views when you use the "Apply to folders" button.
 
@@ -191,11 +190,25 @@ Here's an overview of the steps the Powershell script performs to set Explorer v
 3) Set any direct registry entries, such as Show File Extensions and Make All Folders Generic, for the current user.
 4) If custom "This PC" and "Network" views have been selected, create BagMRU/Bags entries for those views.
 5) Export HKEY_LOCAL_MACHINE FolderTypes key to a file.
-6) Use Replace with regular expressions to change defaults in exported file as per user's selections.
+6) Use Replace with regular expresions to change defaults in exported file as per user's selections.
 7) Import edited FolderTypes key file to HKEY_CURRENT_USER.
 8) Restart Explorer.
 
 -----------------------------------------------------------------------------------
+
+# Language Support
+
+Any language that is displayed left to right, and can be represented with UTF-8 encoding, should work. The WinSetView.HTA script looks for a **language.txt** file. If none is found, it will display in English using text built into the script. If it finds a language.txt file, it will read that file to replace all of the labels and help text. A file named **English.txt** is included for reference. It is not needed to run the script, but can be used as a template to create a new language file. 
+
+## Language Template 
+
+The first line specifies the dialog dimensions for a screen set at 100% scaling. This is needed because many languages will take up more space than English, requiring the dialog to be larger. The dimensions are expressed as width x height (e.g. 660x555).
+
+The next set of lines represent the dialog button and checkbox labels, one per line with no blank lines.
+
+This is followed by a <> separator and the title for the Help dialog and then another <> separator followed by the Help dialog text.
+
+Save the file as type UTF-8. UTF-8 with BOM or UTF-8 with signature is also fine.
 
 # Acknowledgements
 

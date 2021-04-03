@@ -8,6 +8,8 @@ File 1 of 2: WinSetView.hta (GUI tool to select desired views)
 <meta charset="UTF-8">
 <head>
 <hta:application
+  id=oHTA
+  icon=powershell.exe
   applicationname=WinSetView
   maximizebutton=no
   scroll=no
@@ -20,109 +22,219 @@ File 1 of 2: WinSetView.hta (GUI tool to select desired views)
   td    {padding: 0 15 0 0}
   #op   {margin-bottom:5pt}
   #th   {margin-bottom:5pt}
-  #cs   {margin-bottom:5pt; margin-top:5pt; width:100%; height:40; white-space:nowrap; overflow:auto}
+  #cs   {margin-bottom:5pt; margin-top:5pt; font-size:9pt; width:100%; height:40; white-space:nowrap; overflow:auto}
   #hb   {width:2em}
-  #wn   {width:2em}
-  #wp   {width:2em}
+  #wn   {width:2em; margin-left:2pt}
+  #wp   {width:2em; margin-left:2pt}
+  #w1   {margin-left:10pt; display=inline}
+  #w2   {margin-left:10pt; display=inline}
+  #lang {width:15em; font-size:8pt}
+  #vb   {white-space:nowrap; display=inline}
+  #wd   {margin-left:10pt}
 </style>
 <title>Globally Set Explorer Folder Views</title>
 </head>
 
 <script language=VBScript>
 Option Explicit
-Const Ver = "1.1"
-Dim Mode, NoGroup, Generic, TPMode, TPNoGrp, ShowExt, Columns, Msg, Choice, oFolder, oFiles
+SetLocale(1033)
+Const Ver = "1.2"
+Dim Mode, NoGroup, Generic, TPMode, TPNoGrp, ShowExt, Columns, Msg, Choice, oFolder, oFiles, AllHTML
 Dim MyPath, CmdLine, Params, oShell, Visible, oFSO, i, Chk, ArrCB, j, AppData, rbShow, RBSet, CBSet
 Dim ColShow, ColMore, Label, Delim, CSVData, ArrCSV, CSVFile, oFile, DefData, UserData, OldData
-Dim oReg, Key, SubKey, ArrKeys, Value, WinWidth, WinHeight, ScaleWidth, Resize, Result, NameWid, PathWid
+Dim WinWidth, WinHeight, ScaleWidth, Resize, Result, NameWid, PathWid, WinVer
+Dim LangData, LangDir, LangFile, ArrLang, Tag, Item, oStream, ArrHelp, HH, HT, FileName
+Dim Count, Pick, Language, oOption, LangCount, LangLast, TaggedHTML, LangIndex
 
 'Set up an array of checkbox object names
 ArrCB = Split("se,ng,gn,ch,dm,sz,ti,fn,dc,fv,tt,fp,da,fe,tc,ff,fa,tk,tp,pi,fo,pc,xg",",")
 
-RBSet = "True,False,False,False,False,False,False,False,False,True,False,False,False,False,False"
+RBSet = "False,True,False,False,False,False,False,False,False,True,False,False,False,False,False"
 CBSet = "True,True,True,True,True,True,True,False,False,False,False,False,False,False,False,False,False,False,False,False,False,True,True"
 ColShow = "DateModified Size ItemType"
 ColMore = "FileExtension ItemTypeText ContentType PerceivedType Kind DateCreated DateAccessed FileAttributes FileVersion"
 ColMore = ColMore & " ItemFolderNameDisplay ItemFolderPathDisplay ItemFolderPathDisplayNarrow ItemPathDisplay FileOwner"
 NameWid = "34"
 PathWid = "34"
-DefData = Ver & "," & RBSet & "," & CBSet & "," & NameWid & "," & PathWid & "," & ColShow & "," & ColMore
+Language = "English"
+DefData = Ver & "," & RBSet & "," & CBSet & "," & NameWid & "," & PathWid & "," & ColShow & "," & ColMore & "," & Language
 UserData = DefData
 Set oShell = CreateObject("Wscript.Shell")
 Set oFSO = CreateObject("Scripting.FileSystemObject")
-WinWidth = 580
-WinHeight = 530
+Set oStream = CreateObject("ADODB.Stream")
+oStream.CharSet = "UTF-8"
+AppData = oShell.ExpandEnvironmentStrings("%APPDATA%") & "\WinSetView"
+MyPath = LCase(document.location.pathname)
+MyPath = Left(MyPath,InStrRev(MyPath,"\"))
+LangDir = MyPath & "Language\"
+
+LangData = "Globally Set Explorer Folder Views,Reset Views to Windows Defaults,"
+LangData = LangData + "Details,List,Tiles,Content,Small Icons,Medium Icons,Large Icons,"
+LangData = LangData + "Show File Extensions,No Grouping,Make All Folders Generic,"
+LangData = LangData + "Set Global Column Headings:,Date modified,Size,Item type,Folder name,"
+LangData = LangData + "Date created,File version,Type,Folder path,Date accessed,File extension,"
+LangData = LangData + "Content type,Folder,Attributes,Kind,Perceived type,Path,Owner,"
+LangData = LangData + "Name Column Width:,Path Column Width:,Set views for `This PC` and `Network`:,"
+LangData = LangData + "No Grouping,Submit,Last Run Settings,App Defaults,Restore from Backup"
+
+HH = "Help Topic: Name and Path Column Widths"
+HT = HT & "The first number sets the width of the name column (first column) in Details view." & vbCRLF & vbCRLF
+HT = HT & "The second number Sets the width of any path columns enabled in Details view." & vbCRLF & vbCRLF
+HT = HT & "The value is specified in ems. 1 em ≈ 1 char" & vbCRLF & vbCRLF
+HT = HT & "Em size is relative to screen scaling. For example (at 96 dpi):" & vbCRLF & vbCRLF
+HT = HT & "1 em at 100% = 8 pixels" & vbCRLF
+HT = HT & "1 em at 125% = 10 pixels" & vbCRLF
+HT = HT & "1 em at 150% = 12 pixels" & vbCRLF & vbCRLF
+HT = HT & "Explorer uses ems internally for all its default column widths. This keeps the amount of text "
+HT = HT & "displayed in each column constant as screen scaling is changed."
+
+'Get Windows NT Version
+WinVer = oShell.RegRead("HKLM\Software\Microsoft\Windows NT\CurrentVersion\CurrentVersion")
+
+If WinVer < 6.1 Then
+  MsgBox "Windows 7 or higher is required",0+16,"Error"
+  Self.Close
+End If
+
+'Set up paths
+If Not oFSO.FolderExists(AppData) Then oFSO.CreateFolder(AppData)
+CSVFile = AppData & "\WinSetView.csv"
+
+'Read in previous user selections
+If oFSO.FileExists(CSVFile) Then
+  oStream.Open
+  oStream.LoadFromFile CSVFile
+  UserData = oStream.ReadText
+  oStream.Close
+End If
+
+'See if there are any reg files in the backup folder
+Set oFolder = oFSO.GetFolder(AppData)
+Set oFiles = oFolder.Files
+rbShow = False
+For Each oFile In oFiles
+  If LCase(oFSO.GetExtensionName(oFile.Name)) = "reg" Then rbShow = True
+Next
 
 Sub Window_onLoad
 
-  CenterWindow WinWidth,WinHeight
+  Self.ResizeTo 800,800 
 
-  'Resize window if not 96 dpi
-  Resize = False
-  Value = oShell.RegRead("HKCU\Control Panel\Desktop\WindowMetrics\AppliedDPI")
-  If Value > 96 Then
-    'Custom scaling is set
-    Resize = True
-    ScaleWidth = Value/96
-  Else
-    'See if standard (125 or 150 percent) scaling is set
-    Set oReg = GetObject("winmgmts://./root/default:StdRegProv")
-    Key = "Control Panel\Desktop\PerMonitorSettings"
-    Const HKEY_CURRENT_USER = &H80000001
-    Result = oReg.EnumKey(HKEY_CURRENT_USER, Key, ArrKeys)
-    If Result=0 Then
-      'Assume first monitor in list is the one we want
-      For Each SubKey In ArrKeys
-        Exit For
-      Next
-      Value = oShell.RegRead("HKCU\" & Key & "\" & SubKey & "\DPIValue")
-      If Value=1 Then ScaleWidth = 1.25: Resize = True
-      If Value=2 Then ScaleWidth = 1.50: Resize = True
-    End If
+  'Populate language dropdown menu
+  LangCount = 0
+  If oFSO.FolderExists(LangDir) Then
+    Set oFolder = oFSO.GetFolder(LangDir)
+    For Each oFile In oFolder.Files
+      FileName = oFSO.GetBaseName(oFile)
+      If Lcase(oFSO.getExtensionName(oFile.path)) = Lcase("txt") Then
+        LangCount = LangCount + 1
+        Set oOption = Document.CreateElement("Option")
+        oOption.Text =  FileName 
+        oOption.Value =  FileName 
+        Lang.Add(oOption) 
+      End If 
+    Next
   End If
-  If Resize Then
-    WinWidth = WinWidth * ScaleWidth
-    CenterWindow WinWidth,WinHeight
-    WinHeight = Document.GetElementByID("all").ScrollHeight * 1.15
-    CenterWindow WinWidth,WinHeight
+  
+  If LangCount=0 Then
+    Set oOption = Document.CreateElement("Option")
+    oOption.Text =  "English" 
+    oOption.Value =  "English" 
+    Lang.Add(oOption) 
+    lang.disabled = True 
   End If
-
-  'Set up paths
-  AppData = oShell.ExpandEnvironmentStrings("%APPDATA%") & "\WinSetView"
-  If Not oFSO.FolderExists(AppData) Then oFSO.CreateFolder(AppData)
-  CSVFile = AppData & "\WinSetView.csv"
-
-  'Read in previous user selections
-  If oFSO.FileExists(CSVFile) Then
-    Set oFile = oFSO.OpenTextFile(CSVFile,1)
-    UserData = oFile.ReadAll
-    oFile.Close
-  End If
-
-  'See if there are any reg files in the backup folder
-  Set oFolder = oFSO.GetFolder(AppData)
-  Set oFiles = oFolder.Files
-  rbShow = False
-  For Each oFile In oFiles
-    If LCase(oFSO.GetExtensionName(oFile.Name)) = "reg" Then rbShow = True
-  Next
-
-  'Update interface
+  
+  'Update interface selections
   HTAStateRestore UserData
+
   If (UserData=DefData Or OldData) Then yb.Disabled = True
   If Not rbShow Then rb.Disabled = True
 
+  If LangCount>0 Then
+    LangIndex = 0
+    LangLast = LangCount - 1
+    For i = 0 To (LangLast)
+      If LCase(Language)=LCase(lang.options(i).value) Then
+        LangIndex = i
+        Exit For
+      End If
+    Next
+    lang.SelectedIndex = LangIndex
+  End If
+
+  TaggedHTML = Body.InnerHTML
+
+  UpdateLang
+
 End Sub
 
-Sub CenterWindow(widthX, heightY)
-  self.ResizeTo widthX, heightY 
-  self.MoveTo (screen.Width - widthX)/2, (screen.Height - heightY)/2
+Sub CenterWindow(Width,Height)
+  Dim X,Y
+  Self.ResizeTo Width,Height 
+  X = (screen.Width - Width) / 2
+  Y = (screen.Height - Height) / 2
+  Self.MoveTo X, Y
 End Sub
 
-'Set interface to values from CSVData
+'Update labels with selected language
+Sub UpdateLang
+
+  'Read in language file
+  If LangCount>0 Then
+    LangIndex = lang.SelectedIndex
+    Language = lang.options(LangIndex).value
+    LangFile = LangDir & Language & ".txt"
+    If oFSO.FileExists(LangFile) Then
+      oStream.Open
+      oStream.LoadFromFile LangFile
+      LangData = oStream.ReadText
+      oStream.Close
+      ArrHelp = Split(LangData,"<>")
+      HT = ArrHelp(2)
+      HH = ArrHelp(1)
+      LangData = Replace(LangData,VBCRLF,",")
+    End If
+  End If
+
+  ArrLang = Split(LangData,",")
+
+  AllHTML = TaggedHTML
+  
+  Document.title = ArrLang(0)
+  
+  For i = 1 To 37
+    Tag = "#" & i & "#"
+    Item = ArrLang(i)
+    Item = Replace(Item,"`",Chr(34))
+    Item = Replace(Item,Tag,"")
+    AllHTML = Replace(AllHTML,Tag,Item)
+  Next
+  AllHTML = Replace(AllHTML," ~","")
+  Body.InnerHTML = AllHTML
+
+  'ScaleDialog
+  Self.ResizeTo 800,800 
+  WinWidth = Document.GetElementByID("vb").ScrollWidth * 1.2
+  Self.ResizeTo WinWidth,800 
+  WinHeight = Document.GetElementByID("body").ScrollHeight * 1.08
+  CenterWindow WinWidth,WinHeight
+
+  lang.SelectedIndex = LangIndex
+  
+End Sub
+
+'Set interface selections to values from CSVData
 Sub HTAStateRestore(CSVData)
+
+  If WinVer < 6.3 Then
+    fe.Checked = False
+    fe.Disabled = True
+    Mux "FileExtension",False
+  End If
+  
   ArrCSV = Split(CSVData,",")
   If Not ArrCSV(0) = Ver Then OldData=True: Exit Sub
+
   j = 1
   For i = 0 to 7
     vm(i).Checked = ArrCSV(j)
@@ -140,13 +252,17 @@ Sub HTAStateRestore(CSVData)
   PathWid = ArrCSV(j+1)
   ColShow = ArrCSV(j+2)
   ColMore = ArrCSV(j+3)
+  Language = ArrCSV(j+4)
+  If LangCount=0 Then Language = "English"
+  
   ViewOps
   wn.Value = NameWid
   wp.Value = PathWid
   cs.Value = ColShow
+ 
 End Sub
 
-'Save interface values to file
+'Save interface selections to file
 Sub HTAStateSave
   CSVData = Ver & ","
   For i = 0 to 7
@@ -160,10 +276,13 @@ Sub HTAStateSave
   Next
   CSVData = CSVData & wn.Value & "," & wp.Value & ","
   CSVData = CSVData & ColShow & ","
-  CSVData = CSVData & ColMore
-  Set oFile = oFSO.OpenTextFile(CSVFile,2,True)
-  oFile.Write CSVData
-  oFile.Close
+  CSVData = CSVData & ColMore & ","
+  CSVData = CSVData & Language
+  oStream.Open
+  oStream.WriteText CSVData
+  oStream.SaveToFile CSVFile,2
+  oStream.Close
+
 End Sub
 
 'Run WinSetView.ps1 with parameters based on user selections
@@ -172,14 +291,14 @@ Sub Submit
   ColShow = Replace(ColShow," ",",")
   ColMore = Replace(ColMore," ",",")
 
-  If vm(0).Checked Then Mode = 1
-  If vm(1).Checked Then Mode = 4
-  If vm(2).Checked Then Mode = 2
-  If vm(3).Checked Then Mode = 5
-  If vm(4).Checked Then Mode = 3
-  If vm(5).Checked Then Mode = 6
-  If vm(6).Checked Then Mode = 7
-  If vm(7).Checked Then Mode = 0
+  If vm(0).Checked Then Mode = 0
+  If vm(1).Checked Then Mode = 1
+  If vm(2).Checked Then Mode = 4
+  If vm(3).Checked Then Mode = 2
+  If vm(4).Checked Then Mode = 5
+  If vm(5).Checked Then Mode = 3
+  If vm(6).Checked Then Mode = 6
+  If vm(7).Checked Then Mode = 7
 
   If pc.Checked Then 
     If xm(0).Checked Then TPMode = 1
@@ -206,13 +325,11 @@ Sub Submit
   ColMore = "'" & ColMore & "'"
   Params = Mode & " " & ShowExt & " " & NoGroup & " " & Generic & " " & TPMode & " " & TPNoGrp
   Params = Params & " " & Columns & " " & ColShow & " " & ColMore & " " & NameWid & " " & PathWid
-  Visible = 0
+  Visible = 1
   RunScript
 End Sub
 
 Sub RunScript
-  MyPath = LCase(document.location.pathname)
-  MyPath = Left(MyPath,InStrRev(MyPath,"\"))
   CmdLine = "Powershell.exe -ExecutionPolicy Bypass " & Chr(34) & MyPath & "WinSetView.ps1" & Chr(34) & " " & Params
   oShell.Run CmdLine,Visible,False
   Window.Close
@@ -228,7 +345,7 @@ End Sub
 
 'Hide or show options based on current selections
 Sub ViewOps
-  If vm(7).Checked Then
+  If vm(0).Checked Then
     op.style.visibility = "hidden"
     co.style.visibility = "hidden"  
     th.style.visibility = "hidden"  
@@ -270,84 +387,73 @@ Sub Mux(Label,Checked)
 End Sub
 
 Sub Help01
-  Dim HH,HT
-  HH = "Help Topic: Name and Path Column Widths"
-  HT = HT & "The first number sets the width of the name column (first column) in Details view." & vbCRLF & vbCRLF
-  HT = HT & "The second number Sets the width of any path columns enabled in Details view." & vbCRLF & vbCRLF
-  HT = HT & "The value is specified in ems. 1 em ≈ 1 char" & vbCRLF & vbCRLF
-  HT = HT & "Em size is relative to screen scaling. For example (at 96 dpi):" & vbCRLF & vbCRLF
-  HT = HT & "1 em at 100% = 8 pixels" & vbCRLF
-  HT = HT & "1 em at 125% = 10 pixels" & vbCRLF
-  HT = HT & "1 em at 150% = 12 pixels" & vbCRLF & vbCRLF
-  HT = HT & "Explorer uses ems internally for all its default column widths. This keeps the amount of text "
-  HT = HT & "displayed in each column constant as screen scaling is changed."
   MsgBox HT,0+64,HH
 End Sub
 </script>
 
-<body>
-<div id=all>
-  <input type=radio name=vm Checked onclick=ViewOps >Details
-  <input type=radio name=vm onclick=ViewOps >List
-  <input type=radio name=vm onclick=ViewOps >Tiles
-  <input type=radio name=vm onclick=ViewOps >Content
-  <input type=radio name=vm onclick=ViewOps >Small Icons
-  <input type=radio name=vm onclick=ViewOps >Medium Icons
-  <input type=radio name=vm onclick=ViewOps >Large Icons<br><br>
-  <input type=radio name=vm onclick=ViewOps >Reset Views to Windows Defaults<br><br>
-  <input type=checkbox id=se Checked >Show File Extensions
-  <div id=op>
-    <input type=checkbox id=ng Checked >No Grouping
-    <input type=checkbox id=gn Checked >Make All Folders Generic<br><br>
-    <input type=checkbox id=ch Checked onclick=ViewOps >Set Global Column Headings:<br>
-  </div>
-  <div id=co>
-    <table>
-    <tr><td>
-    <input type=checkbox id=dm Checked onclick='Mux "DateModified",dm.Checked' >Date modified</td><td>
-    <input type=checkbox id=sz Checked onclick='Mux "Size",sz.Checked' >Size</td><td>
-    <input type=checkbox id=ti Checked onclick='Mux "ItemType",ti.Checked' >Item type</td><td>
-    <input type=checkbox id=fn onclick='Mux "ItemFolderNameDisplay",fn.Checked' >Folder name</td><tr>
-    <tr><td>
-    <input type=checkbox id=dc onclick='Mux "DateCreated",dc.Checked' >Date created</td><td>
-    <input type=checkbox id=fv onclick='Mux "FileVersion",fv.Checked' >File version</td><td>
-    <input type=checkbox id=tt onclick='Mux "ItemTypeText",tt.Checked' >Type</td><td>
-    <input type=checkbox id=fp onclick='Mux "ItemFolderPathDisplay",fp.Checked' >Folder path</td><tr>
-    <tr><td>
-    <input type=checkbox id=da onclick='Mux "DateAccessed",da.Checked' >Date accessed</td><td>
-    <input type=checkbox id=fe onclick='Mux "FileExtension",fe.Checked' >File extension</td><td>
-    <input type=checkbox id=tc onclick='Mux "ContentType",tc.Checked' >Content type</td><td>
-    <input type=checkbox id=ff onclick='Mux "ItemFolderPathDisplayNarrow",ff.Checked' >Folder</td><tr>
-    <tr><td>
-    <input type=checkbox id=fa onclick='Mux "FileAttributes",fa.Checked' >Attributes</td><td>
-    <input type=checkbox id=tk onclick='Mux "Kind",tk.Checked' >Kind</td><td>
-    <input type=checkbox id=tp onclick='Mux "PerceivedType",tp.Checked' >Perceived type</td><td>
-    <input type=checkbox id=pi onclick='Mux "ItemPathDisplay",pi.Checked' >Path</td><tr>
-    <tr><td>
-    <input type=checkbox id=fo onclick='Mux "FileOwner",fo.Checked' >Owner</td><tr>
-    </table>
-    <textarea id=cs readOnly=True></textarea><br>
-    <input type=button id=hb value=? onclick=Help01>
-    Name Column Width:<input type=text id=wn maxlength="2" value="34">
-    Path Column Width:<input type=text id=wp maxlength="2" value="34"><br><br>
-  </div>
-  <div id=th>
-    <input type=checkbox id=pc Checked onclick=ViewOps >Set views for "This PC" and "Network":<br>
-  </div>
-  <div id=mc>
-    <input type=radio name=xm >Details
-    <input type=radio name=xm Checked >List
-    <input type=radio name=xm >Tiles
-    <input type=radio name=xm >Content
-    <input type=radio name=xm >Small Icons
-    <input type=radio name=xm >Medium Icons
-    <input type=radio name=xm >Large Icons<br>
-    <input type=checkbox id=xg Checked >No Grouping<br><br>
-  </div>
-  <input type=button value=Submit onclick=Submit>
-  <input type=button id=yb value="Last Run Settings" onclick='HTAStateRestore UserData'>
-  <input type=button value="App Defaults" onclick='HTAStateRestore DefData'>
-  <input type=button id=rb value="Restore from Backup" onclick=Restore>
+<body id=body>
+<select id=Lang onchange='UpdateLang'>
+<input id=wd type=radio name=vm onclick=ViewOps >#1#<br><br>
+<div id=vb>
+<input type=radio name=vm Checked onclick=ViewOps >#2#
+<input type=radio name=vm onclick=ViewOps >#3#
+<input type=radio name=vm onclick=ViewOps >#4#
+<input type=radio name=vm onclick=ViewOps >#5#
+<input type=radio name=vm onclick=ViewOps >#6#
+<input type=radio name=vm onclick=ViewOps >#7#
+<input type=radio name=vm onclick=ViewOps >#8#</div><br><br>
+<input type=checkbox id=se Checked >#9#
+<div id=op>
+  <input type=checkbox id=ng Checked >#10#
+  <input type=checkbox id=gn Checked >#11#<br><br>
+  <input type=checkbox id=ch Checked onclick=ViewOps >#12#<br>
 </div>
+<div id=co>
+  <table>
+  <tr><td>
+  <input type=checkbox id=dm Checked onclick='Mux "DateModified",dm.Checked' >#13#</td><td>
+  <input type=checkbox id=sz Checked onclick='Mux "Size",sz.Checked' >#14#</td><td>
+  <input type=checkbox id=ti Checked onclick='Mux "ItemType",ti.Checked' >#15#</td><td>
+  <input type=checkbox id=fn onclick='Mux "ItemFolderNameDisplay",fn.Checked' >#16#</td><tr>
+  <tr><td>
+  <input type=checkbox id=dc onclick='Mux "DateCreated",dc.Checked' >#17#</td><td>
+  <input type=checkbox id=fv onclick='Mux "FileVersion",fv.Checked' >#18#</td><td>
+  <input type=checkbox id=tt onclick='Mux "ItemTypeText",tt.Checked' >#19#</td><td>
+  <input type=checkbox id=fp onclick='Mux "ItemFolderPathDisplay",fp.Checked' >#20#</td><tr>
+  <tr><td>
+  <input type=checkbox id=da onclick='Mux "DateAccessed",da.Checked' >#21#</td><td>
+  <input type=checkbox id=fe onclick='Mux "FileExtension",fe.Checked' >#22#</td><td>
+  <input type=checkbox id=tc onclick='Mux "ContentType",tc.Checked' >#23#</td><td>
+  <input type=checkbox id=ff onclick='Mux "ItemFolderPathDisplayNarrow",ff.Checked' >#24#</td><tr>
+  <tr><td>
+  <input type=checkbox id=fa onclick='Mux "FileAttributes",fa.Checked' >#25#</td><td>
+  <input type=checkbox id=tk onclick='Mux "Kind",tk.Checked' >#26#</td><td>
+  <input type=checkbox id=tp onclick='Mux "PerceivedType",tp.Checked' >#27#</td><td>
+  <input type=checkbox id=pi onclick='Mux "ItemPathDisplay",pi.Checked' >#28#</td><tr>
+  <tr><td>
+  <input type=checkbox id=fo onclick='Mux "FileOwner",fo.Checked' >#29#</td><tr>
+  </table>
+  <textarea id=cs readOnly=True></textarea><br>
+  <input type=button id=hb value=? onclick=Help01>
+  <div id=w1>#30#<input type=text id=wn maxlength="2" value="34"></div>
+  <div id=w2>#31#<input type=text id=wp maxlength="2" value="34"></div><br><br>
+</div>
+<div id=th>
+  <input type=checkbox id=pc Checked onclick=ViewOps >#32#<br>
+</div>
+<div id=mc>
+  <input type=radio name=xm >#2#
+  <input type=radio name=xm Checked >#3#
+  <input type=radio name=xm >#4#
+  <input type=radio name=xm >#5#
+  <input type=radio name=xm >#6#
+  <input type=radio name=xm >#7#
+  <input type=radio name=xm >#8#<br>
+  <input type=checkbox id=xg Checked >#33#<br><br>
+</div>
+<input type=button value="#34# ~" onclick=Submit>
+<input type=button id=yb value="#35# ~" onclick='HTAStateRestore UserData'>
+<input type=button value="#36# ~" onclick='HTAStateRestore DefData'>
+<input type=button id=rb value="#37# ~" onclick=Restore>
 </body>
 </html>

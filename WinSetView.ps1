@@ -22,6 +22,8 @@
 # $Columns: 1 = Set global column headings  0 = Windows default columns
 # $ColShow: Columns to display in detail view
 # $ColMore: Additional columns available to select via right-click
+# $NameWid: Width of Name column in ems
+# $PathWid: With of any path headings in ems
 
 Param (
   $Mode = 1,
@@ -36,6 +38,29 @@ Param (
   $NameWid = 34,
   $PathWid = 34
 )
+
+$Key = "Registry::HKLM\Software\Microsoft\Windows NT\CurrentVersion"
+$Value = "CurrentVersion"
+$WinVer = (Get-ItemProperty -Path $Key -Name $Value).$Value
+If ($WinVer -lt 6.1) {
+  Write-Host `n'Windows 7 or higher is required.'`n
+  Read-Host -Prompt "Press any key to continue"
+  Exit
+}
+
+If ($PSVersionTable.PSVersion.Major -lt 3) {
+  Write-Host `n'Powershell 3 or higher is required.'`n
+  Read-Host -Prompt "Press any key to continue"
+  Exit
+}
+
+# FileExtension is not a supported column heading in Windows 7
+If ($WinVer -lt 6.3) {
+  $ColShow = $ColShow -Replace 'FileExtension,',''
+  $ColShow = $ColShow -Replace ',FileExtension',''
+  $ColMore = $ColMore -Replace 'FileExtension,',''
+  $ColMore = $ColMore -Replace ',FileExtension',''
+}
 
 If ($Mode -IsNot [int]) {$Mode = 1}
 If ($ShowExt -IsNot [int]) {$ShowExt = 1}
