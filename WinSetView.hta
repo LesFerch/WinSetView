@@ -233,7 +233,7 @@ Sub HTAStateRestore(CSVData)
   End If
   
   ArrCSV = Split(CSVData,",")
-  If Not ArrCSV(0) = Ver Then OldData=True: Exit Sub
+  If Not ArrCSV(0) = Ver Then OldData=True: cs.Value = ColShow: Exit Sub
 
   j = 1
   For i = 0 to 7
