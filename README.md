@@ -22,6 +22,10 @@ All changes made by this tool are per-user within the HKEY_CURRENT_USER hive in 
 # Options
 ![image](https://user-images.githubusercontent.com/79026235/113469683-9635c200-941d-11eb-8b02-d85254abecd6.png)
 
+## Language Dropdown Menu
+
+This allows you to select an interface language for WinSetView. See **Language Support** section below for details. This option does NOT change the Windows language.
+
 ## Reset Views to Windows Defaults
 
 This option clears the registry keys that hold Explorer views and restarts Explorer, causing all folder views to revert to Windows defaults.
