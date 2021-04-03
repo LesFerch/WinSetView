@@ -1,4 +1,4 @@
-﻿
+
 # WinSetView
 
 ## Globally Set Explorer Folder Views
@@ -18,7 +18,8 @@ Each option, and related Explorer background information, is detailed below, but
 All changes made by this tool are per-user within the HKEY_CURRENT_USER hive in the registry. No machine settings are touched and no elevated privileges are required. On each run, the tool makes a unique backup file of the affected registry values. A restore option is provided allowing you to rollback to any of these backups. There's also an option to completely reset all Explorer views to Windows default values.
 
 # Options
-![image](https://user-images.githubusercontent.com/79026235/113078564-5a8ec400-91a1-11eb-91de-1c3ddc834d79.png)
+![image](https://user-images.githubusercontent.com/79026235/113469683-9635c200-941d-11eb-8b02-d85254abecd6.png)
+
 ## View Radio Buttons:
 For your global Explorer view, you can select one of:
 **Details, List, Tiles, Content, Small Icons, Medium Icons, Large Icons**
@@ -198,22 +199,29 @@ Here's an overview of the steps the Powershell script performs to set Explorer v
 
 # Language Support
 
-Any language that is displayed left to right, and can be represented with UTF-8 encoding, should work. The WinSetView.HTA script looks for a **language.txt** file. If none is found, it will display in English using text built into the script. If it finds a language.txt file, it will read that file to replace all of the labels and help text. A file named **English.txt** is included for reference. It is not needed to run the script, but can be used as a template to create a new language file. 
+Any language that is displayed left to right, and can be represented with **UTF-8** encoding, should work. The **WinSetView.HTA** script looks for a **Language** folder in the same location as the HTA. If none is found, it will display English using text built into the script. If it finds a language folder, it will read the list of **.txt** files found there to create a language dropdown menu. Several example language files are included. The file **English.txt** should be used as a template to create a new language file.
+
+Contributors are needed to correct the sample language files (other than English) since much of their text was translated from the English file using Google Translate. The folder view radio buttons and the column heading checkbox labels are already correct in the samples because those were copied from Windows running in those languages. The other labels, buttons, and help text probably have many errors. If you can help correct a language file or add a new one, that would be most appreciated. I look forward to seeing some Asian language files as well.
+
+Please see the Acknowledgment section for any language files that have been hand-corrected.
 
 ## Language Template 
 
-The first line specifies the dialog dimensions for a screen set at 100% scaling. This is needed because many languages will take up more space than English, requiring the dialog to be larger. The dimensions are expressed as width x height (e.g. 660x555).
+The first line in the file specifies the title displayed in the dialog title bar.
 
-The next set of lines represent the dialog button and checkbox labels, one per line with no blank lines.
+The next set of lines represent the radio button and checkbox labels, one per line with no blank lines. Please note that the second row of radio buttons in the dialog are not included in the language file because they have the same labels as the first row.
 
-This is followed by a <> separator and the title for the Help dialog and then another <> separator followed by the Help dialog text.
+This is followed by a **<>** separator and the title for the **Help** dialog and then another **<>** separator followed by the Help dialog text.
 
-Save the file as type UTF-8. UTF-8 with BOM or UTF-8 with signature is also fine.
+Save the text file as type **UTF-8**. UTF-8 with BOM or UTF-8 with signature is also fine. The file can have any name as long as it has a **.txt** extension, but it makes sense to give the file a name that matches its language selection in Windows. For example: **Deutsch (Deutschland).txt**
+
 
 # Acknowledgements
 
 Thanks to **Keith Miller** at TenForums.com for providing the FolderTypes approach to setting default views.
 
 Thanks to my son **Brian** for helping me debug and clean up my HTML code. If you use Spotify on Android, please check out his [**Trimify**](https://play.google.com/store/apps/details?id=app.web.trimifymusic) app on the Google Play store.
+
+Thanks to **Patrick Hannemann** for providing **Deutsch (Deutschland).txt**.
 
 Thanks to my cat Puddles for keeping me company while I worked on this.
