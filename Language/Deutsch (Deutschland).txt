@@ -10,7 +10,7 @@ Große Symbole
 Dateierweiterungen anzeigen
 Keine Gruppierung
 Alle Ordner generisch machen
-Globaler Spaltenüberschriften festlegen:
+Globale Spaltenüberschriften festlegen:
 Änderungsdatum
 Größe
 Elementtyp
