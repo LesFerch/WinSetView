@@ -231,6 +231,8 @@ Thanks to **Keith Miller** at TenForums.com for providing the FolderTypes approa
 
 Thanks to my son **Brian** for helping me debug and clean up my HTML code. If you use Spotify on Android, please check out his [**Trimify**](https://play.google.com/store/apps/details?id=app.web.trimifymusic) app on the Google Play store.
 
-Thanks to **Patrick Hannemann** for providing **Deutsch (Deutschland).txt**.
+Thanks to **Patrick Hannemann** for providing the **Deutsch (Deutschland).txt** language file.
+
+Thanks to my daughter **Dana** for providig the 日本語.txt (Japanese) language file. The translation may be rough in places, as she is very new to the language. Please gently provide corrections. Thank you.
 
 Thanks to my cat Puddles for keeping me company while I worked on this.
