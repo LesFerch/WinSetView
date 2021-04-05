@@ -186,7 +186,7 @@ Fortunately for us, Explorer will also look for the FolderTypes key in HKEY_CURR
 
     HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\FolderTypes
 
-This provides an opportunity to inject our desired default settings without touching the base defaults for the machine and all other users (and not requiring admin privileges).
+This provides an opportunity to set our desired default settings without touching the base defaults for the machine and all other users (and not requiring admin privileges).
 
 Note: Default views for all folders except "This PC" and "Network" can be found in the FolderTypes key.
 
