@@ -118,13 +118,13 @@ Folder views in Windows Explorer are both flexible and frustrating. Many users h
 
 ## Explorer's Many Views
 
-The Downloads folder, for example, has at least four different views. So, if you want grouping turned off for Downloads, you have to do it at least four times. Those four views are: 1) This PC, Downloads, 2) C:\Users\Username\Downloads, 3) This PC, Downloads via an Open or Save dialog, and 4) C:\Users\Username\Downloads via an Open or Save dialog. Frequently, a user will set one of these views and then encounter one of the other views and get angry that their view settings "didn't stick".
+The Downloads folder, for example, has at least four different views. Those four views are: 1) This PC, Downloads, 2) C:\Users\Username\Downloads, 3) This PC, Downloads via an Open or Save dialog, and 4) C:\Users\Username\Downloads via an Open or Save dialog. Frequently, a user will set one of these views and then encounter one of the other views and get angry that their view settings "didn't stick".
 
 ## Apply to Folders Explained
 
-Another confusion is over the "Apply to folders" button. This can be found in **View**, **Options**, **Change folder and search options**, **View** tab. Many users interpret this button to mean "Apply to ALL folders". That's not what it means. It actually means "Apply to all folders that are the same type as the current folder". So, in the case of our Downloads example, each of those four views are different folder types, so the "Apply to folders" button will not help to set all Downloads views the same.
+Another confusion is over the **Apply to folders** button. This can be found in **View**, **Options**, **Change folder and search options**, **View** tab. Many users interpret this button to mean "Apply to ALL folders". That's not what it means. It actually means "Apply to all folders that are the same type as the current folder". This button can be used to set all views of the **Downloads** folder the same, so it is very useful, but Explorer provides no option to set all folders and virtual folders to one *global* view.
 
-Explorer provides no option to set all folders and virtual folders to one global view. You can set a generic folder, such as C:\\, to your desired views and then use the "Apply to folders" button to set all other generic folders the same. But, as explained, there are plenty of folders that are not generic folders. You can make the "Apply to folders" button apply to more folders by setting a registry value that tells Explorer to treat "all folders" as "Generic". That registry value is:
+You can set a generic folder, such as C:\\, to your desired views and then use the **Apply to folders** button to set all other generic folders the same. But, by default, there are many folders that are not generic folders. You can make the **Apply to folders** button apply to more folders by setting a registry value that tells Explorer to treat "all folders" as "Generic". That registry value is:
 
     [HKEY_CURRENT_USER\SOFTWARE\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags\AllFolders\Shell]
     "FolderType"="Generic"
@@ -133,13 +133,13 @@ Note: You can substitute "Generic" with "NotSpecified" and get the same result.
 
 Note: This tool makes this registry entry for you (if desired). It is only shown here for educational purposes.
 
-With that value set, changing the view for say, C:\\, and then clicking the "Apply to folders" button will also change the view for Documents, Music, Pictures, and Videos, but frustratingly, it will not change Downloads. Explorer really likes to keep the view for Downloads separate from all other folders.
+With that value set, changing the view for say, C:\\, and then clicking the **Apply to folders** button will also change the view for Documents, Music, Pictures, and Videos, but not Downloads. Explorer really likes to keep the view for Downloads separate from all other folders.
 
 ## Apply to Folders "Bug"
 
-Whenever you use the "Apply to folders" button, on any generic folder, such as C:\\, your views for "This PC" and "Network" will revert back to Windows defaults. If you always leave "This PC" and "Network" at their default views, this is not an issue, but if you have changed either view and want to keep it changed, this is a nuisance.
+Whenever you use the **Apply to folders** button, on any generic folder, such as C:\\, your views for "This PC" and "Network" will revert back to Windows defaults. If you always leave "This PC" and "Network" at their default views, this is not an issue, but if you have changed either view and want to keep it changed, this is a nuisance.
 
-There is a sort-of-okay workaround. Any folder that is open when "Apply to folders" is used, will not have it's view changed. So, to "protect" your custom views for "This PC" and "Network", be sure to have separate windows open to each of those views when you use the "Apply to folders" button.
+There is a sort-of-okay workaround. Any folder that is open when **Apply to folders** is used, will not have it's view changed. So, to "protect" your custom views for "This PC" and "Network", be sure to have separate windows open to each of those views when you use the **Apply to folders** button.
 
 ## Automatic Folder Type Discovery
 
@@ -153,7 +153,7 @@ For a lot of users, data specific views in Explorer are just an annoying distrac
 
 ## How is this better than Explorer's "Apply to Folders"?
 
-That option only applies your changes to folders of the *same type*. Explorer has many folder types, (e.g. Downloads, This PC, Search Results, Open/Save dialogs, etc.), requiring you to set your desired view options repeatedly. Additionally, many users encounter situations where their selected options are reverted back to Windows defaults for no obvious reason. This tool allows you to make quick *global* changes to your view settings that will not unexpectedly change.
+That option only applies your changes to folders of the *same type*. Explorer has many folder types, (e.g. Downloads, This PC, Search Results, etc.), requiring you to set your desired view options repeatedly. Additionally, many users encounter situations where their selected options are reverted back to Windows defaults for no obvious reason. This tool allows you to make quick *global* changes to your view settings that will not unexpectedly change.
 
 ## Does this tool require administrative privileges?
 
@@ -172,7 +172,7 @@ When a folder is opened, Explorer looks for existing view settings in the BagMRU
     HKCU\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\BagMRU
     HKCU\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags
 
-If no settings exist there, it then checks the Streams key for any default settings that have been applied using the "Apply to folders" button:
+If no settings exist there, it then checks the Streams key for any default settings that have been applied using the **Apply to folders** button:
 
     HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Streams\Defaults
 
