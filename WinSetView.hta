@@ -32,6 +32,7 @@ File 1 of 2: WinSetView.hta (GUI tool to select desired views)
   #lang {width:15em; font-size:8pt}
   #vb   {white-space:nowrap; display=inline}
   #wd   {margin-left:10pt}
+  #ka   {margin-top:3pt}
 </style>
 <title>Globally Set Explorer Folder Views</title>
 </head>
@@ -414,13 +415,14 @@ End Sub
 <select id=Lang onchange='UpdateLang'>
 <input id=wd type=radio name=vm onclick=ViewOps >#1#<br><br>
 <div id=vb>
-<input type=radio name=vm Checked onclick=ViewOps >#2#
-<input type=radio name=vm onclick=ViewOps >#3#
-<input type=radio name=vm onclick=ViewOps >#4#
-<input type=radio name=vm onclick=ViewOps >#5#
-<input type=radio name=vm onclick=ViewOps >#6#
-<input type=radio name=vm onclick=ViewOps >#7#
-<input type=radio name=vm onclick=ViewOps >#8#</div><br><br>
+  <input type=radio name=vm Checked onclick=ViewOps >#2#
+  <input type=radio name=vm onclick=ViewOps >#3#
+  <input type=radio name=vm onclick=ViewOps >#4#
+  <input type=radio name=vm onclick=ViewOps >#5#
+  <input type=radio name=vm onclick=ViewOps >#6#
+  <input type=radio name=vm onclick=ViewOps >#7#
+  <input type=radio name=vm onclick=ViewOps >#8#
+</div><br><br>
 <input type=checkbox id=se Checked >#9#
 <div id=op>
   <input type=checkbox id=ng Checked >#10#
