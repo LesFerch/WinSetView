@@ -242,6 +242,6 @@ Thanks to my son **Brian** for helping me debug and clean up my HTML code. If yo
 
 Thanks to **Patrick Hannemann** for providing the **Deutsch (Deutschland).txt** language file.
 
-Thanks to my daughter **Dana** for providig the 日本語.txt (Japanese) language file. The translation may be rough in places, as she is very new to the language. Please gently provide corrections. Thank you.
+Thanks to my daughter **Dana** for providing the 日本語.txt (Japanese) language file. The translation may be rough in places, as she is very new to the language. Please gently provide corrections. Thank you.
 
 Thanks to my cat Puddles for keeping me company while I worked on this.
