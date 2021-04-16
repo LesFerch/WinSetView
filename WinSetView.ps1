@@ -24,6 +24,8 @@
 # $ColMore: Additional columns available to select via right-click
 # $NameWid: Width of Name column in ems
 # $PathWid: With of any path headings in ems
+# $SubMode: 0 = Save defaults, Clear existing views, Restart Explorer
+#           1 = Save defaults, Clear existing views except Streams/Defaults, Restart Explorer
 
 Param (
   $Mode = 1,
@@ -36,7 +38,8 @@ Param (
   $ColShow = 'DateModified,Size,ItemType',
   $ColMore = 'FileExtension,ItemTypeText,ContentType,PerceivedType,Kind,DateCreated,DateAccessed,FileAttributes,FileVersion,ItemFolderNameDisplay,ItemFolderPathDisplay,ItemFolderPathDisplayNarrow,ItemPathDisplay,FileOwner',
   $NameWid = 34,
-  $PathWid = 34
+  $PathWid = 34,
+  $SubMode = 0
 )
 
 $Key = "Registry::HKLM\Software\Microsoft\Windows NT\CurrentVersion"
@@ -71,6 +74,7 @@ If ($TPNoGrp -IsNot [int]) {$TPNoGrp = 1}
 If ($Columns -IsNot [int]) {$Columns = 0}
 If ($NameWid -IsNot [int]) {$NameWid = 34}
 If ($PathWid -IsNot [int]) {$PathWid = 34}
+If ($SubMode -IsNot [int]) {$SubMode = 0}
 
 If ($Mode -gt 9) {$Mode = 1}
 If ($ShowExt -gt 1) {$ShowExt = 1}
@@ -78,6 +82,7 @@ If ($TPMode -gt 8) {$TPMode = 4}
 If ($NameWid -lt 1) {$NameWid = 34}
 If ($PathWid -lt 1) {$PathWid = 34}
 
+If ($Mode -eq 0) {$SubMode = 0}
 If ($Mode -eq 3) {$IconSize = '010'}
 If ($Mode -eq 6) {$Mode = 3; $IconSize = '030'}
 If ($Mode -eq 7) {$Mode = 3; $IconSize = '060'}
@@ -112,7 +117,7 @@ $Bak      = $Null
 Function DeleteUserKeys {
   Reg Delete $BagM /f 2>$Null
   Reg Delete $Bags /f 2>$Null
-  Reg Delete $Defs /f 2>$Null
+  If ($SubMode -eq 0) {Reg Delete $Defs /f 2>$Null}
 }
 
 Function RestartExplorer {
