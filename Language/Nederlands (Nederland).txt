@@ -10,6 +10,7 @@ Grote pictogrammen
 Toon bestandsextensies
 Geen groepering
 Maak alle mappen algemeen
+Houden "Op mappen toepassen" keer bekeken
 Globale kolomkoppen instellen:
 Gewijzigd op
 Grootte
@@ -52,3 +53,7 @@ Em-grootte is relatief ten opzichte van schermschaal. Bijvoorbeeld (bij 96 dpi):
 1 em op 150% = 12 pixels
 
 Explorer gebruikt intern ems voor al zijn standaard kolombreedtes. Hierdoor blijft de hoeveelheid tekst die in elke kolom wordt weergegeven constant wanneer de schermschaal wordt gewijzigd.
+<>
+Waarschuwing...
+<>
+Als "Maak alle mappen algemeen" en "Houden "Op mappen toepassen" keer bekeken" beide zijn aangevinkt, krijgt alleen het maptype Downloads zijn weergave vanuit een weergave die is opgeslagen met de knop "Op mappen toepassen" van de Verkenner.

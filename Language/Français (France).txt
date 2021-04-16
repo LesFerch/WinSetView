@@ -10,6 +10,7 @@ Grandes icônes
 Afficher les extensions de fichier
 Pas de regroupement
 Rendre tous les dossiers génériques
+Conserver "Appliquer aux dossiers" Vues
 Définir les en-têtes de colonne globaux:
 Modifiée le
 Taille
@@ -52,3 +53,7 @@ La taille Em est relative à la mise à l'échelle de l'écran. Par exemple (à 
 1 em à 150% = 12 pixels
 
 Explorer utilise ems en interne pour toutes ses largeurs de colonne par défaut. Cela maintient la quantité de texte affichée dans chaque colonne constante à mesure que la mise à l'échelle de l'écran est modifiée.
+<>
+Avertissement...
+<>
+Si "Rendre tous les dossiers génériques" et "Conserver "Appliquer aux dossiers" Vues" sont tous les deux cochés, seul le type de dossier Téléchargements obtiendra sa vue à partir d'une vue enregistrée avec le bouton "Appliquer aux dossiers" de l'Explorateur.

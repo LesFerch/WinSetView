@@ -10,6 +10,7 @@ Conteúdo
 Mostrar extensões de arquivo
 Sem agrupamento
 Tornar todas as pastas genéricas
+Manter "Aplicar ás Pastas" Visualizações
 Definir cabeçalhos de colunas globais:
 Data de modificação
 Tamanho
@@ -52,3 +53,7 @@ O tamanho do em é relativo ao dimensionamento da tela. Por exemplo (a 96 dpi):
 1 em 150% = 12 pixels
 
 O Explorer usa o ems internamente para todas as larguras de coluna padrão. Isso mantém a quantidade de texto exibida em cada coluna constante conforme a escala da tela é alterada.
+<>
+Aviso...
+<>
+Se "Tornar todas as pastas genéricas" e "Manter "Aplicar ás Pastas" Visualizações" estiverem marcados, apenas o tipo de pasta Downloads obterá sua visualização de uma visualização salva com o botão "Aplicar ás Pastas" do Explorer.

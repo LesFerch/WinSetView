@@ -10,6 +10,7 @@ Icone grandi
 Mostra estensioni di file
 Nessun raggruppamento
 Rendi generiche tutte le cartelle
+Mantenere "Applica alle cartelle" Visualizzazioni
 Imposta intestazioni di colonna globali:
 Ultima  modifica
 Dimensione
@@ -52,3 +53,7 @@ La dimensione em è relativa al ridimensionamento dello schermo. Ad esempio (a 9
 1 em al 150% = 12 pixel
 
 Explorer utilizza ems internamente per tutte le sue larghezze di colonna predefinite. Ciò mantiene costante la quantità di testo visualizzato in ciascuna colonna quando viene modificato il ridimensionamento dello schermo.
+<>
+Avvertimento...
+<>
+Se "Rendi generiche tutte le cartelle" e "Mantenere "Applica alle cartelle" Visualizzazioni" sono entrambe selezionate, solo il tipo di cartella Download avrà la sua visualizzazione da una vista salvata con il pulsante "Applica alle cartelle" di Explorer.

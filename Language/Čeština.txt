@@ -10,6 +10,7 @@ Velké ikony
 Zobrazit přípony souborů
 Žádné seskupování
 Nastavit všechny složky jako obecné
+Držet "Použít pro složky" Pohledy
 Nastavit globální záhlaví sloupců:
 Datum změny
 Velikost
@@ -52,3 +53,7 @@ Velikost Em je relativní k měřítku obrazovky. Například (při 96 dpi):
 1 em na 150% = 12 pixelů
 
 Průzkumník používá ems interně pro všechny své výchozí šířky sloupců. Tím se udržuje konstantní množství textu zobrazeného v každém sloupci při změně měřítka obrazovky.
+<>
+Varování...
+<>
+Pokud jsou zaškrtnuty možnosti „Nastavit všechny složky jako obecné“ a „Držet "Použít pro složky" Pohledy“, zobrazí se pouze pohled ze složky Stažené soubory ze zobrazení uloženého pomocí tlačítka „Použít pro složky“ Průzkumníka.

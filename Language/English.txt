@@ -10,6 +10,7 @@ Large Icons
 Show File Extensions
 No Grouping
 Make All Folders Generic
+Keep "Apply to Folders" Views
 Set Global Column Headings:
 Date modified
 Size
@@ -52,3 +53,7 @@ Em size is relative to screen scaling. For example (at 96 dpi):
 1 em at 150% = 12 pixels
 
 Explorer uses ems internally for all its default column widths. This keeps the amount of text displayed in each column constant as screen scaling is changed.
+<>
+Warning...
+<>
+If "Make All Folders Generic" and "Keep "Apply to Folders" Views" are both checked, only the Downloads folder type will get its view from a view saved with Explorer's "Apply to Folders" button.

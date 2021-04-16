@@ -10,6 +10,7 @@ Iconos grandes
 Mostrar extensiones de archivo
 Sin agrupamiento
 Convertir todas las carpetas en genéricas
+Conservar "Aplicar a las carpetas" vistas
 Establecer encabezados de columna globales:
 Fecha de modificación
 Tamaño
@@ -52,3 +53,7 @@ El tamaño de em es relativo a la escala de la pantalla. Por ejemplo (a 96 ppp):
 1 em al 150% = 12 píxeles
 
 Explorer usa ems internamente para todos sus anchos de columna predeterminados. Esto mantiene constante la cantidad de texto que se muestra en cada columna a medida que se cambia la escala de la pantalla.
+<>
+Advertencia...
+<>
+Si "Convertir todas las carpetas en genéricas" y "Conservar "Aplicar a las carpetas" vistas" están marcadas, solo el tipo de carpeta Descargas obtendrá su vista de una vista guardada con el botón "Aplicar a las carpetas" del Explorador.

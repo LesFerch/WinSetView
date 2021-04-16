@@ -10,6 +10,7 @@ Duże ikony
 Pokaż rozszerzenia plików
 Bez grupowania
 Ustaw wszystkie foldery jako ogólne
+Trzymać "Zastosuj do foldeów" wyświetlenia
 Ustaw globalne nagłówki kolumn:
 Data modyfikacji
 Rozmiar
@@ -52,3 +53,7 @@ Rozmiar Em jest zależny od skalowania ekranu. Na przykład (przy 96 dpi):
 1 em przy 150% = 12 pikseli
 
 Explorer używa wewnętrznie ems dla wszystkich domyślnych szerokości kolumn. Dzięki temu ilość tekstu wyświetlanego w każdej kolumnie jest stała, gdy zmienia się skalowanie ekranu.
+<>
+Ostrzeżenie...
+<>
+Jeśli zaznaczone są oba pola „Ustaw wszystkie foldery jako ogólne” i „Trzymać "Zastosuj do foldeów" wyświetlenia”, tylko typ folderu Pobrane będzie miał widok z widoku zapisanego za pomocą przycisku „Zastosuj do foldeów” w Eksploratorze.

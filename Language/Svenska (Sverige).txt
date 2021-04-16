@@ -10,6 +10,7 @@ Stora ikoner
 Visa filtillägg
 Ingen gruppering
 Gör alla mappar generiska
+Ha kvar "Använd i alla mappar" utsikt
 Ange globala kolumnrubriker:
 Senast ändrad
 Storlek
@@ -52,3 +53,7 @@ Em-storlek är relativt skärmskalning. Till exempel (vid 96 dpi):
 1 em vid 150% = 12 pixlar
 
 Explorer använder ems internt för alla sina standardkolumnbredder. Detta håller mängden text som visas i varje kolumn konstant när skärmskalning ändras.
+<>
+Varning...
+<>
+Om "Gör alla mappar generiska" och "Ha kvar "Använd i alla mappar" utsikt" båda är markerade, kommer bara nedladdningens mapptyp att få sin vy från en vy som sparas med Explorer "Använd i alla mappar" -knappen.

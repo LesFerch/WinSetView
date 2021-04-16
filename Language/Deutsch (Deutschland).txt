@@ -10,6 +10,7 @@ Große Symbole
 Dateierweiterungen anzeigen
 Keine Gruppierung
 Alle Ordner generisch machen
+Behalten "Für Ordner übernehmen" Ansichten
 Globale Spaltenüberschriften festlegen:
 Änderungsdatum
 Größe
@@ -52,3 +53,7 @@ Die Em-Größe ist relativ zur Bildschirmskalierung. Zum Beispiel bei 96 dpi:
 1 em bei 150% = 12 Pixel
 
 Der Explorer verwendet ems intern für alle Standardspaltenbreiten. Dadurch bleibt die in jeder Spalte angezeigte Textmenge konstant, wenn die Bildschirmskalierung geändert wird.
+<>
+Warnung...
+<>
+Wenn die Option "Alle Ordner generisch machen" und "Behalten "Für Ordner übernehmen" Ansichten" aktiviert sind, wird nur der Ordnertyp "Downloads" aus einer Ansicht abgerufen, die mit der Schaltfläche "Für Ordner übernehmen" des Explorers gespeichert wurde.
