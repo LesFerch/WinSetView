@@ -231,7 +231,7 @@ The next set of lines represent the radio button and checkbox labels, one per li
 
 This is followed by a **<>** separator and the title for the **Help** dialog and then another **<>** separator followed by the Help dialog text.
 
-Save the text file as type **UTF-8**. UTF-8 with BOM or UTF-8 with signature is also fine. The file can have any name as long as it has a **.txt** extension, but it makes sense to give the file a name that matches its language selection in Windows. For example: **Deutsch (Deutschland).txt**
+Save the text file as type **UTF-8**. UTF-8 with BOM (signature) is also fine. The file can have any name as long as it has a **.txt** extension, but it makes sense to give the file a name that matches its language selection in Windows. For example: **Deutsch (Deutschland).txt**
 
 
 # Acknowledgements
@@ -240,8 +240,10 @@ Thanks to **Keith Miller** at TenForums.com for providing the FolderTypes approa
 
 Thanks to my son **Brian** for helping me debug and clean up my HTML code. If you use Spotify on Android, please check out his [**Trimify**](https://play.google.com/store/apps/details?id=app.web.trimifymusic) app on the Google Play store.
 
-Thanks to **Patrick Hannemann** for providing the **Deutsch (Deutschland).txt** language file.
+Thanks to **Patrick Hannemann** for providing the **Deutsch (Deutschland)** (German) language file.
 
-Thanks to my daughter **Dana** for providing the 日本語.txt (Japanese) language file. The translation may be rough in places, as she is very new to the language. Please gently provide corrections. Thank you.
+Thanks to **Vladimir Bondarev** for providing the **Pусский** (Russian) language file.
 
-Thanks to my cat Puddles for keeping me company while I worked on this.
+Thanks to my daughter **Dana** for providing the **日本語** (Japanese) language file. The translation may be rough in places, as she is very new to the language. Please gently provide corrections. Thank you.
+
+Thanks to my cat **Puddles** for keeping me company while I worked on this.
