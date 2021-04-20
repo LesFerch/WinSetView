@@ -244,6 +244,8 @@ Thanks to **Patrick Hannemann** for providing the **Deutsch (Deutschland)** (Ger
 
 Thanks to **Vladimir Bondarev** for providing the **Pусский** (Russian) language file.
 
+Thanks to **Ringo Xue** for providing the **中文 (简体)** (Chinese (Traditional, Taiwan)) language file.
+
 Thanks to my daughter **Dana** for providing the **日本語** (Japanese) language file. The translation may be rough in places, as she is very new to the language. Please gently provide corrections. Thank you.
 
 Thanks to my cat **Puddles** for keeping me company while I worked on this.
