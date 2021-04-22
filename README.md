@@ -246,7 +246,7 @@ Thanks to **Vladimir Bondarev** for providing the **Pусский** (Russian) la
 
 Thanks to **Ringo Xue** for providing the **中文 (简体)** and **中文 (繁体)** (Chinese) language files.
 
-Thanks to **Danfong Hsieh** for providing the **中文(台灣)** (Chinese) language file.
+Thanks to **Danfong Hsieh** for providing the **中文 (繁體)** (Chinese) language file.
 
 Thanks to my daughter **Dana** for providing the **日本語** (Japanese) language file. The translation may be rough in places, as she is very new to the language. Please gently provide corrections. Thank you.
 
