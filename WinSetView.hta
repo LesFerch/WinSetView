@@ -340,7 +340,7 @@ Sub Submit
 End Sub
 
 Sub RunScript
-  CmdLine = "Powershell.exe -ExecutionPolicy Bypass " & Chr(34) & MyPath & "WinSetView.ps1" & Chr(34) & " " & Params
+  CmdLine = "Powershell.exe -ExecutionPolicy Bypass -File " & Chr(34) & MyPath & "WinSetView.ps1" & Chr(34) & " " & Params
   oShell.Run CmdLine,Visible,False
   Window.Close
 End Sub
