@@ -5,7 +5,7 @@
 Compatible with Windows 7, Windows 8, and Windows 10.
 
 Les Ferch, lesferch@gmail.com\
-GitHub repository created 2021-03-26, last updated 2021-04-22
+GitHub repository created 2021-03-26, last updated 2021-04-23
 
 # Summary
 
@@ -231,7 +231,7 @@ The next set of lines represent the radio button and checkbox labels, one per li
 
 This is followed by a **<>** separator and the title for the **Help** dialog and then another **<>** separator followed by the Help dialog text.
 
-Save the text file as type **Unicode**. The file can have any name as long as it has a **.txt** extension, but it makes sense to give the file a name that matches its language selection in Windows. For example: **Deutsch (Deutschland).txt**
+Save the text file as type **Unicode (UTF-16)**. The file can have any name as long as it has a **.txt** extension, but it makes sense to give the file a name that matches its language selection in Windows. For example: **Deutsch (Deutschland).txt**
 
 
 # Acknowledgements

@@ -121,6 +121,7 @@ If (Test-Path -Path $TestFile) {
   $BakDir = "$PSScriptRoot\AppData"
 }
 $BakFile  = "$BakDir\$TimeStr.reg"
+$Custom   = "$BakDir\WinSetViewCustom.reg"
 
 Function DeleteUserKeys {
   Reg Delete $BagM /f 2>$Null
@@ -248,5 +249,6 @@ If ($Columns -eq 1) {$Data = $Data -replace '"ColumnList"=".+?(?=;1)',$ColReg}
 Out-File -InputObject $Data -encoding Unicode -filepath $RegFile
 
 Reg Import $RegFile
+If (Test-Path -Path $Custom) {Reg Import $Custom}
 
 RestartExplorer
