@@ -1,4 +1,4 @@
-﻿<!--
+<!--
 WinSetView (Globally Set Explorer Folder Views)
 Les Ferch, lesferch@gmail.com, GitHub repository created 2021-03-26
 File 1 of 2: WinSetView.hta (GUI tool to select desired views)
@@ -44,8 +44,8 @@ Const Ver = "1.3"
 Dim Mode, NoGroup, Generic, TPMode, TPNoGrp, ShowExt, Columns, Msg, Choice, oFolder, oFiles, AllHTML
 Dim MyPath, CmdLine, Params, oShell, Visible, oFSO, i, Chk, ArrCB, j, AppData, rbShow, RBSet, CBSet
 Dim ColShow, ColMore, Label, Delim, CSVData, ArrCSV, CSVFile, oFile, DefData, UserData, OldData
-Dim WinWidth, WinHeight, ScaleWidth, Resize, Result, NameWid, PathWid, WinVer, HH2, HT2
-Dim LangData, LangDir, LangFile, ArrLang, Tag, Item, oStream, ArrHelp, HH1, HT1, FileName
+Dim WinWidth, WinHeight, ScaleWidth, Resize, Result, NameWid, PathWid, WinVer, HH2, HT2, TestFile
+Dim LangData, LangDir, LangFile, ArrLang, Tag, Item, ArrHelp, HH1, HT1, FileName, ParamFile
 Dim Count, Pick, Language, oOption, LangCount, LangLast, TaggedHTML, LangIndex, SubMode
 
 'Set up an array of checkbox object names
@@ -63,12 +63,26 @@ DefData = Ver & "," & RBSet & "," & CBSet & "," & NameWid & "," & PathWid & "," 
 UserData = DefData
 Set oShell = CreateObject("Wscript.Shell")
 Set oFSO = CreateObject("Scripting.FileSystemObject")
-Set oStream = CreateObject("ADODB.Stream")
-oStream.CharSet = "UTF-8"
-AppData = oShell.ExpandEnvironmentStrings("%APPDATA%") & "\WinSetView"
 MyPath = LCase(document.location.pathname)
 MyPath = Left(MyPath,InStrRev(MyPath,"\"))
 LangDir = MyPath & "Language\"
+AppData = MyPath & "AppData"
+
+TestFile = Now()
+TestFile = Replace(TestFile,"/","")
+TestFile = Replace(TestFile,":","")
+TestFile = Replace(TestFile," ","")
+TestFile = MyPath & "\" & TestFile & ".txt"
+On Error Resume Next
+Set oFile = oFSO.OpenTextFile(TestFile,2,True)
+oFile.Write ""
+oFile.Close
+On Error Goto 0
+If oFSO.FileExists(TestFile) Then 
+  oFSO.DeleteFile(TestFile)
+Else
+  AppData = oShell.ExpandEnvironmentStrings("%APPDATA%") & "\WinSetView"
+End If
 
 LangData = "Globally Set Explorer Folder Views,Reset Views to Windows Defaults,"
 LangData = LangData + "Details,List,Tiles,Content,Small Icons,Medium Icons,Large Icons,"
@@ -106,13 +120,13 @@ End If
 'Set up paths
 If Not oFSO.FolderExists(AppData) Then oFSO.CreateFolder(AppData)
 CSVFile = AppData & "\WinSetView.csv"
+ParamFile = AppData & "\WinSetViewParams.txt"
 
 'Read in previous user selections
 If oFSO.FileExists(CSVFile) Then
-  oStream.Open
-  oStream.LoadFromFile CSVFile
-  UserData = oStream.ReadText
-  oStream.Close
+  Set oFile = oFSO.OpenTextFile(CSVFile,1,,-1)
+  UserData = oFile.ReadAll
+  oFile.Close
 End If
 
 'See if there are any reg files in the backup folder
@@ -192,10 +206,9 @@ Sub UpdateLang
     Language = lang.options(LangIndex).value
     LangFile = LangDir & Language & ".txt"
     If oFSO.FileExists(LangFile) Then
-      oStream.Open
-      oStream.LoadFromFile LangFile
-      LangData = oStream.ReadText
-      oStream.Close
+      Set oFile = oFSO.OpenTextFile(LangFile,1,,-1)
+      LangData = oFile.ReadAll
+      oFile.Close
       ArrHelp = Split(LangData,"<>")
       HH1 = ArrHelp(1)
       HT1 = ArrHelp(2)
@@ -287,10 +300,9 @@ Sub HTAStateSave
   CSVData = CSVData & ColShow & ","
   CSVData = CSVData & ColMore & ","
   CSVData = CSVData & Language
-  oStream.Open
-  oStream.WriteText CSVData
-  oStream.SaveToFile CSVFile,2
-  oStream.Close
+  Set oFile = oFSO.OpenTextFile(CSVFile,2,True,-1)
+  oFile.Write CSVData
+  oFile.Close
 
 End Sub
 
@@ -341,6 +353,9 @@ End Sub
 
 Sub RunScript
   CmdLine = "Powershell.exe -ExecutionPolicy Bypass " & Chr(34) & ".\WinSetView.ps1" & Chr(34) & " " & Params
+  Set oFile = oFSO.CreateTextFile(AppData & "\WinSetViewParams.txt")
+  oFile.Write Params 
+  oFile.Close()
   oShell.Run CmdLine,Visible,False
   Window.Close
 End Sub

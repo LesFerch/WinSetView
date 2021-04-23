@@ -111,8 +111,16 @@ $BakDir   = "$env:APPDATA\WinSetView"
 $RegFile  = "$TempDir\WinSetView.reg"
 $T1       = "$TempDir\WinSetView.tmp"
 $TimeStr  = (get-date).ToString("yyyy-MM-dd-HHmm-ss")
-$BakFile  = "$BakDir\$TimeStr.reg"
 $Bak      = $Null
+
+$TestFile = "$PSScriptRoot\$TimeStr.txt"
+Try {[io.file]::OpenWrite($TestFile).close()}
+Catch {}
+If (Test-Path -Path $TestFile) {
+  Remove-Item $TestFile
+  $BakDir = "$PSScriptRoot\AppData"
+}
+$BakFile  = "$BakDir\$TimeStr.reg"
 
 Function DeleteUserKeys {
   Reg Delete $BagM /f 2>$Null
@@ -234,7 +242,9 @@ If ($Mode -eq 3) {
 If ($NoGroup -eq 1) {$Data = $Data -replace '"GroupBy"=".+"','"GroupBy"=""'}
 If ($Columns -eq 1) {$Data = $Data -replace '"ColumnList"=".+?(?=;1)',$ColReg}
 
-Out-File -InputObject $Data -encoding ASCII -filepath $RegFile
+#$Data = $Data -replace '"SortByList"=".+"','"SortByList"="prop:-System.ItemNameDisplay"'
+
+Out-File -InputObject $Data -encoding Unicode -filepath $RegFile
 
 Reg Import $RegFile
 

@@ -217,7 +217,7 @@ Here's an overview of the steps the Powershell script performs to set Explorer v
 
 # Language Support
 
-Any language that is displayed left to right, and can be represented with **UTF-8** encoding, should work. The **WinSetView.HTA** script looks for a **Language** folder in the same location as the HTA. If none is found, it will display English using text built into the script. If it finds a language folder, it will read the list of **.txt** files found there to create a language dropdown menu. Several example language files are included. The file **English.txt** should be used as a template to create a new language file.
+The **WinSetView.HTA** script looks for a **Language** folder in the same location as the HTA. If none is found, it will display English using text built into the script. If it finds a language folder, it will read the list of **.txt** files found there to create a language dropdown menu. Several example language files are included. The file **English.txt** should be used as a template to create a new language file.
 
 Contributors are needed to correct the sample language files (other than English) since most of the text was translated from English using Google Translate. The folder view radio buttons and the column heading checkbox labels are already correct in the samples because those were copied from Windows running in those languages. The other labels, buttons, and help text probably have many errors. If you can help correct a language file or add a new one, that would be most appreciated. I look forward to seeing some Asian language files as well.
 
@@ -231,7 +231,7 @@ The next set of lines represent the radio button and checkbox labels, one per li
 
 This is followed by a **<>** separator and the title for the **Help** dialog and then another **<>** separator followed by the Help dialog text.
 
-Save the text file as type **UTF-8**. UTF-8 with BOM (signature) is also fine. The file can have any name as long as it has a **.txt** extension, but it makes sense to give the file a name that matches its language selection in Windows. For example: **Deutsch (Deutschland).txt**
+Save the text file as type **Unicode**. The file can have any name as long as it has a **.txt** extension, but it makes sense to give the file a name that matches its language selection in Windows. For example: **Deutsch (Deutschland).txt**
 
 
 # Acknowledgements
