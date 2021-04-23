@@ -42,7 +42,7 @@ Option Explicit
 SetLocale(1033)
 Const Ver = "1.3"
 Dim Mode, NoGroup, Generic, TPMode, TPNoGrp, ShowExt, Columns, Msg, Choice, oFolder, oFiles, AllHTML
-Dim MyPath, CmdLine, Params, oShell, Visible, oFSO, i, Chk, ArrCB, j, AppData, rbShow, RBSet, CBSet
+Dim CmdLine, Params, oShell, Visible, oFSO, i, Chk, ArrCB, j, AppData, rbShow, RBSet, CBSet
 Dim ColShow, ColMore, Label, Delim, CSVData, ArrCSV, CSVFile, oFile, DefData, UserData, OldData
 Dim WinWidth, WinHeight, ScaleWidth, Resize, Result, NameWid, PathWid, WinVer, HH2, HT2, TestFile
 Dim LangData, LangDir, LangFile, ArrLang, Tag, Item, ArrHelp, HH1, HT1, FileName, ParamFile
@@ -63,16 +63,14 @@ DefData = Ver & "," & RBSet & "," & CBSet & "," & NameWid & "," & PathWid & "," 
 UserData = DefData
 Set oShell = CreateObject("Wscript.Shell")
 Set oFSO = CreateObject("Scripting.FileSystemObject")
-MyPath = LCase(document.location.pathname)
-MyPath = Left(MyPath,InStrRev(MyPath,"\"))
-LangDir = MyPath & "Language\"
-AppData = MyPath & "AppData"
+LangDir = ".\Language\"
+AppData = ".\AppData"
 
 TestFile = Now()
 TestFile = Replace(TestFile,"/","")
 TestFile = Replace(TestFile,":","")
 TestFile = Replace(TestFile," ","")
-TestFile = MyPath & "\" & TestFile & ".txt"
+TestFile = ".\" & TestFile & ".txt"
 On Error Resume Next
 Set oFile = oFSO.OpenTextFile(TestFile,2,True)
 oFile.Write ""
