@@ -3,7 +3,7 @@
 if exist ".\WinSetViewParams.txt" goto OK
 echo:
 echo Usage:- Run WinSetView.hta to create or update WinSetViewParams.txt
-echo         Or drop a previously saved/renamed MyParams.txt on this cmd
+echo         Or drop a previously saved/renamed WinSetViewParams.txt on this cmd
 echo:
 pause & exit
 :OK
