@@ -130,6 +130,7 @@ Function DeleteUserKeys {
 
 Function RestartExplorer {
   Get-process explorer | Stop-Process
+  Explorer $PSScriptRoot
   Exit
 }
 
