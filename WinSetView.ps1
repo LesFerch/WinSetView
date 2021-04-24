@@ -244,8 +244,6 @@ If ($Mode -eq 3) {
 If ($NoGroup -eq 1) {$Data = $Data -replace '"GroupBy"=".+"','"GroupBy"=""'}
 If ($Columns -eq 1) {$Data = $Data -replace '"ColumnList"=".+?(?=;1)',$ColReg}
 
-#$Data = $Data -replace '"SortByList"=".+"','"SortByList"="prop:-System.ItemNameDisplay"'
-
 Out-File -InputObject $Data -encoding Unicode -filepath $RegFile
 
 Reg Import $RegFile
