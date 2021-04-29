@@ -37,13 +37,13 @@ File 1 of 2: WinSetView.hta (GUI tool to select desired views)
 <title>Globally Set Explorer Folder Views</title>
 </head>
 
-<script language=VBScript>
+<script language="VBScript">
 Option Explicit
 SetLocale(1033)
 Const Ver = "1.3"
 Dim Mode, NoGroup, Generic, TPMode, TPNoGrp, ShowExt, Columns, Msg, Choice, oFolder, oFiles, AllHTML
 Dim CmdLine, Params, oShell, Visible, oFSO, i, Chk, ArrCB, j, AppData, rbShow, RBSet, CBSet
-Dim ColShow, ColMore, Label, Delim, CSVData, ArrCSV, CSVFile, oFile, DefData, UserData, OldData
+Dim ColShow, ColMore, Label, Delim, CSVData, ArrCSV, CSVFile, oFile, DefData, UserData
 Dim WinWidth, WinHeight, ScaleWidth, Resize, Result, NameWid, PathWid, WinVer, HH2, HT2, TestFile
 Dim LangData, LangDir, LangFile, ArrLang, Tag, Item, ArrHelp, HH1, HT1, FileName, ParamFile
 Dim Count, Pick, Language, oOption, LangCount, LangLast, TaggedHTML, LangIndex, SubMode
@@ -125,6 +125,8 @@ If oFSO.FileExists(CSVFile) Then
   Set oFile = oFSO.OpenTextFile(CSVFile,1,,-1)
   UserData = oFile.ReadAll
   oFile.Close
+  ArrCSV = Split(UserData,",")
+  If Not ArrCSV(0) = Ver Then UserData = DefData
 End If
 
 'See if there are any reg files in the backup folder
@@ -166,7 +168,7 @@ Sub Window_onLoad
   'Update interface selections
   HTAStateRestore UserData
 
-  If (UserData=DefData Or OldData) Then yb.Disabled = True
+  If UserData=DefData Then yb.Disabled = True
   If Not rbShow Then rb.Disabled = True
 
   If LangCount>0 Then
@@ -253,7 +255,6 @@ Sub HTAStateRestore(CSVData)
   End If
   
   ArrCSV = Split(CSVData,",")
-  If Not ArrCSV(0) = Ver Then OldData=True: cs.Value = ColShow: Exit Sub
 
   j = 1
   For i = 0 to 7
@@ -350,7 +351,7 @@ Sub Submit
 End Sub
 
 Sub RunScript
-  CmdLine = "Powershell.exe -ExecutionPolicy Bypass " & Chr(34) & ".\WinSetView.ps1" & Chr(34) & " " & Params
+  CmdLine = "Powershell.exe -ExecutionPolicy Bypass .\WinSetView.ps1 " & Params
   Set oFile = oFSO.CreateTextFile(AppData & "\WinSetViewParams.txt")
   oFile.Write Params 
   oFile.Close()
@@ -450,24 +451,24 @@ End Sub
   <input type=checkbox id=dm Checked onclick='Mux "DateModified",dm.Checked' >#14#</td><td>
   <input type=checkbox id=sz Checked onclick='Mux "Size",sz.Checked' >#15#</td><td>
   <input type=checkbox id=ti Checked onclick='Mux "ItemType",ti.Checked' >#16#</td><td>
-  <input type=checkbox id=fn onclick='Mux "ItemFolderNameDisplay",fn.Checked' >#17#</td><tr>
+  <input type=checkbox id=fn onclick='Mux "ItemFolderNameDisplay",fn.Checked' >#17#</td></tr>
   <tr><td>
   <input type=checkbox id=dc onclick='Mux "DateCreated",dc.Checked' >#18#</td><td>
   <input type=checkbox id=fv onclick='Mux "FileVersion",fv.Checked' >#19#</td><td>
   <input type=checkbox id=tt onclick='Mux "ItemTypeText",tt.Checked' >#20#</td><td>
-  <input type=checkbox id=fp onclick='Mux "ItemFolderPathDisplay",fp.Checked' >#21#</td><tr>
+  <input type=checkbox id=fp onclick='Mux "ItemFolderPathDisplay",fp.Checked' >#21#</td></tr>
   <tr><td>
   <input type=checkbox id=da onclick='Mux "DateAccessed",da.Checked' >#22#</td><td>
   <input type=checkbox id=fe onclick='Mux "FileExtension",fe.Checked' >#23#</td><td>
   <input type=checkbox id=tc onclick='Mux "ContentType",tc.Checked' >#24#</td><td>
-  <input type=checkbox id=ff onclick='Mux "ItemFolderPathDisplayNarrow",ff.Checked' >#25#</td><tr>
+  <input type=checkbox id=ff onclick='Mux "ItemFolderPathDisplayNarrow",ff.Checked' >#25#</td></tr>
   <tr><td>
   <input type=checkbox id=fa onclick='Mux "FileAttributes",fa.Checked' >#26#</td><td>
   <input type=checkbox id=tk onclick='Mux "Kind",tk.Checked' >#27#</td><td>
   <input type=checkbox id=tp onclick='Mux "PerceivedType",tp.Checked' >#28#</td><td>
-  <input type=checkbox id=pi onclick='Mux "ItemPathDisplay",pi.Checked' >#29#</td><tr>
+  <input type=checkbox id=pi onclick='Mux "ItemPathDisplay",pi.Checked' >#29#</td></tr>
   <tr><td>
-  <input type=checkbox id=fo onclick='Mux "FileOwner",fo.Checked' >#30#</td><tr>
+  <input type=checkbox id=fo onclick='Mux "FileOwner",fo.Checked' >#30#</td></tr>
   </table>
   <textarea id=cs readOnly=True></textarea><br>
   <input type=button id=h1 value=? onclick=Help01>

@@ -50,7 +50,7 @@ This option retains any folder views that have been saved using Explorer's **App
 
 If you want this extra level of view customization, be sure to use the **Apply to Folders** button in Explorer for each folder type view you want to set. That is, in *Explorer*, set your desired view for **Downloads**, then go to **View**, **Options**, **Change folder and search options**, **View** tab, and click **Apply to Folders**. Repeat those steps for **Documents**, **Music**, **Pictures**, and **Videos**. All of those views will then take precedence over any global folder view set with *WinSetView*, as long as **Keep "Apply to Folders" Views** is *checked* and **Make All Folders Generic** is *unchecked*.
 
-If **Make All Folders Generic** is also checked, only the **Downloads** folder will get its view from any view saved via Explorer's **Apply to Folders** button.
+If **Make All Folders Generic** is also checked, only **Downloads**, **Libraries**, and **Search Results** will get their views from any view saved via Explorer's **Apply to Folders** button.
 
 ## Set Global Column Headings
 
@@ -172,6 +172,14 @@ No. This tool creates a copy of the Windows folder view defaults, edits that cop
 ## Is there an Undo?
 
 Yes, as described under "Restore from Backup" above, the tool creates a backup every run that can be restored at any time. You can also revert the Explorer views to Windows defaults at any time.
+
+## How can I have a folder path column only in Search Results?
+
+When you select your desired columns in WinSetView, also check your desired folder path column option and then click **Submit** to apply the changes. Then, in *Explorer*, unselect the folder path column for any General Items (Generic) view, such as C:\\ and then make that change apply to all folders of the same type by going to **View**, **Options**, **Change folder and search options**, **View** tab and clicking **Apply to Folders**. Repeat those steps for **Downloads** and any other folder type where you want the path column removed.
+
+Be sure to check **Keep "Apply to Folders" Views** the next time you run WinSetView in order to retain that work.
+
+The next major release of WinSetView will provide direct setting of each major folder type's defaults, eliminating the need for this workaround.
 
 ## How does this tool work?
 
