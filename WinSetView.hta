@@ -187,6 +187,11 @@ Sub Window_onLoad
 
   UpdateLang
 
+  Set oOption = Nothing
+  Set oFile = Nothing
+  Set oFiles = Nothing
+  Set oFolder = Nothing
+
 End Sub
 
 Sub CenterWindow(Width,Height)
@@ -209,6 +214,7 @@ Sub UpdateLang
       Set oFile = oFSO.OpenTextFile(LangFile,1,,-1)
       LangData = oFile.ReadAll
       oFile.Close
+      Set oFile = Nothing
       ArrHelp = Split(LangData,"<>")
       HH1 = ArrHelp(1)
       HT1 = ArrHelp(2)
@@ -266,7 +272,7 @@ Sub HTAStateRestore(CSVData)
     j = j + 1
   Next
   For Each Chk in ArrCB
-    Eval(Chk).Checked = ArrCSV(j)
+    Document.GetElementByID(Chk).Checked = ArrCSV(j)
     j = j + 1
   Next
   NameWid = ArrCSV(j)
@@ -293,7 +299,7 @@ Sub HTAStateSave
     CSVData = CSVData & xm(i).Checked & ","
   Next
   For Each Chk in ArrCB
-    CSVData = CSVData & Eval(Chk).Checked & ","
+    CSVData = CSVData & Document.GetElementByID(Chk).Checked & ","
   Next
   CSVData = CSVData & wn.Value & "," & wp.Value & ","
   CSVData = CSVData & ColShow & ","
@@ -427,6 +433,7 @@ End Sub
 
 <body id=body>
 <select id=Lang onchange='UpdateLang'>
+</select>
 <input id=wd type=radio name=vm onclick=ViewOps >#1#<br><br>
 <div id=vb>
   <input type=radio name=vm Checked onclick=ViewOps >#2#
