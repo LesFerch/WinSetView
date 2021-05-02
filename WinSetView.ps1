@@ -35,7 +35,7 @@ Param (
   $TPMode = 4,
   $TPNoGrp = 1,
   $Columns = 1,
-  $ColShow = 'DateModified,Size,ItemType',
+  $ColShow = 'ItemFolderPathDisplay,DateModified,Size,ItemType',
   $ColMore = 'FileExtension,ItemTypeText,ContentType,PerceivedType,Kind,DateCreated,DateAccessed,FileAttributes,FileVersion,ItemFolderNameDisplay,ItemFolderPathDisplay,ItemFolderPathDisplayNarrow,ItemPathDisplay,FileOwner',
   $NameWid = 34,
   $PathWid = 34,
