@@ -43,10 +43,13 @@ Param (
 )
 
 $Key = "Registry::HKLM\Software\Microsoft\Windows NT\CurrentVersion"
-$Value = "CurrentVersion"
-$WinVer = (Get-ItemProperty -Path $Key -Name $Value).$Value
-If ($WinVer -lt 6.1) {
-  Write-Host `n'Windows 7 or higher is required.'`n
+$Value = "ProductName"
+$WinVer = (Get-ItemProperty -Path $Key -Name $Value).$Value.SubString(8,2)
+$WinVer = '   .' + $WinVer + '. '
+$WinVer = ($WinVer -Replace '\.',' ').Trim()
+
+If (-Not(($WinVer -eq '7') -Or ($WinVer -eq '8') -Or ($WinVer -eq '10'))){
+  Write-Host `n'Windows 7, 8, or 10 is required.'`n
   Read-Host -Prompt "Press any key to continue"
   Exit
 }
@@ -58,7 +61,7 @@ If ($PSVersionTable.PSVersion.Major -lt 3) {
 }
 
 # FileExtension is not a supported column heading in Windows 7
-If ($WinVer -lt 6.3) {
+If ($WinVer -eq '7') {
   $ColShow = $ColShow -Replace 'FileExtension,',''
   $ColShow = $ColShow -Replace ',FileExtension',''
   $ColMore = $ColMore -Replace 'FileExtension,',''
@@ -83,18 +86,10 @@ If ($NameWid -lt 1) {$NameWid = 34}
 If ($PathWid -lt 1) {$PathWid = 34}
 
 If ($Mode -eq 0) {$SubMode = 0}
-If ($Mode -eq 3) {$IconSize = '010'}
-If ($Mode -eq 6) {$Mode = 3; $IconSize = '030'}
-If ($Mode -eq 7) {$Mode = 3; $IconSize = '060'}
-If ($Mode -eq 8) {$Mode = 3; $IconSize = '100'}
-
-$ColShow  = (';0System.' + $ColShow -replace ',',';0System.')
-$ColMore  = (';1System.' + $ColMore -replace ',',';1System.')
-$ColReg   = ('"ColumnList"="prop:0System.ItemNameDisplay' + $ColShow + $ColMore)
-
-$ColReg = $ColReg -replace 'System.ItemNameDisplay',"($NameWid)System.ItemNameDisplay"
-$ColReg = $ColReg -replace 'System.ItemFolderPathDisplay',"($PathWid)System.ItemFolderPathDisplay"
-$ColReg = $ColReg -replace 'System.ItemPathDisplay',"($PathWid)System.ItemPathDisplay"
+If ($Mode -eq 3) {$IconSize = 16}
+If ($Mode -eq 6) {$Mode = 3; $IconSize = 48}
+If ($Mode -eq 7) {$Mode = 3; $IconSize = 96}
+If ($Mode -eq 8) {$Mode = 3; $IconSize = 256}
 
 $BagM = '"HKCU\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\BagMRU"'
 $Bags = '"HKCU\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags"'
@@ -104,8 +99,6 @@ $CUFT = '"HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\FolderTypes"'
 $LMFT = '"HKLM\Software\Microsoft\Windows\CurrentVersion\Explorer\FolderTypes"'
 $Advn = '"HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced"'
 
-$LV       = '"LogicalViewMode"=dword:0000000'
-$IS       = '"IconSize"=dword:00000'
 $TempDir  = "$env:TEMP"
 $BakDir   = "$env:APPDATA\WinSetView"
 $RegFile  = "$TempDir\WinSetView.reg"
@@ -224,29 +217,92 @@ If ($TPMode -ne 0) {
 
 If ($Generic -eq 1) {Reg Add $AFSh /v FolderType /d Generic /t REG_SZ /f}
 
-#Set Explorer folder view defaults. Steps:
+#Set Explorer folder view defaults:
 # 1) Export HKLM FolderTypes key
-# 2) Use Replace with regular expresions to change defaults in exported file
-# 3) Import FolderTypes key to HKCU
+# 2) Import FolderTypes key to HKCU
+# 2) Update HKCU FolderTypes default settings
 # 4) Restart Explorer
 #Note: Explorer will use HKCU key instead of HKLM key automatically
 
 Reg Export $LMFT $RegFile /y
-
 $Data = Get-Content $RegFile
-
 $Data = $Data -replace 'HKEY_LOCAL_MACHINE','HKEY_CURRENT_USER'
-$Data = $Data -replace ($LV+'.+'),($LV+$Mode)
-If ($Mode -eq 3) {
-  $Data = $Data -replace ($IS+".+"),''
-  $Data = $Data -replace ($LV+$Mode),($IS+$IconSize+[char]13+[char]10+$LV+$Mode)
-}
-If ($NoGroup -eq 1) {$Data = $Data -replace '"GroupBy"=".+"','"GroupBy"=""'}
-If ($Columns -eq 1) {$Data = $Data -replace '"ColumnList"=".+?(?=;1)',$ColReg}
-
 Out-File -InputObject $Data -encoding Unicode -filepath $RegFile
-
 Reg Import $RegFile
-If (Test-Path -Path $Custom) {Reg Import $Custom}
 
+$FolderTypes = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\FolderTypes'
+$GroupBy = ''
+$SearchMode = 1
+
+$RegColShow  = (';0System.' + $ColShow -replace ',',';0System.')
+$RegColMore  = (';1System.' + $ColMore -replace ',',';1System.')
+
+Get-ChildItem $FolderTypes | Get-ItemProperty | Where CanonicalName -Match Search | ForEach {
+  $Key = $_.PSPath
+  $Key = "$Key\TopViews"
+  If (Test-Path -Path $Key) {
+    Get-ChildItem $Key | Get-ItemProperty | ForEach {
+      $GUID = $_.PSChildName
+      $ChildKey = $Key + '\' + $GUID
+      Set-ItemProperty -Path $ChildKey -Name 'LogicalViewMode' -Value $Mode
+      If ($Mode -eq 3) {Set-ItemProperty -Path $ChildKey -Name 'IconSize' -Value $IconSize}
+      If ($NoGroup -eq 1) {Set-ItemProperty -Path $ChildKey -Name 'GroupBy' -Value $GroupBy}
+      If ($Columns -eq 1) {
+        $ColOrg = (Get-ItemProperty $ChildKey).ColumnList
+        $ColOrg = $ColOrg -Replace '0\(','1\('
+        $ColOrg = $ColOrg -Replace '0System.','1System.'
+        $ColOrg = $ColOrg -Replace 'Prop:',''
+        $ColAll = "prop:0($NameWid)System.ItemNameDisplay" + $RegColShow + $RegColMore + ';' + $ColOrg
+        $ColNew = ''
+        $ColAll.Split(';') | ForEach {
+          $ArrItem = $_.Split('.')
+          If ($ColNew -NotMatch $ArrItem[1]) {$ColNew = $ColNew + ';' + $_}
+        }
+        $ColNew = $ColNew -replace ';prop:0','prop:0'
+        $ColNew = $ColNew -replace 'System.ItemFolderPathDisplay',"($PathWid)System.ItemFolderPathDisplay"
+        $ColNew = $ColNew -replace 'System.ItemPathDisplay',"($PathWid)System.ItemPathDisplay"
+        Set-ItemProperty -Path $ChildKey -Name 'ColumnList' -Value $ColNew
+      }
+    }
+  }
+}
+
+$ColShow = ($ColShow -replace 'ItemFolderNameDisplay','')
+$ColShow = ($ColShow -replace 'ItemFolderPathDisplay','')
+$ColShow = ($ColShow -replace 'ItemFolderPathDisplayNarrow','')
+$ColShow = ($ColShow -replace 'ItemPathDisplay','')
+$ColShow = ($ColShow -replace ',,',',')
+
+$RegColShow  = (';0System.' + $ColShow -replace ',',';0System.')
+$RegColMore  = (';1System.' + $ColMore -replace ',',';1System.')
+
+Get-ChildItem $FolderTypes | Get-ItemProperty | Where CanonicalName -NotMatch Search | ForEach {
+  $Key = $_.PSPath
+  $Key = "$Key\TopViews"
+  If (Test-Path -Path $Key) {
+    Get-ChildItem $Key | Get-ItemProperty | ForEach {
+      $GUID = $_.PSChildName
+      $ChildKey = $Key + '\' + $GUID
+      Set-ItemProperty -Path $ChildKey -Name 'LogicalViewMode' -Value $Mode
+      If ($Mode -eq 3) {Set-ItemProperty -Path $ChildKey -Name 'IconSize' -Value $IconSize}
+      If ($NoGroup -eq 1) {Set-ItemProperty -Path $ChildKey -Name 'GroupBy' -Value $GroupBy}
+      If ($Columns -eq 1) {
+        $ColOrg = (Get-ItemProperty $ChildKey).ColumnList
+        $ColOrg = $ColOrg -Replace '0\(','1\('
+        $ColOrg = $ColOrg -Replace '0System.','1System.'
+        $ColOrg = $ColOrg -Replace 'Prop:',''
+        $ColAll = "prop:0($NameWid)System.ItemNameDisplay" + $RegColShow + $RegColMore + ';' + $ColOrg
+        $ColNew = ''
+        $ColAll.Split(';') | ForEach {
+          $ArrItem = $_.Split('.')
+          If ($ColNew -NotMatch $ArrItem[1]) {$ColNew = $ColNew + ';' + $_}
+        }
+        $ColNew = $ColNew -replace ';prop:0','prop:0'
+        Set-ItemProperty -Path $ChildKey -Name 'ColumnList' -Value $ColNew
+      }
+    }
+  }
+}
+
+If (Test-Path -Path $Custom) {Reg Import $Custom}
 RestartExplorer

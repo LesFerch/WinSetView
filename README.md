@@ -5,7 +5,7 @@
 Compatible with Windows 7, Windows 8, and Windows 10.
 
 Les Ferch, lesferch@gmail.com\
-GitHub repository created 2021-03-26, last updated 2021-04-28
+GitHub repository created 2021-03-26, last updated 2021-05-02
 
 # Summary
 
@@ -88,6 +88,8 @@ The **File extension** column heading is not available on Windows 7.
 **Folder path**: Full path to the folder. Example: C:\Movies\Ghibli\
 **Folder**: Folder name followed by preceding path. Example: Ghibli (C:\Movies)\
 **Path**: Full path to the file. Example: C:\Movies\Ghibli\Ponyo.mkv
+
+In WinSetView 1.5 and above, these path columns will only appear in search results. Please note that the path column will not appear when you search the Downloads folder because the Downloads folder type does not have an associated search results folder type.
 
 ## Name and Path Column Widths
 The first number sets the width of the name column (first column) in Details view. The second number Sets the width of any path columns enabled in Details view.\
@@ -175,11 +177,7 @@ Yes, as described under "Restore from Backup" above, the tool creates a backup e
 
 ## How can I have a folder path column only in Search Results?
 
-When you select your desired columns in WinSetView, also check your desired folder path column option and then click **Submit** to apply the changes. Then, in *Explorer*, unselect the folder path column for any General Items (Generic) view, such as C:\\ and then make that change apply to all folders of the same type by going to **View**, **Options**, **Change folder and search options**, **View** tab and clicking **Apply to Folders**. Repeat those steps for **Downloads** and any other folder type where you want the path column removed.
-
-Be sure to check **Keep "Apply to Folders" Views** the next time you run WinSetView in order to retain that work.
-
-The next major release of WinSetView will provide direct setting of each major folder type's defaults, eliminating the need for this workaround.
+Use WinSetView 1.5 or higher. In WinSetView 1.5 and above, the path columns are only applied to search results.
 
 ## How does this tool work?
 
@@ -216,10 +214,9 @@ Here's an overview of the steps the Powershell script performs to set Explorer v
 2) Delete those keys (except Streams/Defaults if Keep "Apply to Folders" Views is checked).
 3) Set any direct registry entries, such as Show File Extensions and Make All Folders Generic, for the current user.
 4) If custom "This PC" and "Network" views have been selected, create BagMRU/Bags entries for those views.
-5) Export HKEY_LOCAL_MACHINE FolderTypes key to a file.
-6) Use Replace with regular expresions to change defaults in exported file as per user's selections.
-7) Import edited FolderTypes key file to HKEY_CURRENT_USER.
-8) Restart Explorer.
+5) Copy FolderTypes key from HKEY_LOCAL_MACHINE (HKLM) to HKEY_CURRENT_USER (HKCU).
+6) Edit FolderTypes key in HKCU per user's selections.
+7) Restart Explorer.
 
 -----------------------------------------------------------------------------------
 

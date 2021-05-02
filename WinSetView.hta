@@ -34,19 +34,31 @@ File 1 of 2: WinSetView.hta (GUI tool to select desired views)
   #wd   {margin-left:10pt}
   #ka   {margin-top:3pt}
 </style>
-<title>Globally Set Explorer Folder Views</title>
 </head>
 
 <script language="VBScript">
 Option Explicit
 SetLocale(1033)
-Const Ver = "1.3"
+Const Ver = "1.5"
 Dim Mode, NoGroup, Generic, TPMode, TPNoGrp, ShowExt, Columns, Msg, Choice, oFolder, oFiles, AllHTML
 Dim CmdLine, Params, oShell, Visible, oFSO, i, Chk, ArrCB, j, AppData, rbShow, RBSet, CBSet
 Dim ColShow, ColMore, Label, Delim, CSVData, ArrCSV, CSVFile, oFile, DefData, UserData
 Dim WinWidth, WinHeight, ScaleWidth, Resize, Result, NameWid, PathWid, WinVer, HH2, HT2, TestFile
 Dim LangData, LangDir, LangFile, ArrLang, Tag, Item, ArrHelp, HH1, HT1, FileName, ParamFile
 Dim Count, Pick, Language, oOption, LangCount, LangLast, TaggedHTML, LangIndex, SubMode
+
+Set oShell = CreateObject("Wscript.Shell")
+Set oFSO = CreateObject("Scripting.FileSystemObject")
+
+'Get Windows version
+WinVer = oShell.RegRead("HKLM\Software\Microsoft\Windows NT\CurrentVersion\ProductName")
+WinVer = Trim(Replace(Mid(WinVer,9,2),"."," "))
+
+'Check Windows version
+If Not(WinVer="7" Or WinVer="8" Or WinVer="10") Then
+  MsgBox "Windows 7, 8, or 10 is required.",0+16,"Error"
+  Self.Close
+End If
 
 'Set up an array of checkbox object names
 ArrCB = Split("se,ng,gn,ka,ch,dm,sz,ti,fn,dc,fv,tt,fp,da,fe,tc,ff,fa,tk,tp,pi,fo,pc,xg",",")
@@ -61,8 +73,6 @@ PathWid = "34"
 Language = "English"
 DefData = Ver & "," & RBSet & "," & CBSet & "," & NameWid & "," & PathWid & "," & ColShow & "," & ColMore & "," & Language
 UserData = DefData
-Set oShell = CreateObject("Wscript.Shell")
-Set oFSO = CreateObject("Scripting.FileSystemObject")
 LangDir = ".\Language\"
 AppData = ".\AppData"
 
@@ -106,14 +116,6 @@ HH2 = "Warning..."
 HT2 = HT2 & "If `Make All Folders Generic` and `Keep `Apply to Folders` Views` are both checked, "
 HT2 = HT2 & "only the Downloads folder type will get its view from a view saved with Explorer's "
 HT2 = HT2 & "`Apply to Folders` button."
-
-'Get Windows NT Version
-WinVer = oShell.RegRead("HKLM\Software\Microsoft\Windows NT\CurrentVersion\CurrentVersion")
-
-If WinVer < 6.1 Then
-  MsgBox "Windows 7 or higher is required",0+16,"Error"
-  Self.Close
-End If
 
 'Set up paths
 If Not oFSO.FolderExists(AppData) Then oFSO.CreateFolder(AppData)
@@ -228,7 +230,7 @@ Sub UpdateLang
 
   AllHTML = TaggedHTML
   
-  Document.title = ArrLang(0)
+  Document.title = ArrLang(0) & " " & Ver
   
   For i = 1 To 38
     Tag = "#" & i & "#"
@@ -254,7 +256,7 @@ End Sub
 'Set interface selections to values from CSVData
 Sub HTAStateRestore(CSVData)
 
-  If WinVer < 6.3 Then
+  If WinVer = "7" Then
     fe.Checked = False
     fe.Disabled = True
     Mux "FileExtension",False
