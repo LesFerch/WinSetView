@@ -20,7 +20,7 @@ Each option, and related Explorer background information, is detailed below, but
 All changes made by this tool are per-user within the HKEY_CURRENT_USER hive in the registry. No machine settings are touched and no elevated privileges are required. On each run, the tool makes a unique backup file of the affected registry values. A restore option is provided allowing you to rollback to any of these backups. There's also an option to completely reset all Explorer views to Windows default values.
 
 # Options
-![image](https://user-images.githubusercontent.com/79026235/115082553-19eab680-9ed4-11eb-9b53-bb9f1142086e.png)
+![image](https://user-images.githubusercontent.com/79026235/116820794-c4a1dc80-ab44-11eb-9213-3d3d26ef0e4c.png)
 
 ## Language Dropdown Menu
 
@@ -58,6 +58,15 @@ Check this box if you want to control which column headings are enabled globally
 
 Seventeen of Explorer's column headings are provided (I can add more on request). There are many more heading choices in Explorer, but these are the ones that are most likely to be applicable globally. Some of them appear redundant, but they're all different in some way. Each heading is explained below:
 
+## Path headings (useful in search results):
+
+**Folder path**: Full path to the folder. Example: C:\Movies\Ghibli\
+**Folder**: Folder name followed by preceding path. Example: Ghibli (C:\Movies)\
+**Path**: Full path to the file. Example: C:\Movies\Ghibli\Ponyo.mkv
+**Folder name**: The folder name only. Example: Ghibli\
+
+In WinSetView 1.5 and above, the path columns will only appear in search results. Please note that the path column will not appear when you search the Downloads folder because the Downloads folder type does not have an associated search results folder type. Tip: Select your preferred search result path column first and then select other headings, such as Date modified and Size. That way, when you do a search, the path of all matches will be visible without having to make the window larger.
+
 ## Date headings:
 
 **Date Modified**: The last date/time the file was updated on this file system.\
@@ -81,15 +90,6 @@ Seventeen of Explorer's column headings are provided (I can add more on request)
 **File extension**: Example: .mp3 (handy for sorting if you don't need a type field)
 
 The **File extension** column heading is not available on Windows 7.
-
-## Path headings (useful in search results):
-
-**Folder name**: The folder name only. Example: Ghibli\
-**Folder path**: Full path to the folder. Example: C:\Movies\Ghibli\
-**Folder**: Folder name followed by preceding path. Example: Ghibli (C:\Movies)\
-**Path**: Full path to the file. Example: C:\Movies\Ghibli\Ponyo.mkv
-
-In WinSetView 1.5 and above, the path columns will only appear in search results. Please note that the path column will not appear when you search the Downloads folder because the Downloads folder type does not have an associated search results folder type. Tip: Select your preferred search result path column first and then select other headings, such as Date modified and Size. That way, when you do a search, the path of all matches will be visible without having to make the Window larger.
 
 ## Name and Path Column Widths
 The first number sets the width of the name column (first column) in Details view. The second number Sets the width of any path columns enabled in Details view.\
