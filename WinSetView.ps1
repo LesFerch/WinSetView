@@ -234,10 +234,25 @@ $FolderTypes = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\FolderT
 $GroupBy = ''
 $SearchMode = 1
 
-$RegColShow  = (';0System.' + $ColShow -replace ',',';0System.')
+$ColShowSearch = $ColShow
+
+$ColShow = ($ColShow -replace 'ItemFolderNameDisplay','')
+$ColShow = ($ColShow -replace 'ItemFolderPathDisplay','')
+$ColShow = ($ColShow -replace 'ItemFolderPathDisplayNarrow','')
+$ColShow = ($ColShow -replace 'ItemPathDisplay','')
+$ColShow = ($ColShow -replace ',,',',')
+
+$RegColShowOther   = (';0System.' + $ColShow -replace ',',';0System.')
+$RegColShowSearch  = (';0System.' + $ColShowSearch -replace ',',';0System.')
 $RegColMore  = (';1System.' + $ColMore -replace ',',';1System.')
 
-Get-ChildItem $FolderTypes | Get-ItemProperty | Where CanonicalName -Match Search | ForEach {
+Get-ChildItem $FolderTypes | Get-ItemProperty | ForEach {
+  If ($_.CanonicalName -Match 'Search') {
+    $RegColShow = $RegColShowSearch
+  }
+  Else {
+    $RegColShow = $RegColShowOther
+  }
   $Key = $_.PSPath
   $Key = "$Key\TopViews"
   If (Test-Path -Path $Key) {
@@ -261,43 +276,6 @@ Get-ChildItem $FolderTypes | Get-ItemProperty | Where CanonicalName -Match Searc
         $ColNew = $ColNew -replace ';prop:0','prop:0'
         $ColNew = $ColNew -replace 'System.ItemFolderPathDisplay',"($PathWid)System.ItemFolderPathDisplay"
         $ColNew = $ColNew -replace 'System.ItemPathDisplay',"($PathWid)System.ItemPathDisplay"
-        Set-ItemProperty -Path $ChildKey -Name 'ColumnList' -Value $ColNew
-      }
-    }
-  }
-}
-
-$ColShow = ($ColShow -replace 'ItemFolderNameDisplay','')
-$ColShow = ($ColShow -replace 'ItemFolderPathDisplay','')
-$ColShow = ($ColShow -replace 'ItemFolderPathDisplayNarrow','')
-$ColShow = ($ColShow -replace 'ItemPathDisplay','')
-$ColShow = ($ColShow -replace ',,',',')
-
-$RegColShow  = (';0System.' + $ColShow -replace ',',';0System.')
-$RegColMore  = (';1System.' + $ColMore -replace ',',';1System.')
-
-Get-ChildItem $FolderTypes | Get-ItemProperty | Where CanonicalName -NotMatch Search | ForEach {
-  $Key = $_.PSPath
-  $Key = "$Key\TopViews"
-  If (Test-Path -Path $Key) {
-    Get-ChildItem $Key | Get-ItemProperty | ForEach {
-      $GUID = $_.PSChildName
-      $ChildKey = $Key + '\' + $GUID
-      Set-ItemProperty -Path $ChildKey -Name 'LogicalViewMode' -Value $Mode
-      If ($Mode -eq 3) {Set-ItemProperty -Path $ChildKey -Name 'IconSize' -Value $IconSize}
-      If ($NoGroup -eq 1) {Set-ItemProperty -Path $ChildKey -Name 'GroupBy' -Value $GroupBy}
-      If ($Columns -eq 1) {
-        $ColOrg = (Get-ItemProperty $ChildKey).ColumnList
-        $ColOrg = $ColOrg -Replace '0\(','1\('
-        $ColOrg = $ColOrg -Replace '0System.','1System.'
-        $ColOrg = $ColOrg -Replace 'Prop:',''
-        $ColAll = "prop:0($NameWid)System.ItemNameDisplay" + $RegColShow + $RegColMore + ';' + $ColOrg
-        $ColNew = ''
-        $ColAll.Split(';') | ForEach {
-          $ArrItem = $_.Split('.')
-          If ($ColNew -NotMatch $ArrItem[1]) {$ColNew = $ColNew + ';' + $_}
-        }
-        $ColNew = $ColNew -replace ';prop:0','prop:0'
         Set-ItemProperty -Path $ChildKey -Name 'ColumnList' -Value $ColNew
       }
     }
