@@ -62,8 +62,8 @@ Seventeen of Explorer's column headings are provided (I can add more on request)
 
 **Folder path**: Full path to the folder. Example: C:\Movies\Ghibli\
 **Folder**: Folder name followed by preceding path. Example: Ghibli (C:\Movies)\
-**Path**: Full path to the file. Example: C:\Movies\Ghibli\Ponyo.mkv
-**Folder name**: The folder name only. Example: Ghibli\
+**Path**: Full path to the file. Example: C:\Movies\Ghibli\Ponyo.mkv\
+**Folder name**: The folder name only. Example: Ghibli
 
 In WinSetView 1.5 and above, the path columns will only appear in search results. Please note that the path column will not appear when you search the Downloads folder because the Downloads folder type does not have an associated search results folder type. Tip: Select your preferred search result path column first and then select other headings, such as Date modified and Size. That way, when you do a search, the path of all matches will be visible without having to make the window larger.
 
