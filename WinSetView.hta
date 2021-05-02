@@ -45,7 +45,7 @@ Dim CmdLine, Params, oShell, Visible, oFSO, i, Chk, ArrCB, j, AppData, rbShow, R
 Dim ColShow, ColMore, Label, Delim, CSVData, ArrCSV, CSVFile, oFile, DefData, UserData
 Dim WinWidth, WinHeight, ScaleWidth, Resize, Result, NameWid, PathWid, WinVer, HH2, HT2, TestFile
 Dim LangData, LangDir, LangFile, ArrLang, Tag, Item, ArrHelp, HH1, HT1, FileName, ParamFile
-Dim Count, Pick, Language, oOption, LangCount, LangLast, TaggedHTML, LangIndex, SubMode
+Dim Count, Pick, Language, oOption, LangCount, LangLast, TaggedHTML, LangIndex, SubMode, FirstRun
 
 Set oShell = CreateObject("Wscript.Shell")
 Set oFSO = CreateObject("Scripting.FileSystemObject")
@@ -123,12 +123,17 @@ CSVFile = AppData & "\WinSetView.csv"
 ParamFile = AppData & "\WinSetViewParams.txt"
 
 'Read in previous user selections
+FirstRun = True
 If oFSO.FileExists(CSVFile) Then
+  FirstRun = False
   Set oFile = oFSO.OpenTextFile(CSVFile,1,,-1)
   UserData = oFile.ReadAll
   oFile.Close
   ArrCSV = Split(UserData,",")
-  If Not ArrCSV(0) = Ver Then UserData = DefData
+  If Not ArrCSV(0) = Ver Then
+    UserData = DefData
+    FirstRun = True
+  End If
 End If
 
 'See if there are any reg files in the backup folder
@@ -170,7 +175,7 @@ Sub Window_onLoad
   'Update interface selections
   HTAStateRestore UserData
 
-  If UserData=DefData Then yb.Disabled = True
+  If FirstRun Then yb.Disabled = True
   If Not rbShow Then rb.Disabled = True
 
   If LangCount>0 Then
