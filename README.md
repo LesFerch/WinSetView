@@ -89,7 +89,7 @@ The **File extension** column heading is not available on Windows 7.
 **Folder**: Folder name followed by preceding path. Example: Ghibli (C:\Movies)\
 **Path**: Full path to the file. Example: C:\Movies\Ghibli\Ponyo.mkv
 
-In WinSetView 1.5 and above, these path columns will only appear in search results. Please note that the path column will not appear when you search the Downloads folder because the Downloads folder type does not have an associated search results folder type.
+In WinSetView 1.5 and above, the path columns will only appear in search results. Please note that the path column will not appear when you search the Downloads folder because the Downloads folder type does not have an associated search results folder type. Tip: Select your preferred search result path column first and then select other headings, such as Date modified and Size. That way, when you do a search, the path of all matches will be visible without having to make the Window larger.
 
 ## Name and Path Column Widths
 The first number sets the width of the name column (first column) in Details view. The second number Sets the width of any path columns enabled in Details view.\
@@ -177,7 +177,7 @@ Yes, as described under "Restore from Backup" above, the tool creates a backup e
 
 ## How can I have a folder path column only in Search Results?
 
-Use WinSetView 1.5 or higher. In WinSetView 1.5 and above, the path columns are only applied to search results.
+Use WinSetView 1.5 or higher. In WinSetView 1.5 and above, the path columns are only applied to search results. See the path headings section above for more details.
 
 ## How does this tool work?
 
