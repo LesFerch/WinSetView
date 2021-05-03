@@ -5,7 +5,7 @@
 Compatible with Windows 7, Windows 8, and Windows 10.
 
 Les Ferch, lesferch@gmail.com\
-GitHub repository created 2021-03-26, last updated 2021-05-02
+GitHub repository created 2021-03-26, last updated 2021-05-03
 
 # Summary
 
@@ -20,7 +20,7 @@ Each option, and related Explorer background information, is detailed below, but
 All changes made by this tool are per-user within the HKEY_CURRENT_USER hive in the registry. No machine settings are touched and no elevated privileges are required. On each run, the tool makes a unique backup file of the affected registry values. A restore option is provided allowing you to rollback to any of these backups. There's also an option to completely reset all Explorer views to Windows default values.
 
 # Options
-![image](https://user-images.githubusercontent.com/79026235/116820794-c4a1dc80-ab44-11eb-9213-3d3d26ef0e4c.png)
+![image](https://user-images.githubusercontent.com/79026235/116878268-1d2cb480-abed-11eb-98a1-34134734086a.png)
 
 ## Language Dropdown Menu
 
@@ -178,6 +178,14 @@ Yes, as described under "Restore from Backup" above, the tool creates a backup e
 ## How can I have a folder path column only in Search Results?
 
 Use WinSetView 1.5 or higher. In WinSetView 1.5 and above, the path columns are only applied to search results. See the path headings section above for more details.
+
+## How can I disable automatic folder type discovery and keep special folder views, such as Pictures?
+
+Select your desired options in *WinSetView*, check the option **Make all folders generic** and then click **Submit**. Then, in *Explorer*, open your **Pictures** folder, click in the white space, select **Customize this folder...**, Select **Pictures** from the drop down menu, check **Also apply this template to all subfolders**, and click **Apply**. Repeat this step for any other folder trees that you wish to set as Pictures. Repeat, similarly, for **Documents**, **Music**, and **Videos** folder types.
+
+Once you've set up these special folder types, be sure to use the **Apply to folders** button any time you change a view that you want applied to all folders of the same type.
+
+If you run WinSetView again with **Make all folders generic** checked, be sure to check the option **Keep "Apply to Folders" Views**. Then, you will only have to do the **Customize this folder...** procedure to get your custom views for **Pictures** (and other special folders) to reappear. If you uncheck **Make all folders generic** and check the option **Keep "Apply to Folders" Views**, then you won't have to repeat the **Customize this folder...** procedure, but automtic folder type discovery will be re-enabled.
 
 ## How does this tool work?
 
