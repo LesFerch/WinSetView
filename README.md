@@ -20,7 +20,7 @@ Each option, and related Explorer background information, is detailed below, but
 All changes made by this tool are per-user within the HKEY_CURRENT_USER hive in the registry. No machine settings are touched and no elevated privileges are required. On each run, the tool makes a unique backup file of the affected registry values. A restore option is provided allowing you to rollback to any of these backups. There's also an option to completely reset all Explorer views to Windows default values.
 
 # Options
-![image](https://user-images.githubusercontent.com/79026235/116878268-1d2cb480-abed-11eb-98a1-34134734086a.png)
+![image](https://user-images.githubusercontent.com/79026235/116888269-3f2c3400-abf9-11eb-8ca1-9f8e018f8631.png)
 
 ## Language Dropdown Menu
 
