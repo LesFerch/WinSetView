@@ -42,9 +42,9 @@ SetLocale(1033)
 Const Ver = "1.5"
 Dim Mode, NoGroup, Generic, TPMode, TPNoGrp, ShowExt, Columns, Msg, Choice, oFolder, oFiles, AllHTML
 Dim CmdLine, Params, oShell, Visible, oFSO, i, Chk, ArrCB, j, AppData, rbShow, RBSet, CBSet
-Dim ColShow, ColMore, Label, Delim, CSVData, ArrCSV, CSVFile, oFile, DefData, UserData
+Dim ColShow, ColMore, Label, Delim, CSVData, ArrCSV, CSVFile, oFile, DefData, UserData, Centered
 Dim WinWidth, WinHeight, ScaleWidth, Resize, Result, NameWid, PathWid, WinVer, HH2, HT2, TestFile
-Dim LangData, LangDir, LangFile, ArrLang, Tag, Item, ArrHelp, HH1, HT1, FileName, ParamFile
+Dim LangData, LangDir, LangFile, ArrLang, Tag, Item, ArrHelp, HH1, HT1, FileName, ParamFile, X, Y
 Dim Count, Pick, Language, oOption, LangCount, LangLast, TaggedHTML, LangIndex, SubMode, FirstRun
 
 Set oShell = CreateObject("Wscript.Shell")
@@ -145,8 +145,7 @@ For Each oFile In oFiles
 Next
 
 Sub Window_onLoad
-
-  Self.ResizeTo 800,800 
+  Centered = False
 
   'Populate language dropdown menu
   LangCount = 0
@@ -202,11 +201,13 @@ Sub Window_onLoad
 End Sub
 
 Sub CenterWindow(Width,Height)
-  Dim X,Y
-  Self.ResizeTo Width,Height 
-  X = (screen.Width - Width) / 2
-  Y = (screen.Height - Height) / 2
-  Self.MoveTo X, Y
+  Self.ResizeTo Width,Height
+  If Not Centered Then
+    X = (screen.Width - Width) / 2
+    Y = (screen.Height - Height) / 2
+    Self.MoveTo X,Y
+    Centered = True
+  End If
 End Sub
 
 'Update labels with selected language
