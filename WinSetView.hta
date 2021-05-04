@@ -385,12 +385,14 @@ End Sub
 Sub ViewOps
   If vm(0).Checked Then
     op.style.visibility = "hidden"
+    h2.style.visibility = "hidden"
     co.style.visibility = "hidden"  
     th.style.visibility = "hidden"  
     mc.style.visibility = "hidden"
     Exit Sub
   End If  
   op.style.visibility = "visible"
+  h2.style.visibility = "visible"
   th.style.visibility = "visible"  
   mc.style.visibility = "visible"  
   If ch.Checked Then
