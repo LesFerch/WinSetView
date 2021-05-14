@@ -3,10 +3,8 @@ WinSetView (Globally Set Explorer Folder Views)
 Les Ferch, lesferch@gmail.com, GitHub repository created 2021-03-26
 File 1 of 2: WinSetView.hta (GUI tool to select desired views)
 -->
-
 <html>
 <meta charset="UTF-8">
-<head>
 <hta:application
   id=oHTA
   icon=powershell.exe
@@ -16,28 +14,10 @@ File 1 of 2: WinSetView.hta (GUI tool to select desired views)
   selection=no
   singleinstance=yes
 >
-<style>
-  body  {background-color:LemonChiffon; font-size:10pt; font-family:Arial}
-  table {font-size:10pt; font-family:Arial; border-collapse:collapse}
-  td    {padding: 0 15 0 0}
-  #op   {margin-bottom:5pt}
-  #th   {margin-bottom:5pt}
-  #cs   {margin-bottom:5pt; margin-top:5pt; font-size:9pt; width:100%; height:40; white-space:nowrap; overflow:auto}
-  #h1   {width:2em}
-  #h2   {width:2em}
-  #wn   {width:2em; margin-left:2pt}
-  #wp   {width:2em; margin-left:2pt}
-  #w1   {margin-left:10pt; display=inline}
-  #w2   {margin-left:10pt; display=inline}
-  #lang {width:15em; font-size:8pt}
-  #vb   {white-space:nowrap; display=inline}
-  #wd   {margin-left:10pt}
-  #ka   {margin-top:3pt}
-</style>
-</head>
-
 <script language="VBScript">
 Option Explicit
+Window.ResizeTo 100,100
+Window.MoveTo -2000,-2000
 SetLocale(1033)
 Const Ver = "1.5"
 Dim Mode, NoGroup, Generic, TPMode, TPNoGrp, ShowExt, Columns, Msg, Choice, oFolder, oFiles, AllHTML
@@ -56,7 +36,7 @@ WinVer = Trim(Replace(Mid(WinVer,9,2),"."," "))
 
 'Check Windows version
 If Not(WinVer="7" Or WinVer="8" Or WinVer="10") Then
-  MsgBox "Windows 7, 8, or 10 is required.",0+16,"Error"
+  MsgBox "Windows 7, 8, or 10 is required.",vbCritical,"Error"
   Self.Close
 End If
 
@@ -76,11 +56,7 @@ UserData = DefData
 LangDir = ".\Language\"
 AppData = ".\AppData"
 
-TestFile = Now()
-TestFile = Replace(TestFile,"/","")
-TestFile = Replace(TestFile,":","")
-TestFile = Replace(TestFile," ","")
-TestFile = ".\" & TestFile & ".txt"
+TestFile = ".\" & Replace(Replace(Replace(Now(),"/",""),":","")," ","") & ".txt"
 On Error Resume Next
 Set oFile = oFSO.OpenTextFile(TestFile,2,True)
 oFile.Write ""
@@ -432,15 +408,34 @@ Sub Mux(Label,Checked)
 End Sub
 
 Sub Help01
-  MsgBox HT1,0+64,HH1
+  MsgBox HT1,vbInformation,HH1
 End Sub
 
 Sub Help02
   HT2 = Replace(HT2,"`",Chr(34))
-  MsgBox HT2,0+48,HH2
+  MsgBox HT2,vbExclamation,HH2
 End Sub
 </script>
-
+<head>
+<style>
+  body  {background-color:LemonChiffon; font-size:10pt; font-family:Arial}
+  table {font-size:10pt; font-family:Arial; border-collapse:collapse}
+  td    {padding: 0 15 0 0}
+  #op   {margin-bottom:5pt}
+  #th   {margin-bottom:5pt}
+  #cs   {margin-bottom:5pt; margin-top:5pt; font-size:9pt; width:100%; height:40; white-space:nowrap; overflow:auto}
+  #h1   {width:2em}
+  #h2   {width:2em}
+  #wn   {width:2em; margin-left:2pt}
+  #wp   {width:2em; margin-left:2pt}
+  #w1   {margin-left:10pt; display:inline}
+  #w2   {margin-left:10pt; display:inline}
+  #lang {width:15em; font-size:8pt}
+  #vb   {white-space:nowrap; display:inline}
+  #wd   {margin-left:10pt}
+  #ka   {margin-top:3pt}
+</style>
+</head>
 <body id=body>
 <select id=Lang onchange='UpdateLang'>
 </select>
