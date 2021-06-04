@@ -5,7 +5,7 @@
 Compatible with Windows 7, Windows 8, and Windows 10.
 
 Les Ferch, lesferch@gmail.com\
-GitHub repository created 2021-03-26, last updated 2021-05-03
+GitHub repository created 2021-03-26, last updated 2021-06-04
 
 # Summary
 

@@ -236,11 +236,17 @@ $SearchMode = 1
 
 $ColShowSearch = $ColShow
 
+$ColShow = ($ColShow -replace ',',' ')
 $ColShow = ($ColShow -replace 'ItemFolderNameDisplay','')
-$ColShow = ($ColShow -replace 'ItemFolderPathDisplay','')
+$ColShow = ($ColShow.Trim() -replace '  ',' ')
 $ColShow = ($ColShow -replace 'ItemFolderPathDisplayNarrow','')
+$ColShow = ($ColShow.Trim() -replace '  ',' ')
+$ColShow = ($ColShow -replace 'ItemFolderPathDisplay','')
+$ColShow = ($ColShow.Trim() -replace '  ',' ')
 $ColShow = ($ColShow -replace 'ItemPathDisplay','')
-$ColShow = ($ColShow -replace ',,',',')
+$ColShow = ($ColShow.Trim() -replace '  ',' ')
+$ColShow = ($ColShow.Trim() -replace '  ',' ')
+$ColShow = ($ColShow -replace ' ',',')
 
 $RegColShowOther   = (';0System.' + $ColShow -replace ',',';0System.')
 $RegColShowSearch  = (';0System.' + $ColShowSearch -replace ',',';0System.')
