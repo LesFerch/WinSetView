@@ -214,21 +214,21 @@ Please note that you can set the width as small as 1em, but Explorer will expand
 
 If you click the **⟷** column heading button, it will prompt with an option to clear all column width fields.
 
-**✔✔ (Display in Details View)**
+**✓✓ (Display in Details View)**
 
 This column provides checkboxes to allow you to select which column headings are displayed in Details view. Any column selected for Details view also becomes a quick-pick item when you right-click in the column heading bar in Explorer. Therefore, when you select an item in this column, it also checks the item in the *Add to Right-Click Menu* column.
 
 If you *uncheck* an item in this column, it does not uncheck the item in the *Add to Right-Click Menu* column because an item can be available for quick-pick without being an active column heading.
 
-If you click the **✔✔** column heading button, it will prompt with an option to clear all selections in the column.
+If you click the **✓✓** column heading button, it will prompt with an option to clear all selections in the column.
 
-**✔ (Add to Right-Click Menu)**
+**✓ (Add to Right-Click Menu)**
 
 This column provides checkboxes to allow you to select which column headings are available for quick-pick when you right-click in the column heading bar in Explorer Details view.
 
 The Explorer limit for the quick-pick menu is 21 items, so WinSetView will not allow you to select more than 21 items in this column.
 
-If you click the **✔** column heading button, it will prompt with an option to clear all selections in the column. This will also clear all selections in the *Display in Details View* column because it's not possible for a property to be a Details view column heading and not be in the quick-pick menu.
+If you click the **✓** column heading button, it will prompt with an option to clear all selections in the column. This will also clear all selections in the *Display in Details View* column because it's not possible for a property to be a Details view column heading and not be in the quick-pick menu.
 
 ## Folder Types
 
