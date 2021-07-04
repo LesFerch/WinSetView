@@ -108,7 +108,7 @@ The 🔍 button can be safely ignored. It's a feature for technical users that p
 
 The **Inherit** checkbox is very important. By default, this box is checked for all folder types. This means the folder type will get its settings from its parent folder type. With all Inherit boxes checked, all folder types will get the same settings as *Global*, which is equivalent to how WinSetView v1 worked. Uncheck the Inherit button when you wish to have settings for a folder type that differ from its parent.
 
-Please note that there are *groups* of folder types in WinSetView. For example, the parent of *General Items* is *Global* but the parent of *General Items Library*, *General Items OneDrive*, and *General Items Search Results* is the *General Items* folder type. The same pattern is true for *Documents*, *Music* *Pictures*, *Videos*, and *Contacts*.
+Please note that there are *groups* of folder types in WinSetView. For example, the parent of *General Items* is *Global* but the parent of *General Items Library*, *General Items OneDrive*, and *General Items Search Results* is the *General Items* folder type. The same pattern is true for *Documents*, *Music*, *Pictures*, *Videos*, and *Contacts*.
 
 ## Options Menu
 
