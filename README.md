@@ -94,9 +94,25 @@ The **Group by** option applies to any view. Use the *Columns* button to select 
 
 The **Sort by** option applies to any view. Use the *Columns* button to select up to four properties to sort by. A plus sign indicates ascending order and a minus sign indicates descending order. By default, items will be sorted *ascending* by *Name*.
 
+## Folder Types
+
+In Windows, there are five major folder types that most users are familiar with:
+
+**General Items\
+Documents\
+Pictures\
+Music\
+Videos**
+
+Any folder (or tree of folders) can be set to one of these folder types using Explorer's **Customize this folder...** menu and the view settings for a particular folder type can be updated from the currently viewed folder by using Explorer's **Apply to Folders** button. More information on these options is in the *Background* section later in this document.
+
+In the Windows 10 *FolderTypes* registry key, there are actually **56** different folder types, of which **38** have view and column heading settings that can be edited by WinSetView. Ten of these folder types do not appear to affect anything useful or visible in Explorer, leaving **28** folder types that are shown in WinSetView.
+
+Note: The file **FolderTypes.txt** file contains the list of all 38 of the editable folder types, but I have commented out 10 of those. If you see a reason why one or more of the commented out entries should be enabled for editing in WinSetView, please let me know.
+
 ## Folder Type List
 
-Below the *Global* section are settings for each Explorer folder type. See the **Folder Types** section below for more information about the different folder types.
+Below the *Global* section in WinSetView are settings for each Explorer folder type. See below for more information about the different folder types.
 
 To the left of each folder type is a checkbox that is normally checked. If the box is unchecked, no settings will be changed for that folder type. That is, it will retain it's Windows default settings.
 
@@ -109,6 +125,68 @@ The 🔍 button can be safely ignored. It's a feature for technical users that p
 The **Inherit** checkbox is very important. By default, this box is checked for all folder types. This means the folder type will get its settings from its parent folder type. With all Inherit boxes checked, all folder types will get the same settings as *Global*, which is equivalent to how WinSetView v1 worked. Uncheck the Inherit button when you wish to have settings for a folder type that differ from its parent.
 
 Please note that there are *groups* of folder types in WinSetView. For example, the parent of *General Items* is *Global* but the parent of *General Items Library*, *General Items OneDrive*, and *General Items Search Results* is the *General Items* folder type. The same pattern is true for *Documents*, *Music*, *Pictures*, *Videos*, and *Contacts*.
+
+Here are more details about the folder types available to edit in WinSetView:
+
+**Downloads**
+
+As of Windows 10 1903, the **Downloads** folder is its own folder type. This is a good thing, but the default setting of *group by date* has been a source of frustration for many users. Although WinSetView will let you change this default, it was always in the user's control to turn it off for the Downloads folder type. More details on this can be found in the *Background* section below.
+
+You can leave *Inherit* checked and just let *Downloads* use your Global settings, or uncheck Inherit and select specific settings for this folder type. Be assured, either way, if you set *Group by* to *(None)* you will never see grouping in this folder again.
+
+**General Items**
+
+This is the folder type that applies to most folders on your computer's storage devices. It's also known as the *Generic* folder type. You will probably want to leave *Inherit* checked for this folder type to have it use your Global settings.
+
+**Documents**
+
+This folder type is for document files, such as Word and Excel files. For most users using the Global settings for documents works fine, but some users may want to uncheck *Inherit* on this folder type and add headings such as *Authors* or *Owner*.
+
+**Music**
+
+This folder type is for music files, such as MP3s. Therefore, you may want to enable headings such as *Rating*, *Bit rate*, *Length*, *Contributing Artists*, and *Genre*.
+
+**Pictures**
+
+This folder type is for pictures, such as JPGs. Many users like to set *Pictures* folders to a more visual display, such as large icons or add columns such as *Dimensions* to Details view. Uncheck *Inherit* if you want to set Pictures differently than your Global settings. If you want to have icons for Pictures folders in Explorer, but want List or Details view when opening or saving files in graphics programs, be sure to go to the *Options* menu to set the view for Open and Save dialogs.
+
+**Videos**
+
+This folder type is for videos, such as MP4s and MKVs. The comments for the Pictures folder type also apply to the Videos folder type.
+
+**Contacts**
+
+This folder can be found when you browse to your user folder in Windows. If you use *Windows Contacts*, your contacts will be shown here. A Details view with column headings such as *E-mail address*, *Cell phone*, *Home address*, etc. would make sense for this folder type. If you don't use Windows Contacts, you can safely leave this folder type to use your Global settings.
+
+**Library folder types**
+
+Under each folder type listed above, there is a corresponding *Libary* folder type. This controls the view you see when the folder is accessed via *Libraries*.
+
+**OneDrive folder types**
+
+Under each folder type listed above, except Contacts, there is a corresponding *OneDrive* folder type. This controls the view you see for folders on Microsoft OneDrive.
+
+**Search Results folder types**
+
+Under each folder type listed above, there is a corresponding *Search Results* folder type. This controls the view you see after doing a search. This is where a property, such as *Folder Path*, is useful to show the path of any found item.
+
+Note: Each of the folder type groups above (e.g. *Pictures*) is a family in WinSetView with the first member being the parent of the others. Therefore, for example, if you uncheck *Inherit* for the *Music* folder type and then edit its column headings, those settings will be inherited by all of the other *Music* folder types, as long as they have Inherit checked.
+
+**Quick access**
+
+This folder type controls the view you see when clicking on the *Quick access* item in Explorer's left navigation pane. This folder type is also known as the *Home Folder*.
+
+**User Files**
+
+This folder type controls the view you see for your user folder (e.g. C:\\Users\\SomeUser).
+
+**User Files Search Results**
+
+This folder type controls the view of results you see when you *search* your user folder.
+
+**Searches**
+
+This folder type controls the view you see for the *Searches* item within your user folder.
 
 ## Options Menu
 
@@ -229,84 +307,6 @@ This column provides checkboxes to allow you to select which column headings are
 The Explorer limit for the quick-pick menu is 21 items, so WinSetView will not allow you to select more than 21 items in this column.
 
 If you click the **✓** column heading button, it will prompt with an option to clear all selections in the column. This will also clear all selections in the *Display in Details View* column because it's not possible for a property to be a Details view column heading and not be in the quick-pick menu.
-
-## Folder Types
-
-In Windows, there are five major folder types that most users are familiar with:
-
-**General Items\
-Documents\
-Pictures\
-Music\
-Videos**
-
-Any folder (or tree of folders) can be set to one of these folder types using Explorer's **Customize this folder...** menu and the view settings for a particular folder type can be updated from the currently viewed folder by using Explorer's **Apply to Folders** button. More information on these options is in the *Background* section later in this document.
-
-In the Windows 10 *FolderTypes* registry key, there are actually **56** different folder types, of which **38** have view and column heading settings that can be edited by WinSetView. Ten of these folder types do not appear to affect anything useful or visible in Explorer, leaving **28** folder types that are shown in WinSetView.
-
-Note: The file **FolderTypes.txt** file contains the list of all 38 of the editable folder types, but I have commented out 10 of those. If you see a reason why one or more of the commented out entries should be enabled for editing in WinSetView, please let me know.
-
-Here are some more details about the folder types available to edit in WinSetView:
-
-**Downloads**
-
-As of Windows 10 1903, the **Downloads** folder is its own folder type. This is a good thing, but the default setting of *group by date* has been a source of frustration for many users. Although WinSetView will let you change this default, it was always in the user's control to turn it off for the Downloads folder type. More details on this can be found in the *Background* section below.
-
-You can leave *Inherit* checked and just let *Downloads* use your Global settings, or uncheck Inherit and select specific settings for this folder type. Be assured, either way, if you set *Group by* to *(None)* you will never see grouping in this folder again.
-
-**General Items**
-
-This is the folder type that applies to most folders on your computer's storage devices. It's also known as the *Generic* folder type. You will probably want to leave *Inherit* checked for this folder type to have it use your Global settings.
-
-**Documents**
-
-This folder type is for document files, such as Word and Excel files. For most users using the Global settings for documents works fine, but some users may want to uncheck *Inherit* on this folder type and add headings such as *Authors* or *Owner*.
-
-**Music**
-
-This folder type is for music files, such as MP3s. Therefore, you may want to enable headings such as *Rating*, *Bit rate*, *Length*, *Contributing Artists*, and *Genre*.
-
-**Pictures**
-
-This folder type is for pictures, such as JPGs. Many users like to set *Pictures* folders to a more visual display, such as large icons or add columns such as *Dimensions* to Details view. Uncheck *Inherit* if you want to set Pictures differently than your Global settings. If you want to have icons for Pictures folders in Explorer, but want List or Details view when opening or saving files in graphics programs, be sure to go to the *Options* menu to set the view for Open and Save dialogs.
-
-**Videos**
-
-This folder type is for videos, such as MP4s and MKVs. The comments for the Pictures folder type also apply to the Videos folder type.
-
-**Contacts**
-
-This folder can be found when you browse to your user folder in Windows. If you use *Windows Contacts*, your contacts will be shown here. A Details view with column headings such as *E-mail address*, *Cell phone*, *Home address*, etc. would make sense for this folder type. If you don't use Windows Contacts, you can safely leave this folder type to use your Global settings.
-
-**Library folder types**
-
-Under each folder type listed above, there is a corresponding *Libary* folder type. This controls the view you see when the folder is accessed via *Libraries*.
-
-**OneDrive folder types**
-
-Under each folder type listed above, except Contacts, there is a corresponding *OneDrive* folder type. This controls the view you see for folders on Microsoft OneDrive.
-
-**Search Results folder types**
-
-Under each folder type listed above, there is a corresponding *Search Results* folder type. This controls the view you see after doing a search. This is where a property, such as *Folder Path*, is useful to show the path of any found item.
-
-Note: Each of the folder type groups above (e.g. *Pictures*) is a family in WinSetView with the first member being the parent of the others. Therefore, for example, if you uncheck *Inherit* for the *Music* folder type and then edit its column headings, those settings will be inherited by all of the other *Music* folder types, as long as they have Inherit checked.
-
-**Quick access**
-
-This folder type controls the view you see when clicking on the *Quick access* item in Explorer's left navigation pane. This folder type is also known as the *Home Folder*.
-
-**User Files**
-
-This folder type controls the view you see for your user folder (e.g. C:\\Users\\SomeUser).
-
-**User Files Search Results**
-
-This folder type controls the view of results you see when you *search* your user folder.
-
-**Searches**
-
-This folder type controls the view you see for the *Searches* item within your user folder.
 
 ## Column Headings (Properties)
 
