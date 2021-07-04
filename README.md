@@ -234,10 +234,10 @@ If you click the **✔** column heading button, it will prompt with an option to
 
 In Windows, there are five major folder types that most users are familiar with:
 
-**General Items
-Documents
-Pictures
-Music
+**General Items\
+Documents\
+Pictures\
+Music\
 Videos**
 
 Any folder (or tree of folders) can be set to one of these folder types using Explorer's **Customize this folder...** menu and the view settings for a particular folder type can be updated from the currently viewed folder by using Explorer's **Apply to Folders** button. More information on these options is in the *Background* section later in this document.
@@ -554,12 +554,12 @@ I have not included any right to left languages, such as Arabic, with WinSetView
 
 The **WinSetView.hta** script looks for a **Language** folder in the same location as the script. The Language folder contains one folder for each supported language (e.g. *en-US*). Within each language folder are the following files:
 
-*Columns-Win10.txt
-Columns-Win7.txt
-Columns-Win8.txt
-FolderTypes.txt
-Font.txt
-Labels.txt
+*Columns-Win10.txt\
+Columns-Win7.txt\
+Columns-Win8.txt\
+FolderTypes.txt\
+Font.txt\
+Labels.txt\
 ViewList.txt*
 
 If you wish to edit an existing language, you only need to touch the files *Labels.txt* and *FolderTypes.txt*. The *Columns* and *ViewList* files contain language strings pulled directly from Windows, so they are already perfectly matched to what Explorer displays.
