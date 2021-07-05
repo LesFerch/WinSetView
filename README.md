@@ -304,7 +304,11 @@ If you click the **✓✓** column heading button, it will prompt with an option
 
 This column provides checkboxes to allow you to select which column headings are available for quick-pick when you right-click in the column heading bar in Explorer Details view.
 
-The Explorer limit for the quick-pick menu is 21 items, so WinSetView will not allow you to select more than 21 items in this column.
+The Explorer limit for the quick-pick menu is 21 items, so WinSetView will not allow you to select more than 21 items in this column. If you hit this limit, you will see this message:
+
+![image](https://user-images.githubusercontent.com/79026235/124494511-eb6ad200-dd84-11eb-8198-adea1bb7e176.png)
+
+Just click OK to close the message. Adjust your selections as necessary. You can't pick more than 21.
 
 If you click the **✓** column heading button, it will prompt with an option to clear all selections in the column. This will also clear all selections in the *Display in Details View* column because it's not possible for a property to be a Details view column heading and not be in the quick-pick menu.
 
