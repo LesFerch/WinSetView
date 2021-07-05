@@ -78,7 +78,7 @@ The Minimize, Maximize and Exit controls work as they do in any application. Ple
 
 ## Global
 
-Set the global (system-wide) views for Windows:
+Set the *Global* (system-wide) views for Windows:
 
 Use the **View** menu to select one of: *Details, List, Tiles, Content, Small icons, Medium icons, Large icons, or Extra large icons*
 
@@ -93,6 +93,26 @@ The selected column headings for *Details* view are shown on a single line with 
 The **Group by** option applies to any view. Use the *Columns* button to select the property to group by or turn off grouping, which will be displayed as *(None)*.
 
 The **Sort by** option applies to any view. Use the *Columns* button to select up to four properties to sort by. A plus sign indicates ascending order and a minus sign indicates descending order. By default, items will be sorted *ascending* by *Name*.
+
+## Additional Settings for Each Folder Type
+
+Below the *Global* section in WinSetView are settings for each Explorer folder type. See below for more information about the different folder types. Each folder type has settings as described above for *Global*, but also has these additional settings:
+
+**Enable/Disable Check Box**
+
+To the left of each folder type is a checkbox that is normally checked. If the box is unchecked, no settings will be changed for that folder type. That is, it will retain it's Windows default settings.
+
+**Inherit**
+
+The **Inherit** checkbox is very important. By default, this box is checked for all folder types. This means the folder type will get its settings from its parent folder type. With all Inherit boxes checked, all folder types will get the same settings as *Global*, which is equivalent to how WinSetView v1 worked. Uncheck the Inherit button when you wish to have settings for a folder type that differ from its parent.
+
+Please note that there are *groups* of folder types in WinSetView. For example, the parent of *General Items* is *Global* but the parent of *General Items Library*, *General Items OneDrive*, and *General Items Search Results* is the *General Items* folder type. The same pattern is true for *Documents*, *Music*, *Pictures*, *Videos*, and *Contacts*.
+
+**Inspect (🔍)**
+
+The 🔍 button can be safely ignored. It's a feature for technical users that provides a quick, synchronized view of the folder type's default values in HKLM compared to the current values (if any) set in HKCU by WinSetView.
+
+Note: For power users who have their own comparison tool installed, such as WinDiff or Beyond Compare, a before/after comparison can be done by going to the Windows Temp directory and comparing the files *WinSetView1.reg* and *WinSetView2.reg*.
 
 ## Folder Types
 
@@ -111,22 +131,6 @@ In the Windows 10 *FolderTypes* registry key, there are actually **56** differen
 Note: The file **FolderTypes.txt** file contains the list of all 38 of the editable folder types, but I have commented out 10 of those. If you see a reason why one or more of the commented out entries should be enabled for editing in WinSetView, please let me know.
 
 ## Folder Type List
-
-Below the *Global* section in WinSetView are settings for each Explorer folder type. See below for more information about the different folder types.
-
-To the left of each folder type is a checkbox that is normally checked. If the box is unchecked, no settings will be changed for that folder type. That is, it will retain it's Windows default settings.
-
-Below each folder type name, are the same settings described above in the *Global* section.
-
-There are two additional settings:
-
-The 🔍 button can be safely ignored. It's a feature for technical users that provides a quick, synchronized view of the folder type's default values in HKLM compared to the current values (if any) set in HKCU by WinSetView.
-
-The **Inherit** checkbox is very important. By default, this box is checked for all folder types. This means the folder type will get its settings from its parent folder type. With all Inherit boxes checked, all folder types will get the same settings as *Global*, which is equivalent to how WinSetView v1 worked. Uncheck the Inherit button when you wish to have settings for a folder type that differ from its parent.
-
-Please note that there are *groups* of folder types in WinSetView. For example, the parent of *General Items* is *Global* but the parent of *General Items Library*, *General Items OneDrive*, and *General Items Search Results* is the *General Items* folder type. The same pattern is true for *Documents*, *Music*, *Pictures*, *Videos*, and *Contacts*.
-
-Here are more details about the folder types available to edit in WinSetView:
 
 **Downloads**
 
