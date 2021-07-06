@@ -418,7 +418,7 @@ This script creates a language-specific *Labels.txt* file for WinSetView using a
 
 # Background
 
-Folder views in Windows Explorer are both flexible and frustrating. Many users have reported their view settings getting inexplicitly reverted back to Windows defaults, especially as it concerns the *Downloads* folder. However, some of these frustrations may be due to a misunderstanding of how the views work.
+Folder views in Windows Explorer are both flexible and, sometimes, frustrating. Many users have reported their view settings getting inexplicitly reverted back to Windows defaults, especially as it concerns the *Downloads* folder. However, some of these frustrations may be due to a misunderstanding of how the views work.
 
 In Explorer, there are separate views for each folder type and often multiple folders that point to the same physical location. See the *Downloads Folder* section below for more details on this topic. Understanding Explorer's **Apply to Folders**, **Reset Folders**, and **Customize this folder...** features is key to getting control over Explorer's folder views.
 
