@@ -225,7 +225,7 @@ This makes the **Documents**, **Music**, **Pictures**, and **Videos** folders ge
 
 Please note that, even with this setting enabled, you can still change any folders to type **Documents**, **Music**, **Pictures**, or **Videos** using Explorer's **Customize this folder...** option. Any default views, you may have set for these folder types in WinSetView, would then apply.
 
-Checking this option also causes **Folder Type Discovery** to be disabled. That's the windows feature that automatically changes a folder's view based on its contents. If you want your folder views to change with content, don't check this item. If you want a consistent view across all folders, regardless of content, you may want to check this option.
+Checking this option also causes **Folder Type Discovery** to be disabled. That's the windows feature that automatically changes a folder's type based on its contents. If you want your folder views to change with content, don't check this item. If you want a consistent view across all folders, regardless of content, you may want to check this option.
 
 Please note there is no separate setting for **Folder Type Discovery**. If you want Folder Type Discovery off, you must make all folders generic. However, as noted above, you can change any folder (or tree of folders) back to a specific folder type at any time.
 
@@ -459,7 +459,7 @@ Please note that the *Generic* registry setting has no affect on the *Downloads*
 
 ## Automatic Folder Type Discovery
 
-By default, Explorer has automatic folder type discovery *enabled*. This means Explorer will automatically change the view of a folder based on its contents. The "FolderType"="Generic" registry entry, described above, also disables automatic folder discovery. This setting is applied by WinSetView when you select the **Make All Folders Generic** option.
+By default, Explorer has automatic folder type discovery *enabled*. This means Explorer will automatically change a folder's type (and hence its view) based on its contents. The "FolderType"="Generic" registry entry, described above, also disables automatic folder discovery. This setting is applied by WinSetView when you select the **Make All Folders Generic** option.
 
 If you want the folders *Pictures*, *Videos*, etc. to have the same view as *General Items*, then it will make sense to check the **Make All Folders Generic** option in WinSetView. However, if you want different views for these folders, it's probably not worth the trouble to check *Make All Folders Generic* just to turn off automatic folder type discovery. See this topic in the **FAQ** section for more details.
 
