@@ -592,7 +592,11 @@ Save all edited language files as type **Unicode (UTF-16)**.
 
 Thanks to **Keith Miller** at TenForums.com for documenting the FolderTypes approach to setting default views.
 
-Thanks to my daughter **Dana** for providing the Japanese (ja-JP) translation.
+Thanks to **Patrick Hannemann** for the German (de-DE) translation.
+
+Thanks to **Ringo Xue** for the Simplified Chinese (zh-CN) translation.
+
+Thanks to my daughter **Dana** for the Japanese (ja-JP) translation.
 
 Thanks to my son **Brian** for HTML/CSS help. If you use Spotify on Android, please check out his  [**Trimify**](https://play.google.com/store/apps/details?id=app.web.trimifymusic) app on the Google Play store.
 
