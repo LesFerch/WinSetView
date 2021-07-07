@@ -572,7 +572,7 @@ If you wish to edit an existing language, you only need to touch the files *Labe
 
 The *Font.txt* file contains the default display font for the language. 
 
-If you edit *Columns* and *ViewList* please be sure to use EXACTLY the same terms that Windows uses. As described in the *Tools* section, the *GetWinStrings.ps1* script will extract key words from Windows for any installed language.
+If you edit *FolderTypes* and *ViewList* please be sure to use EXACTLY the same terms that Windows uses. As described in the *Tools* section, the *GetWinStrings.ps1* script will extract key words from Windows for any installed language.
 
 The *Tools* section provides details about which scripts and procedures create the various language files. However, I suggest that if you wish to create a new translation, please contact me and I will create all the files so you only have to edit the two machine translated files.
 
