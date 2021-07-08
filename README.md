@@ -9,7 +9,7 @@ GitHub repository created 2021-03-26, last updated 2021-07-03
 
 # Summary
 
-WinSetView provides an easy way to globally set Windows Explorer folder views. For example, if you want Details view, with a particular selection of column headings enabled across all folders, then WinSetView will do that for you. WinSetView sets registry values, as discussed in various websites online, that Explorer will use to let you get the folder views set up just the way you want. It does not modify Explorer or add any tasks or services.
+WinSetView provides an *easy* way to set Windows File Explorer default folder views. For example, if you want Details view, with a particular selection of column headings enabled across all folders, then WinSetView will do that for you. WinSetView sets registry values, as discussed in various websites online, that Explorer will use to let you get the folder views set up just the way you want. It does NOT modify File Explorer or add any tasks or services.
 
 WinSetView is comprised of two main files: **WinSetView.hta** (HTML GUI with VBScript code) and **WinSetView.ps1** (PowerShell command line script) and numerous supporting files (see the Files section below for details). Double-click **WinSetView.hta** to open the GUI. When you click **Submit**, it will pass your choices as an INI file to WinSetView.ps1, which will make the registry changes and then restart Explorer.
 
