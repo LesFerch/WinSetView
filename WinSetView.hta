@@ -1471,6 +1471,23 @@ Sub ShowC2(id,ftname)
   Document.GetElementByID("V~" & id).InnerHTML = Replace(ftname,"`","'")
 End Sub
 
+Sub PixelInput(id)
+  Dim a, b, c
+  If Not window.event.altKey Then Exit Sub
+  a = Document.GetElementByID("W~" & id).Value
+  b = ""
+  If IsNumeric(a) Then b = Int(BaseScale * 8 * a)
+  b = InputBox(ArrLang(28),"",b)
+  If Not IsNumeric(b) Then b = ""
+  If b<>"" Then 
+    b = Abs(Int(b))
+    c = Int(b / BaseScale / 8)
+    If c>99 Then c = 99
+    If c<1 Then c = 1
+    Document.GetElementByID("W~" & id).Value = c
+  End If
+End Sub
+
 ' HTML interface starts here with the script-generated pages
 
 Sub BuildPages
@@ -1509,7 +1526,7 @@ Sub BuildPages
     "<td><input type=radio name=RBS2 onclick=RBS2Click('" & C1 & "') id=S2~" & C1 & " Value='" & C1 & "'></td>" &_
     "<td><input type=radio name=RBS3 onclick=RBS3Click('" & C1 & "') id=S3~" & C1 & " Value='" & C1 & "'></td>" &_
     "<td><input type=radio name=RBS4 onclick=RBS4Click('" & C1 & "') id=S4~" & C1 & " Value='" & C1 & "'></td>" &_
-    "<td><input type=text class=cw id=W~" & C1 & " maxlength=2></td>" &_
+    "<td><input type=text class=cw id=W~" & C1 & " maxlength=2 onclick=PixelInput('" & C1 & "')></td>" &_
     "<td><input type=checkbox onclick=CBMClick('" & C1 & "') id=M~" & C1 & " Value='" & C1 & "'></td>" &_
     "<td><input type=checkbox onclick=CBPClick('" & C1 & "') id=P~" & C1 & " Value='" & C1 & "'></td>" &_
     "<td><span id=V~" & C1 & " class=" & x & " onmouseover='ShowC1 " & Q & C1 & Q &_ 

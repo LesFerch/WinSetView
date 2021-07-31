@@ -5,7 +5,7 @@
 Compatible with Windows 7, 8, 10, and 11.
 
 Les Ferch, lesferch@gmail.com\
-GitHub repository created 2021-03-26, last updated 2021-07-11
+GitHub repository created 2021-03-26, last updated 2021-07-30
 
 # Summary
 
@@ -42,7 +42,7 @@ When checked, and applied via *Submit*, this option clears the registry keys tha
 
 ## Submit
 
-Execute the Powershell script to apply the selected options to the registry and restart Explorer.
+Execute the PowerShell script to apply the selected options to the registry and restart Explorer.
 
 When *Submit* is clicked, the current selections in WinSetView are saved to an INI file (Win10.ini on Windows 10 and 11) and that INI file name is passed to WinSetView.ps1. 
 
@@ -86,7 +86,7 @@ Note: In *Explorer*, you can use *Ctrl-Mouse-Scroll-wheel* to set a custom icon 
 
 Use the **Columns** button to select column headings, group by, and sort by options. See the *Columns* section below for further information.
 
-The selected column headings for *Details* view are shown on a single line with each heading separated by a vertical bar. If many headings are selected and/or a large font is used, this line will wrap. To view this line wthout wrapping, use the horizontal scroll menu, as described above. Column headings shown in *blue* are only displayed in search result views. See the *Options* page to toggle this feature on or off.
+The selected column headings for *Details* view are shown on a single line with each heading separated by a vertical bar. If many headings are selected and/or a large font is used, this line will wrap. To view this line without wrapping, use the horizontal scroll menu, as described above. Column headings shown in *blue* are only displayed in search result views. See the *Options* page to toggle this feature on or off.
 
 The **Group by** option applies to any view. Use the *Columns* button to select the property to group by or turn off grouping, which will be displayed as *(None)*.
 
@@ -261,7 +261,7 @@ The top left of the page shows the currently selected folder type (or *Global*).
 
 The top right of the page has a back button (🡨) that will take you back to the main page. Please note that clicking the **X** in the System menu bar will exit the application, just as it does on the main page.
 
-Next, the currently selected column headings, that will display in Explorer's Details view, are shown on a single, scrollable line.
+Next, the currently selected column headings, that will display in File Explorer's Details view, are shown on a single, scrollable line in the same *order* as they will appear in File Explorer.
 
 This is followed by a list of all the Details view column headings that can be selected in Explorer (over 300 on Windows 10). These items are shown in the language of your choice, exactly as they appear in Explorer. Hovering the mouse over any name will show its internal Windows property name.¹
 
@@ -292,6 +292,12 @@ Explorer uses ems internally for all its default column widths. This keeps the a
 
 Please note that you can set the width as small as 1em, but Explorer will expand the column width to it's minimum allowed value when you drag the column width control in Explorer Details view. The minimum value cannot be overridden.
 
+If you wish to enter the column width in *pixels*, hold **Alt** and **click** the input width field you wish to adjust. A dialog will open showing the width in pixels:
+
+![image](https://user-images.githubusercontent.com/79026235/127723197-4b19497a-cf17-43e2-b7ac-df23e4b33608.png)
+
+The pixel value will vary depending on screen pixel density, whereas the value in ems will be constant across different display configurations. Please note that WinSetView sets the column *default* width which can only be set to whole (integer) em values. Windows File Explorer lets you set the width down to the pixel, but that is stored as a setting within the volatile *Bags* registry key *overriding* the default value. WinSetView deals with *default* settings only.
+
 If you click the **⟷** column heading button, it will prompt with an option to clear all column width fields.
 
 **✓✓ (Display in Details View)**
@@ -300,7 +306,9 @@ This column provides checkboxes to allow you to select which column headings are
 
 If you *uncheck* an item in this column, it does not uncheck the item in the *Add to Right-Click Menu* column because an item can be available for quick-pick without being an active column heading.
 
-If you click the **✓✓** column heading button, it will prompt with an option to clear all selections in the column.
+**Column Order**: The *order* in which the selected columns are displayed in File Explorer is shown at the top of the screen. The order is simply based on click-order. To change the order, simply uncheck each item and then recheck them in the desired order.
+
+Click the **✓✓** column heading to quickly uncheck *all* selected column headings.
 
 **✓ (Add to Right-Click Menu)**
 
@@ -540,7 +548,7 @@ Note: Default views for all folder types can be found in the *FolderTypes* key, 
 
 **How WinSetView Works**:
 
-Here's an overview of the steps the Powershell script performs to set Explorer views as per the selected options:
+Here's an overview of the steps the PowerShell script performs to set Explorer views as per the selected options:
 
 1) Backup the existing user's registry keys that hold Explorer views
 2) Delete those keys (except *Streams/Defaults* if *Keep "Apply to Folders" Views* is checked).
