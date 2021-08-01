@@ -485,9 +485,9 @@ For example, you may find it useful to set *Pictures* to Details view with colum
 
 ## Apply to Folders "Bug"
 
-Whenever you use the **Apply to Folders** button, on any generic folder, such as C:\\, your views for *This PC* and *Network* will revert back to Windows defaults. If you always leave *This PC* and *Network* at their default views, this is not an issue, but if you have changed either view and want to keep it changed, this is a nuisance.
+Whenever you use the **Apply to Folders** button, on any generic folder, such as C:\\, your views for *This PC* and *Network* (and USB connected phones and possibly other virtual folders) will revert back to Windows *defaults*. If you always leave *This PC* and *Network* (and other devices) at their default views, this is not an issue, but if you have changed the views and want to keep them changed, this is a nuisance.
 
-There is a workaround. Any folder that is open when **Apply to Folders** is used, will not have it's view changed. So, to "protect" your custom views for *This PC* and *Network*, be sure to have separate windows open to each of those views when you use the **Apply to Folders** button.
+There is a workaround for *This PC* and *Network*. Any folder that is open when **Apply to Folders** is used, will not have it's view changed. So, to "protect" your custom views for *This PC* and *Network*, be sure to have separate windows open to each of those views when you use the **Apply to Folders** button.
 
 # FAQ
 
