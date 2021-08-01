@@ -214,7 +214,7 @@ Function GetScale()
     'Custom scaling is set
     GetScale = Value/96
   Else
-    'See if standard (125 or 150 percent) scaling is set
+    'See if standard scaling is set
     Key = "Control Panel\Desktop\PerMonitorSettings"
     Result = oReg.EnumKey(HKCU, Key, ArrKeys)
     If Result=0 Then
@@ -223,8 +223,7 @@ Function GetScale()
         Exit For
       Next
       Value = oWSH.RegRead("HKCU\" & Key & "\" & SubKey & "\DPIValue")
-      If Value=1 Then GetScale = 1.25
-      If Value=2 Then GetScale = 1.50
+      If Value>0 Then GetScale = 1 + (Value * 0.25)
     End If
   End If
 End Function
@@ -1609,7 +1608,7 @@ End Sub
     white-space:nowrap;
     background-color:Azure;
     text-align:center;
-    padding:.3em .3em .3em .3em;
+    padding:0.3em 0.3em 0.3em 0.3em;
     border:1px solid black;
     margin-top:2.2em;
     margin-left:-1.5em
