@@ -599,6 +599,8 @@ Sub Dict2Dom
   gn.checked = oSettings.Item("[Options]Generic")
   x = oSettings.Item("[Options]SearchOnly")
   If x="" Then so.checked = 1 Else so.checked = x
+  x = oSettings.Item("[Options]SetVirtualFolders")
+  If x="" Then vf.checked = 1 Else vf.checked = x
   ka.checked = oSettings.Item("[Options]KeepViews")
   fd.checked = oSettings.Item("[Options]FileDialogOption")
   tp.checked = oSettings.Item("[Options]ThisPCoption")
@@ -711,6 +713,7 @@ Sub Var2Ini(INIFile)
   oFile.Write "CompView=" & Abs(Int(cv.checked)) & Z
   oFile.Write "Generic=" & Abs(Int(gn.checked)) & Z
   oFile.Write "SearchOnly=" & Abs(Int(so.checked)) & Z
+  oFile.Write "SetVirtualFolders=" & Abs(Int(vf.checked)) & Z
   oFile.Write "KeepViews=" & Abs(Int(ka.checked)) & Z
   oFile.Write "FileDialogOption=" & Abs(Int(fd.checked)) & Z
   oFile.Write "FileDialogView=" & fdv.SelectedIndex & Z
@@ -776,6 +779,7 @@ End Sub
 ' Display Options page
 
 Sub Options
+  YScrollPos = Document.documentElement.ScrollTop
   Pg1.style.display = "none"
   Pg4.style.display = "inline"
   OptionFileDialogs
@@ -1715,6 +1719,7 @@ End Sub
     <input type=checkbox id=cv Checked># 27 #<br><br>
     <div id=Sec4>
       <input type=checkbox id=so Checked onclick=OptionSearchOnly># 9 #<br><br>
+      <input type=checkbox id=vf Checked># 29 #<br><br>
       <input type=checkbox id=gn Checked># 10 #<br><br>
       <input type=checkbox id=ka># 11 #<br><br>
       <input type=checkbox id=fd onclick=OptionFileDialogs># 12 #<br>

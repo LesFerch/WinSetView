@@ -217,6 +217,12 @@ Note: The path column will not appear when you search the Downloads folder becau
 
 Note: The *Relevance* column heading (*Search.Rank* property) is *only* shown in search results and is therefore always blue in WinSetView, regardless of this setting.
 
+**Use General Items view for connected devices**
+
+Connected devices, such as phones and tablets, normally open in **Tiles** view with no option to easily change the view. The **Apply to folders** option is grayed out for such devices, requiring view changes to be done folder by folder. Enabling the **Use General Items view for connected devices** option causes such devices to open in the same view that has been set for **General Items**.
+
+Please note that this option actually causes *all virtual folders* to be displayed with the same view as General Items. Therefore, other virtual folders, such as *This PC* and *Network* will also be displayed with the General Items view. However, the separate view settings, available for *This PC* and *Network*, can be used to override the General Items view.
+
 **Make All Folders Generic**
 
 This option sets a registry value that tells Explorer to make all folders to be type *Generic* (i.e. *General Items*).
@@ -487,7 +493,7 @@ For example, you may find it useful to set *Pictures* to Details view with colum
 
 Whenever you use the **Apply to Folders** button, on any generic folder, such as C:\\, your views for *This PC* and *Network* (and USB connected phones and possibly other virtual folders) will revert back to Windows *defaults*. If you always leave *This PC* and *Network* (and other devices) at their default views, this is not an issue, but if you have changed the views and want to keep them changed, this is a nuisance.
 
-There is a workaround for *This PC* and *Network*. Any folder that is open when **Apply to Folders** is used, will not have it's view changed. So, to "protect" your custom views for *This PC* and *Network*, be sure to have separate windows open to each of those views when you use the **Apply to Folders** button.
+There is a workaround for *This PC* and *Network*. Any folder that is open when **Apply to Folders** is used, will not have it's view changed. So, to "protect" your custom views for *This PC* and *Network*, be sure to have separate windows open to each of those views when you use the **Apply to Folders** button. However, this approach is *not* practical to protect the views for a connected device, such as a smartphone in file transfer mode, as there would simply be too many folders to open. It's much easier to always use WinSetView to make your default view changes and avoid using the **Apply to Folders** button altogether.
 
 # FAQ
 

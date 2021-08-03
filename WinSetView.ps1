@@ -130,6 +130,7 @@ Else {
   $KeepViews = [Int]$iniContent['Options']['KeepViews']
   $Generic = [Int]$iniContent['Options']['Generic']
   $SearchOnly = [Int]$iniContent['Options']['SearchOnly']
+  $SetVirtualFolders = [Int]$iniContent['Options']['SetVirtualFolders']
   $FileDialogOption = [Int]$iniContent['Options']['FileDialogOption']
   $FileDialogView = [Int]$iniContent['Options']['FileDialogView']
   $FileDialogNG = [Int]$iniContent['Options']['FileDialogNG']
@@ -248,6 +249,16 @@ If ($ThisPCoption -ne 0) {
 
 If ($Generic -eq 1) {Reg Add "$Bags\AllFolders\Shell" /v FolderType /d Generic /t REG_SZ /f}
 
+If ($SetVirtualFolders -eq 1) {
+  $GUID = $iniContent['Generic']['GUID']
+  $GroupBy = $iniContent['Generic']['GroupBy']
+  SetViewValues([Int]$iniContent['Generic']['View'])
+  Reg Add "$Bags\AllFolders\Shell\$GUID" /v Mode /d "$Mode" /t REG_DWORD /f
+  Reg Add "$Bags\AllFolders\Shell\$GUID" /v LogicalViewMode /d "$LVMode" /t REG_DWORD /f
+  If ($LVMode -eq 3) {Reg Add "$Bags\AllFolders\Shell\$GUID" /v IconSize /d "$IconSize" /t REG_DWORD /f}
+  If ($GroupBy -eq '') {Reg Add "$Bags\AllFolders\Shell\$GUID" /v GroupView /d 0 /t REG_DWORD /f}
+}
+
 # Set Explorer folder view defaults:
 #  1) Export HKLM FolderTypes key
 #  2) Import FolderTypes key to HKCU
@@ -336,7 +347,7 @@ Get-ChildItem $FolderTypes | Get-ItemProperty | ForEach {
 Reg Export $CUFT $RegFile2 /y
 
 # Import Reg data to force dialog views
-# This is MUCH faster than creating the keys using Powershell
+# This is MUCH faster than creating the keys using PowerShell
 
 If ($FileDialogOption -eq 1) {
   Out-File -InputObject $RegData -filepath $T1
