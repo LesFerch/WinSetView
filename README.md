@@ -5,7 +5,7 @@
 Compatible with Windows 7, 8, 10, and 11.
 
 Les Ferch, lesferch@gmail.com\
-GitHub repository created 2021-03-26, last updated 2021-07-31
+GitHub repository created 2021-03-26, last updated 2021-08-02
 
 # Summary
 
@@ -192,7 +192,7 @@ This folder type controls the view you see for the *Searches* item within your u
 
 ## Options Menu
 
-![image](https://user-images.githubusercontent.com/79026235/124369691-adfb2d00-dc3c-11eb-9b8b-969f43e451c1.png)
+![image](https://user-images.githubusercontent.com/79026235/127952042-0b9da3db-7b39-44ed-9f96-8b7188b8c77b.png)
 
 **Show File Extensions**
 
