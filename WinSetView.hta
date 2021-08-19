@@ -800,7 +800,8 @@ End Sub
 ' Run WinSetView.ps1 with supplied parameter (INI or REG filename)
 
 Sub RunScript(Param)
-  CmdLine = "Powershell.exe -ExecutionPolicy Bypass .\WinSetView.ps1 " & Param
+  If window.event.altKey Then x = "-NoExit" Else x = ""
+  CmdLine = "Powershell.exe " & x & " -ExecutionPolicy Bypass .\WinSetView.ps1 " & Param
   oWSH.Run CmdLine,1,False
   Window.Close
 End Sub

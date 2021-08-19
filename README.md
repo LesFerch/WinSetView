@@ -5,7 +5,7 @@
 Compatible with Windows 7, 8, 10, and 11.
 
 Les Ferch, lesferch@gmail.com\
-GitHub repository created 2021-03-26, last updated 2021-08-11
+GitHub repository created 2021-03-26, last updated 2021-08-18
 
 # Summary
 
@@ -44,7 +44,9 @@ When checked, and applied via *Submit*, this option clears the registry keys tha
 
 Execute the PowerShell script to apply the selected options to the registry and restart Explorer.
 
-When *Submit* is clicked, the current selections in WinSetView are saved to an INI file (Win10.ini on Windows 10 and 11) and that INI file name is passed to WinSetView.ps1. 
+When *Submit* is clicked, the current selections in WinSetView are saved to an INI file (Win10.ini on Windows 10 and 11) and that INI file name is passed to WinSetView.ps1.
+
+Hold down the **Alt** key when clicking **Submit** to keep the PowerShell console open after completion of the script. This is useful for debugging if any errors appear in the PowerShell console window.
 
 See the **Background** section for details on how Explorer view settings work and how this script sets Explorer view default values.
 
