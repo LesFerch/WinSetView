@@ -846,6 +846,7 @@ Sub SelectColumns(i)
         GroupBy(i).style.visibility = "hidden"
         Document.GetElementByID(Gidx).Checked = False
       Else
+        GroupBy(i).style.visibility = "visible"
         If ArrGroupBy(FTindex)=C1 Then Document.GetElementByID(Gidx).Checked = True
       End If
       If ArrSort1(FTindex)=C1 Then Document.GetElementByID(S1idx).Checked = True
@@ -853,34 +854,33 @@ Sub SelectColumns(i)
         RBS2(i).style.visibility = "hidden"
         Document.GetElementByID(S2idx).Checked = False
       Else
+        RBS2(i).style.visibility = "visible"
         If ArrSort2(FTindex)=C1 Then Document.GetElementByID(S2idx).Checked = True
       End If
       If ArrSort3(FTindex)="" Then 
         RBS3(i).style.visibility = "hidden"
         Document.GetElementByID(S3idx).Checked = False
       Else
+        RBS3(i).style.visibility = "visible"
         If ArrSort3(FTindex)=C1 Then Document.GetElementByID(S3idx).Checked = True
       End If
       If ArrSort4(FTindex)="" Then 
         RBS4(i).style.visibility = "hidden"
         Document.GetElementByID(S4idx).Checked = False
       Else
+        RBS4(i).style.visibility = "visible"
         If ArrSort4(FTindex)=C1 Then Document.GetElementByID(S4idx).Checked = True
       End If
     End If
   Next
 
-  cbs1.Value = UpArrow
-  cbs2.Value = UpArrow
-  cbs3.Value = UpArrow
-  cbs4.Value = UpArrow
+  If ArrGroupBy(FTindex)="" Then cbg.Value = "X" Else cbg.Value = "{ }"
 
-  If ArrSort1Order(FTindex)="-" Then cbs1.Value = DnArrow
-  If ArrSort2Order(FTindex)="-" Then cbs2.Value = DnArrow
-  If ArrSort3Order(FTindex)="-" Then cbs3.Value = DnArrow
-  If ArrSort4Order(FTindex)="-" Then cbs4.Value = DnArrow
+  If ArrSort1Order(FTindex)="+" Then cbs1.Value = UpArrow Else cbs1.Value = DnArrow
+	If ArrSort2Order(FTindex)="+" Then cbs2.Value = UpArrow Else cbs2.Value = DnArrow
+	If ArrSort3Order(FTindex)="+" Then cbs3.Value = UpArrow Else cbs3.Value = DnArrow
+	If ArrSort4Order(FTindex)="+" Then cbs4.Value = UpArrow Else cbs4.Value = DnArrow
   
-  If ArrGroupBy(FTindex)="" Then cbg.Value = "X"
   If ArrSort2(FTindex)="" Then cbs2.Value = "X"
   If ArrSort3(FTindex)="" Then cbs3.Value = "X"
   If ArrSort4(FTindex)="" Then cbs4.Value = "X"
