@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <!--
 WinSetView (Globally Set Explorer Folder Views) v2
 Les Ferch, lesferch@gmail.com, GitHub repository created 2021-03-26
@@ -37,7 +37,7 @@ Dim AvailHeight, HeadHeight, RequiredWidth, CurrentWidth, Maximized, Fonts
 Dim AppData, WinVer, Folder, INIFile, rbShow, BodyHTML, TaggedHTML, Tag, Item
 Dim Language,LangDir, LangFile, LangCount, LangData, LangIndex, UBFolderType, YScrollPos
 Dim ViewFile, ViewData, FolderTypeFile, Scale, FontsFile, Backup, F1, F2
-Dim ColFile, ColData, SelectedFont1, SelectedFont2, FontFile
+Dim ColFile, ColData, SelectedFont1, SelectedFont2, FontFile, Checkmark, LRArrow
 Dim CmdLine, Line, Order, sOrder, SelectedSize1, SelectedSize2, GUID, Found
 Dim C1, C2, LastColSel, FTindex, Data, Show, TempFile, File, PartsDir, FileDialogExe
 Dim ColWid, ColShow, SortBy, BaseScale, UpArrow, DnArrow, MyLoc, MyPath, CurDir
@@ -98,9 +98,13 @@ FileDialogExe = PartsDir & "FileDialog.exe"
 If WinVer="7" Or WinVer="8" Then
   UpArrow = "↑"
   DnArrow = "↓"
+  Checkmark = "√"
+  LRArrow = "←→"
 Else
   UpArrow = "⮬"
   DnArrow = "⮯"
+  Checkmark = "✔"
+  LRArrow = "⟷"
 End If
 
 ' Set AppData to current folder if we have write access
@@ -200,6 +204,9 @@ Sub window_OnLoad
     End If
     xs.Add(oOption)
   Next
+  
+  cbo.Value = Checkmark & Checkmark
+  cbc.Value = Checkmark
 
   ' Saved current body HTML so that language can be switched without restarting
   TaggedHTML = Document.Body.InnerHTML
@@ -863,11 +870,21 @@ Sub SelectColumns(i)
     End If
   Next
 
+  cbs1.Value = UpArrow
+  cbs2.Value = UpArrow
+  cbs3.Value = UpArrow
+  cbs4.Value = UpArrow
+
+  If ArrSort1Order(FTindex)="-" Then cbs1.Value = DnArrow
+  If ArrSort2Order(FTindex)="-" Then cbs2.Value = DnArrow
+  If ArrSort3Order(FTindex)="-" Then cbs3.Value = DnArrow
+  If ArrSort4Order(FTindex)="-" Then cbs4.Value = DnArrow
+  
   If ArrGroupBy(FTindex)="" Then cbg.Value = "X"
   If ArrSort2(FTindex)="" Then cbs2.Value = "X"
   If ArrSort3(FTindex)="" Then cbs3.Value = "X"
   If ArrSort4(FTindex)="" Then cbs4.Value = "X"
-  
+
   ArrColumnList = Split(ArrColumnLists(FTindex),";")
 
   Order = 0
@@ -1306,7 +1323,7 @@ Sub RBS4Click(id)
 End Sub
 
 Sub WidthClick
-  If MsgBox(ArrLang(26),vbOKCancel,"⟷")=1 Then
+  If MsgBox(ArrLang(26),vbOKCancel,LRArrow)=1 Then
     For i = 0 To UBound(ArrColData)
       If ArrColData(i)<>"" Then
         ArrColDataItem = Split(ArrColData(i),";")
