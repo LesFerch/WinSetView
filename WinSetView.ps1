@@ -12,7 +12,7 @@ Param (
 
 $host.ui.RawUI.WindowTitle = "WinSetView"
 
-# Read entire INI file into a dictioonary object
+# Read entire INI file into a dictionary object
 
 Function Get-IniContent ($FilePath) {
   $ini = @{}

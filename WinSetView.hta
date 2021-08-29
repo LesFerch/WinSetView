@@ -40,7 +40,7 @@ Dim ViewFile, ViewData, FolderTypeFile, Scale, FontsFile, Backup, F1, F2
 Dim ColFile, ColData, SelectedFont1, SelectedFont2, FontFile, Checkmark, LRArrow
 Dim CmdLine, Line, Order, sOrder, SelectedSize1, SelectedSize2, GUID, Found
 Dim C1, C2, LastColSel, FTindex, Data, Show, TempFile, File, PartsDir, FileDialogExe
-Dim ColWid, ColShow, SortBy, BaseScale, UpArrow, DnArrow, MyLoc, MyPath, CurDir
+Dim ColWid, ColShow, SortBy, BaseScale, UpArrow, DnArrow, MyLoc, MyPath, CurDir, a, b, c
 Dim Gidx, Midx, Nidx, Pidx, Widx, S1idx, S2idx, S3idx, S4idx, Sort1, Sort2, Sort3, Sort4
 Dim ArrSort1, ArrSort2, ArrSort3, ArrSort4, ArrFonts
 Dim ArrSort1Order, ArrSort2Order, ArrSort3Order, ArrSort4Order
@@ -85,6 +85,14 @@ MyLoc  = Mid(document.url,8)
 MyPath = Left(MyLoc,InStrRev(MyLoc,"\")-1)
 CurDir = oWSH.CurrentDirectory
 If CurDir<>MyPath Then oWSH.CurrentDirectory = MyPath
+
+If InStr(CurDir,"[") Or InStr(CurDir,"]") Then
+  a = "Current directory: " & CurDir & Z & Z
+  b = "Due to a PowerShell issue, this script cannot run from a directory containing '[' or ']'"
+  c = Z & Z & "Please rename the current directory."
+  MsgBox a & b & c,vbCritical,"Error"
+  Self.Close
+End If
   
 Temp  = oWSH.ExpandEnvironmentStrings("%Temp%")
 TempFile = Temp & "\WinSetView.tmp"
@@ -807,8 +815,11 @@ End Sub
 ' Run WinSetView.ps1 with supplied parameter (INI or REG filename)
 
 Sub RunScript(Param)
-  If window.event.altKey Then x = "-NoExit" Else x = ""
-  CmdLine = "Powershell.exe " & x & " -ExecutionPolicy Bypass .\WinSetView.ps1 " & Param
+  x = ""
+  If Right(Param,3)="ini" Then
+    If window.event.altKey Then x = "-NoExit"
+  End If
+  CmdLine = "Powershell.exe " & x & " -ExecutionPolicy Bypass -File .\WinSetView.ps1 " & Param
   oWSH.Run CmdLine,1,False
   Window.Close
 End Sub
@@ -877,9 +888,9 @@ Sub SelectColumns(i)
   If ArrGroupBy(FTindex)="" Then cbg.Value = "X" Else cbg.Value = "{ }"
 
   If ArrSort1Order(FTindex)="+" Then cbs1.Value = UpArrow Else cbs1.Value = DnArrow
-	If ArrSort2Order(FTindex)="+" Then cbs2.Value = UpArrow Else cbs2.Value = DnArrow
-	If ArrSort3Order(FTindex)="+" Then cbs3.Value = UpArrow Else cbs3.Value = DnArrow
-	If ArrSort4Order(FTindex)="+" Then cbs4.Value = UpArrow Else cbs4.Value = DnArrow
+  If ArrSort2Order(FTindex)="+" Then cbs2.Value = UpArrow Else cbs2.Value = DnArrow
+  If ArrSort3Order(FTindex)="+" Then cbs3.Value = UpArrow Else cbs3.Value = DnArrow
+  If ArrSort4Order(FTindex)="+" Then cbs4.Value = UpArrow Else cbs4.Value = DnArrow
   
   If ArrSort2(FTindex)="" Then cbs2.Value = "X"
   If ArrSort3(FTindex)="" Then cbs3.Value = "X"
@@ -1497,7 +1508,6 @@ Sub ShowC2(id,ftname)
 End Sub
 
 Sub PixelInput(id)
-  Dim a, b, c
   If Not window.event.altKey Then Exit Sub
   a = Document.GetElementByID("W~" & id).Value
   b = ""
