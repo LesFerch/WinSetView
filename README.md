@@ -5,7 +5,7 @@
 Compatible with Windows 7, 8, 10, and 11.
 
 Les Ferch, lesferch@gmail.com\
-GitHub repository created 2021-03-26, last updated 2021-09-05
+GitHub repository created 2021-03-26, last updated 2021-09-10
 
 # Summary
 
@@ -16,6 +16,8 @@ WinSetView is comprised of two main files: **WinSetView.hta** (HTML GUI with VBS
 Each option, and related Explorer background information, is detailed below, but if you just want to get to it, the interface is pretty much self-explanatory. For best results, close all open applications before running WinSetView. Open applications can prevent open/save dialog views from being updated.
 
 All changes made by WinSetView are per-user within the HKEY_CURRENT_USER hive in the registry. No machine settings are touched and no elevated privileges are required. On each run, WinSetView makes a unique backup file of the affected registry values. A restore option is provided allowing you to rollback to any of these backups. There's also an option to completely reset all Explorer views to Windows default values.
+
+**Note**: For USB-connected phones and tablets, WinSetView provides an option to have them displayed in the same view as generic (General Items) folders (e.g. Details view), but it cannot control the Details view column headings for such devices.
 
 # Interface
 ![image](https://user-images.githubusercontent.com/79026235/124369671-6aa0be80-dc3c-11eb-8fd8-c82fe6bf4846.png)
@@ -223,7 +225,7 @@ Note: The *Relevance* column heading (*Search.Rank* property) is *only* shown in
 
 Connected devices, such as phones and tablets, normally open in **Tiles** view with no option to easily change the view. The **Apply to folders** option is grayed out for such devices, requiring view changes to be done folder by folder. Enabling the **Use General Items view for connected devices** option causes such devices to open in the same view that has been set for **General Items**.
 
-Please note that this option actually causes *all virtual folders* to be displayed with the same view as General Items. Therefore, other virtual folders, such as *This PC* and *Network* will also be displayed with the General Items view. However, the separate view settings, available for *This PC* and *Network*, can be used to override the General Items view.
+Please note that this option actually causes all virtual folders, that share the General Items GUID, such as **This PC**, to be displayed with the same view as **General Items**. However, the separate view settings, available for *This PC*, can be used to override the General Items view.
 
 **Make All Folders Generic**
 
@@ -257,7 +259,7 @@ For example, with the *Pictures* folder type set to large icons and this option 
 
 If this option is checked, *This PC* and *Network* will be set to the view selected. If this option is unchecked, these virtual folders will retain their Windows default of Tiles and Group by Category.
 
-Note: *This PC* and *Network* are not specific folder types, so their views cannot be set as folder type defaults. This option simply creates registry values (in the BagMRU/Bags keys) that would be the same as if you manually browsed to those virtual folders and set the views. Since such entries are complex, and not really meant to be set by anything other than Explorer, it is not practical to give options to set them individually. Additionally, these settings are prone to returning to Windows defaults (see *Apply to Folders "Bug"* below).
+Note: This option simply creates registry values (in the BagMRU/Bags keys) that would be the same as if you manually browsed to those virtual folders and set the views. These settings are prone to returning to Windows defaults (see *Apply to Folders "Bug"* below).
 
 ## Columns
 
@@ -400,8 +402,6 @@ This script captures Explorer view settings that can't be set in WinSetView, suc
 
 Rename CaptureCustom.reg to WinSetViewCustom.reg and place it in the AppData folder to have it applied by WinSetView. WinSetView.ps1 will import the file WinSetViewCustom.reg after all other settings are applied. This will override any settings applied by WinSetView!
 
-Note: There are no FolderType keys for This PC, Network, and Recycle Bin, so they can only be set via the BagMRU/Bags keys. It's too complicated to provide complete, discrete options for This PC, Network, and Recycle Bin in WinSetView. It just makes more sense to capture these values if you really want custom settings beyond what WinSetView can provide.
-
 Please, if you don't know what you're doing, avoid this level of customization!
 
 **StartRegeditClean.cmd**
@@ -493,9 +493,7 @@ For example, you may find it useful to set *Pictures* to Details view with colum
 
 ## Apply to Folders "Bug"
 
-Whenever you use the **Apply to Folders** button, on any generic folder, such as C:\\, your views for *This PC* and *Network* (and USB connected phones and possibly other virtual folders) will revert back to Windows *defaults*. If you always leave *This PC* and *Network* (and other devices) at their default views, this is not an issue, but if you have changed the views and want to keep them changed, this is a nuisance.
-
-There is a workaround for *This PC* and *Network*. Any folder that is open when **Apply to Folders** is used, will not have it's view changed. So, to "protect" your custom views for *This PC* and *Network*, be sure to have separate windows open to each of those views when you use the **Apply to Folders** button. However, this approach is *not* practical to protect the views for a connected device, such as a smartphone in file transfer mode, as there would simply be too many folders to open. It's much easier to always use WinSetView to make your default view changes and avoid using the **Apply to Folders** button altogether.
+Whenever you use the **Apply to Folders** button, on any generic folder, such as C:\\, your views for **This PC** (and USB connected phones and possibly other virtual folders) will revert back to Windows *defaults*. If you always leave **This PC** (and other devices) at their default views, this is not an issue, but if you have changed the views and want to keep them changed, avoid using **Apply to Folders** on generic folders. Instead, use **WinSetView** if you want to change your General Items (generic) folder view settings.
 
 # FAQ
 

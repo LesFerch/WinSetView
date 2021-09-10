@@ -36,7 +36,7 @@ Dim i, j, Q, V, X, Y, Z, Temp, TestFile, Section, CheckCount, Value, Key, ArrKey
 Dim AvailHeight, HeadHeight, RequiredWidth, CurrentWidth, Maximized, Fonts
 Dim AppData, WinVer, Folder, INIFile, rbShow, BodyHTML, TaggedHTML, Tag, Item
 Dim Language,LangDir, LangFile, LangCount, LangData, LangIndex, UBFolderType, YScrollPos
-Dim ViewFile, ViewData, FolderTypeFile, Scale, FontsFile, Backup, F1, F2
+Dim ViewFile, ViewData, FolderTypeFile, Scale, FontsFile, Backup, F1, F2, FTHide
 Dim ColFile, ColData, SelectedFont1, SelectedFont2, FontFile, Checkmark, LRArrow
 Dim CmdLine, Line, Order, sOrder, SelectedSize1, SelectedSize2, GUID, Found
 Dim C1, C2, LastColSel, FTindex, Data, Show, TempFile, File, PartsDir, FileDialogExe
@@ -286,6 +286,18 @@ End Sub
 
 ' Update pages with selected language, font, and size
 
+Sub FTHideUnHide(i,HideAll)
+  If ArrIncludeFlag(i)="0" Or HideAll Then
+    Document.GetElementByID(i & "FTtitle").ClassName = "ftl"
+    Document.GetElementByID(i & "FTsettings").Style.Visibility = "hidden"
+    Document.GetElementByID(i & "Include").Checked = False
+  Else
+    Document.GetElementByID(i & "FTtitle").ClassName = "ft"
+    Document.GetElementByID(i & "FTsettings").Style.Visibility = "visible"
+    Document.GetElementByID(i & "Include").Checked = True
+  End If
+End Sub
+
 Sub UpdateLang(OnChange)
 
   'Read in language file
@@ -466,10 +478,6 @@ Sub UpdateLang(OnChange)
           Document.GetElementByID(i & "View").Disabled = True
           Document.GetElementByID(i & "IconSize").Disabled = True
           Document.GetElementByID(i & "SelCol").Disabled = True
-        End If
-        If ArrIncludeFlag(i)="0" Then
-          Document.GetElementByID(i & "FTtitle").ClassName = "ftl"
-          Document.GetElementByID(i & "FTsettings").Style.Visibility = "hidden"
         End If
       End If
 
@@ -747,17 +755,15 @@ Sub Var2Ini(INIFile)
       oFile.Write "Include=" & ArrIncludeFlag(i) & Z
       oFile.Write "Inherit=" & ArrInheritFlag(i) & Z
     End If
-    If ArrIncludeFlag(i)<>"0" Then
-      oFile.Write "View=" & Document.GetElementByID(i & "View").SelectedIndex & Z
-      oFile.Write "IconSize=" & Document.GetElementByID(i & "IconSize").Value & Z
-      oFile.Write "ColumnList=" & ArrColumnLists(i) & Z
-      oFile.Write "GroupBy=" & ArrGroupBy(i) & Z
-      SortBy = ArrSort1Order(i) & ArrSort1(i)
-      If ArrSort2(i)<>"" Then SortBy = SortBy & ";" & ArrSort2Order(i) & ArrSort2(i)
-      If ArrSort3(i)<>"" Then SortBy = SortBy & ";" & ArrSort3Order(i) & ArrSort3(i)
-      If ArrSort4(i)<>"" Then SortBy = SortBy & ";" & ArrSort4Order(i) & ArrSort4(i)
-      oFile.Write "SortBy=" & SortBy & Z
-    End If
+    oFile.Write "View=" & Document.GetElementByID(i & "View").SelectedIndex & Z
+    oFile.Write "IconSize=" & Document.GetElementByID(i & "IconSize").Value & Z
+    oFile.Write "ColumnList=" & ArrColumnLists(i) & Z
+    oFile.Write "GroupBy=" & ArrGroupBy(i) & Z
+    SortBy = ArrSort1Order(i) & ArrSort1(i)
+    If ArrSort2(i)<>"" Then SortBy = SortBy & ";" & ArrSort2Order(i) & ArrSort2(i)
+    If ArrSort3(i)<>"" Then SortBy = SortBy & ";" & ArrSort3Order(i) & ArrSort3(i)
+    If ArrSort4(i)<>"" Then SortBy = SortBy & ";" & ArrSort4Order(i) & ArrSort4(i)
+    oFile.Write "SortBy=" & SortBy & Z
   Next
   oFile.Close
 End Sub
@@ -1050,16 +1056,21 @@ End Sub
 
 Sub OptionReset
   If wd.Checked Then
+    FTHide = True
     Sec1.style.visibility = "hidden"
     Sec4.style.visibility = "hidden"
     lb.style.visibility = "hidden"
     sb.style.visibility = "hidden"
   Else
+    FTHide = False
     Sec1.style.visibility = "visible"
     Sec4.style.visibility = "visible"
     lb.style.visibility = "visible"
     sb.style.visibility = "visible"
   End If
+  For i = 1 To UBFolderType
+    FTHideUnHide i,FTHide
+  Next
 End Sub
 
 Sub OptionSearchOnly
@@ -1164,19 +1175,8 @@ Sub InheritUpdate(i)
 End Sub
 
 Sub IncludeChange(i)
-
   ArrIncludeFlag(i) = Abs(Int(Document.GetElementByID(i & "Include").Checked))
-  For i = 1 To UBFolderType
-    If ArrIncludeFlag(i)="0" Or (ArrIncludeFlag(ArrInherit(i))="0" And Document.GetElementByID(i & "Inherit").Checked) Then
-      Document.GetElementByID(i & "FTtitle").ClassName = "ftl"
-      Document.GetElementByID(i & "FTsettings").Style.Visibility = "hidden"
-      Document.GetElementByID(i & "Include").Checked = False
-    Else
-      Document.GetElementByID(i & "FTtitle").ClassName = "ft"
-      Document.GetElementByID(i & "FTsettings").Style.Visibility = "visible"
-      Document.GetElementByID(i & "Include").Checked = True
-    End If
-  Next
+  FTHideUnHide i,False
   InheritUpdate(i)
 End Sub
 

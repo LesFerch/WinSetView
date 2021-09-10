@@ -220,7 +220,7 @@ Function BuildRegData($Key) {
   $Script:RegData += '@="' + $Script:FT + '"' + "`r`n"
   $Script:RegData += '"LogicalViewMode"=dword:' + $Script:LVMode + "`r`n"
   $Script:RegData += '"Mode"=dword:' + $Script:Mode + "`r`n"
-  If ($Script:LVMode -eq 3) {$Script:RegData += '"IconSize"=dword:' + $Script:IconSize + "`r`n"} 
+  If ($Script:LVMode -eq 3) {$Script:RegData += '"IconSize"=dword:' + '{0:x}' -f $Script:IconSize + "`r`n"} 
 }
 
 # Set up views for This PC and Network virtual folders
