@@ -33,12 +33,12 @@ Const HKCU = &H80000001
 Dim oWSH, oFSO, oFolder, oFile, oFiles, oOption, oReg, oElement
 Dim oFolderTypes, oWMI, oSettings, oSearchOnly, oOption1, oOption2
 Dim i, j, Q, V, X, Y, Z, Temp, TestFile, Section, CheckCount, Value, Key, ArrKeys, Result, SubKey
-Dim AvailHeight, HeadHeight, RequiredWidth, CurrentWidth, Maximized, Fonts
+Dim AvailHeight, HeadHeight, RequiredWidth, CurrentWidth, Maximized, Fonts, TestFileName
 Dim AppData, WinVer, Folder, INIFile, rbShow, BodyHTML, TaggedHTML, Tag, Item
 Dim Language,LangDir, LangFile, LangCount, LangData, LangIndex, UBFolderType, YScrollPos
 Dim ViewFile, ViewData, FolderTypeFile, Scale, FontsFile, Backup, F1, F2, FTHide
 Dim ColFile, ColData, SelectedFont1, SelectedFont2, FontFile, Checkmark, LRArrow
-Dim CmdLine, Line, Order, sOrder, SelectedSize1, SelectedSize2, GUID, Found
+Dim CmdLine, Line, Order, sOrder, SelectedSize1, SelectedSize2, GUID, Found, VirtualStore
 Dim C1, C2, LastColSel, FTindex, Data, Show, TempFile, File, PartsDir, FileDialogExe
 Dim ColWid, ColShow, SortBy, BaseScale, UpArrow, DnArrow, MyLoc, MyPath, CurDir, a, b, c
 Dim Gidx, Midx, Nidx, Pidx, Widx, S1idx, S2idx, S3idx, S4idx, Sort1, Sort2, Sort3, Sort4
@@ -118,13 +118,16 @@ End If
 ' Set AppData to current folder if we have write access
 ' Otherwise set AppData to user profile AppData
 
-TestFile = ".\" & Replace(Replace(Replace(Now(),"/",""),":","")," ","") & ".txt"
+TestFileName = Replace(Replace(Replace(Now(),"/",""),":","")," ","") & ".txt"
+TestFile = ".\" & TestFileName
 On Error Resume Next
 Set oFile = oFSO.OpenTextFile(TestFile,ForWriting,True,Ansi)
 oFile.Write ""
 oFile.Close
 On Error Goto 0
-If oFSO.FileExists(TestFile) Then 
+If oFSO.FileExists(TestFile) Then
+  VirtualStore = oWSH.ExpandEnvironmentStrings("%LOCALAPPDATA%") & "\VirtualStore" & Mid(MyPath,3) & "\"
+  If oFSO.FileExists(VirtualStore & TestFileName) Then AppData = VirtualStore & "AppData"
   oFSO.DeleteFile(TestFile)
 Else
   AppData = oWSH.ExpandEnvironmentStrings("%APPDATA%") & "\WinSetView"
@@ -825,7 +828,7 @@ Sub RunScript(Param)
   If Right(Param,3)="ini" Then
     If window.event.altKey Then x = "-NoExit"
   End If
-  CmdLine = "Powershell.exe " & x & " -ExecutionPolicy Bypass -File .\WinSetView.ps1 " & Param
+  CmdLine = "Powershell.exe " & x & " -ExecutionPolicy Bypass -File .\WinSetView.ps1 " & Chr(34) & Param & Chr(34)
   oWSH.Run CmdLine,1,False
   Window.Close
 End Sub
