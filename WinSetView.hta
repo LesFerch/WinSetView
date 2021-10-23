@@ -422,6 +422,11 @@ Sub UpdateLang(OnChange)
       oOption.Value = j
       If j=0 Then oOption.Disabled = True
       tpv.Add(oOption)
+      Set oOption = document.createElement("Option")
+      oOption.Text =  ArrView(j) 
+      oOption.Value = j
+      If j=0 Then oOption.Disabled = True
+      nwv.Add(oOption)
     Next
       
     ' Populate each folder type setting (View, IconSize, GroupBy, SortBy, and Columns to display)
@@ -634,14 +639,19 @@ Sub Dict2Dom
   ka.checked = oSettings.Item("[Options]KeepViews")
   fd.checked = oSettings.Item("[Options]FileDialogOption")
   tp.checked = oSettings.Item("[Options]ThisPCoption")
+  nw.checked = oSettings.Item("[Options]NetworkOption")
   x = oSettings.Item("[Options]FileDialogNG")
   If x="" Then fdg.checked = 1 Else fdg.checked = x
   x = oSettings.Item("[Options]ThisPCNG")
   If x="" Then tpg.checked = 1 Else tpg.checked = x
+  x = oSettings.Item("[Options]NetworkNG")
+  If x="" Then nwg.checked = 1 Else nwg.checked = x
   x = oSettings.Item("[Options]FileDialogView")
   If x="" Then fdv.SelectedIndex = 1 Else fdv.SelectedIndex = x
   x = oSettings.Item("[Options]ThisPCView")
   If x="" Then tpv.SelectedIndex = 1 Else tpv.SelectedIndex = x
+  x = oSettings.Item("[Options]NetworkView")
+  If x="" Then nwv.SelectedIndex = 1 Else nwv.SelectedIndex = x
   x = oSettings.Item("[Options]Scroll")
   If x="" Then xs.SelectedIndex = 1 Else xs.SelectedIndex = x: xschange
 End Sub
@@ -751,6 +761,9 @@ Sub Var2Ini(INIFile)
   oFile.Write "ThisPCoption=" & Abs(Int(tp.checked)) & Z
   oFile.Write "ThisPCView=" & tpv.SelectedIndex & Z
   oFile.Write "ThisPCNG=" & Abs(Int(tpg.checked)) & Z
+  oFile.Write "NetworkOption=" & Abs(Int(nw.checked)) & Z
+  oFile.Write "NetworkView=" & nwv.SelectedIndex & Z
+  oFile.Write "NetworkNG=" & Abs(Int(nwg.checked)) & Z
   For i = 0 To UBFolderType
     oFile.Write "[" & ArrFolderType(i) & "]" & Z
     If i>0 Then 
@@ -812,6 +825,7 @@ Sub Options
   Pg4.style.display = "inline"
   OptionFileDialogs
   OptionThisPC
+  OptionNetwork
 End Sub
 
 ' Save settings and run WinSetView.ps1
@@ -1105,6 +1119,16 @@ Sub OptionThisPC
   Else
     tpv.Disabled = True
     tpg.Disabled = True
+  End If
+End Sub
+
+Sub OptionNetwork
+  If nw.Checked=True Then
+    nwv.Disabled = False
+    nwg.Disabled = False
+  Else
+    nwv.Disabled = True
+    nwg.Disabled = True
   End If
 End Sub
 
@@ -1444,6 +1468,8 @@ Sub UpdateFont1
   ka.Style.Zoom = Scale
   tp.Style.Zoom = Scale
   tpg.Style.Zoom = Scale
+  nw.Style.Zoom = Scale
+  nwg.Style.Zoom = Scale
 
   'Resize and position dialog
   
@@ -1635,6 +1661,7 @@ End Sub
   .X4   {color:blue}
   #fdv  {margin-left:1.5em; margin-top:3pt}
   #tpv  {margin-left:1.5em; margin-top:3pt}
+  #nwv  {margin-left:1.5em; margin-top:3pt}
   .is   {width:2em}
 
   .tip {
@@ -1762,6 +1789,8 @@ End Sub
       <select id=fdv></select>&nbsp;<input type=checkbox id=fdg checked># 25 #<br><br>
       <input type=checkbox id=tp onclick=OptionThisPC># 13 #<br>
       <select id=tpv></select>&nbsp;<input type=checkbox id=tpg checked># 25 #<br><br>
+      <input type=checkbox id=nw onclick=OptionNetwork># 30 #<br>
+      <select id=nwv></select>&nbsp;<input type=checkbox id=nwg checked># 25 #<br><br>
     </div>
   </div>
 </body>

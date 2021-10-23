@@ -137,6 +137,9 @@ Else {
   $ThisPCoption = [Int]$iniContent['Options']['ThisPCoption']
   $ThisPCView = [Int]$iniContent['Options']['ThisPCView']
   $ThisPCNG = [Int]$iniContent['Options']['ThisPCNG']
+  $NetworkOption = [Int]$iniContent['Options']['NetworkOption']
+  $NetworkView = [Int]$iniContent['Options']['NetworkView']
+  $NetworkNG = [Int]$iniContent['Options']['NetworkNG']
 
   If ($Reset -eq 1) {
     Write-Host `n'Reset to Windows defaults...'`n
@@ -223,28 +226,30 @@ Function BuildRegData($Key) {
   If ($Script:LVMode -eq 3) {$Script:RegData += '"IconSize"=dword:' + '{0:x}' -f $Script:IconSize + "`r`n"} 
 }
 
-# Set up views for This PC and Network virtual folders
+# The FolderTypes key does not include entries for This PC and Network
+
+# This PC does not have a unique GUID so we'll set it's view via a Bags entry:
 
 If ($ThisPCoption -ne 0) {
-
-  # The FolderTypes key does not have default values for This PC and Network,
-  # so we will set them with initial values in the BagMRU and Bags registry keys.
-
-  Reg Add "$BagM" /v NodeSlots /d '020202' /t REG_BINARY /f
-  Reg Add "$BagM" /v MRUListEx /d '0100000000000000ffffffff' /t REG_BINARY /f >$Null
+  Reg Add "$BagM" /v NodeSlots /d '02' /t REG_BINARY /f
+  Reg Add "$BagM" /v MRUListEx /d '00000000ffffffff' /t REG_BINARY /f >$Null
   Reg Add "$BagM" /v '0' /d '14001F50E04FD020EA3A6910A2D808002B30309D0000' /t REG_BINARY /f >$Null
-  Reg Add "$BagM" /v '1' /d '14001F580D1A2CF021BE504388B07367FC96EF3C0000' /t REG_BINARY /f >$Null
   Reg Add "$BagM\0" /v NodeSlot /d 1 /t REG_DWORD /f >$Null
-  Reg Add "$BagM\1" /v NodeSlot /d 2 /t REG_DWORD /f >$Null
-
   SetViewValues($ThisPCView)
-
   $GUID = '{5C4F28B5-F869-4E84-8E60-F11DB97C5CC7}'
   SetBagValues("$Bags\1\ComDlg\$GUID")
   SetBagValues("$Bags\1\Shell\$GUID")
-  If (!($Generic -eq 1)) {$GUID = '{25CC242B-9A7C-4F51-80E0-7A2928FEBE42}'}
-  SetBagValues("$Bags\2\ComDlg\$GUID")
-  SetBagValues("$Bags\2\Shell\$GUID")
+}
+
+# Network has a unique GUID, so we'll set it's view via an AllFolders entry:
+
+If ($NetworkOption -ne 0) {
+  $GUID = '{25CC242B-9A7C-4F51-80E0-7A2928FEBE42}'
+  SetViewValues($NetworkView)
+  Reg Add "$Bags\AllFolders\Shell\$GUID" /v Mode /d "$Mode" /t REG_DWORD /f
+  Reg Add "$Bags\AllFolders\Shell\$GUID" /v LogicalViewMode /d "$LVMode" /t REG_DWORD /f
+  If ($LVMode -eq 3) {Reg Add "$Bags\AllFolders\Shell\$GUID" /v IconSize /d "$IconSize" /t REG_DWORD /f}
+  If ($NetworkNG -eq 1) {Reg Add "$Bags\AllFolders\Shell\$GUID" /v GroupView /d 0 /t REG_DWORD /f}
 }
 
 If ($Generic -eq 1) {Reg Add "$Bags\AllFolders\Shell" /v FolderType /d Generic /t REG_SZ /f}

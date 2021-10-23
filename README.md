@@ -5,7 +5,7 @@
 Compatible with Windows 7, 8, 10, and 11.
 
 Les Ferch, lesferch@gmail.com\
-GitHub repository created 2021-03-26, last updated 2021-09-22
+GitHub repository created 2021-03-26, last updated 2021-10-22
 
 # Summary
 
@@ -255,11 +255,17 @@ This option allows you to set a specific view for Open and Save dialogs that ove
 
 For example, with the *Pictures* folder type set to large icons and this option *checked*, with *Details* selected, you will see Large icons when you browse to Pictures in Explorer, but you will see a Details view in and Open and Save dialogs in applications such as MSPaint.
 
-**Set views for "This PC" and "Network"**
+**Set view for "This PC"**
 
-If this option is checked, *This PC* and *Network* will be set to the view selected. If this option is unchecked, these virtual folders will retain their Windows default of Tiles and Group by Category.
+If this option is checked, *This PC* will be set to the view selected. If this option is unchecked, this virtual folder will retain its Windows default of *Tiles* and group by *Type*.
 
-Note: This option simply creates registry values (in the BagMRU/Bags keys) that would be the same as if you manually browsed to those virtual folders and set the views. These settings are prone to returning to Windows defaults (see *Apply to Folders "Bug"* below).
+**Note**: Because **This PC** does not have its own GUID, this option creates registry values (in the BagMRU/Bags keys) that would be the same as if you manually browsed to this folder and set the view. These settings are prone to returning to Windows defaults (see *Apply to Folders "Bug"* below).
+
+**Set view for "Network"**
+
+If this option is checked, *Network* will be set to the view selected. If this option is unchecked, this virtual folder will retain its Windows default of *Tiles* and group by *Category*.
+
+**Note**: The **Network** virtual folder does not have a *FolderType* registry entry, but does have its own GUID, so this option creates registry values in the *AllFolders* registry key, which is not affected by the *Apply to Folders "Bug"*.
 
 ## Columns
 
