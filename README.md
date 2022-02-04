@@ -1,4 +1,4 @@
-# WinSetView v2
+# WinSetView
 
 ## Globally Set Explorer Folder Views
 
