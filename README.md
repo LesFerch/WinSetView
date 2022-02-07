@@ -1,5 +1,7 @@
 # WinSetView
 
+**[Download Zip](https://github.com/LesFerch/WinSetView/archive/refs/heads/main.zip)**
+
 ## Globally Set Explorer Folder Views
 
 Compatible with Windows 7, 8, 10, and 11.
