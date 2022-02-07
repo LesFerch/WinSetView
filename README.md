@@ -621,5 +621,3 @@ Thanks to my daughter **Dana** for the Japanese (ja-JP) translation.
 Thanks to my son **Brian** for HTML/CSS help. If you use Spotify on Android, please check out his  [**Trimify**](https://play.google.com/store/apps/details?id=app.web.trimifymusic) app on the Google Play store.
 
 Thanks to my cat **Puddles** for keeping me company while I worked on this.
-
-[Tutorial](./Tutorial.md)
