@@ -1,0 +1,4 @@
+plugins:
+  - jekyll-relative-links
+theme: jekyll-theme-slate
+show_downloads: true
