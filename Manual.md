@@ -1,5 +1,10 @@
 # WinSetView
-<!-- If you are seeing this document as raw text, please view it here: https://lesferch.github.io/WinSetView/Manual.html -->
+<!--
+To view this document formatted (instead of as raw text) just click the Help button in WinSetView.hta.
+You can also manually navigate your browser to: https://lesferch.github.io/WinSetView.
+To view this document offline with formatting you will need to install a markdown viewer, such as:
+https://chrome.google.com/webstore/detail/markdown-viewer/ckkdlimhmcjmikdlpkmbgfkaikojcbjk
+-->
 
 This is the complete user manual. See the link below for the quick start guide.
 
