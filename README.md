@@ -48,7 +48,7 @@ The column headings selection page allows you to select your desired column head
 
 Please note that WinSetView allows you to set the default view for every folder type in Windows, but, by *default*, they will all get the same settings as your **Global** settings, as long as the **Inherit** button is checked.
 
-For any folder type (e.g. **Pictures**) tht you wish to have a *different* default view than your global setting, just scroll down to that particular folder type, *uncheck* the **Inherit** button, and repeat steps 2 and 3 for that folder type.
+For any folder type (e.g. **Pictures**) that you wish to have a *different* default view than your global setting, just scroll down to that particular folder type, *uncheck* the **Inherit** button, and repeat steps 2 and 3 for that folder type.
 
 **Note**: You don't have to set the other similar folder types separately. For example, **Pictures Library** will use the same settings as **Pictures** as long as **Inherit** is checked for **Pictures Library**.
 

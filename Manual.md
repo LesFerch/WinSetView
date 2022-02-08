@@ -184,7 +184,7 @@ This folder can be found when you browse to your user folder in Windows. If you 
 
 **Library folder types**
 
-Under each folder type listed above, there is a corresponding *Libary* folder type. This controls the view you see when the folder is accessed via *Libraries*.
+Under each folder type listed above, there is a corresponding *Library* folder type. This controls the view you see when the folder is accessed via *Libraries*.
 
 **OneDrive folder types**
 
@@ -561,7 +561,7 @@ In *Explorer*, open your *Pictures* folder, click in the white space, select **C
 
 If you run WinSetView again with *Make all folders generic* checked, you will have to do the *Customize this folder...* procedure again to get your custom views for Pictures (and other special folders) to reappear.
 
-For most users, who want to keep special folders such as *Pictures*, it's simpler to leave automatic folder type discovery enabled, set up all the folder types with your preferred views in WinSetView, and use **Customize this folder...** for the occassional folder that switches to an undesired folder type.
+For most users, who want to keep special folders such as *Pictures*, it's simpler to leave automatic folder type discovery enabled, set up all the folder types with your preferred views in WinSetView, and use **Customize this folder...** for the occasional folder that switches to an undesired folder type.
 
 ## How does WinSetView work?
 
