@@ -5,7 +5,8 @@ This is the complete user manual. See the link below for the quick start guide.
 
 [![image](https://user-images.githubusercontent.com/79026235/152910441-59ba653c-5607-4f59-90c0-bc2851bf2688.png)Download the zip file](https://github.com/LesFerch/WinSetView/archive/refs/heads/main.zip)
 
-[![image](https://user-images.githubusercontent.com/79026235/152913587-d294de81-c8ca-428d-b351-09a564854eff.png)See the quick start guide](./README.md)
+![image](https://user-images.githubusercontent.com/79026235/152913587-d294de81-c8ca-428d-b351-09a564854eff.png)
+[See the quick start guide](./README.md)
 
 
 ## Globally Set Explorer Folder Views

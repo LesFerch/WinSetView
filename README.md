@@ -73,4 +73,5 @@ Once you're happy with your selections, make those settings apply to Windows Fil
 
 You can always run WinSetView again to change any settings and you can revert back to a previous state using the **Restore** button. You also have the option of setting File Explorer back to Windows defaults by checking **Reset Views to Windows Defaults** and then clicking **Submit**.
 
-[![image](https://user-images.githubusercontent.com/79026235/152911332-6492dd9e-63fa-4f38-8325-335110cbb9a6.png)See the complete user manual](./Manual.md)
+![image](https://user-images.githubusercontent.com/79026235/152911332-6492dd9e-63fa-4f38-8325-335110cbb9a6.png)
+[See the complete user manual](./Manual.md)
