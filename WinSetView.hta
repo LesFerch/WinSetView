@@ -1,6 +1,6 @@
 ﻿<!DOCTYPE html>
 <!--
-WinSetView (Globally Set Explorer Folder Views) v2
+WinSetView (Globally Set Explorer Folder Views)
 Les Ferch, lesferch@gmail.com, GitHub repository created 2021-03-26
 WinSetView.hta (GUI tool to select desired views)
 -->
@@ -219,7 +219,7 @@ Sub window_OnLoad
   cbo.Value = Checkmark & Checkmark
   cbc.Value = Checkmark
 
-  ' Saved current body HTML so that language can be switched without restarting
+  ' Save current body HTML so that language can be switched without restarting
   TaggedHTML = Document.Body.InnerHTML
   
   ' Set up pages in selected language and font
@@ -320,7 +320,7 @@ Sub UpdateLang(OnChange)
 
   FolderTypeFile = LangDir & Language & "\FolderTypes.txt"
 
-  ' Read FolderType file contents into and array
+  ' Read FolderType file contents into an array
   ' If Win 7 or 8, skip folder types that don't exist
 
   If oFSO.FileExists(FolderTypeFile) Then
@@ -390,13 +390,14 @@ Sub UpdateLang(OnChange)
   ArrColData = Split(ColData,Z)
   ReDim ArrHTML2(UBound(ArrColData))
   
-  ' Dynamically gernerate HTML page data
+  ' Dynamically generate HTML page data
   BuildPages
   
   Document.title = ArrLang(1)
   lang.SelectedIndex = LangIndex
   Size1.SelectedIndex = SelectedSize1 - 8
   Size2.SelectedIndex = SelectedSize2 - 8
+  IFace.SelectedIndex = 1
   
   ViewFile = LangDir & Language & "\ViewList.txt"
 
@@ -553,6 +554,8 @@ Sub UpdateLang(OnChange)
   
   ' Hide Restore button if no backup files
   If Not rbshow Then rb.disabled = True
+  
+    SetInterface
 
 End Sub
 
@@ -623,7 +626,7 @@ Sub Dict2Var(OnChange)
   Next
 End Sub
 
-' Populate HTML pages directly from scripting dictionary fro some settings
+' Populate HTML pages directly from scripting dictionary for some settings
 
 Sub Dict2Dom
   wd.checked = oSettings.Item("[Options]Reset")
@@ -654,6 +657,8 @@ Sub Dict2Dom
   If x="" Then nwv.SelectedIndex = 1 Else nwv.SelectedIndex = x
   x = oSettings.Item("[Options]Scroll")
   If x="" Then xs.SelectedIndex = 1 Else xs.SelectedIndex = x: xschange
+  x = oSettings.Item("[Options]Interface")
+  If x="" Then IFace.SelectedIndex = 1 Else IFace.SelectedIndex = x
 End Sub
 
 ' Load Settings button
@@ -748,6 +753,7 @@ Sub Var2Ini(INIFile)
   oFile.Write "Size1=" & Size1.Options(Size1.SelectedIndex).Value & Z
   oFile.Write "Size2=" & Size2.Options(Size2.SelectedIndex).Value & Z
   oFile.Write "Scroll=" & xs.SelectedIndex & Z
+  oFile.Write "Interface=" & IFace.SelectedIndex & Z
   oFile.Write "Reset=" & Abs(Int(wd.checked)) & Z
   oFile.Write "ShowExt=" & Abs(Int(se.checked)) & Z
   oFile.Write "CompView=" & Abs(Int(cv.checked)) & Z
@@ -1078,12 +1084,22 @@ Sub OptionReset
     Sec4.style.visibility = "hidden"
     lb.style.visibility = "hidden"
     sb.style.visibility = "hidden"
+    If IFace.SelectedIndex=2 Then
+      For i = 1 To UBFolderType
+        Document.GetElementByID(i & "Inspect").style.visibility = "hidden"
+      Next
+    End If
   Else
     FTHide = False
     Sec1.style.visibility = "visible"
     Sec4.style.visibility = "visible"
-    lb.style.visibility = "visible"
-    sb.style.visibility = "visible"
+    If IFace.SelectedIndex=2 Then
+      lb.style.visibility = "visible"
+      sb.style.visibility = "visible"
+      For i = 1 To UBFolderType
+        Document.GetElementByID(i & "Inspect").style.visibility = "visible"
+      Next
+    End If
   End If
   For i = 1 To UBFolderType
     FTHideUnHide i,FTHide
@@ -1553,6 +1569,28 @@ Sub PixelInput(id)
   End If
 End Sub
 
+Sub SetInterface
+  If IFace.SelectedIndex=1 Then
+    lb.style.visibility = "hidden"
+    sb.style.visibility = "hidden"
+    ao.style.visibility = "hidden"
+    For i = 1 To UBFolderType
+      Document.GetElementByID(i & "Inspect").style.visibility = "hidden"
+    Next
+  Else
+    lb.style.visibility = "visible"
+    sb.style.visibility = "visible"
+    ao.style.visibility = "visible"
+    For i = 1 To UBFolderType
+      Document.GetElementByID(i & "Inspect").style.visibility = "visible"
+    Next
+  End If
+End Sub
+
+Sub Help
+  oWSH.Run "https://lesferch.github.io/WinSetView/README.html"
+End Sub
+
 ' HTML interface starts here with the script-generated pages
 
 Sub BuildPages
@@ -1690,7 +1728,13 @@ End Sub
     <div id=fix1>
     <div id=f1in>
       <div id=twid>
+        <input type=button id=hb value='# 31 #' onclick=Help>
         <select id=Lang onchange='UpdateLang True'></select>
+        <select id=IFace onchange='SetInterface'>
+          <option selected disabled># 32 #</option>
+          <option># 33 #</option>
+          <option># 34 #</option>
+        </select>
         <select id=Font1 onchange=UpdateFont1></select>
         <select id=Size1 onchange=UpdateFont1></select>
         <select id=xs onchange=xschange></select>
@@ -1783,14 +1827,16 @@ End Sub
     <div id=Sec4>
       <input type=checkbox id=so Checked onclick=OptionSearchOnly># 9 #<br><br>
       <input type=checkbox id=vf Checked># 29 #<br><br>
-      <input type=checkbox id=gn Checked># 10 #<br><br>
-      <input type=checkbox id=ka># 11 #<br><br>
       <input type=checkbox id=fd onclick=OptionFileDialogs># 12 #<br>
       <select id=fdv></select>&nbsp;<input type=checkbox id=fdg checked># 25 #<br><br>
       <input type=checkbox id=tp onclick=OptionThisPC># 13 #<br>
       <select id=tpv></select>&nbsp;<input type=checkbox id=tpg checked># 25 #<br><br>
       <input type=checkbox id=nw onclick=OptionNetwork># 30 #<br>
       <select id=nwv></select>&nbsp;<input type=checkbox id=nwg checked># 25 #<br><br>
+      <div id=ao>
+      <input type=checkbox id=gn Checked># 10 #<br><br>
+      <input type=checkbox id=ka># 11 #<br><br>
+      </div>
     </div>
   </div>
 </body>
