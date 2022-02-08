@@ -1,3 +1,5 @@
+<!-- If you are seeing this document as raw text, please view it here: https://lesferch.github.io/WinSetView/Manual.html -->
+
 # WinSetView
 This is the complete user manual. See the link below for the quick start guide.
 
