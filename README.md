@@ -1,5 +1,3 @@
-<? If you are seeing this document as raw text, please view it here: https://lesferch.github.io/WinSetView ?>
-
 # WinSetView
 
 This is the quick start guide. For more details, please see the [complete user manual](./Manual.md).
