@@ -92,7 +92,7 @@ For *technical users*, who wish to maintain multiple configurations, the **Load 
 
 (Advanced interface)
 
-For *technical users*, who wish to maintain multiple configurations, the **Load Settings** button is used to *save* WinSetView interface selections to an INI file.
+For *technical users*, who wish to maintain multiple configurations, the **Save Settings** button is used to *save* WinSetView interface selections to an INI file.
 
 Please note that the INI file that is read on WinSetView startup and saved upon clicking *Submit*, is Win10.ini in Windows 10 and 11, so typically, you will want to save to Win10.ini.
 
