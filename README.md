@@ -2,8 +2,6 @@
 <!--
 To view this document formatted (instead of as raw text) just click the Help button in WinSetView.hta.
 You can also manually navigate your browser to: https://lesferch.github.io/WinSetView.
-To view this document offline with formatting you will need to install a markdown viewer, such as:
-https://chrome.google.com/webstore/detail/markdown-viewer/ckkdlimhmcjmikdlpkmbgfkaikojcbjk
 -->
 
 This is the quick start guide. For more details, please see the [complete user manual](./Manual.md).
