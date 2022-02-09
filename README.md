@@ -17,6 +17,17 @@ Compatible with Windows 7, 8, 10, and 11.
 
 WinSetView provides an *easy* way to set Windows File Explorer default folder views. For example, if you want Details view, with a particular selection of column headings enabled across all folders, then WinSetView will do that for you.
 
+# How to Download and Run
+
+## Quick Instructions
+
+1. Download the zip file using the link above.
+2. Extract the entire zip file.
+3. Run **WinSetView.hta**.
+4. At the UAC prompt, uncheck **Always ask** and then click **Run**.
+
+For detailed instructions, please see: [Download Help Guide](./DownloadHelp.md)
+
 # How to Use
 
 Simple step by step instructions follow. For complete details, please see the [manual](./Manual.md).
