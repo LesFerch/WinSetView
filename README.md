@@ -88,3 +88,7 @@ You can always run WinSetView again to change any settings and you can revert ba
 
 ![image](https://user-images.githubusercontent.com/79026235/152911332-6492dd9e-63fa-4f38-8325-335110cbb9a6.png)
 [See the complete user manual](./Manual.md)
+
+\
+\
+[![image](https://user-images.githubusercontent.com/79026235/153264696-8ec747dd-37ec-4fc1-89a1-3d6ea3259a95.png)](https://github.com/LesFerch/WinSetView)
