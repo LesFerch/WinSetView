@@ -28,7 +28,11 @@ For detailed instructions, please see: [Download Help Guide](./DownloadHelp.md)
 
 # How to Use
 
-Simple step by step instructions follow. For complete details, please see the [manual](./Manual.md).
+Simple step by step instructions follow.
+
+**Note**: Nothing in Windows is changed, and no settings are saved, until the **Submit** button is pressed. Feel free to experiment with the WinSetView interface and just **X** out and restart the app to get back to where you started.
+
+For complete details, please see the [manual](./Manual.md).
 
 ## Step 1: Select Your Interface Language (Optional)
 
