@@ -1578,12 +1578,14 @@ Sub SetInterface
       Document.GetElementByID(i & "Inspect").style.visibility = "hidden"
     Next
   Else
-    lb.style.visibility = "visible"
-    sb.style.visibility = "visible"
-    ao.style.visibility = "visible"
-    For i = 1 To UBFolderType
-      Document.GetElementByID(i & "Inspect").style.visibility = "visible"
-    Next
+    If Not wd.Checked Then
+      lb.style.visibility = "visible"
+      sb.style.visibility = "visible"
+      ao.style.visibility = "visible"
+      For i = 1 To UBFolderType
+        Document.GetElementByID(i & "Inspect").style.visibility = "visible"
+      Next
+    End If
   End If
 End Sub
 
