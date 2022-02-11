@@ -1084,6 +1084,7 @@ Sub OptionReset
     Sec4.style.visibility = "hidden"
     lb.style.visibility = "hidden"
     sb.style.visibility = "hidden"
+    ao.style.visibility = "hidden"
     If IFace.SelectedIndex=2 Then
       For i = 1 To UBFolderType
         Document.GetElementByID(i & "Inspect").style.visibility = "hidden"
@@ -1096,6 +1097,7 @@ Sub OptionReset
     If IFace.SelectedIndex=2 Then
       lb.style.visibility = "visible"
       sb.style.visibility = "visible"
+      ao.style.visibility = "visible"
       For i = 1 To UBFolderType
         Document.GetElementByID(i & "Inspect").style.visibility = "visible"
       Next
