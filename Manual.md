@@ -17,7 +17,7 @@ This is the complete user manual. See the link below for the quick start guide.
 Compatible with Windows 7, 8, 10, and 11.
 
 Les Ferch, lesferch@gmail.com\
-GitHub repository created 2021-03-26, last updated 2022-02-09
+GitHub repository created 2021-03-26, last updated 2022-02-10
 
 # Summary
 
@@ -442,7 +442,7 @@ For those who prefer to go old school. This does the same thing as WinSetBack.ps
 
 Whereas WinSetBack.ps1 captures ALL Explorer view-related keys, *CaptureCustom.vbs* captures only the *BagMRU*, *Bags*, and *Control Panel* keys to provide a supplemental file for use with WinSetView.
 
-This script captures Explorer view settings that can't be set in WinSetView, such as *Recycle Bin* views or separate views for *This PC* and *Network*. First run WinSetView to set your desired Explorer default view settings. Next, set This PC, Network, Recycle Bin, and Control Panel to your desired views and close those windows. Then run CaptureCustom.vbs. It will export the ControlPanel, BagMRU, and Bags keys to a file named CaptureCustom.reg.
+This script captures Explorer view settings that can't be set in WinSetView, such as *Recycle Bin* and *Control Panel* views. First run WinSetView to set your desired Explorer default view settings. Next, set Recycle Bin, Control Panel, etc. to your desired views and close those windows. Then run CaptureCustom.vbs. It will export the ControlPanel, BagMRU, and Bags keys to a file named CaptureCustom.reg.
 
 Rename CaptureCustom.reg to WinSetViewCustom.reg and place it in the AppData folder to have it applied by WinSetView. WinSetView.ps1 will import the file WinSetViewCustom.reg after all other settings are applied. This will override any settings applied by WinSetView!
 
@@ -603,7 +603,7 @@ Here's an overview of the steps the PowerShell script performs to set Explorer v
 1) Backup the existing user's registry keys that hold Explorer views
 2) Delete those keys (except *Streams/Defaults* if *Keep "Apply to Folders" Views* is checked).
 3) Set any direct registry entries, such as *Show File Extensions* and *Make All Folders Generic*, for the current user.
-4) If custom *This PC and Network* views have been selected, create BagMRU/Bags entries for those views.
+4) If custom *This PC and/or Network* views have been selected, create registry entries for those views.
 5) Copy FolderTypes key from HKEY_LOCAL_MACHINE (HKLM) to HKEY_CURRENT_USER (HKCU).
 6) Edit FolderTypes key in HKCU per user's selections.
 7) Restart Explorer.
