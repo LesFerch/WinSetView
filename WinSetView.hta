@@ -34,7 +34,7 @@ Dim oWSH, oFSO, oFolder, oFile, oFiles, oOption, oReg, oElement
 Dim oFolderTypes, oWMI, oSettings, oSearchOnly, oOption1, oOption2
 Dim i, j, Q, V, X, Y, Z, Temp, TestFile, Section, CheckCount, Value, Key, ArrKeys, Result, SubKey
 Dim AvailHeight, HeadHeight, RequiredWidth, CurrentWidth, Maximized, Fonts, TestFileName
-Dim AppData, WinVer, Folder, INIFile, rbShow, BodyHTML, TaggedHTML, Tag, Item
+Dim AppData, NTVer, WinVer, MajVer, Folder, INIFile, rbShow, BodyHTML, TaggedHTML, Tag, Item
 Dim Language,LangDir, LangFile, LangCount, LangData, LangIndex, UBFolderType, YScrollPos
 Dim ViewFile, ViewData, FolderTypeFile, Scale, FontsFile, Backup, F1, F2, FTHide
 Dim ColFile, ColData, SelectedFont1, SelectedFont2, FontFile, Checkmark, LRArrow
@@ -66,16 +66,19 @@ oSearchOnly.Add "ItemFolderNameDisplay",""
 
 BaseScale = GetScale(): Scale = BaseScale
 
-' Get Windows major version from ProductName value
-' Treat Windows 11 same as Windows 10 because they 
-' have same folder types and properties
+' Determine Windows version (also works for Windows Server)
+' Treat Windows 11 same as Windows 10 because they have same folder types and properties
 
-WinVer = oWSH.RegRead("HKLM\Software\Microsoft\Windows NT\CurrentVersion\ProductName")
-WinVer = Trim(Replace(Mid(WinVer,9,2),"."," "))
-If WinVer="11" Then WinVer="10"
+NTVer = oWSH.RegRead("HKLM\Software\Microsoft\Windows NT\CurrentVersion\CurrentVersion")
+If NTVer="6.1" Then WinVer = "7"
+If NTVer="6.2" Or NTVer="6.3" Then WinVer = "8"
+On Error Resume Next
+MajVer = oWSH.RegRead("HKLM\Software\Microsoft\Windows NT\CurrentVersion\CurrentMajorVersionNumber")
+On Error Goto 0
+If MajVer>=10 Then WinVer = "10"
 
 If WinVer<>"7" And WinVer<>"8" And WinVer<>"10" Then
-  MsgBox "Windows 7, 8, 10, or 11 is required.",vbCritical,"Error"
+  MsgBox "Windows 7, 8, 10, or higher is required.",vbCritical,"Error"
   Self.Close
 End If
 

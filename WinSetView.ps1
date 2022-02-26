@@ -31,19 +31,21 @@ Function Get-IniContent ($FilePath) {
   Return $ini
 }
 
-# Get Windows major version from ProductName value
-# Treat Windows 11 same as Windows 10 because they 
-# have same folder types and properties
+# Determine Windows version (also works for Windows Server)
+# Treat Windows 11 same as Windows 10 because they have same folder types and properties
 
 $Key = 'HKLM:\Software\Microsoft\Windows NT\CurrentVersion'
-$Value = 'ProductName'
-$WinVer = (Get-ItemProperty -Path $Key -Name $Value).$Value.SubString(8,2)
-$WinVer = '   .' + $WinVer + '. '
-$WinVer = ($WinVer -Replace '\.',' ').Trim()
-If ($WinVer -eq '11') {$WinVer = '10'}
+$Value = 'CurrentVersion'
+$NTVer = (Get-ItemProperty -Path $Key -Name $Value).$Value
+If ($NTVer -eq '6.1') {$WinVer = '7'}
+If (($NTVer -eq '6.2') -Or ($NTVer -eq '6.3')) {$WinVer = '8'}
+$Value = 'CurrentMajorVersionNumber'
+Try {[Int]$MajVer = (Get-ItemProperty -ErrorAction Stop -Path $Key -Name $Value).$Value}
+Catch {$MajVer = 0}
+If ($MajVer -ge 10) {$WinVer = '10'}
 
 If (($WinVer -ne '7') -And ($WinVer -ne '8') -And ($WinVer -ne '10')){
-  Write-Host `n'Windows 7, 8, 10 or 11 is required.'`n
+  Write-Host `n'Windows 7, 8, 10 or higher is required.'`n
   Read-Host -Prompt 'Press any key to continue'
   Exit
 }
