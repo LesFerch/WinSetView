@@ -40,7 +40,7 @@ Dim ViewFile, ViewData, FolderTypeFile, Scale, FontsFile, Backup, F1, F2, FTHide
 Dim ColFile, ColData, SelectedFont1, SelectedFont2, FontFile, Checkmark, LRArrow
 Dim CmdLine, Line, Order, sOrder, SelectedSize1, SelectedSize2, GUID, Found, VirtualStore
 Dim C1, C2, LastColSel, FTindex, Data, Show, TempFile, File, PartsDir, FileDialogExe
-Dim ColWid, ColShow, SortBy, BaseScale, UpArrow, DnArrow, MyLoc, MyPath, CurDir, a, b, c
+Dim ColWid, ColShow, SortBy, BaseScale, UpArrow, DnArrow, MyPath, MyFolder, a, b, c
 Dim Gidx, Midx, Nidx, Pidx, Widx, S1idx, S2idx, S3idx, S4idx, Sort1, Sort2, Sort3, Sort4
 Dim ArrSort1, ArrSort2, ArrSort3, ArrSort4, ArrFonts
 Dim ArrSort1Order, ArrSort2Order, ArrSort3Order, ArrSort4Order
@@ -84,13 +84,12 @@ End If
 
 ' This code allows the script to run from a UNC or mapped drive
 ' whether it's double-clicked or found with Windows Search
-MyLoc  = Mid(document.url,8)
-MyPath = Left(MyLoc,InStrRev(MyLoc,"\")-1)
-CurDir = oWSH.CurrentDirectory
-If CurDir<>MyPath Then oWSH.CurrentDirectory = MyPath
+MyPath  = Mid(document.url,8)
+MyFolder = oFSO.GetParentFolderName(MyPath)
+oWSH.CurrentDirectory = MyFolder
 
-If InStr(CurDir,"[") Or InStr(CurDir,"]") Then
-  a = "Current directory: " & CurDir & Z & Z
+If InStr(MyFolder,"[") Or InStr(MyFolder,"]") Then
+  a = "Current directory: " & MyFolder & Z & Z
   b = "Due to a PowerShell issue, this script cannot run from a directory containing '[' or ']'"
   c = Z & Z & "Please rename the current directory."
   MsgBox a & b & c,vbCritical,"Error"
@@ -129,7 +128,7 @@ oFile.Write ""
 oFile.Close
 On Error Goto 0
 If oFSO.FileExists(TestFile) Then
-  VirtualStore = oWSH.ExpandEnvironmentStrings("%LOCALAPPDATA%") & "\VirtualStore" & Mid(MyPath,3) & "\"
+  VirtualStore = oWSH.ExpandEnvironmentStrings("%LOCALAPPDATA%") & "\VirtualStore" & Mid(MyFolder,3) & "\"
   If oFSO.FileExists(VirtualStore & TestFileName) Then AppData = VirtualStore & "AppData"
   oFSO.DeleteFile(TestFile)
 Else
@@ -671,7 +670,7 @@ Sub LoadSettings
   If Not oFSO.FileExists(FileDialogExe) Then
     MsgBox "File missing: " & FileDialogExe,vbCritical,"Error"
   Else
-    oWSH.Run FileDialogExe & " Open ""*.ini|*.ini"" ..\AppData",0,False
+    oWSH.Run FileDialogExe & " Open Multi ""*.ini|*.ini"" ..\AppData",0,False
     Window.SetTimeOut "GetINIFile", 500
   End If
 End Sub
@@ -695,7 +694,7 @@ Sub Restore
   If Not oFSO.FileExists(FileDialogExe) Then
     MsgBox "File missing: " & FileDialogExe,vbCritical,"Error"
   Else
-    oWSH.Run FileDialogExe & " Open ""*.reg|*.reg"" ..\AppData\Backup",0,False
+    oWSH.Run FileDialogExe & " Open Multi ""*.reg|*.reg"" ..\AppData\Backup",0,False
     Window.SetTimeOut "GetRegFile", 500
   End If
 End Sub
