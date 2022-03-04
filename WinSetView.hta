@@ -1664,6 +1664,12 @@ Sub BuildPages
   Document.Body.InnerHTML = BodyHTML
 
 End Sub
+
+Sub document_onKeyDown
+  'Prevent F5 or Ctrl-F5 refresh
+  If window.event.keyCode=116 Then window.event.keyCode = 0
+End Sub
+
 </script>
 <style>
   body  {background-color:LemonChiffon; font-family:Segoe UI; font-size:11pt}
