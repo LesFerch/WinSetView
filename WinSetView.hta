@@ -36,7 +36,7 @@ Dim i, j, Q, V, X, Y, Z, Temp, TestFile, Section, CheckCount, Value, Key, ArrKey
 Dim AvailHeight, HeadHeight, RequiredWidth, CurrentWidth, Maximized, Fonts, TestFileName
 Dim AppData, NTVer, WinVer, MajVer, Folder, INIFile, rbShow, BodyHTML, TaggedHTML, Tag, Item
 Dim Language,LangDir, LangFile, LangCount, LangData, LangIndex, UBFolderType, YScrollPos
-Dim ViewFile, ViewData, FolderTypeFile, Scale, FontsFile, Backup, F1, F2, FTHide
+Dim ViewFile, ViewData, FolderTypeFile, Scale, FontsFile, Backup, F1, F2, FTHide, KeepAdvanced
 Dim ColFile, ColData, SelectedFont1, SelectedFont2, FontFile, Checkmark, LRArrow
 Dim CmdLine, Line, Order, sOrder, SelectedSize1, SelectedSize2, GUID, Found, VirtualStore
 Dim C1, C2, LastColSel, FTindex, Data, Show, TempFile, File, PartsDir, FileDialogExe
@@ -52,6 +52,7 @@ Dim ArrSortBy, ArrIncludeFlag, ArrIconSize
 Z = vbCRLF
 Q = Chr(34)
 Language = "en-US"
+KeepAdvanced = False
 
 Set oWSH = CreateObject("Wscript.Shell")
 Set oFSO = CreateObject("Scripting.FileSystemObject")
@@ -548,8 +549,10 @@ Sub UpdateLang(OnChange)
   ' Copy remaining settings from scripting dictionary to the HTML pages
   Dict2Dom
   
-  ' Update page elements to selectd font and size
+  ' Update page elements to selected font and size
   UpdateFont1
+
+  If KeepAdvanced Then IFace.SelectedIndex = 2
 
   ' Hide or unhide controls based on Reset checkbox
   OptionReset
@@ -557,7 +560,7 @@ Sub UpdateLang(OnChange)
   ' Hide Restore button if no backup files
   If Not rbshow Then rb.disabled = True
   
-    SetInterface
+  SetInterface
 
 End Sub
 
@@ -709,11 +712,10 @@ Sub GetINIFile
     Window.SetTimeOut "GetINIFile", 500
   Else
     If File<>"" Then
+      KeepAdvanced = True
       Ini2Dict File
-      If oSettings.Exists("[Options]Language") Then
-        SetLang
-        UpdateLang(False)
-      End If
+      SetLang
+      UpdateLang(False)
     End If
   End If
 End Sub
