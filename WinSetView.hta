@@ -68,6 +68,10 @@ oSearchOnly.Add "ItemFolderNameDisplay",""
 
 BaseScale = GetScale(): Scale = BaseScale
 
+Main
+
+Sub Main
+
 ' Determine Windows version (also works for Windows Server)
 ' Treat Windows 11 same as Windows 10 because they have same folder types and properties
 
@@ -82,6 +86,7 @@ If MajVer>=10 Then WinVer = "10"
 If WinVer<>"7" And WinVer<>"8" And WinVer<>"10" Then
   MsgBox "Windows 7, 8, 10, or higher is required.",vbCritical,"Error"
   Self.Close
+  Exit Sub
 End If
 
 ' This code allows the script to run from a UNC or mapped drive
@@ -96,6 +101,7 @@ If InStr(MyFolder,"[") Or InStr(MyFolder,"]") Then
   c = Z & Z & "Please rename the current directory."
   MsgBox a & b & c,vbCritical,"Error"
   Self.Close
+  Exit Sub
 End If
   
 Temp  = oWSH.ExpandEnvironmentStrings("%Temp%")
@@ -155,6 +161,8 @@ Ini2Dict INIFile
 
 ' Set language choice from INI or Windows
 SetLang
+
+End Sub
 
 ' On exit kill any open instances of filedialog.exe
 
@@ -288,6 +296,7 @@ Sub SetLang
   If Not oFSO.FolderExists(LangDir & Language) Then
     MsgBox "Language folder missing: " & LangDir & Language,vbCritical,"Error"
     Self.Close
+    Exit Sub
   End If
 End Sub
 

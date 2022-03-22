@@ -17,7 +17,7 @@ This is the complete user manual. See the link below for the quick start guide.
 Compatible with Windows 7, 8, 10, and 11.
 
 Les Ferch, lesferch@gmail.com\
-GitHub repository created 2021-03-26, last updated 2022-03-03
+GitHub repository created 2021-03-26, last updated 2022-03-22
 
 # Summary
 
@@ -636,7 +636,7 @@ The *Tools* section provides details about which scripts and procedures create t
 
 ## Language Contributions 
 
-Wherever possible, translated text is pulled directly from Windows (e.g. column headings). Some languages have had the benefit of human translation, but any have been done using online translation software and could use improvement from a native speaker. If you can help with a translation, please contact me!
+Wherever possible, translated text is pulled directly from Windows (e.g. column headings). Some languages have had the benefit of human translation, but many have been done using online translation software and could use improvement from a native speaker. If you can help with a translation, please contact me!
 
 Please see the Acknowledgment section for any language files that have been hand-corrected.
 

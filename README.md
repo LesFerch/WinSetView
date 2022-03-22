@@ -22,7 +22,9 @@ WinSetView provides an *easy* way to set Windows File Explorer default folder vi
 1. Download the zip file using the link above.
 2. Extract the entire zip file.
 3. Run **WinSetView.hta**.
-4. At the UAC prompt, uncheck **Always ask** and then click **Run**.
+4. At the UAC prompt, uncheck **Always ask before opening this file** and then click **Run**.
+
+**Note**: If **WinSetView.hta** does not open, or you get something other than the expected UAC prompt, ensure that the **HTA** file extension is associated with **Microsoft (R) HTML Application host** (MSHTA.exe).
 
 For detailed instructions, please see: [Download Help Guide](./DownloadHelp.md)
 
@@ -53,6 +55,8 @@ Select the default view you want applied to most (or all) folders from the drop 
 ![image](https://user-images.githubusercontent.com/79026235/152623349-50a7d709-6cd5-4987-9b12-4db9defeacaf.png)
 
 If you are happy with the default Details-view column headings (as shown on screen) then skip this step.
+
+**Note**: Column headings shown in blue are only displayed in *search results* (by default). It is, therefore, recommended to keep the **Folder path** column heading.
 
 ![image](https://user-images.githubusercontent.com/79026235/152623354-f8272ef5-d85f-42f5-85d0-362eba5be445.png)
 

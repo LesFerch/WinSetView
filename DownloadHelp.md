@@ -45,6 +45,25 @@ Double-click **WinSetView.hta** to open the app.
 
 ![image](https://user-images.githubusercontent.com/79026235/153104503-bd7122e4-6e9e-4a41-abbb-707935cc77a7.png)
 
+If, after double-clicking the HTA file, you see something like the screenshot below, then the HTA file extension has been associated with Notepad (or some other text editor). See the instructions below for correctly associating the HTA extension.
+
+![image](https://user-images.githubusercontent.com/79026235/159400974-6f39145d-737f-427d-93e2-c8645991f5ad.png)
+
+If, after double-clicking the HTA file, you see something like the screenshots below, then the HTA file extension has been associated with a browser, such as Edge or Chrome. See the instructions below for correctly associating the HTA extension.
+
+![image](https://user-images.githubusercontent.com/79026235/159401808-1a005148-059c-42f0-85b6-7c79f6658334.png)
+![image](https://user-images.githubusercontent.com/79026235/159401820-8e9fb277-07b7-4214-9f42-0f9d9847c220.png)
+
+## How to correct the HTA file association
+
+Right-click **WinsetView.hta**, move down to **Open with** and select **Choose another app**.
+
+![image](https://user-images.githubusercontent.com/79026235/159409762-d2cac00b-0630-4df4-8501-82fc14b7d2f8.png)
+
+Select (single-click) **Microsoft (R) HTML Application host**, check **Always use this app to open .hta files** and then click **OK**.
+
+![image](https://user-images.githubusercontent.com/79026235/159409923-d67519d3-4cfb-4e22-a83a-07eb9483507e.png)
+
 ## Step 4: Allow the App to Run
 
 Windows security will not allow a downloaded app to run without your permission. When the following prompt appears, *uncheck* **Always ask before opening this file** and then click **Run**. This message will not appear again for this app.
@@ -55,7 +74,7 @@ If you see the following error message, then you either only extracted **WinSetV
 
 ![image](https://user-images.githubusercontent.com/79026235/153110135-41cee079-b244-4bae-ae5d-add8d3f2754a.png)
 
-Assuming you did not see the above error message, **WinSetView.hta** may take 5 seconds or so to load the fist time. This delay is just Windows setting things up to allow an **hta** script to run. Subsequent launches of the app should only take about 1 second.
+Assuming you did not see the above error message, **WinSetView.hta** may take a few seconds to load the fist time. This delay is just Windows setting things up to allow an **hta** script to run. Subsequent launches of the app should only take about 1 second.
 
 To use the app, please follow the steps in the guide below...
 
