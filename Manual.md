@@ -220,7 +220,7 @@ This folder type controls the view you see for the *Searches* item within your u
 
 ## Options Menu
 
-![image](https://user-images.githubusercontent.com/79026235/152627497-79f752e9-181f-4678-98a2-dff10753ba5a.png)
+![image](https://user-images.githubusercontent.com/79026235/162346394-4f29f16b-77db-42ab-b790-f52ad57e6019.png)
 
 **Show File Extensions**
 
