@@ -299,6 +299,11 @@ If you really want to use this option, be sure to use the **Apply to Folders** b
 
 Note: If **Make All Folders Generic** is also checked, only **Downloads**, **Libraries**, and **Search Results** will get their views from any view saved via Explorer's **Apply to Folders** button. Of course, if you later change a folder to type **Documents**, **Music**, **Pictures**, or **Videos**, it will then pick up the view settings that were saved using **Apply to Folders**.
 
+\
+**Disable folder thumbnails** (Advanced interface)
+
+This option set a registry value that tells Explorer to NOT create a thumbnail icon for *folders*. It has no effect on thumbnails for *files*.
+
 ## Columns
 
 ![image](https://user-images.githubusercontent.com/79026235/152623377-22665b75-2dd2-4d33-a9ce-004ae19643a8.png)
