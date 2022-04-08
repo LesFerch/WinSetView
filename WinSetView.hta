@@ -38,7 +38,7 @@ Dim AvailHeight, HeadHeight, RequiredWidth, CurrentWidth, Maximized, Fonts, Test
 Dim AppData, NTVer, WinVer, MajVer, Folder, INIFile, rbShow, BodyHTML, TaggedHTML, Tag, Item
 Dim Language,LangDir, LangFile, LangCount, LangData, LangIndex, UBFolderType, YScrollPos
 Dim ViewFile, ViewData, FolderTypeFile, Scale, FontsFile, Backup, F1, F2, FTHide, KeepAdvanced
-Dim ColFile, ColData, SelectedFont1, SelectedFont2, FontFile, Checkmark, LRArrow
+Dim ColFile, ColData, SelectedFont1, SelectedFont2, FontFile, Checkmark, LRArrow, ResetThumbs
 Dim CmdLine, Line, Order, sOrder, SelectedSize1, SelectedSize2, GUID, Found, VirtualStore
 Dim C1, C2, LastColSel, FTindex, Data, Show, TempFile, File, PartsDir, FileDialogExe
 Dim ColWid, ColShow, SortBy, BaseScale, UpArrow, DnArrow, MyPath, MyFolder, a, b, c
@@ -655,6 +655,7 @@ Sub Dict2Dom
   x = oSettings.Item("[Options]SetVirtualFolders")
   If x="" Then vf.checked = 1 Else vf.checked = x
   ka.checked = oSettings.Item("[Options]KeepViews")
+  nf.checked = oSettings.Item("[Options]NoFolderThumbs")
   fd.checked = oSettings.Item("[Options]FileDialogOption")
   tp.checked = oSettings.Item("[Options]ThisPCoption")
   nw.checked = oSettings.Item("[Options]NetworkOption")
@@ -775,6 +776,14 @@ Sub Var2Ini(INIFile)
   oFile.Write "SearchOnly=" & Abs(Int(so.checked)) & Z
   oFile.Write "SetVirtualFolders=" & Abs(Int(vf.checked)) & Z
   oFile.Write "KeepViews=" & Abs(Int(ka.checked)) & Z
+  oFile.Write "NoFolderThumbs=" & Abs(Int(nf.checked)) & Z
+  On Error Resume Next
+  x = oWSH.RegRead("HKCU\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags\AllFolders\Shell\Logo")
+  On Error Goto 0
+  ResetThumbs=0
+  If x<>"none" And nf.checked Then ResetThumbs=1
+  If x="none" And Not nf.checked Then ResetThumbs=1
+  oFile.Write "ResetThumbs=" & ResetThumbs & Z
   oFile.Write "FileDialogOption=" & Abs(Int(fd.checked)) & Z
   oFile.Write "FileDialogView=" & fdv.SelectedIndex & Z
   oFile.Write "FileDialogNG=" & Abs(Int(fdg.checked)) & Z
@@ -1498,6 +1507,7 @@ Sub UpdateFont1
   fd.Style.Zoom = Scale
   fdg.Style.Zoom = Scale
   ka.Style.Zoom = Scale
+  nf.Style.Zoom = Scale
   tp.Style.Zoom = Scale
   tpg.Style.Zoom = Scale
   nw.Style.Zoom = Scale
@@ -1690,6 +1700,7 @@ End Sub
   h3    {font-size:1.2em}
   #gn   {margin-top:3pt}
   #ka   {margin-top:3pt}
+  #nf   {margin-top:3pt}
   #so   {margin-top:3pt}
   #fd   {margin-top:3pt}
   .cta  {margin-top:5pt; width:100%}
@@ -1860,6 +1871,7 @@ End Sub
       <div id=ao>
       <input type=checkbox id=gn Checked># 10 #<br><br>
       <input type=checkbox id=ka># 11 #<br><br>
+      <input type=checkbox id=nf># 35 #<br><br>
       </div>
     </div>
   </div>

@@ -131,6 +131,8 @@ Else {
   $Reset = $iniContent['Options']['Reset']
   $KeepViews = [Int]$iniContent['Options']['KeepViews']
   $Generic = [Int]$iniContent['Options']['Generic']
+  $NoFolderThumbs = [Int]$iniContent['Options']['NoFolderThumbs']
+  $ResetThumbs = [Int]$iniContent['Options']['ResetThumbs']
   $SearchOnly = [Int]$iniContent['Options']['SearchOnly']
   $SetVirtualFolders = [Int]$iniContent['Options']['SetVirtualFolders']
   $FileDialogOption = [Int]$iniContent['Options']['FileDialogOption']
@@ -255,6 +257,8 @@ If ($NetworkOption -ne 0) {
 }
 
 If ($Generic -eq 1) {Reg Add "$Bags\AllFolders\Shell" /v FolderType /d Generic /t REG_SZ /f}
+If ($NoFolderThumbs -eq 1) {Reg Add "$Bags\AllFolders\Shell" /v Logo /d none /t REG_SZ /f}
+If ($ResetThumbs -eq 1) {Remove-Item -ErrorAction Ignore "$Env:LocalAppData\Microsoft\Windows\Explorer\thumbcache*.db"}
 
 If ($SetVirtualFolders -eq 1) {
   $GUID = $iniContent['Generic']['GUID']
