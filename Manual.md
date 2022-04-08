@@ -302,7 +302,7 @@ Note: If **Make All Folders Generic** is also checked, only **Downloads**, **Lib
 \
 **Disable folder thumbnails** (Advanced interface)
 
-This option set a registry value that tells Explorer to NOT create a thumbnail icon for *folders*. It has no effect on thumbnails for *files*.
+This option sets a registry value that tells Explorer to NOT create a thumbnail icon for *folders*. It has no effect on thumbnails for *files*.
 
 ## Columns
 
