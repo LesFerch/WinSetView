@@ -615,7 +615,7 @@ Here's an overview of the steps the PowerShell script performs to set Explorer v
 
 # Language Support
 
-WinSetView is designed to work with any left to right language. There are currently 31 languages included with WinSetView. If your language is not included, please contact me.
+WinSetView is designed to work with any left to right language. There are currently 33 languages included with WinSetView. If your language is not included, please contact me.
 
 I have not included any right to left languages, such as Arabic, with WinSetView, as I'm not sure if that would be useful. However, if a native speaker tells me it would still be helpful to have their right to left language included, I will certainly add the language.
 

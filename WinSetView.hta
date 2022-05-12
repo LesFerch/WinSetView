@@ -307,10 +307,12 @@ Sub FTHideUnHide(i,HideAll)
     Document.GetElementByID(i & "FTtitle").ClassName = "ftl"
     Document.GetElementByID(i & "FTsettings").Style.Visibility = "hidden"
     Document.GetElementByID(i & "Include").Checked = False
+    Document.GetElementByID(i & "Inspect").style.visibility = "hidden"
   Else
     Document.GetElementByID(i & "FTtitle").ClassName = "ft"
     Document.GetElementByID(i & "FTsettings").Style.Visibility = "visible"
     Document.GetElementByID(i & "Include").Checked = True
+    If IFace.SelectedIndex=2 Then Document.GetElementByID(i & "Inspect").style.visibility = "visible"
   End If
 End Sub
 
@@ -1108,11 +1110,6 @@ Sub OptionReset
     lb.style.visibility = "hidden"
     sb.style.visibility = "hidden"
     ao.style.visibility = "hidden"
-    If IFace.SelectedIndex=2 Then
-      For i = 1 To UBFolderType
-        Document.GetElementByID(i & "Inspect").style.visibility = "hidden"
-      Next
-    End If
   Else
     FTHide = False
     Sec1.style.visibility = "visible"
@@ -1121,9 +1118,6 @@ Sub OptionReset
       lb.style.visibility = "visible"
       sb.style.visibility = "visible"
       ao.style.visibility = "visible"
-      For i = 1 To UBFolderType
-        Document.GetElementByID(i & "Inspect").style.visibility = "visible"
-      Next
     End If
   End If
   For i = 1 To UBFolderType
@@ -1609,7 +1603,7 @@ Sub SetInterface
       sb.style.visibility = "visible"
       ao.style.visibility = "visible"
       For i = 1 To UBFolderType
-        Document.GetElementByID(i & "Inspect").style.visibility = "visible"
+        If ArrIncludeFlag(i)="1" Then Document.GetElementByID(i & "Inspect").style.visibility = "visible"
       Next
     End If
   End If
