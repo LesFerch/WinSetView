@@ -294,7 +294,11 @@ Sub SetLang
   If oSettings.Exists("[Options]Language") Then Language = oSettings.Item("[Options]Language")
   If Not oFSO.FolderExists(LangDir & Language) Then Language = "en-US"
   If Not oFSO.FolderExists(LangDir & Language) Then
-    MsgBox "Language folder missing: " & LangDir & Language,vbCritical,"Error"
+    If InStr(MyFolder,Temp) Then
+      MsgBox "Cannot run directly from zip file." & Z & Z & "Please EXTRACT entire zip file and then run.",vbCritical,"Error"
+    Else
+      MsgBox "Language folder missing: " & LangDir & Language,vbCritical,"Error"
+    End If
     Self.Close
     Exit Sub
   End If

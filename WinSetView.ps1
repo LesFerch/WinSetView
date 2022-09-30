@@ -200,7 +200,7 @@ Reg Add $Advn /v UseCompactMode /t REG_DWORD /d ($CompView) /f
 
 If ($Reset -eq 1) {RestartExplorer}
 
-# Function to help Set up views for This PC and Network virtual folders
+# Function to help Set up views for This PC
 
 Function SetBagValues ($Key) {
   Reg Add $Key /v LogicalViewMode /d $LVMode /t REG_DWORD /f >$Null
@@ -245,15 +245,12 @@ If ($ThisPCoption -ne 0) {
   SetBagValues("$Bags\1\Shell\$GUID")
 }
 
-# Network has a unique GUID, so we'll set it's view via an AllFolders entry:
+# Have to use a reg file to set the Network view:
 
 If ($NetworkOption -ne 0) {
-  $GUID = '{25CC242B-9A7C-4F51-80E0-7A2928FEBE42}'
-  SetViewValues($NetworkView)
-  Reg Add "$Bags\AllFolders\Shell\$GUID" /v Mode /d "$Mode" /t REG_DWORD /f
-  Reg Add "$Bags\AllFolders\Shell\$GUID" /v LogicalViewMode /d "$LVMode" /t REG_DWORD /f
-  If ($LVMode -eq 3) {Reg Add "$Bags\AllFolders\Shell\$GUID" /v IconSize /d "$IconSize" /t REG_DWORD /f}
-  If ($NetworkNG -eq 1) {Reg Add "$Bags\AllFolders\Shell\$GUID" /v GroupView /d 0 /t REG_DWORD /f}
+  $Group = 1-$NetworkNG
+  $RegFile = ".\AppParts\NetworkView\$NetworkView-$Group.reg"
+  If (Test-Path -Path $RegFile) {Reg Import $RegFile}
 }
 
 If ($Generic -eq 1) {Reg Add "$Bags\AllFolders\Shell" /v FolderType /d Generic /t REG_SZ /f}
