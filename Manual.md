@@ -261,6 +261,8 @@ This option allows you to set a specific view for Open and Save dialogs that ove
 
 For example, with the *Pictures* folder type set to large icons and this option *checked*, with *Details* selected, you will see Large icons when you browse to Pictures in Explorer, but you will see a Details view in and Open and Save dialogs in applications such as MSPaint.
 
+If you want your Open and Save dialog views to match your File Explorer browsing views, be sure to _uncheck_ this option.
+
 \
 **Set view for "This PC"**
 
