@@ -77,6 +77,7 @@ If (-Not(Test-Path -Path $File)) {
 
 $BagM = '"HKCU\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\BagMRU"'
 $Bags = '"HKCU\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags"'
+$Strm = '"HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Streams"'
 $Defs = '"HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Streams\Defaults"'
 $CUFT = '"HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\FolderTypes"'
 $LMFT = '"HKLM\Software\Microsoft\Windows\CurrentVersion\Explorer\FolderTypes"'
@@ -164,7 +165,7 @@ Remove-Item $T4 2>$Null
 
 Reg Export $BagM $T1 /y 2>$Null
 Reg Export $Bags $T2 /y 2>$Null
-Reg Export $Defs $T3 /y 2>$Null
+Reg Export $Strm $T3 /y 2>$Null
 Reg Export $CUFT $T4 /y 2>$Null
 
 Cmd /c Copy $T1+$T2+$T3+$T4 $BakFile >$Null 2>$Null
@@ -198,14 +199,18 @@ Reg Add $Advn /v UseCompactMode /t REG_DWORD /d ($CompView) /f
 
 # If reset, restart Explorer and exit
 
-If ($Reset -eq 1) {RestartExplorer}
+If ($Reset -eq 1) {
+  Reg Delete $Strm /f 2>$Null
+  RestartExplorer
+}
 
 # Function to help Set up views for This PC
 
 Function SetBagValues ($Key) {
   Reg Add $Key /v LogicalViewMode /d $LVMode /t REG_DWORD /f >$Null
   Reg Add $Key /v Mode /d $Mode /t REG_DWORD /f >$Null
-  If ($ThisPCNG -eq 1) {Reg Add $Key /v GroupView /d 0 /t REG_DWORD /f >$Null}
+  $Group = 1-$ThisPCNG
+  Reg Add $Key /v GroupView /d $Group /t REG_DWORD /f >$Null
   If ($LVMode -eq 3) {Reg Add $Key /v IconSize /d $IconSize /t REG_DWORD /f >$Null}
 }
 
