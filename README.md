@@ -82,7 +82,7 @@ For any folder type (e.g. **Pictures**) that you wish to have a *different* defa
 
 Click The **Options** button.
 
-![image](https://user-images.githubusercontent.com/79026235/152627489-7dafab2b-86d2-4baf-b124-2c314c5cd6ea.png)
+![image](https://user-images.githubusercontent.com/79026235/193393425-e00ff132-68d2-4be7-a5bd-0cd0ac9452c0.png)
 
 Review the settings on that page and adjust as desired. See the [manual](./Manual.md) for full details.
 
