@@ -78,7 +78,7 @@ For any folder type (e.g. **Pictures**) that you wish to have a *different* defa
 
 ## Step 5: Check and Set Your Desired Options
 
-![image](https://user-images.githubusercontent.com/79026235/152623384-10c8163e-51f8-4d0a-af86-47ec225103b4.png)
+![image](https://user-images.githubusercontent.com/79026235/193393425-e00ff132-68d2-4be7-a5bd-0cd0ac9452c0.png)
 
 Click The **Options** button.
 
