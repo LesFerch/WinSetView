@@ -1,11 +1,11 @@
-##2.43
+## 2.43
 
 Bug Fix: Corrected Details view icon size in legacy dialogs (e.g. RegEdit Export dialog).
 
 Enhancement: Hover over Help button to see version number.
 
 
-##2.42
+## 2.42
 
 Bug Fix: "Set view for This PC" now enables grouping when "No Grouping" is unchecked.
 
@@ -20,24 +20,24 @@ Enhancement: Now detects if WinSetView.HTA is launched directly from zip file an
 Enhancement: FileDialog.exe updated to latest version (no impact on WinSetView functionality)
 
 
-##2.41
+## 2.41
 
 Bug Fix: Inspect (magnifying glass) icon now always hidden unless Advanced interface is selected.
 
 Enhancement: Added Vietnamese language
 
 
-##2.40
+## 2.40
 
 Feature added: Disable Folder Thumbnails
 
 
-##2.33
+## 2.33
 
 Enhancement: Minor code change to ensure quicker exit
 
 
-##2.32
+## 2.32
 
 Bug Fix: Rewrote Windows version checking so that it now runs on Windows Server.
 
@@ -52,7 +52,7 @@ Enhancement: Disabled F5 and Ctrl-F5 refresh.
 Enhancement: Tidied up code that determines current directory.
 
 
-##2.30
+## 2.30
 
 Bug Fix: Removed "Language=en-US" from default INI file so that system language is detected.
 
@@ -61,32 +61,32 @@ Feature added: Help button (Opens WinSetView web page)
 Feature added: Standard and Advanced interface selection.
 
 
-##2.20
+## 2.20
 
-Feature added: "Set view for Network" (actually never worked - fixed in ##2.42)
+Feature added: "Set view for Network" (actually never worked - fixed in ## 2.42)
 
 
-##2.16
+## 2.16
 
 Bug Fix: Now runs correctly from a folder in Program Files or Program Files (x86).
 
 
-##2.15
+## 2.15
 
 Bug Fix: Unchecking/checking a folder type now properly hides and unhides elements.
 
 
-##2.14
+## 2.14
 
 Bug Fix: "Use General Items view for connected devices" checkbox now scales properly.
 
 
-##2.13
+## 2.13
 
 Enhancement: Now detects if current directory name contains square brackets (incompatible with PowerShell) and displays error.
 
 
-##2.12
+## 2.12
 
 Bug Fix: HTA now explicitly sets its mode, so that it cannot be set to an incorrect mode via the registry.
 
@@ -95,21 +95,21 @@ Bug Fix: Fixed some display issues with some items not hidden when they should b
 Enhancement: Alt key can now be used with Submit button to keep PowerShell console open.
 
 
-##2.11
+## 2.11
 
 Bug Fix: Now runs from a UNC path.
 
 
-##2.10
+## 2.10
 
 Feature added: "Use General Items view for connected devices"
 
 
-##2.03
+## 2.03
 
 Feature added: Columns widths can now be entered in pixels (use Alt key).
 
 
-##2.02
+## 2.02
 
-First ##2.x release.
+First ## 2.x release.
