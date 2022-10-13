@@ -34,7 +34,7 @@ Feature added: Disable Folder Thumbnails
 
 ## 2.33
 
-Enhancement: Minor code change to ensure quicker exit
+Enhancement: Minor code change to ensure quick exit.
 
 
 ## 2.32
