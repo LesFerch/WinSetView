@@ -112,4 +112,4 @@ Feature added: Columns widths can now be entered in pixels (use Alt key).
 
 ## 2.02
 
-First ## 2.x release.
+First 2.x release.
