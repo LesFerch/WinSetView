@@ -320,6 +320,7 @@ Get-ChildItem $FolderTypes | Get-ItemProperty | ForEach {
       $SortBy = $SortBy -Replace '\+','+System.'
       $SortBy = $SortBy -Replace '-','-System.'
       $View = $iniContent[$FT]['View']
+      $IconSize = 16
       $CustomIconSize = $iniContent[$FT]['IconSize']
       SetViewValues($View)
       If ($CustomIconSize -ne '') {$IconSize = $CustomIconSize}
@@ -345,7 +346,7 @@ Get-ChildItem $FolderTypes | Get-ItemProperty | ForEach {
           $GUID = $_.PSChildName
           $ChildKey = $Key + '\' + $GUID
           Set-ItemProperty -Path $ChildKey -Name 'LogicalViewMode' -Value $LVMode
-          If ($LVMode -eq 3)  {Set-ItemProperty -Path $ChildKey -Name 'IconSize' -Value $IconSize}
+          Set-ItemProperty -Path $ChildKey -Name 'IconSize' -Value $IconSize
           Set-ItemProperty -Path $ChildKey -Name 'GroupBy' -Value $GroupBy
           Set-ItemProperty -Path $ChildKey -Name 'SortByList' -Value $SortBy
           Set-ItemProperty -Path $ChildKey -Name 'ColumnList' -Value $ColumnList

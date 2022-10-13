@@ -19,6 +19,8 @@ WinSetView.hta (GUI tool to select desired views)
 <script language="VBScript">
 Option Explicit
 
+Const Version = "2.43"
+
 RequiredWidth = 700
 If RequiredWidth>screen.availWidth Then RequiredWidth = screen.availWidth
 Window.ResizeTo RequiredWidth, screen.availHeight
@@ -171,6 +173,8 @@ Sub window_OnUnload
 End Sub
 
 Sub window_OnLoad
+
+  Ver.InnerHTML = Version
 
   'Populate language dropdown menu
   
@@ -1761,7 +1765,8 @@ End Sub
     <div id=fix1>
     <div id=f1in>
       <div id=twid>
-        <input type=button id=hb value='# 31 #' onclick=Help>
+        <div class=tip><input type=button id=hb value='# 31 #' onclick=Help>
+        <span id=ver class=tiptext></span></div>
         <select id=Lang onchange='UpdateLang True'></select>
         <select id=IFace onchange='SetInterface'>
           <option selected disabled># 32 #</option>
