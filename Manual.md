@@ -19,7 +19,7 @@ Compatible with Windows 7, 8, 10, and 11.
 Les Ferch, lesferch@gmail.com\
 GitHub repository created 2021-03-26, last updated 2022-10-13
 
-Version 2.43
+[Version 2.43](https://github.com/LesFerch/WinSetView/blob/main/VersionHistory.md)
 
 # Summary
 
