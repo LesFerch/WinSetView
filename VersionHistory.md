@@ -24,12 +24,12 @@ Enhancement: FileDialog.exe updated to latest version (no impact on WinSetView f
 
 Bug Fix: Inspect (magnifying glass) icon now always hidden unless Advanced interface is selected.
 
-Enhancement: Added Vietnamese language
+Enhancement: Added Vietnamese language.
 
 
 ## 2.40
 
-Feature added: Disable Folder Thumbnails
+Feature added: Disable Folder Thumbnails.
 
 
 ## 2.33
