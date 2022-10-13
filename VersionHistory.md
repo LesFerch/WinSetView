@@ -60,6 +60,8 @@ Feature added: Help button (Opens WinSetView web page)
 
 Feature added: Standard and Advanced interface selection.
 
+Enhancement: Added en-GB language for UK, Canada, Australia, etc.
+
 
 ## 2.20
 
