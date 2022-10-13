@@ -217,10 +217,10 @@ Function SetBagValues ($Key) {
 # Set view values based on selection index
 
 Function SetViewValues($Index) {
-  If ($Index -eq 1) {$Script:LVMode = 1; $Script:Mode = 4}
-  If ($Index -eq 2) {$Script:LVMode = 4; $Script:Mode = 3}
-  If ($Index -eq 3) {$Script:LVMode = 2; $Script:Mode = 6}
-  If ($Index -eq 4) {$Script:LVMode = 5; $Script:Mode = 8}
+  If ($Index -eq 1) {$Script:LVMode = 1; $Script:Mode = 4; $Script:IconSize = 16}
+  If ($Index -eq 2) {$Script:LVMode = 4; $Script:Mode = 3; $Script:IconSize = 16}
+  If ($Index -eq 3) {$Script:LVMode = 2; $Script:Mode = 6; $Script:IconSize = 48}
+  If ($Index -eq 4) {$Script:LVMode = 5; $Script:Mode = 8; $Script:IconSize = 32}
   If ($Index -eq 5) {$Script:LVMode = 3; $Script:Mode = 1; $Script:IconSize = 16}
   If ($Index -eq 6) {$Script:LVMode = 3; $Script:Mode = 1; $Script:IconSize = 48}
   If ($Index -eq 7) {$Script:LVMode = 3; $Script:Mode = 1; $Script:IconSize = 96}
@@ -320,7 +320,6 @@ Get-ChildItem $FolderTypes | Get-ItemProperty | ForEach {
       $SortBy = $SortBy -Replace '\+','+System.'
       $SortBy = $SortBy -Replace '-','-System.'
       $View = $iniContent[$FT]['View']
-      $IconSize = 16
       $CustomIconSize = $iniContent[$FT]['IconSize']
       SetViewValues($View)
       If ($CustomIconSize -ne '') {$IconSize = $CustomIconSize}
