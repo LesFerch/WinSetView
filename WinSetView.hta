@@ -19,7 +19,7 @@ WinSetView.hta (GUI tool to select desired views)
 <script language="VBScript">
 Option Explicit
 
-Const Version = "2.43"
+Const Version = "2.44"
 
 RequiredWidth = 700
 If RequiredWidth>screen.availWidth Then RequiredWidth = screen.availWidth
@@ -1475,7 +1475,7 @@ Sub UpdateFont1
   BkP3.Style.FontSize = SelectedSize1 & "pt"
   BkP4.Style.FontSize = SelectedSize1 & "pt"
 
-  x = (UBFolderType * 5) + 16
+  x = (UBFolderType * 5) + 17
   For i = 0 To x
     Set oElement = Document.GetElementsByTagName("input")(i)
     If oElement.Type="button" Or oElement.Type="text" Then
@@ -1591,7 +1591,7 @@ Sub PixelInput(id)
   If b<>"" Then 
     b = Abs(Int(b))
     c = Int(b / BaseScale / 8)
-    If c>99 Then c = 99
+    If c>999 Then c = 999
     If c<1 Then c = 1
     Document.GetElementByID("W~" & id).Value = c
   End If
@@ -1659,7 +1659,7 @@ Sub BuildPages
     "<td><input type=radio name=RBS2 onclick=RBS2Click('" & C1 & "') id=S2~" & C1 & " Value='" & C1 & "'></td>" &_
     "<td><input type=radio name=RBS3 onclick=RBS3Click('" & C1 & "') id=S3~" & C1 & " Value='" & C1 & "'></td>" &_
     "<td><input type=radio name=RBS4 onclick=RBS4Click('" & C1 & "') id=S4~" & C1 & " Value='" & C1 & "'></td>" &_
-    "<td><input type=text class=cw id=W~" & C1 & " maxlength=2 onclick=PixelInput('" & C1 & "')></td>" &_
+    "<td><input type=text class=cw id=W~" & C1 & " maxlength=3 onclick=PixelInput('" & C1 & "')></td>" &_
     "<td><input type=checkbox onclick=CBMClick('" & C1 & "') id=M~" & C1 & " Value='" & C1 & "'></td>" &_
     "<td><input type=checkbox onclick=CBPClick('" & C1 & "') id=P~" & C1 & " Value='" & C1 & "'></td>" &_
     "<td><span id=V~" & C1 & " class=" & x & " onmouseover='ShowC1 " & Q & C1 & Q &_ 
@@ -1807,7 +1807,7 @@ End Sub
           <col style='width:1.8em; min-width:1.8em; max-width:1.8em; text-align:center'>
           <col style='width:1.8em; min-width:1.8em; max-width:1.8em; text-align:center'>
           <col style='width:1.8em; min-width:1.8em; max-width:1.8em; text-align:center'>
-          <col style='width:3.4em; min-width:3.4em; max-width:3.4em; text-align:center'>
+          <col style='width:4.7em; min-width:4.7em; max-width:4.7em; text-align:center'>
           <col style='width:3.0em; min-width:3.0em; max-width:3.0em; text-align:center'>
           <col style='width:3.0em; min-width:3.0em; max-width:3.0em; text-align:center'>
         </colgroup>
@@ -1818,7 +1818,7 @@ End Sub
           <th><div class=tip><input type=button id=cbs2 value='⮬' onclick=SortBy2Click style='height=2em; width:1.5em'><span class=tiptext># 15 #</span></div></th>
           <th><div class=tip><input type=button id=cbs3 value='⮬' onclick=SortBy3Click style='height=2em; width:1.5em'><span class=tiptext># 16 #</span></div></th>
           <th><div class=tip><input type=button id=cbs4 value='⮬' onclick=SortBy4Click style='height=2em; width:1.5em'><span class=tiptext># 17 #</span></div></th>
-          <th><div class=tip><input type=button id=cbw value='⟷' onclick=WidthClick style='width:2.2em'><span class=tiptext># 18 #</span></div></th>
+          <th><div class=tip><input type=button id=cbw value='⟷' onclick=WidthClick style='width:2.4em'><span class=tiptext># 18 #</span></div></th>
           <th><div class=tip><input type=button id=cbo value='✔✔' onclick=View1Click style='width:2em'><span class=tiptext># 19 #</span></div></th>
           <th><div class=tip><input type=button id=cbc value='✔' onclick=View2Click style='width:2em'><span class=tiptext># 20 #</span></div></th>
           </tr>
@@ -1835,7 +1835,7 @@ End Sub
           <col style='width:1.8em; min-width:1.8em; max-width:1.8em; text-align:center'>
           <col style='width:1.8em; min-width:1.8em; max-width:1.8em; text-align:center'>
           <col style='width:1.8em; min-width:1.8em; max-width:1.8em; text-align:center'>
-          <col style='width:3.4em; min-width:3.4em; max-width:3.4em; text-align:center'>
+          <col style='width:4.7em; min-width:4.7em; max-width:4.7em; text-align:center'>
           <col style='width:3.0em; min-width:3.0em; max-width:3.0em; text-align:center'>
           <col style='width:3.0em; min-width:3.0em; max-width:3.0em; text-align:center'>
         </colgroup>
