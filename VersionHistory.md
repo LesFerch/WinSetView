@@ -1,3 +1,7 @@
+## 2.44
+
+Enhancement: Column width can now be set as high as 999 ems (7992 pixels at 96 dpi).
+
 ## 2.43
 
 Bug Fix: Corrected Details view icon size in legacy dialogs (e.g. RegEdit Export dialog, IrfanView Open/Save dialogs).
