@@ -17,9 +17,9 @@ This is the complete user manual. See the link below for the quick start guide.
 Compatible with Windows 7, 8, 10, and 11.
 
 Les Ferch, lesferch@gmail.com\
-GitHub repository created 2021-03-26, last updated 2022-10-13
+GitHub repository created 2021-03-26, last updated 2022-10-21
 
-[Version 2.43](./VersionHistory.md)
+[Version 2.44](./VersionHistory.md)
 
 # Summary
 
