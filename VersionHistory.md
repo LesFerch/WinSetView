@@ -1,3 +1,7 @@
+## 2.45
+
+Bug Fix: Fixed "File not found" error on machines where the PowerShell startup folder is set via Profile.ps1.
+
 ## 2.44
 
 Enhancement: Column width can now be set as high as 999 ems (7992 pixels at 96 dpi).
