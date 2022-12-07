@@ -46,7 +46,7 @@ If ($MajVer -ge 10) {$WinVer = '10'}
 
 If (($WinVer -ne '7') -And ($WinVer -ne '8') -And ($WinVer -ne '10')){
   Write-Host `n'Windows 7, 8, 10 or higher is required.'`n
-  Read-Host -Prompt 'Press any key to continue'
+  Read-Host -Prompt 'Press Enter to continue'
   Exit
 }
 
@@ -54,7 +54,7 @@ If (($WinVer -ne '7') -And ($WinVer -ne '8') -And ($WinVer -ne '10')){
 
 If ($PSVersionTable.PSVersion.Major -lt 2) {
   Write-Host `n'Powershell 2 or higher is required.'`n
-  Read-Host -Prompt 'Press any key to continue'
+  Read-Host -Prompt 'Press Enter to continue'
   Exit
 }
 
@@ -65,13 +65,21 @@ If ($File.Length -gt 4) {$FileExt = $File.SubString($File.Length-4)}
 
 If (-Not(($FileExt -eq '.ini') -Or ($FileExt -eq '.reg'))) {
   Write-Host `n'No INI or REG file supplied on command line.'`n
-  Read-Host -Prompt 'Press any key to continue'
+  Read-Host -Prompt 'Press Enter to continue'
   Exit
 }
 
+# Create PSScriptRoot variable if not exist (i.e. PowerShell 2)
+
+If (!$PSScriptRoot) {$PSScriptRoot = Split-Path $Script:MyInvocation.MyCommand.Path -Parent}
+
+# Make sure we can access the INI (or REG) file
+
+set-location $PSScriptRoot
+
 If (-Not(Test-Path -Path $File)) {
   Write-Host `n"File not found: $File"`n
-  Read-Host -Prompt 'Press any key to continue'
+  Read-Host -Prompt 'Press Enter to continue'
   Exit
 }
 
@@ -93,10 +101,6 @@ $T2       = "$TempDir\WinSetView2.tmp"
 $T3       = "$TempDir\WinSetView3.tmp"
 $T4       = "$TempDir\WinSetView4.tmp"
 $TimeStr  = (get-date).ToString('yyyy-MM-dd-HHmm-ss')
-
-# Create PSScriptRoot variable if not exist (i.e. PowerShell 2)
-
-If (!$PSScriptRoot) {$PSScriptRoot = Split-Path $Script:MyInvocation.MyCommand.Path -Parent}
 
 # Use script folder if we have write access. Otherwise use AppData folder.
 
@@ -232,7 +236,9 @@ Function BuildRegData($Key) {
   $Script:RegData += '@="' + $Script:FT + '"' + "`r`n"
   $Script:RegData += '"LogicalViewMode"=dword:' + $Script:LVMode + "`r`n"
   $Script:RegData += '"Mode"=dword:' + $Script:Mode + "`r`n"
-  If ($Script:LVMode -eq 3) {$Script:RegData += '"IconSize"=dword:' + '{0:x}' -f $Script:IconSize + "`r`n"} 
+  If ($Script:LVMode -eq 3) {$Script:RegData += '"IconSize"=dword:' + '{0:x}' -f $Script:IconSize + "`r`n"}
+  $Group = 1-$FileDialogNG
+  $Script:RegData += '"GroupView"=dword:' + $Group + "`r`n"
 }
 
 # The FolderTypes key does not include entries for This PC and Network
@@ -355,7 +361,7 @@ Get-ChildItem $FolderTypes | Get-ItemProperty | ForEach {
   }
 }
 
-# Export results for use with comparison tools such as WinDiff
+# Export results for use with comparison tools such as WinMerge
 
 Reg Export $CUFT $RegFile2 /y
 
