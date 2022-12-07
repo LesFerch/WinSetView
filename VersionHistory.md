@@ -75,7 +75,7 @@ Enhancement: Added en-GB language for UK, Canada, Australia, etc.
 
 ## 2.20
 
-Feature added: "Set view for Network" (actually never worked - fixed in ## 2.42)
+Feature added: "Set view for Network" (actually never worked - fixed in 2.42)
 
 
 ## 2.16
