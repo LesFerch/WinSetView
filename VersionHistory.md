@@ -2,6 +2,8 @@
 
 Bug Fix: Fixed "File not found" error on machines where the PowerShell startup folder is set via Profile.ps1.
 
+Bug Fix: Fixed file dialog still grouped when Explorer view is grouped, but file dialogs are set to Not Grouped.
+
 ## 2.44
 
 Enhancement: Column width can now be set as high as 999 ems (7992 pixels at 96 dpi).
