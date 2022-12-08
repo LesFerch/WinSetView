@@ -34,7 +34,9 @@ All changes made by WinSetView are per-user within the HKEY_CURRENT_USER hive in
 **Note**: For USB-connected phones and tablets, WinSetView provides an option to have them displayed in the same view as generic (General Items) folders (e.g. Details view), but it cannot control the Details view column headings for such devices.
 
 # Interface
-![image](https://user-images.githubusercontent.com/79026235/152623653-b6834ebe-e40b-476c-b972-d69309e32f66.png)
+![image](https://user-images.githubusercontent.com/79026235/206566843-bf9c8e63-ae86-4ec9-bd46-1f2f77fb5975.png)
+
+**Note**: For Windows 7 and 8, some of the icons used in the program will differ from Windows 10 and 11 due to issues with those older Windows versions being able to display all Unicode characters.
 
 ## Help Button
 
@@ -59,6 +61,10 @@ The font list is read from the file **Fonts.txt** in the **AppParts** folder, wh
 ## Horizontal Scroll Control Menu
 
 Adjust whether a long line in WinSetView is wrapped or scrolled horizontally. Values range from 1 (no horizontal scroll bar) to 9 (view port 9x wider than window). This has no affect on any setting in Windows.
+
+## Theme Menu
+
+Select a light or dark theme for the WinSetView display. Themes definitions are located in .\AppParts\Themes.ini. The provided themes can be edited and/or new themes can be added. Please note that pop-up dialogs have hard-coded light and dark themes.
 
 ## Reset Views to Windows Defaults
 
@@ -117,6 +123,8 @@ Note: In *Explorer*, you can use *Ctrl-Mouse-Scroll-wheel* to set a custom icon 
 Use the **Columns** button to select column headings, group by, and sort by options. See the *Columns* section below for further information.
 
 The selected column headings for *Details* view are shown on a single line with each heading separated by a vertical bar. If many headings are selected and/or a large font is used, this line will wrap. To view this line without wrapping, use the horizontal scroll menu, as described above. Column headings shown in *blue* are only displayed in search result views. See the *Options* page to toggle this feature on or off.
+
+The **⚙** (Options) button allows you to select a _different_ view for File Open/Save dialogs. This can be set under Global as well as under any specific folder type. There is no need to set this option if you want Open/Save dialogs to have the same view you have already set for File Explorer.
 
 The **Group by** option applies to any view. Use the *Columns* button to select the property to group by or turn off grouping, which will be displayed as *(None)*.
 
