@@ -1,3 +1,7 @@
+## 2.46
+
+Enhancement: Windows 11 "Home" folder now indicated for all languages.
+
 ## 2.45
 
 Bug Fix: Fixed "File not found" error on machines where the PowerShell startup folder is set via Profile.ps1.
