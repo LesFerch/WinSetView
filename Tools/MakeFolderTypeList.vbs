@@ -113,6 +113,7 @@ oWSH.Run "Reg Export " & LMFT & " " & TempFile & " /y",0,True
 Set oFile = oFSO.OpenTextFile(TempFile,ForReading,,Unicode)
 Set oFolderTypes = CreateObject("Scripting.Dictionary")
 oFolderTypes.Add "Global","{00000000-0000-0000-0000-000000000000}"
+i = 0
 Do Until oFile.AtEndOfStream
   Line = oFile.ReadLine
   If InStr(Line,"HKEY_LOCAL_MACHINE") Then GUID = Line
@@ -121,7 +122,9 @@ Do Until oFile.AtEndOfStream
     GUID = Replace(GUID,"]","")
     Line = Replace(Line,Chr(34),"")
     FT = Replace(Line,"CanonicalName=","")
+    If oFolderTypes.Exists(FT) Then FT = FT & i
     oFolderTypes.Add FT,GUID
+    i = i + 1
   End If
 Loop
 oFile.Close
