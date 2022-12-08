@@ -42,6 +42,10 @@ All changes made by WinSetView are per-user within the HKEY_CURRENT_USER hive in
 
 Click the **Help** button to bring up a short tutorial for non-technical users. The tutorial also includes a link to this manual.
 
+## ⛶ (Re-center) Button
+
+WinSetView now remembers its window size and position. Click the re-center button to move and resize the WinSetView window back to its default of centered, full height on the primary display. Pressing any function key (i.e. **F1** - **F12**) will also re-center the window. This can be handy if WinSetView has loaded off-screen (e.g. due to a change of monitors or their position).
+
 ## Language Menu
 
 Select an interface language for *WinSetView*. See the **Language Support** section below for details. This option does NOT change the Windows language.
@@ -125,6 +129,8 @@ Use the **Columns** button to select column headings, group by, and sort by opti
 The selected column headings for *Details* view are shown on a single line with each heading separated by a vertical bar. If many headings are selected and/or a large font is used, this line will wrap. To view this line without wrapping, use the horizontal scroll menu, as described above. Column headings shown in *blue* are only displayed in search result views. See the *Options* page to toggle this feature on or off.
 
 The **⚙** (Options) button allows you to select a _different_ view for File Open/Save dialogs. This can be set under Global as well as under any specific folder type. There is no need to set this option if you want Open/Save dialogs to have the same view you have already set for File Explorer.
+
+![image](https://user-images.githubusercontent.com/79026235/206568776-06b2cc04-6d9a-45f0-964c-1f5b702129a9.png)
 
 The **Group by** option applies to any view. Use the *Columns* button to select the property to group by or turn off grouping, which will be displayed as *(None)*.
 
