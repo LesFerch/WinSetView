@@ -45,7 +45,7 @@ For complete details, please see the [manual](./Manual.md).
 
 WinSetView should open in the same language to which you have Windows set. If not, select the correct language from the drop down menu.
 
-## Step 2: Select Your Preferred Global Default View
+## Step 2: Select Your Preferred Default View
 
 ![image](https://user-images.githubusercontent.com/79026235/206563583-ded1543d-0acb-4229-9129-b7f98abc6ee9.png)
 
