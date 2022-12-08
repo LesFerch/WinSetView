@@ -7,7 +7,7 @@ Follow the steps below to download, extract, and run WinSetView for the first ti
 
 ## Step 1: Click the WinSetView Download Link
 
-[![image](https://user-images.githubusercontent.com/79026235/152910441-59ba653c-5607-4f59-90c0-bc2851bf2688.png)Download the zip file](https://github.com/LesFerch/WinSetView/archive/refs/heads/main.zip)
+[![image](https://user-images.githubusercontent.com/79026235/152910441-59ba653c-5607-4f59-90c0-bc2851bf2688.png)Download the zip file](https://github.com/LesFerch/WinSetView/archive/refs/heads/beta.zip)
 
 ## Step 2: Open the Folder Containing the Zip File
 
