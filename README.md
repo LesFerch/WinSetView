@@ -71,7 +71,7 @@ The column headings selection page allows you to select your desired column head
 
 ## Step 4: Set Views for Specific Folder Types (Optional)
 
-![image](https://user-images.githubusercontent.com/79026235/206570942-7e80d520-ad9f-497c-aa37-1e0f74b171a0.png)
+![image](https://user-images.githubusercontent.com/79026235/206572556-a0fdda21-b3e8-4743-9a4c-a1543417ecdd.png)
 
 Please note that WinSetView allows you to set the default view for every folder type in Windows, but, by *default*, they will all get the same settings as your **Global** settings, as long as the **Inherit** button is checked.
 
