@@ -130,11 +130,11 @@ The selected column headings for *Details* view are shown on a single line with 
 
 The **⚙ (Options)** button allows you to select a _different_ view for File Open/Save dialogs. For example, if you have set **List** as your default view, but want **Details** in File Open/Save dialogs, this is where you would set that up.
 
+![image](https://user-images.githubusercontent.com/79026235/206568776-06b2cc04-6d9a-45f0-964c-1f5b702129a9.png)
+
 Separate File Dialog views can be set under Global as well as under any specific folder type. This is an improvement over previous versions of WinSetView that only had one global File Dialog view settings in the Options menu.
 
 Note that there is no need to set this option if you want Open/Save dialogs to have the same view you have already set for File Explorer.
-
-![image](https://user-images.githubusercontent.com/79026235/206568776-06b2cc04-6d9a-45f0-964c-1f5b702129a9.png)
 
 The **Group by** option applies to any view. Use the *Columns* button to select the property to group by or turn off grouping, which will be displayed as *(None)*.
 
