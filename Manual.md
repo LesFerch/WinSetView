@@ -74,6 +74,8 @@ Select a light or dark theme for the WinSetView display. Themes definitions are 
 
 When checked, and applied via *Submit*, this option clears the registry keys that hold Explorer views and restarts Explorer, causing all folder views to revert to Windows defaults. To use this option, check the box and then click *Submit*.
 
+**Note**: The options **Show file extensions** and **Enable compact view on Windows 11** are still applied when resetting to defaults. Be sure to set those options as desired.
+
 ## Submit
 
 Execute the PowerShell script to apply the selected options to the registry and restart Explorer.
@@ -146,7 +148,7 @@ Below the *Global* section in WinSetView are settings for each Explorer folder t
 
 **Enable/Disable Check Box**
 
-To the left of each folder type is a checkbox that is normally checked. If the box is unchecked, no settings will be changed for that folder type. That is, it will retain it's Windows default settings.
+To the left of each folder type is a checkbox that is normally checked. If the box is unchecked, no settings will be changed for that folder type. That is, it will retain it's Windows default settings. This will NOT retain any user set views. Any folders of this type will revert to whatever the default view is for that folder type.
 
 **Inherit**
 
@@ -158,7 +160,7 @@ Please note that there are *groups* of folder types in WinSetView. For example, 
 
 The 🔍 button is a feature for *technical users* that provides a quick, synchronized view of the folder type's default values in HKLM compared to the current values (if any) set in HKCU by WinSetView.
 
-Note: For power users who have their own comparison tool installed, such as WinDiff or Beyond Compare, a before/after comparison can be done by going to the Windows Temp directory and comparing the files *WinSetView1.reg* and *WinSetView2.reg*.
+Note: For power users who have their own comparison tool installed, such as WinMerge or Beyond Compare, a before/after comparison can be done by going to the Windows Temp directory and comparing the files *WinSetView1.reg* and *WinSetView2.reg*.
 
 ## Folder Types
 
@@ -222,9 +224,9 @@ Under each folder type listed above, there is a corresponding *Search Results* f
 
 Note: Each of the folder type groups above (e.g. *Pictures*) is a family in WinSetView with the first member being the parent of the others. Therefore, for example, if you uncheck *Inherit* for the *Music* folder type and then edit its column headings, those settings will be inherited by all of the other *Music* folder types, as long as they have Inherit checked.
 
-**Quick access**
+**Home / Quick access**
 
-This folder type controls the view you see when clicking on the *Quick access* item in Explorer's left navigation pane. This folder type is also known as the *Home Folder*.
+This folder type controls the view you see when clicking on the *Home* or *Quick access* item in Explorer's left navigation pane. This folder type is also known as the *Home Folder*.
 
 **User Files**
 
@@ -240,7 +242,7 @@ This folder type controls the view you see for the *Searches* item within your u
 
 ## Options Menu
 
-![image](https://user-images.githubusercontent.com/79026235/162346394-4f29f16b-77db-42ab-b790-f52ad57e6019.png)
+![image](https://user-images.githubusercontent.com/79026235/206564999-9aa1cef3-2cb0-4e46-9c4e-d49f8783c386.png)
 
 **Show File Extensions**
 
