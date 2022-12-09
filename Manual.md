@@ -329,7 +329,7 @@ Note: If **Make All Folders Generic** is also checked, only **Downloads**, **Lib
 
 Clicking the **Columns** button brings up the column (properties) selection page for the current folder type. Column headings, in Explorer Details view, correspond to file and folder *properties*.
 
-The top left of the page includes the same **Help** and **Re-center** buttons that are found on the main page. This followed by the column re-order button **⮀** and then the name of the currently selected folder type (or *Global*). 
+The top left of the page includes the same **Help** and **Re-center** buttons that are found on the main page. This is followed by the column re-order button **⮀** and then the name of the currently selected folder type (or *Global*). 
 
 The top right of the page has a back button (🡨) that will take you back to the main page. Please note that clicking the **X** in the System menu bar will exit the application, just as it does on the main page.
 
