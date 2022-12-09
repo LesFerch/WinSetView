@@ -166,11 +166,11 @@ Note: For power users who have their own comparison tool installed, such as WinM
 
 **Copy (🗐)**
 
-Click the Copy button to copy the settings for that folder type to the Copy buffer.
+Click the Copy button to copy the settings for that folder type to the copy buffer.
 
 **Paste (🖉)**
 
-Click the Paste button to replace the folder type's settings with the settings in the Copy buffer.
+Click the Paste button to replace the folder type's settings with the settings in the copy buffer.
 
 ## Folder Types
 
