@@ -274,16 +274,14 @@ Note: The *Relevance* column heading (*Search.Rank* property) is *only* shown in
 
 Connected devices, such as phones and tablets, normally open in **Tiles** view with no option to easily change the view. The **Apply to folders** option is grayed out for such devices, requiring view changes to be done folder by folder. Enabling the **Use General Items view for connected devices** option causes such devices to open in the same view that has been set for **General Items**.
 
+Only the view mode (e.g. List, Details, etc.) applies to the connected device. There is a separate set of column headings for such devices and no documented method to change the defaults.
+
 Please note that this option actually causes all virtual folders, that share the General Items GUID, such as **This PC**, to be displayed with the same view as **General Items**. However, the separate view settings, available for *This PC*, can be used to override the General Items view.
 
 \
-**Set views for Open and Save dialogs:**
+**Disable folder thumbnails**
 
-This option allows you to set a specific view for Open and Save dialogs that overrides the view setting for any folder type.
-
-For example, with the *Pictures* folder type set to large icons and this option *checked*, with *Details* selected, you will see Large icons when you browse to Pictures in Explorer, but you will see a Details view in and Open and Save dialogs in applications such as MSPaint.
-
-If you want your Open and Save dialog views to match your File Explorer browsing views, be sure to _uncheck_ this option.
+This option sets a registry value that tells Explorer to NOT create a thumbnail icon for *folders*. It has no effect on thumbnails for *files*.
 
 \
 **Set view for "This PC"**
@@ -323,11 +321,6 @@ If you really want to use this option, be sure to use the **Apply to Folders** b
 
 Note: If **Make All Folders Generic** is also checked, only **Downloads**, **Libraries**, and **Search Results** will get their views from any view saved via Explorer's **Apply to Folders** button. Of course, if you later change a folder to type **Documents**, **Music**, **Pictures**, or **Videos**, it will then pick up the view settings that were saved using **Apply to Folders**.
 
-\
-**Disable folder thumbnails** (Advanced interface)
-
-This option sets a registry value that tells Explorer to NOT create a thumbnail icon for *folders*. It has no effect on thumbnails for *files*.
-
 ## Columns
 
 ![image](https://user-images.githubusercontent.com/79026235/152623377-22665b75-2dd2-4d33-a9ce-004ae19643a8.png)
@@ -347,9 +340,9 @@ To the left of the column headings list are seven columns for selecting **Group 
 ¹ For those running WinSetView in a language other than English, the property name may appear to be showing the "English translation", but that's not correct. The property names are *fixed* internal Windows values and are not necessarily a direct match to the display name. For example, the property *ItemFolderPathDisplayNarrow* is shown in Explorer Details view as *Folder* in English or *Ordner* in German. The display names can also vary from one release to another. For example, the property *Search.Rank* is shown as *Search ranking* in Windows 7 and *Relevance* in Windows 10.
 
 \
-**{ } (Group by)**
+**(⮬) (Group by)**
 
-This column will be disabled by default and the button at the top of the column will appear as an **X**. In this mode, no property is selected for grouping (i.e. *Group by* = *None*). To enable the column, click the **X**. The button will switch to **{ }** and a column of radio buttons will appear. Select the radio button beside the property you wish to group by. Only one property can be selected. Clicking the heading button again will hide the radio buttons and set grouping to none.
+This column will be disabled by default and the button at the top of the column will appear as an **X**. In this mode, no property is selected for grouping (i.e. *Group by* = *None*). To enable the column, click the **X**. The button will switch to **(⮬)** (for group by ascending) and a column of radio buttons will appear. Select the radio button beside the property you wish to group by. Only one property can be selected. Clicking the heading button again will switch to **(⮯)** (for group by ascending). Clicking the heading button once more will hide the radio buttons and set grouping to none.
 
 \
 **⮬ (Sort 1, Sort 2, Sort 3, Sort 4)**
@@ -374,7 +367,7 @@ Please note that you can set the width as small as 1em, but Explorer will expand
 
 If you wish to enter the column width in *pixels*, hold **Alt** and **click** the input width field you wish to adjust. A dialog will open showing the width in pixels:
 
-![image](https://user-images.githubusercontent.com/79026235/127723197-4b19497a-cf17-43e2-b7ac-df23e4b33608.png)
+![image](https://user-images.githubusercontent.com/79026235/206568603-54566b79-a29d-4d72-b405-bd679672d68a.png)
 
 The pixel value will vary depending on screen pixel density, whereas the value in ems will be constant across different display configurations. Please note that WinSetView sets the column *default* width which can only be set to whole (integer) em values. Windows File Explorer lets you set the width down to the pixel, but that is stored as a setting within the volatile *Bags* registry key *overriding* the default value. WinSetView deals with *default* settings only.
 
