@@ -68,7 +68,7 @@ Adjust whether a long line in WinSetView is wrapped or scrolled horizontally. Va
 
 ## Theme Menu
 
-Select a light or dark theme for the WinSetView display. Themes definitions are located in .\AppParts\Themes.ini. The provided themes can be edited and/or new themes can be added. Please note that pop-up dialogs have hard-coded light and dark themes.
+Select a light or dark theme for the WinSetView display. Theme definitions are located in .\AppParts\Themes.ini. The provided themes can be edited and/or new themes can be added. Please note that pop-up dialogs have hard-coded light and dark themes.
 
 ## Reset Views to Windows Defaults
 
@@ -149,6 +149,8 @@ Below the *Global* section in WinSetView are settings for each Explorer folder t
 **Enable/Disable Check Box**
 
 To the left of each folder type is a checkbox that is normally checked. If the box is unchecked, no settings will be changed for that folder type. That is, it will retain it's Windows default settings. This will NOT retain any user set views. Any folders of this type will revert to whatever the Windows default view is for that folder type.
+
+If the **Advanced** interface is enabled, there is also a checkbox beside **Global**. This checkbox can be used to enable or disable ALL folder types with one click. This may be useful if you wish to leave the majority of folder types at their Windows default views and just set a select few to new default views.
 
 **Inherit**
 
