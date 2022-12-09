@@ -323,19 +323,29 @@ Note: If **Make All Folders Generic** is also checked, only **Downloads**, **Lib
 
 ## Columns
 
-![image](https://user-images.githubusercontent.com/79026235/152623377-22665b75-2dd2-4d33-a9ce-004ae19643a8.png)
+![image](https://user-images.githubusercontent.com/79026235/206567904-36c9f71d-c51f-434c-84ab-90de80d74241.png)
 
 Clicking the **Columns** button brings up the column (properties) selection page for the current folder type. Column headings, in Explorer Details view, correspond to file and folder *properties*.
 
-The top left of the page shows the currently selected folder type (or *Global*).
+The top left of the page includes the same **Help** and **Re-center** buttons that are found on the main page. This followed by the column re-order button **⮀** and then the name of the currently selected folder type (or *Global*). 
 
 The top right of the page has a back button (🡨) that will take you back to the main page. Please note that clicking the **X** in the System menu bar will exit the application, just as it does on the main page.
 
 Next, the currently selected column headings, that will display in File Explorer's Details view, are shown on a single, scrollable line in the same *order* as they will appear in File Explorer.
 
-This is followed by a list of all the Details view column headings that can be selected in Explorer (over 300 on Windows 10). These items are shown in the language of your choice, exactly as they appear in Explorer. Hovering the mouse over any name will show its internal Windows property name.¹
+Clicking the column re-order button **⮀** will bring up a dialog that will allow you to rearrange the column headings by dragging them up or down in the presented list.:
 
-To the left of the column headings list are seven columns for selecting **Group by**, **Sort by**, **Width**, **Display**, and **Right-click** options. Each of these headings is also a button. Hovering the mouse over any heading button shows the button's heading text. Each of these columns is described below.
+![image](https://user-images.githubusercontent.com/79026235/206568121-561881d0-1f28-487d-af7e-10d0d955a33d.png)
+
+The column order can also be set by removing each column heading and then adding them back in the desired order, but it is easier to use the re-order dialog. Note that the re-order dialog will allow any order, but will display the following warning if the **Name** property is not the first column:
+
+![image](https://user-images.githubusercontent.com/79026235/206568423-07760488-0399-4889-9b21-c6d4bc3a2afc.png)
+
+The issue with software that uses the "legacy" type dialogs (such as IrfanView) is that those type of dialogs assume that **Name** is always the first column. So, for example, if **Size** is set as the first column, and you are in any view other than **Details**, you will just see a bunch of items with sizes and no names.
+
+Below the column heading line is a scrollable table that includes of all the Details view column headings that can be selected in Explorer (over 300 on Windows 10). These items are shown in the language of your choice, exactly as they appear in Explorer. Hovering the mouse over any name will show its internal Windows property name.¹
+
+The top row of the table consists of a fixed row of buttons for selecting **Group by**, **Sort by**, **Width**, **Display**, and **Right-click** options. Hovering the mouse over any heading button reveals the button's description. The function of each of these buttons is described below.
 
 ¹ For those running WinSetView in a language other than English, the property name may appear to be showing the "English translation", but that's not correct. The property names are *fixed* internal Windows values and are not necessarily a direct match to the display name. For example, the property *ItemFolderPathDisplayNarrow* is shown in Explorer Details view as *Folder* in English or *Ordner* in German. The display names can also vary from one release to another. For example, the property *Search.Rank* is shown as *Search ranking* in Windows 7 and *Relevance* in Windows 10.
 
