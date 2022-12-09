@@ -364,7 +364,7 @@ The top row of the table consists of a fixed row of buttons for selecting **Grou
 \
 **(⮬) (Group by)**
 
-This column will be disabled by default and the button at the top of the column will appear as an **X**. In this mode, no property is selected for grouping (i.e. *Group by* = *None*). To enable the column, click the **X**. The button will switch to **(⮬)** (for group by ascending) and a column of radio buttons will appear. Select the radio button beside the property you wish to group by. Only one property can be selected. Clicking the heading button again will switch to **(⮯)** (for group by ascending). Clicking the heading button once more will hide the radio buttons and set grouping to none.
+This column will be disabled by default and the button at the top of the column will appear as an **X**. In this mode, no property is selected for grouping (i.e. *Group by* = *None*). To enable the column, click the **X**. The button will switch to **(⮬)** (for group by ascending) and a column of radio buttons will appear. Select the radio button beside the property you wish to group by. Only one property can be selected. Clicking the heading button again will switch to **(⮯)** (for group by descending). Clicking the heading button once more will hide the radio buttons and set grouping to none.
 
 \
 **⮬ (Sort 1, Sort 2, Sort 3, Sort 4)**
