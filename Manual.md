@@ -200,7 +200,7 @@ Under each folder type listed above, except Contacts, there is a corresponding *
 
 **Search Results folder types**
 
-Under each folder type listed above, there is a corresponding *Search Results* folder type. This controls the view you see after doing a search. This is where a property, such as *Folder Path*, is useful to show the path of any found item.
+Under each folder type listed above, there is a corresponding *Search Results* folder type. This controls the view you see after doing a search. This is where a property, such as *Folder path* (or *File location*), is useful to show the path of any found item.
 
 Note: Each of the folder type groups above (e.g. *Pictures*) is a family in WinSetView with the first member being the parent of the others. Therefore, for example, if you uncheck *Inherit* for the *Music* folder type and then edit its column headings, those settings will be inherited by all of the other *Music* folder types, as long as they have Inherit checked.
 
@@ -238,7 +238,7 @@ By default, Windows 11 spreads out items in list, details, and small icons views
 
 When this option is checked, path and folder name column headings in Details view are only shown in search results. Such headings are shown in *blue*. The following column headings are affected by this setting:
 
-**Folder path** (ItemFolderPathDisplay): Full path to the folder. Example: C:\Movies\Ghibli\
+**Folder path** or **File location** (ItemFolderPathDisplay): Full path to the folder. Example: C:\Movies\Ghibli\
 **Folder** (ItemFolderPathDisplayNarrow): Folder name followed by preceding path. Example: Ghibli (C:\Movies)\
 **Path** (ItemPathDisplay): Full path to the file. Example: C:\Movies\Ghibli\Ponyo.mkv\
 **Folder name** (ItemFolderNameDisplay): The folder name only. Example: Ghibli
