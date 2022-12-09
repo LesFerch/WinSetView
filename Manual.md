@@ -128,6 +128,10 @@ Use the **Columns** button to select column headings, group by, and sort by opti
 
 The selected column headings for *Details* view are shown on a single line with each heading separated by a vertical bar. If many headings are selected and/or a large font is used, this line will wrap. To view this line without wrapping, use the horizontal scroll menu, as described above. Column headings shown in *blue* are only displayed in search result views. See the *Options* page to toggle this feature on or off.
 
+The **Group by** and **Sort by** options apply to any view. Their current settings are shown on the main screen, but you must use the **Columns** button to change them.
+
+You can group by any property in ascending or descending order, or turn off grouping altogether, which will be displayed as *(None)*. Sorting can be set on anywhere from one to four properties. A plus sign indicates ascending order and a minus sign indicates descending order.
+
 The **⚙ (Options)** button allows you to select a _different_ view for File Open/Save dialogs. For example, if you have set **List** as your default view, but want **Details** in File Open/Save dialogs, this is where you would set that up.
 
 ![image](https://user-images.githubusercontent.com/79026235/206568776-06b2cc04-6d9a-45f0-964c-1f5b702129a9.png)
@@ -135,10 +139,6 @@ The **⚙ (Options)** button allows you to select a _different_ view for File Op
 Separate File Dialog views can be set under Global as well as under any specific folder type. This is an improvement over previous versions of WinSetView that only had one global File Dialog view settings in the Options menu.
 
 Note that there is no need to set this option if you want Open/Save dialogs to have the same view you have already set for File Explorer.
-
-The **Group by** option applies to any view. Use the *Columns* button to select the property to group by or turn off grouping, which will be displayed as *(None)*.
-
-The **Sort by** option applies to any view. Use the *Columns* button to select up to four properties to sort by. A plus sign indicates ascending order and a minus sign indicates descending order. By default, items will be sorted *ascending* by *Name*.
 
 ## Additional Settings for Each Folder Type
 
