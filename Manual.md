@@ -148,7 +148,7 @@ Below the *Global* section in WinSetView are settings for each Explorer folder t
 
 **Enable/Disable Check Box**
 
-To the left of each folder type is a checkbox that is normally checked. If the box is unchecked, no settings will be changed for that folder type. That is, it will retain it's Windows default settings. This will NOT retain any user set views. Any folders of this type will revert to whatever the default view is for that folder type.
+To the left of each folder type is a checkbox that is normally checked. If the box is unchecked, no settings will be changed for that folder type. That is, it will retain it's Windows default settings. This will NOT retain any user set views. Any folders of this type will revert to whatever the Windows default view is for that folder type.
 
 **Inherit**
 
