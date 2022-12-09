@@ -343,7 +343,7 @@ The column order can also be set by removing each column heading and then adding
 
 ![image](https://user-images.githubusercontent.com/79026235/206568423-07760488-0399-4889-9b21-c6d4bc3a2afc.png)
 
-The issue with software that uses the "legacy" type dialogs (such as IrfanView) is that those type of dialogs assume that **Name** is always the first column. So, for example, if **Size** is set as the first column, and you are in any view other than **Details**, you will just see a bunch of items with sizes and no names.
+The issue with software that uses the "legacy" type dialogs (such as IrfanView) is that those type of dialogs assume that **Name** is always the first column. So, for example, if **Size** is set as the first column, and you are in any view other than **Details**, you will just see a bunch of icons with sizes and no names.
 
 Below the column heading line is a scrollable table that includes of all the Details view column headings that can be selected in Explorer (over 300 on Windows 10). These items are shown in the language of your choice, exactly as they appear in Explorer. Hovering the mouse over any name will show its internal Windows property name.¹
 
