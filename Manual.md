@@ -448,11 +448,15 @@ Please note, for system administrators setting up new users, it may be more effi
 
 ## AppParts Folder
 
-This folder contains files that are required for *WinSetView.hta* to have full functionality.
+This folder contains files that are required for *WinSetView.hta* to function.
 
 The **Fonts.txt** file contains a list of fonts to display in the WinSetView font selection menu. If this file is missing, only the two currently selected fonts will be shown.
 
 The **FileDialog.exe** file provides the open/save dialog used by WinSetView for the *Load Settings*, *Save Settings*, and *Restore* buttons. This executable is written in C#. The source code is FileDialog.cs.
+
+The **Modal.hta** file provides the modal dialogs that are displayed by WinSetView, such as the column re-order dialog.
+
+The **Themes.ini** file contains the WinSetView light and dark themes. This file can be edited to change the existing themes or add new themes.
 
 ## Language Folder
 
@@ -581,7 +585,7 @@ No. It shows the view settings that have been configured in the currently loaded
 
 No. Although this is "possible" in theory, it's impractical to implement as the data to be extracted is stored in an undocumented binary format.
 
-## Is there a way to load up Mirosoft's default folder view settings (for Windows 10 and 11) into WinSetView?
+## Is there a way to load up Microsoft's default folder view settings (for Windows 10 and 11) into WinSetView?
 
 Yes. Enable the **Advanced** interface, click **Load Settings**, and then select the file **Win10-Microsoft-Defaults.ini**.
 
