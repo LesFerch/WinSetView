@@ -132,7 +132,7 @@ The selected column headings for *Details* view are shown on a single line with 
 
 The **Group by** and **Sort by** options apply to any view. Their current settings are shown on the main screen, but you must use the **Columns** button to change them.
 
-You can group by any property in ascending or descending order, or turn off grouping altogether, which will be displayed as *(None)*. Sorting can be set on anywhere from one to four properties. A plus sign indicates ascending order and a minus sign indicates descending order.
+You can group by any property in ascending or descending order, or turn off grouping altogether, which will be displayed as *(None)*. Sorting can be set on one or more properties. A plus sign indicates ascending order and a minus sign indicates descending order.
 
 The **⚙ (Options)** button allows you to select a _different_ view for File Open/Save dialogs. For example, if you have set **List** as your default view, but want **Details** in File Open/Save dialogs, this is where you would set that up.
 
