@@ -34,7 +34,7 @@ All changes made by WinSetView are per-user within the HKEY_CURRENT_USER hive in
 **Note**: For USB-connected phones and tablets, WinSetView provides an option to have them displayed in the same view as generic (General Items) folders (e.g. Details view), but it cannot control the Details view column headings for such devices.
 
 # Interface
-![image](https://user-images.githubusercontent.com/79026235/206566843-bf9c8e63-ae86-4ec9-bd46-1f2f77fb5975.png)
+![image](https://user-images.githubusercontent.com/79026235/206638150-afea48d5-0e76-4b11-9dec-49f946d3d86c.png)
 
 **Note**: For Windows 7 and 8, some of the icons used in the program will differ from Windows 10 and 11 due to issues with those older Windows versions being able to display all Unicode characters.
 
