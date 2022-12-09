@@ -204,9 +204,9 @@ Under each folder type listed above, there is a corresponding *Search Results* f
 
 Note: Each of the folder type groups above (e.g. *Pictures*) is a family in WinSetView with the first member being the parent of the others. Therefore, for example, if you uncheck *Inherit* for the *Music* folder type and then edit its column headings, those settings will be inherited by all of the other *Music* folder types, as long as they have Inherit checked.
 
-**Quick access**
+**Home / Quick access**
 
-This folder type controls the view you see when clicking on the *Quick access* item in Explorer's left navigation pane. This folder type is also known as the *Home Folder*.
+This folder type controls the view you see when clicking on the *Home* or *Quick access* item in Explorer's left navigation pane. This folder type is also known as the *Home Folder*.
 
 **User Files**
 
