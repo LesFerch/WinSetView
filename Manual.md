@@ -164,6 +164,14 @@ The 🔍 button is a feature for *technical users* that provides a quick, synchr
 
 Note: For power users who have their own comparison tool installed, such as WinMerge or Beyond Compare, a before/after comparison can be done by going to the Windows Temp directory and comparing the files *WinSetView1.reg* and *WinSetView2.reg*.
 
+**Copy (🗐)**
+
+Click the Copy button to copy the settings for that folder type to the Copy buffer.
+
+**Paste (🖉)**
+
+Click the Paste button to replace the folder type's settings with the settings in the Copy buffer.
+
 ## Folder Types
 
 In Windows, there are five major folder types that most users are familiar with:
