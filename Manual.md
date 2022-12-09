@@ -38,6 +38,8 @@ All changes made by WinSetView are per-user within the HKEY_CURRENT_USER hive in
 
 **Note**: For Windows 7 and 8, some of the icons used in the program will differ from Windows 10 and 11 due to issues with those older Windows versions being able to display all Unicode characters.
 
+**Note**: Nothing in Windows is changed, and no settings are saved, until the **Submit** button is pressed. Feel free to experiment with the WinSetView interface and just **X** out and restart the app to get back to where you started. Display options such as **font**, **font size**, and **theme** are also saved to the INI file and are therefore also only saved when you click **Submit**. Only the WinSetView window size and position are saved automatically when you click **X** to exit the app.
+
 ## Help Button
 
 Click the **Help** button to bring up a short tutorial for non-technical users. The tutorial also includes a link to this manual.
@@ -416,7 +418,7 @@ The Explorer limit for the quick-pick menu is 21 items, so WinSetView will not a
 
 Just click OK to close the message. Adjust your selections as necessary. You can't pick more than 21.
 
-If you click the **✓** column heading button, it will prompt with an option to clear all selections in the column. This will also clear all selections in the *Display in Details View* column because it's not possible for a property to be a Details view column heading and not be in the quick-pick menu.
+If you click the **✓** column heading button, it will prompt with an option to clear all selections in the column. This will clear all selections that are NOT also selected in the *Display in Details View* column. Hold down the **Alt** key while clicking the button to completely clear both columns (except for the **Name** property).
 
 ## Column Headings (Properties)
 
