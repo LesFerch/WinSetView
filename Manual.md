@@ -202,7 +202,7 @@ This folder type is for music files, such as MP3s. Therefore, you may want to en
 
 **Pictures**
 
-This folder type is for pictures, such as JPGs. Many users like to set *Pictures* folders to a more visual display, such as large icons or add columns such as *Dimensions* to Details view. Uncheck *Inherit* if you want to set Pictures differently than your Global settings. If you want to have icons for Pictures folders in Explorer, but want List or Details view when opening or saving files in graphics programs, be sure to go to the *Options* menu to set the view for Open and Save dialogs.
+This folder type is for pictures, such as JPGs. Many users like to set *Pictures* folders to a more visual display, such as large icons or add columns such as *Dimensions* to Details view. Uncheck *Inherit* if you want to set Pictures differently than your Global settings. If you want to have icons for Pictures folders in Explorer, but want List or Details view when opening or saving files in graphics programs, be sure to click the **⚙** (Options) button to set the view for Open and Save dialogs.
 
 **Videos**
 
