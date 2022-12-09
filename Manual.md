@@ -108,7 +108,7 @@ For *technical users*, who wish to maintain multiple configurations, the **Load 
 
 For *technical users*, who wish to maintain multiple configurations, the **Save Settings** button is used to *save* WinSetView interface selections to an INI file.
 
-Please note that the INI file that is read on WinSetView startup and saved upon clicking *Submit*, is Win10.ini in Windows 10 and 11, so typically, you will want to save to Win10.ini.
+Please note that the INI file that is read on WinSetView startup and saved upon clicking **Submit**, is Win10.ini in Windows 10 and 11, so typically, you will want to save to Win10.ini.
 
 When running WinSetView on Windows 7 and 8.x, it will use Win7.ini and Win8.ini respectively. Windows 7 and 8 have separate INI files because they support a smaller set of folder types and column headings than Windows 10 and 11.
 
@@ -345,7 +345,7 @@ The column order can also be set by removing each column heading and then adding
 
 The issue with software that uses the "legacy" type dialogs (such as IrfanView) is that those type of dialogs assume that **Name** is always the first column. So, for example, if **Size** is set as the first column, and you are in any view other than **Details**, you will just see a bunch of icons with sizes and no names.
 
-Below the column heading line is a scrollable table that includes of all the Details view column headings that can be selected in Explorer (over 300 on Windows 10). These items are shown in the language of your choice, exactly as they appear in Explorer. Hovering the mouse over any name will show its internal Windows property name.¹
+Below the column heading line is a scrollable table that includes of all the Details view column headings that can be selected in Explorer (over 300 on Windows 10 and 11). These items are shown in the language of your choice, exactly as they appear in Explorer. Hovering the mouse over any name will show its internal Windows property name.¹
 
 The top row of the table consists of a fixed row of buttons for selecting **Group by**, **Sort by**, **Width**, **Display**, and **Right-click** options. Hovering the mouse over any heading button reveals the button's description. The function of each of these buttons is described below.
 
