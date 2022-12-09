@@ -573,9 +573,21 @@ Whenever you use the **Apply to Folders** button, on any generic folder, such as
 
 # FAQ
 
+## Does WinSetView show my current folder view settings?
+
+No. It shows the view settings that have been configured in the currently loaded settings file (e.g. Win10.ini). The idea is that the app is portable (e.g. run from anywhere such as a flash drive, server, etc.) so that you can easily apply your preferred folder views to a new computer or new user or reapply your preferred views whenever necessary.
+
+## Can you add a feature to read my current folder view settings?
+
+No. Although this is "possible" in theory, it's impractical to implement as the data to be extracted is stored in an undocumented binary format.
+
+## Is there a way to load up Mirosoft's default folder view settings (for Windows 10 and 11) into WinSetView?
+
+Yes. Enable the **Advanced** interface, click **Load Settings**, and then select the file **Win10-Microsoft-Defaults.ini**.
+
 ## How is WinSetView better than Explorer's "Apply to Folders"?
 
-That option only applies your changes to folders of the *same type*. Explorer has many folder types, (e.g. Downloads, Pictures, Search Results, etc.), requiring you to set your desired view options repeatedly. Additionally, many users encounter situations where their selected options are reverted back to Windows defaults for no obvious reason. WinSetView allows you to make quick *global* changes to your view settings that will not unexpectedly change because it sets *default* views (per user).
+That option only applies your changes to folders of the *same type*. Explorer has many folder types, (e.g. Downloads, Pictures, Search Results, etc.), requiring you to set your desired view options repeatedly. Additionally, many users encounter situations where their selected options are reverted back to Windows defaults for no obvious reason and "Apply to Folders" does not reset the views for Open and Save dialogs. WinSetView allows you to make quick *global* changes to your view settings that will stick permanently because it sets *default* views (per user).
 
 ## Can I use Explorer's "Apply to Folders" option in combination with WinSetView?
 
@@ -650,7 +662,8 @@ I have not included any right to left languages, such as Arabic, with WinSetView
 
 The **WinSetView.hta** script looks for a **Language** folder in the same location as the script. The Language folder contains one folder for each supported language (e.g. *en-US*). Within each language folder are the following files:
 
-*Columns-Win10.txt\
+*Columns-Win11.txt\
+Columns-Win10.txt\
 Columns-Win7.txt\
 Columns-Win8.txt\
 FolderTypes.txt\
