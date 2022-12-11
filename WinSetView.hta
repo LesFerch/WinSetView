@@ -1832,7 +1832,9 @@ Sub SetColShowColor
 End Sub
 
 Sub Help
-  oWSH.Run "https://lesferch.github.io/WinSetView"
+  x = "https://lesferch.github.io/WinSetView"
+  If Instr(LCase(Version),"beta")>0 Then x = "https://github.com/LesFerch/WinSetView/blob/beta/README.md"
+  oWSH.Run x
 End Sub
 
 ' HTML interface starts here with the script-generated pages
