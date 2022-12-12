@@ -1,5 +1,3 @@
-## 2.52
-
 ## 2.51 Beta
 
 Bug Fix: Fixed error on machines set to rare combination of en-US format with comma decimal separator.
