@@ -1,3 +1,33 @@
+## 2.52
+
+## 2.51 Beta
+
+Bug Fix: Fixed error on machines set to rare combination of en-US format with comma decimal separator.
+
+Enhancement: When a new version is available, the "Help" button changes to "Update" with the version information in the tooltip.
+
+Enhancement: Display tweaks made to work better with Window's high contrast mode.
+
+Enhancement: Beta version now displays the beta version documentation.
+
+## 2.50 Beta
+
+Enhancement: The File Explorer window size and position is now retained.
+
+Enhancement: The WinSetView window size and position is now remembered. Also added a "Re-center" button to center the app on the primary display.
+
+Feature added: Separate views for File Open/Save dialogs can now be set on a per folder type basis.
+
+Feature added: The Grouping column heading button now has ascending and descending order options.
+
+Feature added: Drag sort dialog added for rearranging column headings.
+
+Feature added: Copy and Paste buttons added for easy copying of view settings from one folder type to another.
+
+Feature added: Uncheck/Recheck all checkbox added to the Advanced interface (handy when you want the majority of the folder type views left at Windows defaults).
+
+Feature added: There's now an extendable Theme menu with light and dark themes provided.
+
 ## 2.46
 
 Enhancement: Windows 11 "Home" folder now indicated for all languages.
