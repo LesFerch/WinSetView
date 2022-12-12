@@ -18,7 +18,7 @@ WinSetView.hta (GUI tool to select desired views)
 <script language="VBScript">
 Option Explicit
 
-Const Version = "2.50 Beta"
+Const Version = "2.51 Beta"
 
 Set oWSH = CreateObject("Wscript.Shell")
 
@@ -72,12 +72,13 @@ Dim ArrColumnLists, ArrGroupBy, ArrInheritFlag, ArrHTML1, ArrHTML2, ArrViewChoic
 Dim ArrSortBy, ArrIncludeFlag, ArrIconSize, ModalHTA, ArrThemes
 Dim ColShowLabels, FTCopyIdx, ThemeFile, SectionList, sTheme, CurBld, LWinVer
 Dim TempArray, RetVal, DialogArgs, DialogOptions, id, GrpUpArrow, GrpDnArrow
-Dim CopyIcon, PasteIcon, InsIcon, Warning, OptIcon, DialogTop
+Dim CopyIcon, PasteIcon, InsIcon, Warning, OptIcon, DialogTop, HighContrast, Beta
 
 Z = vbCRLF
 Q = Chr(34)
 Language = "en-US"
 KeepAdvanced = False
+Beta = Instr(LCase(Version),"beta")>0
 
 Set oFSO = CreateObject("Scripting.FileSystemObject")
 Set oReg = GetObject("winmgmts:\\.\root\default:StdRegProv")
@@ -114,6 +115,8 @@ If WinVer<>"7" And WinVer<>"8" And WinVer<>"10" Then
   Self.Close
   Exit Sub
 End If
+
+HighContrast = oWSH.RegRead("HKCU\Control Panel\Accessibility\HighContrast\Flags")="127"
 
 ' This code allows the script to run from a UNC or mapped drive
 ' whether it's double-clicked or found with Windows Search
@@ -308,7 +311,25 @@ Sub window_OnLoad
   
   ' Set up pages in selected language and font
   UpdateLang False
+
+  UpdateCheck
   
+End Sub
+
+Sub UpdateCheck
+  Dim oReq
+  Set oReq = CreateObject("Msxml2.XMLHttp")
+  x = "https://raw.githubusercontent.com/LesFerch/WinSetView/main/VersionHistory.md"
+  If Beta Then x = "https://raw.githubusercontent.com/LesFerch/WinSetView/beta/VersionHistory.md"
+  oReq.Open "GET", x, False
+  oReq.Send
+  x = Mid(oReq.ResponseText,4,4)
+  If Not IsNumeric(x) Then Exit Sub
+  If x>Left(Version,4) Then
+    hb.Value = "Update"
+    Vp1.innerHTML = Version & " (" & ArrLang(45) & " " & x & ")"
+    RequiredWidth = twid.ScrollWidth + (BaseScale * 50)
+  End If
 End Sub
 
 ' The following code is needed for scaling the checkboxes and radio buttons
@@ -679,6 +700,7 @@ Sub ColShowColor(e)
   If oSearchOnly.Exists(e) Then
     If so.Checked Then x = "X4" Else x = "X3"
   End If
+  If HighContrast Then x = x & "HC"
 End Sub
 
 ' Get preferred font for the selected language and Windows version
@@ -957,7 +979,9 @@ Sub Inspection(i)
 End Sub
 
 Function Modal(Title,Args,DialogTop)
-  DialogArgs = Title & ";" & SelectedFont1 & ";" & SelectedSize1 & ";" & Scale & ";" & Int(Instr(sTheme,"Dark")>0) & ";" & Args
+  x = Abs(Int(Instr(LCase(sTheme),"dark")>0))
+  If HighContrast Then x = 2
+  DialogArgs = Title & ";" & SelectedFont1 & ";" & SelectedSize1 & ";" & Scale & ";" & x & ";" & Args
   DialogOptions = "Scroll:No; DialogWidth:" & 20 * Scale & "em; dialogLeft:" & window.screenLeft+(2*Scale) & "; dialogTop:" & DialogTop
   Modal = ShowModalDialog(ModalHTA,DialogArgs,DialogOptions)
 End Function
@@ -1304,11 +1328,13 @@ End Sub
 
 Sub OptionSearchOnly
   Set oElements = Document.GetElementsByTagName("span")
+  x = ""
+  If HighContrast Then x = x & "HC"
   For Each oElement in oElements
-    If oElement.ClassName="X3" Then
-      oElement.ClassName = "X4"
+    If oElement.ClassName="X3" & x Then
+      oElement.ClassName = "X4" & x
     Else
-      If oElement.ClassName="X4" Then oElement.ClassName = "X3"
+      If oElement.ClassName="X4" & x Then oElement.ClassName = "X3" & x
     End If
   Next
   SetColShowColor
@@ -1833,7 +1859,7 @@ End Sub
 
 Sub Help
   x = "https://lesferch.github.io/WinSetView"
-  If Instr(LCase(Version),"beta")>0 Then x = "https://github.com/LesFerch/WinSetView/blob/beta/README.md"
+  If Beta Then x = "https://github.com/LesFerch/WinSetView/blob/beta/README.md"
   oWSH.Run x
 End Sub
 
@@ -1960,6 +1986,10 @@ End Sub
   .X2   {color:blue}
   .X3   {color:black}
   .X4   {color:blue}
+  .X1HC {font-style:normal}
+  .X2HC {font-style:italic}
+  .X3HC {font-style:normal}
+  .X4HC {font-style:italic}
   #tpv  {margin-left:1.5em; margin-top:3pt}
   #nwv  {margin-left:1.5em; margin-top:3pt}
   .is   {width:2em}
@@ -1997,7 +2027,7 @@ End Sub
     <div id=fix1>
     <div id=f1in>
       <div id=twid>
-        <div class=tip><input type=button value='# 31 #' onclick=Help()>
+        <div class=tip><input type=button id=hb value='# 31 #' onclick=Help()>
         <span id=Vp1 class=tiptext></span></div>
         <div class=tip><input id=bc1 type=button value='⛶' onclick=RecenterButton()>
         <span class=tiptext># 42 #</span></div>

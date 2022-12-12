@@ -7,13 +7,6 @@ Set oWSH = CreateObject("Wscript.Shell")
 Set oFSO = CreateObject("Scripting.FileSystemObject")
 Set oHTTP = CreateObject("Microsoft.XMLHTTP")
 
-Temp  = oWSH.ExpandEnvironmentStrings("%Temp%")
-TempFile = Temp & "\WinSetView.tmp"
-LMFT = "HKLM\Software\Microsoft\Windows\CurrentVersion\Explorer\FolderTypes"
-
-WinVer = oWSH.RegRead("HKLM\Software\Microsoft\Windows NT\CurrentVersion\ProductName")
-WinVer = Trim(Replace(Mid(WinVer,9,2),"."," "))
-
 Lang = oWSH.RegRead("HKCU\Control Panel\Desktop\PreferredUILanguages")(0)
 Lang = InputBox("Language:",Wscript.ScriptName,Lang)
 If Lang="" Then Wscript.Quit

@@ -20,8 +20,8 @@ End If
 
 Font = Args(1)
 FontSize = Args(2)
-Scale = Args(3)
-Dark = Args(4)
+Scale = Replace(Args(3),",",".") 'Ensure decimal separator is a period
+Theme = Args(4) '0:Light 1:Dark 2:High Contrast
 
 Set oWSH = CreateObject("Wscript.Shell")
 CurBld = oWSH.RegRead("HKLM\Software\Microsoft\Windows NT\CurrentVersion\CurrentBuild")
@@ -59,10 +59,11 @@ Sub window_onLoad
   Next
 
   MvClass = "mv"
-  If Dark Then
+
+  If Theme="1" Then
+    MvClass = "mvdark"
     document.body.style.color = "White"
     document.body.style.backgroundColor = "#3C3C3C"
-    MvClass = "mvdark"
     Set oElements = Document.GetElementsByTagName("select")
     For Each oElement in oElements
       oElement.Style.color = "GhostWhite"
@@ -78,6 +79,11 @@ Sub window_onLoad
         End If
       Next
   End If
+
+  If Theme="2" Then
+    MvClass = "mvhc"
+  End If
+
   Select Case document.title
     Case Warning
       WarnDiv.Style.Display = "inline"
@@ -186,6 +192,8 @@ body {background-color:LemonChiffon; font-family:Segoe UI; font-size:11pt; margi
 .mv:hover {background-color:Cyan}
 .mvdark {margin-top:-1px; border:1px solid black; padding:2pt; background-color:DimGrey; cursor:ns-resize}
 .mvdark:hover {background-color:MidnightBlue}
+.mvhc {margin-top:-1px; border:1px solid black; padding:2pt; font-weight:normal; cursor:ns-resize}
+.mvhc:hover {font-weight:bold}
 .NoShow {display:none}
 .TM3 {margin-top:3pt}
 .W100 {width:100%}
