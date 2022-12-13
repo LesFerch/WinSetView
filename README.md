@@ -65,7 +65,7 @@ If you are happy with the default Details-view column headings (as shown on scre
 
 Otherwise, click the **Columns** button to bring up the column headings selection page.
 
-![image](https://user-images.githubusercontent.com/79026235/206564513-a9ec5680-01b2-4c12-a189-d5a99342c2e0.png)
+![image](https://user-images.githubusercontent.com/79026235/207390444-83f4aaff-4425-4b61-9d86-617dddbbbfe9.png)
 
 The column headings selection page allows you to select your desired column headings (and their order), group-by options, sort options, and column widths. The [manual](./Manual.md) provides full details, but you can also hover over or click on elements to see how the interface works.
 
