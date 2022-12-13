@@ -5,6 +5,7 @@
 <script language="VBScript">
 SetLocale(1033)
 Dim RetVal, ReturnArray
+Dim WidthIcon, PixInputIcon, NameWarnIcon, optIcon, DetailsIcon, RightClickIcon
 Dim Item2Move: Item2Move = ""
 document.title = ""
 On Error Resume Next
@@ -21,23 +22,25 @@ End If
 
 Font = Args(1)
 FontSize = Args(2)
-Scale = Replace(Args(3),",",".") 'Ensure decimal separator is a period
+Scale = CDbl(Args(3))
 Theme = Args(4) '0:Light 1:Dark 2:High Contrast
 
 Set oWSH = CreateObject("Wscript.Shell")
 CurBld = oWSH.RegRead("HKLM\Software\Microsoft\Windows NT\CurrentVersion\CurrentBuild")
 
 Sub window_onLoad
-  LRArrow = "⟷"
-  Warning = "⚠"
+  WidthIcon = "⟷"
+  PixInputIcon = "⟷."
+  NameWarnIcon = "⚠"
   optIcon = "⚙"
+  DetailsIcon = "⋮⋮⋮"
+  RightClickIcon = "⋮"
   If CurBld<10000 Then
-    OKarrange.Value = "√"
-    OKpix.Value = "√"
-    OKFD.Value = "√"
-    LRArrow = "←→"
-    Warning = "!"
+    WidthIcon = "←→"
+    PixInputIcon = "←→."
+    NameWarnIcon = "!"
     OptIcon = "☼"
+    DetailsIcon = "𝍖"
   End If
 
   Document.Body.Style.FontFamily = Font
@@ -48,6 +51,7 @@ Sub window_onLoad
     If oElement.Type="button" Or oElement.Type="text" Then
       oElement.Style.FontFamily = Font
       oElement.Style.FontSize = FontSize & "pt"
+      If oElement.Type="button" And CurBld<10000 Then oElement.Value = "√"
     End If
     If oElement.Type="checkbox" Or oElement.Type="radio" Then
       oElement.Style.Zoom = Scale
@@ -86,10 +90,19 @@ Sub window_onLoad
   End If
 
   Select Case document.title
-    Case Warning
-      WarnDiv.Style.Display = "inline"
-      WarnMsg.innerHTML = Args(5)
-    Case LRArrow
+    Case DetailsIcon
+      DetailsDiv.Style.Display = "inline"
+      DetailsMsg.innerHTML = Args(5)
+    Case RightClickIcon
+      RightClickDiv.Style.Display = "inline"
+      RightClickMsg.innerHTML = Args(5)
+    Case WidthIcon
+      WidthDiv.Style.Display = "inline"
+      WidthMsg.innerHTML = Args(5)
+    Case NameWarnIcon
+      NameWarnDiv.Style.Display = "inline"
+      NameWarnMsg.innerHTML = Args(5)
+    Case PixInputIcon
       PixDiv.Style.Display = "inline"
       PixMsg.innerHTML = Args(5)
       InputPix.Value = Args(6)
@@ -146,6 +159,21 @@ Sub DoneArrange
   self.close
 End Sub
 
+Sub DoneDetails
+  window.returnValue = "1"
+  self.close
+End Sub
+
+Sub DoneRightClick
+  window.returnValue = "1"
+  self.close
+End Sub
+
+Sub DoneWidth
+  window.returnValue = "1"
+  self.close
+End Sub
+
 Sub DonePix
   window.returnValue = InputPix.Value
   self.close
@@ -156,15 +184,24 @@ Sub document_onmouseup
 End Sub
 
 Sub document_onkeydown
-  If window.event.keyCode<>13 Then Exit Sub
-  Select Case document.title
-    Case "⚠"
-      self.close
-    Case "⟷"
-      DonePix
-    Case Else
-      DoneArrange
-  End Select
+  If window.event.keyCode=13 Then 'Enter key pressed
+    Select Case document.title
+      Case DetailsIcon
+        DoneDetails
+      Case RightClickIcon
+        DoneRightClick
+      Case WidthIcon
+        DoneWidth
+      Case NameWarnIcon
+        self.close
+      Case PixInputIcon
+        DonePix
+      Case OptIcon
+        DoneFD
+      Case Else
+        DoneArrange
+    End Select
+  End If
 End Sub
 
 Sub DragMoveStart(i)
@@ -207,8 +244,20 @@ body {background-color:LemonChiffon; font-family:Segoe UI; font-size:11pt; margi
   <div id=list></div>
   <input type=button class='TM3 W100' id=OKarrange value=✔ onclick=DoneArrange>
 </div>
-<div id=WarnDiv class=NoShow>
-  <div id=WarnMsg></div>
+<div id=DetailsDiv class=NoShow>
+  <div id=DetailsMsg></div>
+  <input type=button class='TM3 W100' id=OKDetails value=✔ onclick=DoneDetails>
+</div>
+<div id=RightClickDiv class=NoShow>
+  <div id=RightClickMsg></div>
+  <input type=button class='TM3 W100' id=OKRightClick value=✔ onclick=DoneRightClick>
+</div>
+<div id=WidthDiv class=NoShow>
+  <div id=WidthMsg></div>
+  <input type=button class='TM3 W100' id=OKWidth value=✔ onclick=DoneWidth>
+</div>
+<div id=NameWarnDiv class=NoShow>
+  <div id=NameWarnMsg></div>
 </div>
 <div id=PixDiv class=NoShow>
   <div id=PixMsg></div>

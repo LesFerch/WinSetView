@@ -18,7 +18,7 @@ WinSetView.hta (GUI tool to select desired views)
 <script language="VBScript">
 Option Explicit
 
-Const Version = "2.51 Beta"
+Const Version = "2.52 Beta"
 
 Set oWSH = CreateObject("Wscript.Shell")
 
@@ -65,7 +65,7 @@ Dim ColWid, ColShow, SortBy, BaseScale, UpArrow, DnArrow, MyPath, MyFolder, a, b
 Dim Gidx, Midx, Nidx, Pidx, Widx, S1idx, S2idx, S3idx, S4idx, Sort1, Sort2, Sort3, Sort4
 Dim ArrSort1, ArrSort2, ArrSort3, ArrSort4, ArrFonts
 Dim ArrSort1Order, ArrSort2Order, ArrSort3Order, ArrSort4Order, ArrGroupByOrder
-Dim ArrFD, ArrFDV, ArrFDG, LParen, RParen
+Dim ArrFD, ArrFDV, ArrFDG, LParen, RParen, DetailsIcon, RightClickIcon
 Dim ArrLang, ArrView, ArrColData, ArrColDataItem, ArrColumnEntry, ArrColumnList, ArrLine
 Dim ArrData(21), ArrFolderTypeGUID(60), ArrFolderType(60), ArrFolderTypeLang(60), ArrInherit(60)
 Dim ArrColumnLists, ArrGroupBy, ArrInheritFlag, ArrHTML1, ArrHTML2, ArrViewChoice
@@ -156,6 +156,8 @@ If WinVer="7" Or WinVer="8" Then
   PasteIcon = "✍"
   InsIcon = "≈"
   Warning = "!"
+  DetailsIcon = "𝍖"
+  RightClickIcon = "⋮"
 Else
   UpArrow = "⮬"
   DnArrow = "⮯"
@@ -168,6 +170,8 @@ Else
   PasteIcon = "🖉"
   InsIcon = "🔍"
   Warning = "⚠"
+  DetailsIcon = "⋮⋮⋮"
+  RightClickIcon = "⋮"
 End If
 
 ' Set AppData to current folder if we have write access
@@ -297,8 +301,8 @@ Sub window_OnLoad
     xs.Add(oOption)
   Next
   
-  cbo.Value = Checkmark & Checkmark
-  cbc.Value = Checkmark
+  cbo.Value = DetailsIcon
+  cbc.Value = RightClickIcon
 
   If WinVer="7" Or WinVer="8" Then
     bc1.Value = "⊕"
@@ -331,7 +335,7 @@ Sub UpdateCheck
     If Not BetaVer Then Beta = False
     hb.Value = ArrLang(46)
     Vp1.innerHTML = Version & " (" & ArrLang(45) & " " & FullVer & ")"
-    RequiredWidth = twid.ScrollWidth + (BaseScale * 50)
+    RequiredWidth = twid.ScrollWidth + Int(BaseScale * 50)
   End If
 End Sub
 
@@ -982,11 +986,15 @@ Sub Inspection(i)
 End Sub
 
 Function Modal(Title,Args,DialogTop)
-  x = Abs(Int(Instr(LCase(sTheme),"dark")>0))
-  If HighContrast Then x = 2
-  DialogArgs = Title & ";" & SelectedFont1 & ";" & SelectedSize1 & ";" & Scale & ";" & x & ";" & Args
-  DialogOptions = "Scroll:No; DialogWidth:" & 20 * Scale & "em; dialogLeft:" & window.screenLeft+(2*Scale) & "; dialogTop:" & DialogTop
-  Modal = ShowModalDialog(ModalHTA,DialogArgs,DialogOptions)
+  If Not oFSO.FileExists(ModalHTA) Then
+    MsgBox "File missing: " & ModalHTA,vbCritical,"Error"
+  Else
+    x = Abs(Int(Instr(LCase(sTheme),"dark")>0))
+    If HighContrast Then x = 2
+    DialogArgs = Title & ";" & SelectedFont1 & ";" & SelectedSize1 & ";" & Scale & ";" & x & ";" & Args
+    DialogOptions = "Scroll:No; DialogWidth:" & 20 * Scale & "em; dialogLeft:" & window.screenLeft+(2*Scale) & "; dialogTop:" & DialogTop
+    Modal = ShowModalDialog(ModalHTA,DialogArgs,DialogOptions)
+  End If
 End Function
 
 Sub FTOptions(i)
@@ -1613,7 +1621,8 @@ Sub RBS4Click(id)
 End Sub
 
 Sub WidthClick
-  If MsgBox(ArrLang(26),vbOKCancel,LRArrow)=1 Then
+  DialogTop = window.event.clientY - Int(Scale * 25)
+  If Modal(LRArrow, ArrLang(26), DialogTop)="1" Then
     For i = 0 To UBound(ArrColData)
       If ArrColData(i)<>"" Then
         ArrColDataItem = Split(ArrColData(i),";")
@@ -1625,7 +1634,8 @@ Sub WidthClick
 End Sub
 
 Sub View1Click
-  If MsgBox(ArrLang(26),vbOKCancel,"✔✔")=1 Then
+  DialogTop = window.event.clientY - Int(Scale * 25)
+  If Modal(DetailsIcon, ArrLang(26), DialogTop)="1" Then
     For i = 0 To UBound(ArrColData)
       If ArrColData(i)<>"" Then
         ArrColDataItem = Split(ArrColData(i),";")
@@ -1643,7 +1653,8 @@ End Sub
 
 Sub View2Click
   Dim ClearAll: ClearAll = False
-  If MsgBox(ArrLang(26),vbOKCancel,"✔")=1 Then
+  DialogTop = window.event.clientY - Int(Scale * 25)
+  If Modal(RightClickIcon, ArrLang(26), DialogTop)="1" Then
     If window.event.altKey Then ClearAll = True
     For i = 0 To UBound(ArrColData)
       If ArrColData(i)<>"" Then
@@ -1714,7 +1725,7 @@ Sub UpdateFont1
     oElement.Style.FontSize = SelectedSize1 & "pt"
   Next
 
-  RequiredWidth = twid.ScrollWidth + (BaseScale * 50)
+  RequiredWidth = twid.ScrollWidth + Int(BaseScale * 50)
   If RequiredWidth>screen.availWidth Then RequiredWidth = screen.availWidth
 
   UpdateCheck
@@ -1785,7 +1796,7 @@ Sub PixelInput(id)
   a = Document.GetElementByID("W~" & id).Value
   b = ""
   If IsNumeric(a) Then b = Int(BaseScale * 8 * a)
-  b = Modal(LRArrow, ArrLang(28) & ";" & b, window.event.clientY - (Scale * 50))
+  b = Modal(LRArrow & ".", ArrLang(28) & ";" & b, window.event.clientY - Int(Scale * 50))
   If Not IsNumeric(b) Then b = ""
   If b<>"" Then 
     b = Abs(Int(b))
