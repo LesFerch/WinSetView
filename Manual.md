@@ -396,7 +396,7 @@ The pixel value will vary depending on screen pixel density, whereas the value i
 If you click the **⟷** column heading button, it will prompt with an option to clear all column width fields.
 
 \
-**✓✓ (Display in Details View)**
+**⋮⋮⋮ (Display in Details View)**
 
 This column provides checkboxes to allow you to select which column headings are displayed in Details view. Any column selected for Details view also becomes a quick-pick item when you right-click in the column heading bar in Explorer. Therefore, when you select an item in this column, it also checks the item in the *Add to Right-Click Menu* column.
 
@@ -405,10 +405,10 @@ If you *uncheck* an item in this column, it does not uncheck the item in the *Ad
 \
 **Column Order**: The *order* in which the selected columns are displayed in File Explorer is shown at the top of the screen. The order is simply based on click-order. To change the order, simply uncheck each item and then recheck them in the desired order.
 
-Click the **✓✓** column heading to quickly uncheck *all* selected column headings.
+Click the **⋮⋮⋮** column heading to quickly uncheck *all* selected column headings.
 
 \
-**✓ (Add to Right-Click Menu)**
+**⋮ (Add to Right-Click Menu)**
 
 This column provides checkboxes to allow you to select which column headings are available for quick-pick when you right-click in the column heading bar in Explorer Details view.
 
@@ -418,7 +418,7 @@ The Explorer limit for the quick-pick menu is 21 items, so WinSetView will not a
 
 Just click OK to close the message. Adjust your selections as necessary. You can't pick more than 21.
 
-If you click the **✓** column heading button, it will prompt with an option to clear all selections in the column. This will clear all selections that are NOT also selected in the *Display in Details View* column. Hold down the **Alt** key while clicking the button to completely clear both columns (except for the **Name** property).
+If you click the **⋮** column heading button, it will prompt with an option to clear all selections in the column. This will clear all selections that are NOT also selected in the *Display in Details View* column. Hold down the **Alt** key while clicking the button to completely clear both columns (except for the **Name** property).
 
 ## Column Headings (Properties)
 
