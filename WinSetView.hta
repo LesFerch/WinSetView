@@ -317,17 +317,22 @@ Sub window_OnLoad
 End Sub
 
 Sub UpdateCheck
-  Dim oReq
+  Dim oReq, BetaVer, FullVer, CheckVer, MyVer
   Set oReq = CreateObject("Msxml2.XMLHttp")
   x = "https://raw.githubusercontent.com/LesFerch/WinSetView/main/VersionHistory.md"
   If Beta Then x = "https://raw.githubusercontent.com/LesFerch/WinSetView/beta/VersionHistory.md"
   oReq.Open "GET", x, False
   oReq.Send
-  x = Mid(oReq.ResponseText,4,4)
-  If Not IsNumeric(x) Then Exit Sub
-  If x>Left(Version,4) Then
+  x = oReq.ResponseText
+  FullVer = Mid(x,4,9)
+  BetaVer = InStr(LCase(FullVer),"beta")>0
+  CheckVer = Left(FullVer,4)
+  MyVer = Left(Version,4)
+  If Not IsNumeric(CheckVer) Then Exit Sub
+  If CheckVer>MyVer Or ((CheckVer=MyVer) and (Not BetaVer)) Then
+    If Not BetaVer Then Beta = False
     hb.Value = "Update"
-    Vp1.innerHTML = Version & " (" & ArrLang(45) & " " & x & ")"
+    Vp1.innerHTML = Version & " (" & ArrLang(45) & " " & FullVer & ")"
     RequiredWidth = twid.ScrollWidth + (BaseScale * 50)
   End If
 End Sub
