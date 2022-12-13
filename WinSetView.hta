@@ -1634,7 +1634,6 @@ Sub View1Click
         If C1<>"ItemNameDisplay" And Document.GetElementByID(Midx).Checked=True Then
           Document.GetElementByID(Midx).Checked = False
           Document.GetElementByID(Nidx).Value = ""
-          CheckCount = CheckCount - 1
         End If
       End If
     Next
@@ -1657,13 +1656,20 @@ Sub View2Click
             Document.GetElementByID(Midx).Checked = False
             Document.GetElementByID(Nidx).Value = ""
           Else
-            If Document.GetElementByID(Midx).Checked = False Then Document.GetElementByID(Pidx).Checked = False
+            If Document.GetElementByID(Midx).Checked = False Then
+              If Document.GetElementByID(Pidx).Checked=True Then
+                Document.GetElementByID(Pidx).Checked = False
+                CheckCount = CheckCount - 1
+              End If
+            End If
           End If
         End If
       End If
     Next
-    cs.innerHTML = Split(ArrColData(0),";")(0)
-    CheckCount = 1
+    If ClearAll Then
+      cs.innerHTML = Split(ArrColData(0),";")(0)
+      CheckCount = 1
+    End If
   End If
 End Sub
 
