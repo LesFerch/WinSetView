@@ -331,7 +331,7 @@ Sub UpdateCheck
   If Not IsNumeric(CheckVer) Then Exit Sub
   If CheckVer>MyVer Or ((CheckVer=MyVer) and (Not BetaVer)) Then
     If Not BetaVer Then Beta = False
-    hb.Value = "Update"
+    hb.Value = ArrLang(46)
     Vp1.innerHTML = Version & " (" & ArrLang(45) & " " & FullVer & ")"
     RequiredWidth = twid.ScrollWidth + (BaseScale * 50)
   End If
