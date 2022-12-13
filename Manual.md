@@ -538,6 +538,8 @@ The **Apply to Folders** button can be found in **View**, **Options**, **Change 
 
 This button can be used to set a consistent view for a given folder type, such as the *Pictures* or *Downloads* folder types. It does not, however, provide an option to set folders of different types to a single *global* view.
 
+**Note**: The **Apply to Folders** button does NOT reset any file dialog views that have been previously opened. This is another reason to use WinSetView to reset views consistently.
+
 ## Reset Folders
 
 The **Reset Folders** button can be found in the same place as the **Apply to Folders** button. It will reset all folders, that are the same type as the current folder, to Windows default views for that folder type.
