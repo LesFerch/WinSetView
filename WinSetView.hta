@@ -312,8 +312,6 @@ Sub window_OnLoad
   ' Set up pages in selected language and font
   UpdateLang False
 
-  UpdateCheck
-  
 End Sub
 
 Sub UpdateCheck
@@ -1713,6 +1711,7 @@ Sub UpdateFont1
   RequiredWidth = twid.ScrollWidth + (BaseScale * 50)
   If RequiredWidth>screen.availWidth Then RequiredWidth = screen.availWidth
 
+  UpdateCheck
   Recenter
 
   Sec1.Style.MarginTop = fix1.ScrollHeight
