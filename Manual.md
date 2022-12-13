@@ -335,7 +335,7 @@ Note: If **Make All Folders Generic** is also checked, only **Downloads**, **Lib
 
 ## Columns
 
-![image](https://user-images.githubusercontent.com/79026235/206567904-36c9f71d-c51f-434c-84ab-90de80d74241.png)
+![image](https://user-images.githubusercontent.com/79026235/207390444-83f4aaff-4425-4b61-9d86-617dddbbbfe9.png)
 
 Clicking the **Columns** button brings up the column (properties) selection page for the current folder type. Column headings, in Explorer Details view, correspond to file and folder *properties*.
 
