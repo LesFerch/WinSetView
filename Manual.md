@@ -668,7 +668,7 @@ Here's an overview of the steps the PowerShell script performs to set Explorer v
 4) If custom *This PC and/or Network* views have been selected, create registry entries for those views.\
 5) Copy FolderTypes key from HKEY_LOCAL_MACHINE (HKLM) to HKEY_CURRENT_USER (HKCU).\
 6) Edit FolderTypes key in HKCU per user's selections.\
-7) Restart Explorer.\
+7) Restart Explorer.
 
 # Language Support
 
