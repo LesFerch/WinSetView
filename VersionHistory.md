@@ -1,5 +1,8 @@
 ## 2.52
-
+\
+\
+\
+\
 Enhancement: The File Explorer window size and position is now retained.
 
 Enhancement: The WinSetView window size and position is now remembered. Also added a "Re-center" button to center the app on the primary display.
