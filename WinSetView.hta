@@ -4,10 +4,9 @@ WinSetView (Globally Set Explorer Folder Views)
 Les Ferch, lesferch@gmail.com, GitHub repository created 2021-03-26
 WinSetView.hta (GUI tool to select desired views)
 -->
-
 <html>
 <head>
-<meta charset="UTF-8" http-equiv="X-UA-Compatible" content="IE=7">
+<meta charset="UTF-8" http-equiv="X-UA-Compatible" content="IE=8">
 <hta:application
   id=oHTA
   icon=powershell.exe
@@ -19,12 +18,31 @@ WinSetView.hta (GUI tool to select desired views)
 <script language="VBScript">
 Option Explicit
 
-Const Version = "2.46"
+Const Version = "2.52"
 
-RequiredWidth = 700
-If RequiredWidth>screen.availWidth Then RequiredWidth = screen.availWidth
-Window.ResizeTo RequiredWidth, screen.availHeight
-Window.MoveTo (screen.availWidth - RequiredWidth) / 2, 4
+Set oWSH = CreateObject("Wscript.Shell")
+
+Dim WinSizePos, aWinSizePos, GotError
+WinSizePos = ""
+On Error Resume Next
+WinSizePos = oWSH.RegRead("HKCU\Software\WinSetView\WinSizePos")
+On Error Goto 0
+
+If WinSizePos<>"" Then
+  aWinSizePos = Split(WinSizePos,",")
+  On Error Resume Next
+  Window.ResizeTo aWinSizePos(0),aWinSizePos(1)
+  Window.MoveTo aWinSizePos(2),aWinSizePos(3)
+  GotError = Err.Number<>0
+  On Error Goto 0
+End If
+
+If WinSizePos="" Or GotError Then
+  RequiredWidth = 700
+  If RequiredWidth>screen.availWidth Then RequiredWidth = screen.availWidth
+  Window.ResizeTo RequiredWidth, screen.availHeight
+  Window.MoveTo (screen.availWidth - RequiredWidth) / 2, 4
+End If
 
 SetLocale(1033)
 Const ForReading = 1
@@ -33,31 +51,35 @@ Const Unicode = -1
 Const Ansi = 0
 Const HKCU = &H80000001
 
-Dim oWSH, oFSO, oFolder, oFile, oFiles, oOption, oReg, oElement
-Dim oFolderTypes, oWMI, oSettings, oSearchOnly, oOption1, oOption2
+Dim o, oWSH, oFSO, oFolder, oFile, oFiles, oOption, oReg, oElement, oElements
+Dim oFolderTypes, oWMI, oSettings, oSearchOnly, oOption1, oOption2, oThemes
 Dim i, j, Q, V, X, Y, Z, Temp, TestFile, Section, CheckCount, Value, Key, ArrKeys, Result, SubKey
 Dim AvailHeight, HeadHeight, RequiredWidth, CurrentWidth, Maximized, Fonts, TestFileName
 Dim AppData, NTVer, WinVer, MajVer, Folder, INIFile, rbShow, BodyHTML, TaggedHTML, Tag, Item
 Dim Language,LangDir, LangFile, LangCount, LangData, LangIndex, UBFolderType, YScrollPos
 Dim ViewFile, ViewData, FolderTypeFile, Scale, FontsFile, Backup, F1, F2, FTHide, KeepAdvanced
-Dim ColFile, ColData, SelectedFont1, SelectedFont2, FontFile, Checkmark, LRArrow, ResetThumbs
+Dim ColFile, ColData, SelectedFont1, SelectedFont2, FontFile, LRArrow, ResetThumbs
 Dim CmdLine, Line, Order, sOrder, SelectedSize1, SelectedSize2, GUID, Found, VirtualStore
 Dim C1, C2, LastColSel, FTindex, Data, Show, TempFile, File, PartsDir, FileDialogExe
 Dim ColWid, ColShow, SortBy, BaseScale, UpArrow, DnArrow, MyPath, MyFolder, a, b, c
 Dim Gidx, Midx, Nidx, Pidx, Widx, S1idx, S2idx, S3idx, S4idx, Sort1, Sort2, Sort3, Sort4
 Dim ArrSort1, ArrSort2, ArrSort3, ArrSort4, ArrFonts
-Dim ArrSort1Order, ArrSort2Order, ArrSort3Order, ArrSort4Order
+Dim ArrSort1Order, ArrSort2Order, ArrSort3Order, ArrSort4Order, ArrGroupByOrder
+Dim ArrFD, ArrFDV, ArrFDG, LParen, RParen, DetailsIcon, RightClickIcon
 Dim ArrLang, ArrView, ArrColData, ArrColDataItem, ArrColumnEntry, ArrColumnList, ArrLine
 Dim ArrData(21), ArrFolderTypeGUID(60), ArrFolderType(60), ArrFolderTypeLang(60), ArrInherit(60)
 Dim ArrColumnLists, ArrGroupBy, ArrInheritFlag, ArrHTML1, ArrHTML2, ArrViewChoice
-Dim ArrSortBy, ArrIncludeFlag, ArrIconSize
+Dim ArrSortBy, ArrIncludeFlag, ArrIconSize, ModalHTA, ArrThemes
+Dim ColShowLabels, FTCopyIdx, ThemeFile, SectionList, sTheme, CurBld, LWinVer
+Dim TempArray, RetVal, DialogArgs, DialogOptions, id, GrpUpArrow, GrpDnArrow
+Dim CopyIcon, PasteIcon, InsIcon, Warning, OptIcon, DialogTop, HighContrast, Beta
 
 Z = vbCRLF
 Q = Chr(34)
 Language = "en-US"
 KeepAdvanced = False
+Beta = Instr(LCase(Version),"beta")>0
 
-Set oWSH = CreateObject("Wscript.Shell")
 Set oFSO = CreateObject("Scripting.FileSystemObject")
 Set oReg = GetObject("winmgmts:\\.\root\default:StdRegProv")
 Set oWMI = GetObject("winmgmts:\\.\root\cimv2")
@@ -82,8 +104,11 @@ If NTVer="6.1" Then WinVer = "7"
 If NTVer="6.2" Or NTVer="6.3" Then WinVer = "8"
 On Error Resume Next
 MajVer = oWSH.RegRead("HKLM\Software\Microsoft\Windows NT\CurrentVersion\CurrentMajorVersionNumber")
+CurBld = oWSH.RegRead("HKLM\Software\Microsoft\Windows NT\CurrentVersion\CurrentBuild")
 On Error Goto 0
 If MajVer>=10 Then WinVer = "10"
+LWinVer = WinVer
+If CurBld>=22000 Then LWinVer = "11"
 
 If WinVer<>"7" And WinVer<>"8" And WinVer<>"10" Then
   MsgBox "Windows 7, 8, 10, or higher is required.",vbCritical,"Error"
@@ -91,9 +116,11 @@ If WinVer<>"7" And WinVer<>"8" And WinVer<>"10" Then
   Exit Sub
 End If
 
+HighContrast = oWSH.RegRead("HKCU\Control Panel\Accessibility\HighContrast\Flags")="127"
+
 ' This code allows the script to run from a UNC or mapped drive
 ' whether it's double-clicked or found with Windows Search
-MyPath  = Mid(document.url,8)
+MyPath = Mid(Document.url,8)
 MyFolder = oFSO.GetParentFolderName(MyPath)
 oWSH.CurrentDirectory = MyFolder
 
@@ -106,25 +133,43 @@ If InStr(MyFolder,"[") Or InStr(MyFolder,"]") Then
   Exit Sub
 End If
   
-Temp  = oWSH.ExpandEnvironmentStrings("%Temp%")
+Temp = oWSH.ExpandEnvironmentStrings("%Temp%")
 TempFile = Temp & "\WinSetView.tmp"
-LangDir  = ".\Language\"
+LangDir = ".\Language\"
 PartsDir = ".\AppParts\"
 AppData = ".\AppData"
 Backup = ".\AppData\Backup"
 FontsFile = PartsDir & "Fonts.txt"
 FileDialogExe = PartsDir & "FileDialog.exe"
+ModalHTA = PartsDir & "Modal.hta"
+ThemeFile = PartsDir & "Themes.ini"
 
 If WinVer="7" Or WinVer="8" Then
   UpArrow = "↑"
   DnArrow = "↓"
-  Checkmark = "√"
+  GrpUpArrow = "(↑)"
+  GrpDnArrow = "(↓)"
   LRArrow = "←→"
+  OptIcon = "☼"
+  CopyIcon = "©"
+  PasteIcon = "✍"
+  InsIcon = "≈"
+  Warning = "!"
+  DetailsIcon = "⋮⋮"
+  RightClickIcon = "⋮"
 Else
   UpArrow = "⮬"
   DnArrow = "⮯"
-  Checkmark = "✔"
+  GrpUpArrow = "(⮬)"
+  GrpDnArrow = "(⮯)"
   LRArrow = "⟷"
+  OptIcon = "⚙"
+  CopyIcon = "🗐"
+  PasteIcon = "🖉"
+  InsIcon = "🔍"
+  Warning = "⚠"
+  DetailsIcon = "⋮⋮⋮"
+  RightClickIcon = "⋮"
 End If
 
 ' Set AppData to current folder if we have write access
@@ -159,11 +204,32 @@ Next
 ' Get data from INI file
 
 INIFile = AppData & "\Win" & WinVer & ".ini"
-Ini2Dict INIFile
+Set oSettings = CreateObject("Scripting.Dictionary")
+Set oThemes = CreateObject("Scripting.Dictionary")
+If oFSO.FileExists(INIFile) Then Set oSettings = Ini2Dict(INIFile)
+If oFSO.FileExists(ThemeFile) Then Set oThemes = Ini2Dict(ThemeFile)
+ArrThemes = Split(SectionList,"|")
 
 ' Set language choice from INI or Windows
 SetLang
 
+End Sub
+
+'Calculate current window size and position and save to registry
+
+Sub window_OnBeforeUnload
+  Dim w, h, xpad, ypad, wpad, hpad
+  w = Document.documentElement.clientWidth
+  h = Document.documentElement.clientHeight
+  x = window.screenLeft
+  y = window.screenTop
+  window.MoveTo screen.Width,screen.Height
+  window.ResizeTo 500,500
+  wpad = 500 - Document.documentElement.clientWidth
+  hpad = 500 - Document.documentElement.clientHeight
+  xpad = window.screenLeft - screen.Width
+  ypad = window.screenTop - screen.Height
+  oWSH.RegWrite "HKCU\Software\WinSetView\WinSizePos",w+wpad & "," & h+hpad & "," & x-xpad & "," & y-ypad
 End Sub
 
 ' On exit kill any open instances of filedialog.exe
@@ -174,7 +240,8 @@ End Sub
 
 Sub window_OnLoad
 
-  Ver.InnerHTML = Version
+  Vp1.innerHTML = Version
+  Vp2.innerHTML = Version
 
   'Populate language dropdown menu
   
@@ -184,9 +251,9 @@ Sub window_OnLoad
     For Each oFolder In oFolder.SubFolders
       Folder = oFSO.GetBaseName(oFolder)
       LangCount = LangCount + 1
-      Set oOption = document.createElement("Option")
-      oOption.Text =  Folder 
-      oOption.Value =  Folder 
+      Set oOption = Document.createElement("Option")
+      oOption.Text = Folder 
+      oOption.Value = Folder 
       Lang.Add(oOption) 
     Next
   End If
@@ -207,12 +274,12 @@ Sub window_OnLoad
   ' Populate font menu
 
   For i = 8 to 24
-    Set oOption1 = document.createElement("Option")
-    oOption1.Text =  i
+    Set oOption1 = Document.createElement("Option")
+    oOption1.Text = i
     oOption1.Value = i
     Size1.Add(oOption1)
-    Set oOption2 = document.createElement("Option")
-    oOption2.Text =  i
+    Set oOption2 = Document.createElement("Option")
+    oOption2.Text = i
     oOption2.Value = i
     Size2.Add(oOption2)
   Next
@@ -220,27 +287,56 @@ Sub window_OnLoad
   ' Populate horizontal scroll control menu
 
   For i = 0 to 9
-    Set oOption = document.createElement("Option")
+    Set oOption = Document.createElement("Option")
     If i=0 Then
       oOption.Disabled = True
       oOption.Text =  "⟷"
       oOption.Value = i
     Else
-      oOption.Text =  i
+      oOption.Text = i
       oOption.Value = i
     End If
     xs.Add(oOption)
   Next
   
-  cbo.Value = Checkmark & Checkmark
-  cbc.Value = Checkmark
+  cbo.Value = DetailsIcon
+  cbc.Value = RightClickIcon
+
+  If WinVer="7" Or WinVer="8" Then
+    bc1.Value = "⊕"
+    bc2.Value = "⊕"
+    ba.Value = "↑↓"
+  End If
 
   ' Save current body HTML so that language can be switched without restarting
-  TaggedHTML = Document.Body.InnerHTML
+  TaggedHTML = Document.Body.innerHTML
   
   ' Set up pages in selected language and font
-  UpdateLang(False)
-  
+  UpdateLang False
+
+End Sub
+
+Sub UpdateCheck
+  Dim oReq, BetaVer, FullVer, CheckVer, MyVer
+  Set oReq = CreateObject("Msxml2.XMLHttp")
+  x = "https://raw.githubusercontent.com/LesFerch/WinSetView/main/VersionHistory.md"
+  If Beta Then x = "https://raw.githubusercontent.com/LesFerch/WinSetView/beta/VersionHistory.md"
+  On Error Resume Next
+  oReq.Open "GET", x, False
+  oReq.Send
+  x = oReq.ResponseText
+  On Error Goto 0
+  FullVer = Mid(x,4,9)
+  BetaVer = InStr(LCase(FullVer),"beta")>0
+  CheckVer = Left(FullVer,4)
+  MyVer = Left(Version,4)
+  If Not IsNumeric(CheckVer) Then Exit Sub
+  If CheckVer>MyVer Or ((CheckVer=MyVer) and (Not BetaVer)) Then
+    If Not BetaVer Then Beta = False
+    hb.Value = ArrLang(46)
+    Vp1.innerHTML = Version & " (" & ArrLang(45) & " " & FullVer & ")"
+    RequiredWidth = twid.ScrollWidth + Int(BaseScale * 50)
+  End If
 End Sub
 
 ' The following code is needed for scaling the checkboxes and radio buttons
@@ -268,8 +364,10 @@ End Function
 
 ' Get data from INI file into scripting dictionary
 
-Sub Ini2Dict(INIFile)
-  Set oSettings = CreateObject("Scripting.Dictionary")
+Function Ini2Dict(INIFile)
+  SectionList = ""
+  Dim oDict
+  Set oDict = CreateObject("Scripting.Dictionary")
   If oFSO.FileExists(IniFile) Then 
     Set oFile = oFSO.OpenTextFile(IniFile,ForReading,,Ansi)
     Do Until oFile.AtEndOfStream
@@ -277,15 +375,18 @@ Sub Ini2Dict(INIFile)
       If Line<>"" And Left(Line,1)<>";" Then
         If Left(Line,1)="[" Then
           Section = Line
+          If SectionList<>"" Then SectionList = SectionList & "|"
+          SectionList = SectionList & Replace(Replace(Section,"[",""),"]","")
         Else
           ArrLine = Split(Line,"=")
-          If UBound(Arrline)=1 Then oSettings.Add Section & ArrLine(0),ArrLine(1)
+          If UBound(Arrline)=1 Then oDict.Add Section & ArrLine(0),ArrLine(1)
         End If
       End If
     Loop
     oFile.Close
+    Set Ini2Dict = oDict
   End If
-End Sub
+End Function
 
 ' Set preferred language
 
@@ -313,14 +414,14 @@ End Sub
 Sub FTHideUnHide(i,HideAll)
   If ArrIncludeFlag(i)="0" Or HideAll Then
     Document.GetElementByID(i & "FTtitle").ClassName = "ftl"
-    Document.GetElementByID(i & "FTsettings").Style.Visibility = "hidden"
+    Document.GetElementByID(i & "FTsettings").Style.Display = "none"
     Document.GetElementByID(i & "Include").Checked = False
-    Document.GetElementByID(i & "Inspect").style.visibility = "hidden"
+    Document.GetElementByID(i & "Inspect").Style.Display = "none"
   Else
     Document.GetElementByID(i & "FTtitle").ClassName = "ft"
-    Document.GetElementByID(i & "FTsettings").Style.Visibility = "visible"
+    Document.GetElementByID(i & "FTsettings").Style.Display = "block"
     Document.GetElementByID(i & "Include").Checked = True
-    If IFace.SelectedIndex=2 Then Document.GetElementByID(i & "Inspect").style.visibility = "visible"
+    If IFace.SelectedIndex=2 Then Document.GetElementByID(i & "Inspect").Style.Display = "inline"
   End If
 End Sub
 
@@ -361,6 +462,7 @@ Sub UpdateLang(OnChange)
           oWSH.RegRead "HKLM\Software\Microsoft\Windows\CurrentVersion\Explorer\FolderTypes\" & GUID & "\CanonicalName"
           If Err.Number<>0 Then Found = False
           On Error Goto 0
+          If InStr(ArrLine(1),"StorageProvider") Then Found = False
         End If
         If Found Then
           i = i + 1
@@ -383,7 +485,8 @@ Sub UpdateLang(OnChange)
   ReDim ArrSort1(UBFolderType), ArrSort2(UBFolderType), ArrSort3(UBFolderType), ArrSort4(UBFolderType)
   ReDim ArrSort1Order(UBFolderType), ArrSort2Order(UBFolderType), ArrSort3Order(UBFolderType), ArrSort4Order(UBFolderType)
   ReDim ArrColumnLists(UBFolderType), ArrGroupBy(UBFolderType), ArrViewChoice(UBFolderType), ArrIconSize(UBFolderType)
-  ReDim ArrHTML1(UBFolderType), ArrInheritFlag(UBFolderType), ArrIncludeFlag(UBFolderType)
+  ReDim ArrHTML1(UBFolderType), ArrInheritFlag(UBFolderType), ArrIncludeFlag(UBFolderType), ArrGroupByOrder(UBFolderType)
+  ReDim ArrFD(UBFolderType), ArrFDV(UBFolderType), ArrFDG(UBFolderType)
   
   ' Set up inheritance based upon first string match up to first period in folder type
   ' For StorageProvider (OneDrive) items, match inheritance on next part of string
@@ -406,7 +509,7 @@ Sub UpdateLang(OnChange)
 
   ' Get Details view column headings
   
-  ColFile = LangDir & Language & "\Columns-Win" & WinVer & ".txt"
+  ColFile = LangDir & Language & "\Columns-Win" & LWinVer & ".txt"
   Set oFile = oFSO.OpenTextFile(ColFile,ForReading,,Unicode)
   ColData = oFile.ReadAll
   oFile.Close
@@ -436,17 +539,12 @@ Sub UpdateLang(OnChange)
     ' Populate the two View menus on the Options page
 
     For j = 0 To 8
-      Set oOption = document.createElement("Option")
-      oOption.Text =  ArrView(j) 
-      oOption.Value = j
-      If j=0 Then oOption.Disabled = True
-      fdv.Add(oOption)
-      Set oOption = document.createElement("Option")
+      Set oOption = Document.createElement("Option")
       oOption.Text =  ArrView(j) 
       oOption.Value = j
       If j=0 Then oOption.Disabled = True
       tpv.Add(oOption)
-      Set oOption = document.createElement("Option")
+      Set oOption = Document.createElement("Option")
       oOption.Text =  ArrView(j) 
       oOption.Value = j
       If j=0 Then oOption.Disabled = True
@@ -458,7 +556,7 @@ Sub UpdateLang(OnChange)
     For i = 0 To UBFolderType
 
       For j = 0 To 8
-        Set oOption = document.createElement("Option")
+        Set oOption = Document.createElement("Option")
         oOption.Text =  ArrView(j) 
         oOption.Value = j
         If j=0 Then oOption.Disabled = True
@@ -476,14 +574,20 @@ Sub UpdateLang(OnChange)
         IconSizeUpdate(i)
       Else
         Document.GetElementByID(i & "IconSize").Value = ArrIconSize(i)
-        Document.GetElementByID(i & "IconSize").Disabled = ArrIconSize(i)=""
+        Document.GetElementByID(i & "IconSize").Disabled = (ArrIconSize(i)="")
       End If
 
+      If i>0 Then
+        If ArrIconSize(i)="" Then x = "" Else x = " [" & ArrIconSize(i) & "]"
+        Document.GetElementByID(i & "FTView").innerHTML = ArrView(0) & ": " & ArrView(ArrViewChoice(i)) & x
+      End If
+
+      If ArrGroupByOrder(i)="" Then ArrGroupByOrder(i)="+"
       If ArrGroupBy(i)="" Then
-        Document.GetElementByID(i & "GroupBy").InnerHTML = ArrView(9)
+        Document.GetElementByID(i & "GroupBy").innerHTML = ArrView(9) 'None
       Else
         On Error Resume Next
-        Document.GetElementByID(i & "GroupBy").InnerHTML = Document.GetElementByID("L~" & ArrGroupBy(i)).Value
+        Document.GetElementByID(i & "GroupBy").innerHTML = ArrGroupByOrder(i) & Document.GetElementByID("L~" & ArrGroupBy(i)).Value
         On Error Goto 0
       End If
 
@@ -501,15 +605,15 @@ Sub UpdateLang(OnChange)
       If Sort3<>"" Then SortBy = SortBy & ", " & Sort3
       If Sort4<>"" Then SortBy = SortBy & ", " & Sort4
 
-      Document.GetElementByID(i & "SortBy").InnerHTML = SortBy
+      Document.GetElementByID(i & "SortBy").innerHTML = SortBy
 
       If i>0 Then
         Document.GetElementByID(i & "Inherit").Checked = ArrInheritFlag(i)
         Document.GetElementByID(i & "Include").Checked = ArrIncludeFlag(i)
         If ArrInheritFlag(i)="1" Then
-          Document.GetElementByID(i & "View").Disabled = True
-          Document.GetElementByID(i & "IconSize").Disabled = True
-          Document.GetElementByID(i & "SelCol").Disabled = True
+          Document.GetElementByID(i & "FTcontrols").Style.Display = "none"
+        Else
+          Document.GetElementByID(i & "FTView").Style.Display = "none"
         End If
       End If
 
@@ -521,18 +625,15 @@ Sub UpdateLang(OnChange)
         ArrColumnEntry = Split(ArrColumnList(j),",")
         If ArrColumnEntry(0)="0" Then
           If ColShow<>"" Then ColShow = ColShow & " | "
-          x = "X1"
-          If ArrColumnEntry(2)="Search.Rank" Then x = "X2"
-          If oSearchOnly.Exists(ArrColumnEntry(2)) Then
-            If so.checked Then x = "X4" Else x = "X3"
-          End If
+          ColShowColor(ArrColumnEntry(2))
           On Error Resume Next
           ColShow = ColShow & "<span class=" & x & ">" & Document.GetElementByID("L~" & ArrColumnEntry(2)).Value & "</span>"
           On Error Goto 0
         End If
       Next
 
-      Document.GetElementByID(i & "ColShow").InnerHTML = ColShow
+      Document.GetElementByID(i & "ColShow").innerHTML = ColShow
+      UpdateFDView(i)
  
     Next
 
@@ -552,11 +653,11 @@ Sub UpdateLang(OnChange)
   ' Populate font menu
 
   For i = 0 To UBound(ArrFonts)
-    Set oOption1 = document.createElement("Option")
-    Set oOption2 = document.createElement("Option")
+    Set oOption1 = Document.createElement("Option")
+    Set oOption2 = Document.createElement("Option")
     If ArrFonts(i)<>"" Then
-      oOption1.Text =  ArrFonts(i) 
-      oOption2.Text =  ArrFonts(i) 
+      oOption1.Text = ArrFonts(i) 
+      oOption2.Text = ArrFonts(i) 
       oOption1.Value = ArrFonts(i)
       oOption2.Value = ArrFonts(i)
       Font1.Add(oOption1)
@@ -564,6 +665,21 @@ Sub UpdateLang(OnChange)
       If SelectedFont1=ArrFonts(i) Then Font1.SelectedIndex = i
       If SelectedFont2=ArrFonts(i) Then Font2.SelectedIndex = i
     End If
+  Next
+
+  ' Create Theme Select element with translated labels
+  For i = -1 To UBound(ArrThemes)
+    Set oOption = Document.createElement("Option")
+    If i=-1 Then
+      oOption.Disabled = True
+      oOption.Text = ArrLang(37) 
+      oOption.Value = ArrLang(37)
+    Else
+      x = Replace(Replace(ArrThemes(i),"Light",ArrLang(38)),"Dark",ArrLang(39))
+      oOption.Text = x 
+      oOption.Value = ArrThemes(i) 
+    End If
+    Theme.Add(oOption)
   Next
 
   ' Copy remaining settings from scripting dictionary to the HTML pages
@@ -578,10 +694,21 @@ Sub UpdateLang(OnChange)
   OptionReset
   
   ' Hide Restore button if no backup files
-  If Not rbshow Then rb.disabled = True
+  If Not rbshow Then rb.Style.Display = "None"
   
   SetInterface
+  
+  SetTheme
 
+End Sub
+
+Sub ColShowColor(e)
+  x = "X1"
+  If e="Search.Rank" Then x = "X2"
+  If oSearchOnly.Exists(e) Then
+    If so.Checked Then x = "X4" Else x = "X3"
+  End If
+  If HighContrast Then x = x & "HC"
 End Sub
 
 ' Get preferred font for the selected language and Windows version
@@ -622,6 +749,10 @@ Sub Dict2Var(OnChange)
     ArrIconSize(i) = oSettings.Item("[" & ArrFolderType(i) & "]IconSize")
     ArrColumnLists(i) = oSettings.Item("[" & ArrFolderType(i) & "]ColumnList")
     ArrGroupBy(i) = oSettings.Item("[" & ArrFolderType(i) & "]GroupBy")
+    ArrGroupByOrder(i) = oSettings.Item("[" & ArrFolderType(i) & "]GroupByOrder")
+    ArrFD(i) = oSettings.Item("[" & ArrFolderType(i) & "]FileDialogOption")
+    ArrFDV(i) = oSettings.Item("[" & ArrFolderType(i) & "]FileDialogView")
+    ArrFDG(i) = oSettings.Item("[" & ArrFolderType(i) & "]FileDialogNG")
     ArrInheritFlag(i) = oSettings.Item("[" & ArrFolderType(i) & "]Inherit")
     ArrIncludeFlag(i) = oSettings.Item("[" & ArrFolderType(i) & "]Include")
     If ArrColumnLists(i)="" Then ArrColumnLists(i) = "0,34,ItemNameDisplay"
@@ -656,27 +787,22 @@ End Sub
 Sub Dict2Dom
   wd.checked = oSettings.Item("[Options]Reset")
   x = oSettings.Item("[Options]ShowExt")
-  If x="" Then se.checked = 1 Else se.checked = x
+  If x="" Then se.Checked = 1 Else se.Checked = x
   x = oSettings.Item("[Options]CompView")
-  If x="" Then cv.checked = 1 Else cv.checked = x
+  If x="" Then cv.Checked = 1 Else cv.Checked = x
   gn.checked = oSettings.Item("[Options]Generic")
   x = oSettings.Item("[Options]SearchOnly")
-  If x="" Then so.checked = 1 Else so.checked = x
+  If x="" Then so.Checked = 1 Else so.Checked = x
   x = oSettings.Item("[Options]SetVirtualFolders")
-  If x="" Then vf.checked = 1 Else vf.checked = x
+  If x="" Then vf.Checked = 1 Else vf.Checked = x
   ka.checked = oSettings.Item("[Options]KeepViews")
   nf.checked = oSettings.Item("[Options]NoFolderThumbs")
-  fd.checked = oSettings.Item("[Options]FileDialogOption")
   tp.checked = oSettings.Item("[Options]ThisPCoption")
   nw.checked = oSettings.Item("[Options]NetworkOption")
-  x = oSettings.Item("[Options]FileDialogNG")
-  If x="" Then fdg.checked = 1 Else fdg.checked = x
   x = oSettings.Item("[Options]ThisPCNG")
-  If x="" Then tpg.checked = 1 Else tpg.checked = x
+  If x="" Then tpg.Checked = 1 Else tpg.Checked = x
   x = oSettings.Item("[Options]NetworkNG")
-  If x="" Then nwg.checked = 1 Else nwg.checked = x
-  x = oSettings.Item("[Options]FileDialogView")
-  If x="" Then fdv.SelectedIndex = 1 Else fdv.SelectedIndex = x
+  If x="" Then nwg.Checked = 1 Else nwg.Checked = x
   x = oSettings.Item("[Options]ThisPCView")
   If x="" Then tpv.SelectedIndex = 1 Else tpv.SelectedIndex = x
   x = oSettings.Item("[Options]NetworkView")
@@ -685,6 +811,8 @@ Sub Dict2Dom
   If x="" Then xs.SelectedIndex = 1 Else xs.SelectedIndex = x: xschange
   x = oSettings.Item("[Options]Interface")
   If x="" Then IFace.SelectedIndex = 1 Else IFace.SelectedIndex = x
+  x = oSettings.Item("[Options]ThemeIndex")
+  If x="" Then Theme.SelectedIndex = 1 Else Theme.SelectedIndex = x
 End Sub
 
 ' Load Settings button
@@ -695,7 +823,7 @@ Sub LoadSettings
     MsgBox "File missing: " & FileDialogExe,vbCritical,"Error"
   Else
     oWSH.Run FileDialogExe & " Open Multi ""*.ini|*.ini"" ..\AppData",0,False
-    Window.SetTimeOut "GetINIFile", 500
+    Window.SetTimeOut "GetINIFile()", 500
   End If
 End Sub
 
@@ -707,7 +835,7 @@ Sub SaveSettings
     MsgBox "File missing: " & FileDialogExe,vbCritical,"Error"
   Else
     oWSH.Run FileDialogExe & " Save ""*.ini|*.ini"" ..\AppData",0,False
-    Window.SetTimeOut "SaveINIFile", 500
+    Window.SetTimeOut "SaveINIFile()", 500
   End If
 End Sub
 
@@ -719,7 +847,7 @@ Sub Restore
     MsgBox "File missing: " & FileDialogExe,vbCritical,"Error"
   Else
     oWSH.Run FileDialogExe & " Open Multi ""*.reg|*.reg"" ..\AppData\Backup",0,False
-    Window.SetTimeOut "GetRegFile", 500
+    Window.SetTimeOut "GetRegFile()", 500
   End If
 End Sub
 
@@ -730,13 +858,13 @@ Sub GetINIFile
   File = oWSH.RegRead("HKCU\Software\FileDialog\")
   On Error Goto 0
   If File="?" Then
-    Window.SetTimeOut "GetINIFile", 500
+    Window.SetTimeOut "GetINIFile()", 500
   Else
     If File<>"" Then
       KeepAdvanced = True
-      Ini2Dict File
+      Set oSettings = Ini2Dict(File)
       SetLang
-      UpdateLang(False)
+      UpdateLang False
     End If
   End If
 End Sub
@@ -748,7 +876,7 @@ Sub SaveINIFile
   File = oWSH.RegRead("HKCU\Software\FileDialog\")
   On Error Goto 0
   If File="?" Then
-    Window.SetTimeOut "SaveINIFile", 500
+    Window.SetTimeOut "SaveINIFile()", 500
   Else
     If File<>"" Then Var2Ini(File)
   End If
@@ -761,7 +889,7 @@ Sub GetRegFile
   File = oWSH.RegRead("HKCU\Software\FileDialog\")
   On Error Goto 0
   If File="?" Then
-    Window.SetTimeOut "GetRegFile", 500
+    Window.SetTimeOut "GetRegFile()", 500
   Else
     If File<>"" Then RunScript File
   End If
@@ -772,6 +900,7 @@ End Sub
 Sub Var2Ini(INIFile)
   Set oFile = oFSO.OpenTextFile(INIFile,ForWriting,True,Ansi)
   oFile.Write "[Options]" & Z
+  oFile.Write "ThemeIndex=" & Theme.SelectedIndex & Z
   oFile.Write "Language=" & Language & Z
   oFile.Write "Font1=" & Font1.Options(Font1.SelectedIndex).Value & Z
   oFile.Write "Font2=" & Font2.Options(Font2.SelectedIndex).Value & Z
@@ -779,30 +908,27 @@ Sub Var2Ini(INIFile)
   oFile.Write "Size2=" & Size2.Options(Size2.SelectedIndex).Value & Z
   oFile.Write "Scroll=" & xs.SelectedIndex & Z
   oFile.Write "Interface=" & IFace.SelectedIndex & Z
-  oFile.Write "Reset=" & Abs(Int(wd.checked)) & Z
-  oFile.Write "ShowExt=" & Abs(Int(se.checked)) & Z
-  oFile.Write "CompView=" & Abs(Int(cv.checked)) & Z
-  oFile.Write "Generic=" & Abs(Int(gn.checked)) & Z
-  oFile.Write "SearchOnly=" & Abs(Int(so.checked)) & Z
-  oFile.Write "SetVirtualFolders=" & Abs(Int(vf.checked)) & Z
-  oFile.Write "KeepViews=" & Abs(Int(ka.checked)) & Z
-  oFile.Write "NoFolderThumbs=" & Abs(Int(nf.checked)) & Z
+  oFile.Write "Reset=" & Abs(Int(wd.Checked)) & Z
+  oFile.Write "ShowExt=" & Abs(Int(se.Checked)) & Z
+  oFile.Write "CompView=" & Abs(Int(cv.Checked)) & Z
+  oFile.Write "Generic=" & Abs(Int(gn.Checked)) & Z
+  oFile.Write "SearchOnly=" & Abs(Int(so.Checked)) & Z
+  oFile.Write "SetVirtualFolders=" & Abs(Int(vf.Checked)) & Z
+  oFile.Write "KeepViews=" & Abs(Int(ka.Checked)) & Z
+  oFile.Write "NoFolderThumbs=" & Abs(Int(nf.Checked)) & Z
   On Error Resume Next
   x = oWSH.RegRead("HKCU\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags\AllFolders\Shell\Logo")
   On Error Goto 0
   ResetThumbs=0
-  If x<>"none" And nf.checked Then ResetThumbs=1
-  If x="none" And Not nf.checked Then ResetThumbs=1
+  If x<>"none" And nf.Checked Then ResetThumbs=1
+  If x="none" And Not nf.Checked Then ResetThumbs=1
   oFile.Write "ResetThumbs=" & ResetThumbs & Z
-  oFile.Write "FileDialogOption=" & Abs(Int(fd.checked)) & Z
-  oFile.Write "FileDialogView=" & fdv.SelectedIndex & Z
-  oFile.Write "FileDialogNG=" & Abs(Int(fdg.checked)) & Z
-  oFile.Write "ThisPCoption=" & Abs(Int(tp.checked)) & Z
+  oFile.Write "ThisPCoption=" & Abs(Int(tp.Checked)) & Z
   oFile.Write "ThisPCView=" & tpv.SelectedIndex & Z
-  oFile.Write "ThisPCNG=" & Abs(Int(tpg.checked)) & Z
-  oFile.Write "NetworkOption=" & Abs(Int(nw.checked)) & Z
+  oFile.Write "ThisPCNG=" & Abs(Int(tpg.Checked)) & Z
+  oFile.Write "NetworkOption=" & Abs(Int(nw.Checked)) & Z
   oFile.Write "NetworkView=" & nwv.SelectedIndex & Z
-  oFile.Write "NetworkNG=" & Abs(Int(nwg.checked)) & Z
+  oFile.Write "NetworkNG=" & Abs(Int(nwg.Checked)) & Z
   For i = 0 To UBFolderType
     oFile.Write "[" & ArrFolderType(i) & "]" & Z
     If i>0 Then 
@@ -814,6 +940,10 @@ Sub Var2Ini(INIFile)
     oFile.Write "IconSize=" & Document.GetElementByID(i & "IconSize").Value & Z
     oFile.Write "ColumnList=" & ArrColumnLists(i) & Z
     oFile.Write "GroupBy=" & ArrGroupBy(i) & Z
+    oFile.Write "GroupByOrder=" & ArrGroupByOrder(i) & Z
+    oFile.Write "FileDialogOption=" & ArrFD(i) & Z
+    oFile.Write "FileDialogView=" & ArrFDV(i) & Z
+    oFile.Write "FileDialogNG=" & ArrFDG(i) & Z
     SortBy = ArrSort1Order(i) & ArrSort1(i)
     If ArrSort2(i)<>"" Then SortBy = SortBy & ";" & ArrSort2Order(i) & ArrSort2(i)
     If ArrSort3(i)<>"" Then SortBy = SortBy & ";" & ArrSort3Order(i) & ArrSort3(i)
@@ -843,28 +973,110 @@ Sub Inspection(i)
   End If
 
   YScrollPos = Document.documentElement.ScrollTop
-  Pg1.style.display = "none"
-  Pg2.style.display = "none"
+  Pg1.Style.Display = "none"
+  Pg2.Style.Display = "none"
   UpdateFont2
   UpdateSize2
-  document.documentElement.style.overflow = "hidden"
+  Document.documentElement.Style.overflow = "hidden"
   HeadHeight = P3hd.ScrollHeight + 50
-  AvailHeight = document.documentElement.clientHeight - HeadHeight
+  AvailHeight = Document.documentElement.clientHeight - HeadHeight
   y = Int(AvailHeight / 2)
   Txt1.Style.Height = y
   Txt2.Style.Height = y
   Window.ScrollTo 0, 0
 End Sub
 
+Function Modal(Title,Args,DialogTop)
+  If Not oFSO.FileExists(ModalHTA) Then
+    MsgBox "File missing: " & ModalHTA,vbCritical,"Error"
+  Else
+    x = Abs(Int(Instr(LCase(sTheme),"dark")>0))
+    If HighContrast Then x = 2
+    DialogArgs = Title & ";" & SelectedFont1 & ";" & SelectedSize1 & ";" & Scale & ";" & x & ";" & Args
+    DialogOptions = "Scroll:No; DialogWidth:" & Int(20*Scale) & "em; dialogLeft:" & window.screenLeft+Int(2*Scale) & "; dialogTop:" & DialogTop
+    Modal = ShowModalDialog(ModalHTA,DialogArgs,DialogOptions)
+  End If
+End Function
+
+Sub FTOptions(i)
+  RetVal = Modal(OptIcon, ArrLang(12) & ";" & ArrLang(25) & ";" & Join(ArrView,"|") & ";" & ArrFD(i) & ";" & ArrFDG(i) & ";" & ArrFDV(i), window.event.clientY)
+  If RetVal<>"" Then
+    TempArray = Split(RetVal,"|")
+    ArrFD(i) = Int(TempArray(0))
+    ArrFDV(i) = Int(TempArray(1))
+    ArrFDG(i) = Int(TempArray(2))
+  End If
+  UpdateFDView(i)
+  InheritUpdate(i)
+End Sub
+
+Sub UpdateFDView(i)
+  If ArrFD(i)="1" Then
+    LParen = "": RParen = ""
+    If ArrFDG(i)="0" Then LParen = "(": RParen = ")"
+    Document.GetElementByID(i & "FTDialogView").Style.Display = "block"
+    Document.GetElementByID(i & "DialogView").innerHTML = LParen & ArrView(ArrFDV(i)) & RParen
+  Else
+    Document.GetElementByID(i & "FTDialogView").Style.Display = "none"
+  End If
+End Sub
+
+Sub FTCopy(i)
+  FTCopyIdx = i
+End Sub
+
+Sub FTPaste(i)
+  If FTCopyIdx="" Then Exit Sub
+  ArrViewChoice(i) = ArrViewChoice(FTCopyIdx)
+  ArrIconSize(i) = ArrIconSize(FTCopyIdx)
+  ArrColumnLists(i) = ArrColumnLists(FTCopyIdx)
+  ArrGroupBy(i) = ArrGroupBy(FTCopyIdx)
+  ArrGroupByOrder(i) = ArrGroupByOrder(FTCopyIdx)
+  ArrFD(i) = ArrFD(FTCopyIdx)
+  ArrFDV(i) = ArrFDV(FTCopyIdx)
+  ArrFDG(i) = ArrFDG(FTCopyIdx)
+  ArrSort1(i) = ArrSort1(FTCopyIdx)
+  ArrSort1Order(i) = ArrSort1Order(FTCopyIdx)
+  ArrSort2(i) = ArrSort2(FTCopyIdx)
+  ArrSort2Order(i) = ArrSort2Order(FTCopyIdx)
+  ArrSort3(i) = ArrSort3(FTCopyIdx)
+  ArrSort3Order(i) = ArrSort3Order(FTCopyIdx)
+  ArrSort4(i) = ArrSort4(FTCopyIdx)
+  ArrSort4Order(i) = ArrSort4Order(FTCopyIdx)
+  Document.GetElementByID(i & "View").SelectedIndex = ArrViewChoice(i)
+  Document.GetElementByID(i & "IconSize").Value = ArrIconSize(i)
+  Document.GetElementByID(i & "GroupBy").innerHTML = Document.GetElementByID(FTCopyIdx & "GroupBy").innerHTML
+  Document.GetElementByID(i & "SortBy").innerHTML = Document.GetElementByID(FTCopyIdx & "SortBy").innerHTML
+  Document.GetElementByID(i & "ColShow").innerHTML = Document.GetElementByID(FTCopyIdx & "ColShow").innerHTML
+  UpdateFDView(i)
+  InheritUpdate(i)
+End Sub
+
 ' Display Options page
 
 Sub Options
   YScrollPos = Document.documentElement.ScrollTop
-  Pg1.style.display = "none"
-  Pg4.style.display = "inline"
-  OptionFileDialogs
+  Pg1.Style.Display = "none"
+  Pg4.Style.Display = "inline"
   OptionThisPC
   OptionNetwork
+End Sub
+
+Sub Arrange
+  GenColShow
+  TempArray = Split(ColShowLabels,"|")
+  DialogTop = window.screenTop+Int(fix2.ScrollHeight-(Scale*60))
+  RetVal = Modal(ArrLang(36), ColShowLabels, DialogTop)
+  If RetVal="" Then Exit Sub
+  TempArray = Split(RetVal,"|")
+  For j = 0 To UBound(TempArray)
+    id = Split(ArrData(TempArray(j)),";")(4)
+    Document.GetElementByID("N~" & id).Value = j
+  Next
+  GenColShow
+  If Document.GetElementByID("N~ItemNameDisplay").Value<>0 Then
+    RetVal = Modal(Warning, ArrLang(43), DialogTop)
+  End If
 End Sub
 
 ' Save settings and run WinSetView.ps1
@@ -899,13 +1111,6 @@ Sub SelectColumns(i)
       Pidx = "P~" & C1: Widx = "W~" & C1: Nidx = "N~" & C1: Gidx = "G~" & C1: S1idx = "S1~" & C1: S2idx = "S2~" & C1: S3idx = "S3~" & C1: S4idx = "S4~" & C1: Midx = "M~" & C1
       Document.GetElementByID(Nidx).Value = ""
       Document.GetElementByID(Widx).Value = ""
-      Document.GetElementByID(Gidx).Style.Zoom = Scale
-      Document.GetElementByID(S1idx).Style.Zoom = Scale
-      Document.GetElementByID(S2idx).Style.Zoom = Scale
-      Document.GetElementByID(S3idx).Style.Zoom = Scale
-      Document.GetElementByID(S4idx).Style.Zoom = Scale
-      Document.GetElementByID(Pidx).Style.Zoom = Scale
-      Document.GetElementByID(Midx).Style.Zoom = Scale
       If C1="ItemNameDisplay" Then
         Document.GetElementByID(Pidx).Checked = True
         Document.GetElementByID(Midx).Checked = True
@@ -916,38 +1121,42 @@ Sub SelectColumns(i)
         Document.GetElementByID(Midx).Checked = False
       End If
       If ArrGroupBy(FTindex)="" Then
-        GroupBy(i).style.visibility = "hidden"
+        GroupBy(i).Style.visibility = "hidden"
         Document.GetElementByID(Gidx).Checked = False
       Else
-        GroupBy(i).style.visibility = "visible"
+        GroupBy(i).Style.visibility = "visible"
         If ArrGroupBy(FTindex)=C1 Then Document.GetElementByID(Gidx).Checked = True
       End If
       If ArrSort1(FTindex)=C1 Then Document.GetElementByID(S1idx).Checked = True
       If ArrSort2(FTindex)="" Then 
-        RBS2(i).style.visibility = "hidden"
+        RBS2(i).Style.visibility = "hidden"
         Document.GetElementByID(S2idx).Checked = False
       Else
-        RBS2(i).style.visibility = "visible"
+        RBS2(i).Style.visibility = "visible"
         If ArrSort2(FTindex)=C1 Then Document.GetElementByID(S2idx).Checked = True
       End If
       If ArrSort3(FTindex)="" Then 
-        RBS3(i).style.visibility = "hidden"
+        RBS3(i).Style.visibility = "hidden"
         Document.GetElementByID(S3idx).Checked = False
       Else
-        RBS3(i).style.visibility = "visible"
+        RBS3(i).Style.visibility = "visible"
         If ArrSort3(FTindex)=C1 Then Document.GetElementByID(S3idx).Checked = True
       End If
       If ArrSort4(FTindex)="" Then 
-        RBS4(i).style.visibility = "hidden"
+        RBS4(i).Style.visibility = "hidden"
         Document.GetElementByID(S4idx).Checked = False
       Else
-        RBS4(i).style.visibility = "visible"
+        RBS4(i).Style.visibility = "visible"
         If ArrSort4(FTindex)=C1 Then Document.GetElementByID(S4idx).Checked = True
       End If
     End If
   Next
 
-  If ArrGroupBy(FTindex)="" Then cbg.Value = "X" Else cbg.Value = "{ }"
+  If ArrGroupBy(FTindex)="" Then
+    cbg.Value = "X"
+  Else
+    If ArrGroupByOrder(FTindex)="+" Then cbg.Value = GrpUpArrow Else cbg.Value = GrpDnArrow
+  End If
 
   If ArrSort1Order(FTindex)="+" Then cbs1.Value = UpArrow Else cbs1.Value = DnArrow
   If ArrSort2Order(FTindex)="+" Then cbs2.Value = UpArrow Else cbs2.Value = DnArrow
@@ -978,16 +1187,17 @@ Sub SelectColumns(i)
   Next
 
   CheckCount = i
-  cs.InnerHTML = Document.GetElementByID(FTindex & "ColShow").InnerHTML
-  P2tt.InnerHTML = ArrFolderTypeLang(FTindex)
+  cs.innerHTML = Document.GetElementByID(FTindex & "ColShow").innerHTML
+  SetColShowColor
+  P2tt.innerHTML = ArrFolderTypeLang(FTindex)
 
   tab2.Style.LineHeight = Int(Scale * 10) & "pt"
 
   YScrollPos = Document.documentElement.ScrollTop
-  Pg1.style.display = "none"
-  Pg2.style.display = "inline"
-  Pg3.style.display = "none"
-  tcin.Style.MarginTop = fix2.ScrollHeight - 15
+  Pg1.Style.Display = "none"
+  Pg2.Style.Display = "inline"
+  Pg3.Style.Display = "none"
+  tcin.Style.MarginTop = fix2.ScrollHeight - Int(Scale * 20)
   Window.ScrollTo 0, 0
 End Sub
 
@@ -1035,23 +1245,23 @@ Sub GenColShow
 
   Data = ""
   ColShow = ""
+  ColShowLabels = ""
   For i = 0 To LastColSel
     ArrColumnEntry = Split(ArrData(i),";")
     If Data<>"" Then Data = Data & ";"
     Data = Data & ArrColumnEntry(0) & "," & ArrColumnEntry(2) & "," & ArrColumnEntry(4)
     If ArrColumnEntry(0)="0" Then
       If ColShow<>"" Then ColShow = ColShow & " | "
-      x = "X1"
-      If ArrColumnEntry(4)="Search.Rank" Then x = "X2"
-      If oSearchOnly.Exists(ArrColumnEntry(4)) Then
-        If so.checked Then x = "X4" Else x = "X3"
-      End If
+      If ColShowLabels<>"" Then ColShowLabels = ColShowLabels & "|"
+      ColShowColor(ArrColumnEntry(4))
       ColShow = ColShow & "<span class=" & x & ">" & ArrColumnEntry(3) & "</span>"
+      ColShowLabels = ColShowLabels & ArrColumnEntry(3)
     End If
   Next
 
   ' Display column heading list
-  cs.InnerHTML = ColShow
+  cs.innerHTML = ColShow
+  SetColShowColor
 
 End Sub
 
@@ -1062,14 +1272,15 @@ Sub P2Exit
   GenColShow
   
   ArrColumnLists(FTindex) = Data
-  Document.GetElementByID(FTindex & "ColShow").InnerHTML = ColShow
+  Document.GetElementByID(FTindex & "ColShow").innerHTML = ColShow
+  SetColShowColor
   
   If cbg.Value="X" Then ArrGroupBy(FTindex)=""
   If ArrGroupBy(FTindex)="" Then
-    Document.GetElementByID(FTindex & "GroupBy").InnerHTML = ArrView(9)
+    Document.GetElementByID(FTindex & "GroupBy").innerHTML = ArrView(9) 'None
   Else
     On Error Resume Next
-    Document.GetElementByID(FTindex & "GroupBy").InnerHTML = Document.GetElementByID("L~" & ArrGroupBy(FTindex)).Value
+    Document.GetElementByID(FTindex & "GroupBy").innerHTML = ArrGroupByOrder(FTindex) & Document.GetElementByID("L~" & ArrGroupBy(FTindex)).Value
     On Error Goto 0
   End If
 
@@ -1083,7 +1294,7 @@ Sub P2Exit
   If ArrSort3(FTindex)<>"" Then SortBy = SortBy & ", " & ArrSort3Order(FTindex) & Document.GetElementByID("L~" & ArrSort3(FTindex)).Value
   If ArrSort4(FTindex)<>"" Then SortBy = SortBy & ", " & ArrSort4Order(FTindex) & Document.GetElementByID("L~" & ArrSort4(FTindex)).Value
   On Error Goto 0
-  Document.GetElementByID(FTindex & "SortBy").InnerHTML = SortBy
+  Document.GetElementByID(FTindex & "SortBy").innerHTML = SortBy
   
   InheritUpdate(i)
 
@@ -1094,17 +1305,11 @@ End Sub
 ' Return to main page
 
 Sub Back2Pg1
-  Pg4.style.display = "none"
-  Pg3.style.display = "none"
-  Pg2.style.display = "none"
-  Pg1.style.display = "inline"
-  document.documentElement.style.overflow = "auto"
-  Window.SetTimeOut "YScroll", 50
-End Sub
-
-' Go back to saved scroll position
-
-Sub YScroll
+  Pg4.Style.Display = "none"
+  Pg3.Style.Display = "none"
+  Pg2.Style.Display = "none"
+  Pg1.Style.Display = "inline"
+  Document.documentElement.Style.overflow = "auto"
   Window.ScrollTo 0, YScrollPos
 End Sub
 
@@ -1113,19 +1318,19 @@ End Sub
 Sub OptionReset
   If wd.Checked Then
     FTHide = True
-    Sec1.style.visibility = "hidden"
-    Sec4.style.visibility = "hidden"
-    lb.style.visibility = "hidden"
-    sb.style.visibility = "hidden"
-    ao.style.visibility = "hidden"
+    Sec1.Style.visibility = "hidden"
+    Sec4.Style.visibility = "hidden"
+    lb.Style.visibility = "hidden"
+    sb.Style.visibility = "hidden"
+    ao.Style.visibility = "hidden"
   Else
     FTHide = False
-    Sec1.style.visibility = "visible"
-    Sec4.style.visibility = "visible"
+    Sec1.Style.visibility = "visible"
+    Sec4.Style.visibility = "visible"
     If IFace.SelectedIndex=2 Then
-      lb.style.visibility = "visible"
-      sb.style.visibility = "visible"
-      ao.style.visibility = "visible"
+      lb.Style.visibility = "visible"
+      sb.Style.visibility = "visible"
+      ao.Style.visibility = "visible"
     End If
   End If
   For i = 1 To UBFolderType
@@ -1134,44 +1339,32 @@ Sub OptionReset
 End Sub
 
 Sub OptionSearchOnly
-  x = Document.GetElementsByTagName("span").length - 1
-  For i = 0 To x
-    Set oElement = Document.GetElementsByTagName("span")(i)
-    If oElement.ClassName="X3" Then
-      oElement.ClassName = "X4"
+  Set oElements = Document.GetElementsByTagName("span")
+  x = ""
+  If HighContrast Then x = x & "HC"
+  For Each oElement in oElements
+    If oElement.ClassName="X3" & x Then
+      oElement.ClassName = "X4" & x
     Else
-      If oElement.ClassName="X4" Then oElement.ClassName = "X3"
+      If oElement.ClassName="X4" & x Then oElement.ClassName = "X3" & x
     End If
   Next
-End Sub
-
-Sub OptionFileDialogs
-  If fd.Checked=True Then
-    fdv.Disabled = False
-    fdg.Disabled = False
-  Else
-    fdv.Disabled = True
-    fdg.Disabled = True
-  End If
+  SetColShowColor
 End Sub
 
 Sub OptionThisPC
   If tp.Checked=True Then
-    tpv.Disabled = False
-    tpg.Disabled = False
+    otp.Style.Display = "block"
   Else
-    tpv.Disabled = True
-    tpg.Disabled = True
+    otp.Style.Display = "none"
   End If
 End Sub
 
 Sub OptionNetwork
   If nw.Checked=True Then
-    nwv.Disabled = False
-    nwg.Disabled = False
+    onw.Style.Display = "block"
   Else
-    nwv.Disabled = True
-    nwg.Disabled = True
+    onw.Style.Display = "none"
   End If
 End Sub
 
@@ -1190,9 +1383,15 @@ Sub IconSizeUpdate(i)
      ArrIconSize(i) = "256"
   End Select
   
-  Document.GetElementByID(i & "IconSize").Value = ArrIconSize(i)
-  Document.GetElementByID(i & "IconSize").Disabled = ArrIconSize(i)=""
-
+  Set o = Document.GetElementByID(i & "IconSize")
+  o.Value = ArrIconSize(i)
+  If ArrIconSize(i)="" Then
+    o.Disabled = True
+    o.Style.backgroundColor = oThemes.Item(sTheme & "InputDisabledBackground")
+  Else
+    o.Disabled = False
+    o.Style.backgroundColor = oThemes.Item(sTheme & "InputBackground")
+  End If
 End Sub
 
 Sub ViewChange(i)
@@ -1209,13 +1408,11 @@ End Sub
 Sub InheritChange(i)
   ArrInheritFlag(i) = Abs(Int(Document.GetElementByID(i & "Inherit").Checked))
   If ArrInheritFlag(i)="1" Then
-    Document.GetElementByID(i & "View").Disabled = True
-    Document.GetElementByID(i & "IconSize").Disabled = True
-    Document.GetElementByID(i & "SelCol").Disabled = True
+    Document.GetElementByID(i & "FTcontrols").Style.Display = "none"
+    Document.GetElementByID(i & "FTView").Style.Display = "block"
   Else
-    Document.GetElementByID(i & "View").Disabled = False
-    Document.GetElementByID(i & "IconSize").Disabled = False
-    Document.GetElementByID(i & "SelCol").Disabled = False
+    Document.GetElementByID(i & "FTcontrols").Style.Display = "block"
+    Document.GetElementByID(i & "FTView").Style.Display = "none"
   End If
   InheritUpdate(i)
 End Sub
@@ -1227,6 +1424,10 @@ Sub InheritUpdate(i)
       ArrIconSize(i) = ArrIconSize(ArrInherit(i))
       ArrColumnLists(i) = ArrColumnLists(ArrInherit(i))
       ArrGroupBy(i) = ArrGroupBy(ArrInherit(i))
+      ArrGroupByOrder(i) = ArrGroupByOrder(ArrInherit(i))
+      ArrFD(i) = ArrFD(ArrInherit(i))
+      ArrFDV(i) = ArrFDV(ArrInherit(i))
+      ArrFDG(i) = ArrFDG(ArrInherit(i))
       ArrSort1(i) = ArrSort1(ArrInherit(i))
       ArrSort1Order(i) = ArrSort1Order(ArrInherit(i))
       ArrSort2(i) = ArrSort2(ArrInherit(i))
@@ -1235,11 +1436,16 @@ Sub InheritUpdate(i)
       ArrSort3Order(i) = ArrSort3Order(ArrInherit(i))
       ArrSort4(i) = ArrSort4(ArrInherit(i))
       ArrSort4Order(i) = ArrSort4Order(ArrInherit(i))
+
       Document.GetElementByID(i & "View").SelectedIndex = ArrViewChoice(i)
       Document.GetElementByID(i & "IconSize").Value = ArrIconSize(i)
-      Document.GetElementByID(i & "GroupBy").InnerHTML = Document.GetElementByID(ArrInherit(i) & "GroupBy").InnerHTML
-      Document.GetElementByID(i & "SortBy").InnerHTML = Document.GetElementByID(ArrInherit(i) & "SortBy").InnerHTML
-      Document.GetElementByID(i & "ColShow").InnerHTML = Document.GetElementByID(ArrInherit(i) & "ColShow").InnerHTML
+      If ArrIconSize(i)="" Then x = "" Else x = " [" & ArrIconSize(i) & "]"
+      Document.GetElementByID(i & "FTView").innerHTML = ArrView(0) & ": " & ArrView(ArrViewChoice(i)) & x
+      Document.GetElementByID(i & "GroupBy").innerHTML = Document.GetElementByID(ArrInherit(i) & "GroupBy").innerHTML
+      Document.GetElementByID(i & "SortBy").innerHTML = Document.GetElementByID(ArrInherit(i) & "SortBy").innerHTML
+      Document.GetElementByID(i & "ColShow").innerHTML = Document.GetElementByID(ArrInherit(i) & "ColShow").innerHTML
+
+      UpdateFDView(i)
     End If
   Next
 End Sub
@@ -1250,20 +1456,32 @@ Sub IncludeChange(i)
   InheritUpdate(i)
 End Sub
 
+Sub IncludeAll
+  For i = 1 To UBFolderType
+    ArrIncludeFlag(i) = Abs(Int(ica.Checked))
+    FTHideUnHide i,False
+    InheritUpdate(i)
+  Next
+End Sub
+
 ' Event handlers for column selection page buttons:
 
 Sub GroupByClick
   x = cbg.Value
   Select Case x
-    Case "{ }"
+    Case GrpUpArrow
+      cbg.Value = GrpDnArrow
+      ArrGroupByOrder(FTindex) = "-"
+    Case GrpDnArrow
       cbg.Value = "X"
       For i = 0 To UBound(ArrColData)
-        GroupBy(i).style.visibility = "hidden"
+        GroupBy(i).Style.visibility = "hidden"
       Next
     Case "X"
-      cbg.Value = "{ }"
+      cbg.Value = GrpUpArrow
+      ArrGroupByOrder(FTindex) = "+"
       For i = 0 To UBound(ArrColData)
-        GroupBy(i).style.visibility = "visible"
+        GroupBy(i).Style.visibility = "visible"
       Next
   End Select
 End Sub
@@ -1288,13 +1506,13 @@ Sub SortBy2Click
       cbs2.Value = "X"
       ArrSort2Order(FTindex) = "+"
       For i = 0 To UBound(ArrColData)
-        RBS2(i).style.visibility = "hidden"
+        RBS2(i).Style.visibility = "hidden"
       Next
     Case "X"
       cbs2.Value = UpArrow
       ArrSort2Order(FTindex) = "+"
       For i = 0 To UBound(ArrColData)
-        RBS2(i).style.visibility = "visible"
+        RBS2(i).Style.visibility = "visible"
       Next
   End Select
 End Sub
@@ -1309,13 +1527,13 @@ Sub SortBy3Click
       cbs3.Value = "X"
       ArrSort3Order(FTindex) = "+"
       For i = 0 To UBound(ArrColData)
-        RBS3(i).style.visibility = "hidden"
+        RBS3(i).Style.visibility = "hidden"
       Next
     Case "X"
       cbs3.Value = UpArrow
       ArrSort3Order(FTindex) = "+"
       For i = 0 To UBound(ArrColData)
-        RBS3(i).style.visibility = "visible"
+        RBS3(i).Style.visibility = "visible"
       Next
   End Select
 End Sub
@@ -1330,13 +1548,13 @@ Sub SortBy4Click
       cbs4.Value = "X"
       ArrSort4Order(FTindex) = "+"
       For i = 0 To UBound(ArrColData)
-        RBS4(i).style.visibility = "hidden"
+        RBS4(i).Style.visibility = "hidden"
       Next
     Case "X"
       cbs4.Value = UpArrow
       ArrSort4Order(FTindex) = "+"
       For i = 0 To UBound(ArrColData)
-        RBS4(i).style.visibility = "visible"
+        RBS4(i).Style.visibility = "visible"
       Next
   End Select
 End Sub
@@ -1404,7 +1622,8 @@ Sub RBS4Click(id)
 End Sub
 
 Sub WidthClick
-  If MsgBox(ArrLang(26),vbOKCancel,LRArrow)=1 Then
+  DialogTop = window.event.clientY - Int(Scale * 25)
+  If Modal(LRArrow, ArrLang(26), DialogTop)="1" Then
     For i = 0 To UBound(ArrColData)
       If ArrColData(i)<>"" Then
         ArrColDataItem = Split(ArrColData(i),";")
@@ -1416,7 +1635,8 @@ Sub WidthClick
 End Sub
 
 Sub View1Click
-  If MsgBox(ArrLang(26),vbOKCancel,"✔✔")=1 Then
+  DialogTop = window.event.clientY - Int(Scale * 25)
+  If Modal(DetailsIcon, ArrLang(26), DialogTop)="1" Then
     For i = 0 To UBound(ArrColData)
       If ArrColData(i)<>"" Then
         ArrColDataItem = Split(ArrColData(i),";")
@@ -1428,26 +1648,40 @@ Sub View1Click
         End If
       End If
     Next
-    cs.InnerHTML = Split(ArrColData(0),";")(0)
+    cs.innerHTML = Split(ArrColData(0),";")(0)
   End If
 End Sub
 
 Sub View2Click
-  If MsgBox(ArrLang(26),vbOKCancel,"✔")=1 Then
+  Dim ClearAll: ClearAll = False
+  DialogTop = window.event.clientY - Int(Scale * 25)
+  If Modal(RightClickIcon, ArrLang(26), DialogTop)="1" Then
+    If window.event.altKey Then ClearAll = True
     For i = 0 To UBound(ArrColData)
       If ArrColData(i)<>"" Then
         ArrColDataItem = Split(ArrColData(i),";")
         C1 = ArrColDataItem(1)
         Pidx = "P~" & C1: Midx = "M~" & C1: Nidx = "N~" & C1
         If C1<>"ItemNameDisplay" Then
-          Document.GetElementByID(Pidx).Checked = False
-          Document.GetElementByID(Midx).Checked = False
-          Document.GetElementByID(Nidx).Value = ""
+          If ClearAll Then
+            Document.GetElementByID(Pidx).Checked = False
+            Document.GetElementByID(Midx).Checked = False
+            Document.GetElementByID(Nidx).Value = ""
+          Else
+            If Document.GetElementByID(Midx).Checked = False Then
+              If Document.GetElementByID(Pidx).Checked=True Then
+                Document.GetElementByID(Pidx).Checked = False
+                CheckCount = CheckCount - 1
+              End If
+            End If
+          End If
         End If
       End If
     Next
-    cs.InnerHTML = Split(ArrColData(0),";")(0)
-    CheckCount = 1
+    If ClearAll Then
+      cs.innerHTML = Split(ArrColData(0),";")(0)
+      CheckCount = 1
+    End If
   End If
 End Sub
 
@@ -1470,18 +1704,14 @@ Sub UpdateFont1
   
   Document.Body.Style.FontFamily = SelectedFont1
   Document.Body.Style.FontSize = SelectedSize1 & "pt"
-  BkP2.Style.FontSize = SelectedSize1 & "pt"
-  BkP3.Style.FontSize = SelectedSize1 & "pt"
-  BkP4.Style.FontSize = SelectedSize1 & "pt"
 
-  x = (UBFolderType * 5) + 17
-  For i = 0 To x
-    Set oElement = Document.GetElementsByTagName("input")(i)
+  Set oElements = Document.GetElementsByTagName("input")
+  For Each oElement in oElements
     If oElement.Type="button" Or oElement.Type="text" Then
       oElement.Style.FontFamily = SelectedFont1
       oElement.Style.FontSize = SelectedSize1 & "pt"
     End If
-    If oElement.Type="checkbox" Then
+    If oElement.Type="checkbox" Or oElement.Type="radio" Then
       oElement.Style.Zoom = Scale
     End If
   Next
@@ -1490,71 +1720,53 @@ Sub UpdateFont1
   BkP3.Style.FontFamily = "WingDings"
   BkP4.Style.FontFamily = "WingDings"
 
-  x = Document.GetElementsByTagName("select").length - 1
-  For i = 0 To x
-    Set oElement = Document.GetElementsByTagName("select")(i)
+  Set oElements = Document.GetElementsByTagName("select")
+  For Each oElement in oElements
     oElement.Style.FontFamily = SelectedFont1
     oElement.Style.FontSize = SelectedSize1 & "pt"
   Next
 
-  ' Scale checkboxes
-  
-  wd.Style.Zoom = Scale
-  se.Style.Zoom = Scale
-  cv.Style.Zoom = Scale
-  vf.Style.Zoom = Scale
-  gn.Style.Zoom = Scale
-  so.Style.Zoom = Scale
-  fd.Style.Zoom = Scale
-  fdg.Style.Zoom = Scale
-  ka.Style.Zoom = Scale
-  nf.Style.Zoom = Scale
-  tp.Style.Zoom = Scale
-  tpg.Style.Zoom = Scale
-  nw.Style.Zoom = Scale
-  nwg.Style.Zoom = Scale
-
-  'Resize and position dialog
-  
-  twid.style.whiteSpace="nowrap"
-  bwid.style.whiteSpace="nowrap"
-  x = bwid.ScrollWidth
-  y = twid.ScrollWidth
-  If y>x Then x = y
-  RequiredWidth = x + (50 * Scale)
-  twid.style.whiteSpace="normal"
-  bwid.style.whiteSpace="normal"
-  If RequiredWidth<700 Then RequiredWidth = 700
+  RequiredWidth = twid.ScrollWidth + Int(BaseScale * 50)
   If RequiredWidth>screen.availWidth Then RequiredWidth = screen.availWidth
-  CurrentWidth = Document.Body.OffsetWidth + (50 * Scale)
-  Maximized = (1.1 * CurrentWidth) >= screen.availWidth
-  If (CurrentWidth < RequiredWidth) Or (CurrentWidth > 700) And Not Maximized Then
-    Self.ResizeTo RequiredWidth, screen.availHeight
-    Self.MoveTo (screen.availWidth - RequiredWidth) / 2, 4
-  End If
+
+  UpdateCheck
+  Recenter
 
   Sec1.Style.MarginTop = fix1.ScrollHeight
   
   ' Refresh page
-  Pg1.style.display = "none"
-  Pg1.style.display = "inline"
+  Pg1.Style.Display = "none"
+  Pg1.Style.Display = "inline"
 
+End Sub
+
+Sub RecenterButton
+  WinSizePos = ""
+  Recenter
+End Sub
+
+'Resize and position window
+Sub Recenter
+  If  WinSizePos="" Then
+    Self.ResizeTo RequiredWidth, screen.availHeight
+    Self.MoveTo (screen.availWidth - RequiredWidth) / 2, 4
+  End If
 End Sub
 
 Sub UpdateFont2
   SelectedFont2 = Font2.Options(Font2.SelectedIndex).Value
   Txt1.Style.FontFamily = SelectedFont2
   Txt2.Style.FontFamily = SelectedFont2
-  Pg3.style.display = "none"
-  Pg3.style.display = "inline"
+  Pg3.Style.Display = "none"
+  Pg3.Style.Display = "inline"
 End Sub
 
 Sub UpdateSize2
   SelectedSize2 = Size2.Options(Size2.SelectedIndex).Value
   Txt1.Style.FontSize = SelectedSize2 & "pt"
   Txt2.Style.FontSize = SelectedSize2 & "pt"
-  Pg3.style.display = "none"
-  Pg3.style.display = "inline"
+  Pg3.Style.Display = "none"
+  Pg3.Style.Display = "inline"
 End Sub
 
 ' Change width of display columns class based on 1-9 value selected in dropdown menu.
@@ -1565,19 +1777,19 @@ End Sub
 Sub xschange
   x = xs.SelectedIndex
   If x=1 Then v = "" Else v = Int(RequiredWidth * x)
-  x = Document.GetElementsByTagName("div").length - 1
-  For i = 0 To x
-    Set oElement = Document.GetElementsByTagName("div")(i)
+  Set oElements = Document.GetElementsByTagName("div")
+  For Each oElement in oElements
     If oElement.ClassName="cta" Then oElement.Style.Width = v
   Next
+  xs.blur
 End Sub
 
 Sub ShowC1(id)
-  Document.GetElementByID("V~" & id).InnerHTML = id
+  Document.GetElementByID("V~" & id).innerHTML = id
 End Sub
 
 Sub ShowC2(id,ftname)
-  Document.GetElementByID("V~" & id).InnerHTML = Replace(ftname,"`","'")
+  Document.GetElementByID("V~" & id).innerHTML = Replace(ftname,"`","'")
 End Sub
 
 Sub PixelInput(id)
@@ -1585,7 +1797,7 @@ Sub PixelInput(id)
   a = Document.GetElementByID("W~" & id).Value
   b = ""
   If IsNumeric(a) Then b = Int(BaseScale * 8 * a)
-  b = InputBox(ArrLang(28),"",b)
+  b = Modal(LRArrow & ".", ArrLang(28) & ";" & b, window.event.clientY - Int(Scale * 50))
   If Not IsNumeric(b) Then b = ""
   If b<>"" Then 
     b = Abs(Int(b))
@@ -1598,26 +1810,79 @@ End Sub
 
 Sub SetInterface
   If IFace.SelectedIndex=1 Then
-    lb.style.visibility = "hidden"
-    sb.style.visibility = "hidden"
-    ao.style.visibility = "hidden"
+    lb.Style.visibility = "hidden"
+    sb.Style.visibility = "hidden"
+    ao.Style.visibility = "hidden"
+    ica.Style.Display = "none"
     For i = 1 To UBFolderType
-      Document.GetElementByID(i & "Inspect").style.visibility = "hidden"
+      Document.GetElementByID(i & "Inspect").Style.Display = "none"
     Next
   Else
     If Not wd.Checked Then
-      lb.style.visibility = "visible"
-      sb.style.visibility = "visible"
-      ao.style.visibility = "visible"
+      lb.Style.visibility = "visible"
+      sb.Style.visibility = "visible"
+      ao.Style.visibility = "visible"
+      ica.Style.Display = "inline"
       For i = 1 To UBFolderType
-        If ArrIncludeFlag(i)="1" Then Document.GetElementByID(i & "Inspect").style.visibility = "visible"
+        If ArrIncludeFlag(i)="1" Then Document.GetElementByID(i & "Inspect").Style.Display = "inline"
       Next
     End If
   End If
+  IFace.blur
+End Sub
+
+Sub SetTheme
+  If UBound(ArrThemes)=-1 Then Exit Sub
+  sTheme = "[" & ArrThemes(Theme.SelectedIndex-1) & "]"
+  Document.body.Style.color = oThemes.Item(sTheme & "MainText")
+  Document.body.Style.backgroundColor = oThemes.Item(sTheme & "MainBackground")
+  fix1.Style.backgroundColor = oThemes.Item(sTheme & "MainBackground")
+  fix2.Style.backgroundColor = oThemes.Item(sTheme & "MainBackground")
+  txt1.Style.color = oThemes.Item(sTheme & "InspectText")
+  txt1.Style.backgroundColor = oThemes.Item(sTheme & "InspectBackground")
+  txt2.Style.color = oThemes.Item(sTheme & "InspectText")
+  txt2.Style.backgroundColor = oThemes.Item(sTheme & "InspectBackground")
+  SetColShowColor
+  Set oElements = Document.GetElementsByTagName("select")
+  For Each oElement in oElements
+    oElement.Style.color = oThemes.Item(sTheme & "SelectText")
+    oElement.Style.backgroundColor = oThemes.Item(sTheme & "SelectBackground")
+    oElement.Style.borderColor = oThemes.Item(sTheme & "SelectBorder")
+  Next
+  Set oElements = Document.GetElementsByTagName("input")
+  For Each oElement in oElements
+    If oElement.Type="button" Then
+      oElement.Style.color = oThemes.Item(sTheme & "ButtonText")
+      oElement.Style.backgroundColor = oThemes.Item(sTheme & "ButtonBackground")
+      oElement.Style.borderColor = oThemes.Item(sTheme & "ButtonBorder")
+    End If
+    If oElement.Type="text" Then
+      oElement.Style.color = oThemes.Item(sTheme & "InputText")
+      oElement.Style.borderColor = oThemes.Item(sTheme & "InputBorder")
+      If oElement.Disabled = True Then
+        oElement.Style.backgroundColor = oThemes.Item(sTheme & "InputDisabledBackground")
+      Else
+        oElement.Style.backgroundColor = oThemes.Item(sTheme & "InputBackground")
+      End If
+    End If
+  Next
+  Theme.blur
+End Sub
+
+Sub SetColShowColor
+  Set oElements = Document.GetElementsByTagName("span")
+  For Each oElement in oElements
+    If oElement.ClassName="X1" Then oElement.Style.color = oThemes.Item(sTheme & "MainText")
+    If oElement.ClassName="X2" Then oElement.Style.color = oThemes.Item(sTheme & "SearchPropText")
+    If oElement.ClassName="X3" Then oElement.Style.color = oThemes.Item(sTheme & "MainText")
+    If oElement.ClassName="X4" Then oElement.Style.color = oThemes.Item(sTheme & "SearchPropText")
+  Next
 End Sub
 
 Sub Help
-  oWSH.Run "https://lesferch.github.io/WinSetView"
+  x = "https://lesferch.github.io/WinSetView"
+  If Beta Then x = "https://github.com/LesFerch/WinSetView/blob/beta/README.md"
+  oWSH.Run x
 End Sub
 
 ' HTML interface starts here with the script-generated pages
@@ -1626,20 +1891,28 @@ Sub BuildPages
   
   'Build page of Folder Types
   For i = 0 To UBFolderType
-    v = "": x = "": y= ""
+    Dim Xinc, Xcop, Xpas, Xln2, Xvue
+    Xinc = "":Xcop = "": Xpas = "": Xln2 =""
     If i>0 Then
-      v = "<input type=checkbox id=" & i & "Include onclick=IncludeChange(" & i & ") Checked>"
-      x = "<input type=button id=" & i & "Inspect value=🔍 onclick=Inspection(" & i & ")>"
-      y = "<input type=checkbox id=" & i & "Inherit onclick=InheritChange(" & i & ") Checked># 21 #"
+      Xinc = "<input type=checkbox id=" & i & "Include onclick=IncludeChange(" & i & ") Checked>"
+      Xcop = "<div class=tip><input type=button id=" & i & "Copy value=" & CopyIcon & " onclick=FTCopy(" & i & ")><span class=tiptext># 40 #</span></div> "
+      Xpas = "<div class=tip><input type=button id=" & i & "Paste value=" & PasteIcon & " onclick=FTPaste(" & i & ")><span class=tiptext># 41 #</span></div>"
+      Xln2 = "<div class=fo><input type=checkbox id=" & i & "Inherit onclick=InheritChange(" & i & ") Checked># 21 # <input type=button id=" & i & "Inspect value=" & InsIcon & " style='padding:0' onclick=Inspection(" & i & ")></div>"
+      Xvue = "<div class=fo id=" & i & "FTView></div>"
     End If
-    ArrHTML1(i) = v & "<div class=ft id=" & i & "FTtitle>" & ArrFolderTypeLang(i) & "</div><br>" & Z &_
-    "<div id=" & i & "FTsettings><select id=" & i & "View onchange=ViewChange(" & i & ")></select>" & Z &_
+    ArrHTML1(i) = Xinc & "<div class=ft id=" & i & "FTtitle>" & ArrFolderTypeLang(i) & "</div><br>" & Z &_
+    "<div id=" & i & "FTsettings>" & Xln2 & Z &_
+    "<div class=fo id=" & i & "FTcontrols><select id=" & i & "View onchange=ViewChange(" & i & ")></select>" & Z &_
     "<input type=text class=is id=" & i & "IconSize OnChange=IconSizeChange(" & i & ")>" & Z &_
     "<input type=button id=" & i & "SelCol value='# 24 #' onclick=SelectColumns(" & i & ")>" & Z &_
-    x & y & "<br>" & Z &_
+    "<div class=tip><input type=button id=" & i & "Option value=" & OptIcon & " onclick=FTOptions(" & i & ")><span class=tiptext># 3 #</span></div>" & Z &_
+    Xcop & Xpas & "</div>" & Z &_
+    Xvue & Z &_
     "<div class=cta id=" & i & "ColShow></div>" & Z &_
-    "<div class=fo># 22 #:&nbsp;<span id=" & i & "GroupBy></span></div>" & Z &_
-    "<div class=fo># 23 #:&nbsp;<span id=" & i & "SortBy></span></div></div><br><br>" & Z
+    "<div class=fo># 22 #: <span id=" & i & "GroupBy></span></div>" & Z &_
+    "<div class=fo># 23 #: <span id=" & i & "SortBy></span></div>" & Z &_
+    "<div class='fo noshow' id=" & i & "FTDialogView># 44 #: <span id=" & i & "DialogView></span></div>" & Z &_
+    "</div><br><br>" & Z
   Next
 
   'Build column heading selection page
@@ -1647,11 +1920,7 @@ Sub BuildPages
     If ArrColData(i)="" Then ReDim Preserve ArrColData(UBound(ArrColData)-1): Exit For
     ArrColumnEntry = Split(ArrColData(i),";")
     C1 = ArrColumnEntry(1): C2 = ArrColumnEntry(0)
-    x = "X1"
-    If C1="Search.Rank" Then x = "X2"
-    If oSearchOnly.Exists(C1) Then
-      If so.checked Then x = "X4" Else x = "X3"
-    End If
+    ColShowColor(C1)
     ArrHTML2(i) = "<tr>" &_
     "<td><input type=radio name=GroupBy onclick=RBGClick('" & C1 & "') id=G~" & C1 & " Value='" & C1 & "'></td>" &_
     "<td><input type=radio name=RBS1 onclick=RBS1Click('" & C1 & "') id=S1~" & C1 & " Value='" & C1 & "'></td>" &_
@@ -1661,8 +1930,8 @@ Sub BuildPages
     "<td><input type=text class=cw id=W~" & C1 & " maxlength=3 onclick=PixelInput('" & C1 & "')></td>" &_
     "<td><input type=checkbox onclick=CBMClick('" & C1 & "') id=M~" & C1 & " Value='" & C1 & "'></td>" &_
     "<td><input type=checkbox onclick=CBPClick('" & C1 & "') id=P~" & C1 & " Value='" & C1 & "'></td>" &_
-    "<td><span id=V~" & C1 & " class=" & x & " onmouseover='ShowC1 " & Q & C1 & Q &_ 
-    "' onmouseout='ShowC2 " & Q & C1 & Q & "," & Q & Replace(C2,"'","`") & Q & "'>" & C2 & "</span></td>" &_
+    "<td><span id=V~" & C1 & " class=" & x & " onmouseover='ShowC1" & Q & C1 & Q &_
+    "' onmouseout='ShowC2" & Q & C1 & Q & "," & Q & Replace(C2,"'","`") & Q & "'>" & C2 & "</span></td>" &_
     "<td><input type=text style=display:none id=L~" & C1 & " Value='" & C2 & "'></td>" &_
     "<td><input type=text style=display:none id=N~" & C1 & "></td></tr>"
   Next
@@ -1682,13 +1951,17 @@ Sub BuildPages
 
   If WinVer="7" Or WinVer="8" Then BodyHTML = Replace(BodyHTML,"⮬","↑")
 
-  Document.Body.InnerHTML = BodyHTML
+  Document.Body.innerHTML = BodyHTML
 
 End Sub
 
 Sub document_onKeyDown
-  'Prevent F5 or Ctrl-F5 refresh
-  If window.event.keyCode=116 Then window.event.keyCode = 0
+  'Recenter window if F1-F12 is pressed (also prevents F5 or Ctrl-F5 refresh)
+  If window.event.keyCode>=112 And window.event.keyCode<=123 Then
+    window.event.keyCode = 0
+    WinSizePos = ""
+    Recenter
+  End If
 End Sub
 
 </script>
@@ -1703,7 +1976,6 @@ End Sub
   #ka   {margin-top:3pt}
   #nf   {margin-top:3pt}
   #so   {margin-top:3pt}
-  #fd   {margin-top:3pt}
   .cta  {margin-top:5pt; width:100%}
   #fix1 {position:fixed; left:0; top:0; width:100%; background-color:LemonChiffon}
   #f1in {margin-left:5pt; margin-top:5pt}
@@ -1719,6 +1991,9 @@ End Sub
   #BkP2 {float:right; margin-right:10pt; font-family:WingDings; width:3em}
   #BkP3 {float:right; font-family:WingDings; width:3em}
   #BkP4 {float:right; font-family:WingDings; width:3em}
+  .fl1  {float:left; margin-left:5pt}
+  .fl2  {float:left; margin-left:3pt}
+  .fl3  {float:left; margin-left:3pt; margin-right:3pt}
   .ft   {font-size:1.2em; font-weight:bold; margin-top:1pt; margin-bottom:1pt; display:inline}
   .ftl  {font-size:1.2em; font-weight:light; margin-top:1pt; margin-bottom:1pt; display:inline}
   .ft2  {font-weight:bold; margin-top:1pt; margin-bottom:1pt; margin-left:5pt}
@@ -1733,14 +2008,23 @@ End Sub
   .X2   {color:blue}
   .X3   {color:black}
   .X4   {color:blue}
-  #fdv  {margin-left:1.5em; margin-top:3pt}
+  .X1HC {font-style:normal}
+  .X2HC {font-style:italic}
+  .X3HC {font-style:normal}
+  .X4HC {font-style:italic}
   #tpv  {margin-left:1.5em; margin-top:3pt}
   #nwv  {margin-left:1.5em; margin-top:3pt}
   .is   {width:2em}
+  .noshow {display:none}
+
+  #tab1 tbody td {text-align:center}
+  #tab2 tbody td {text-align:center}
+  #tab2 tbody td+td+td+td+td+td+td+td+td {text-align:left}
 
   .tip {
     display:inline;
-    font-weight:normal
+    font-weight:normal;
+    color:Black
   }
   .tiptext {
     visibility:hidden;
@@ -1757,6 +2041,7 @@ End Sub
   .tip:hover .tiptext {
     visibility:visible
   }
+
 </style>
 </head>
 <body>
@@ -1764,31 +2049,36 @@ End Sub
     <div id=fix1>
     <div id=f1in>
       <div id=twid>
-        <div class=tip><input type=button id=hb value='# 31 #' onclick=Help>
-        <span id=ver class=tiptext></span></div>
-        <select id=Lang onchange='UpdateLang True'></select>
-        <select id=IFace onchange='SetInterface'>
+        <div class=tip><input type=button id=hb value='# 31 #' onclick=Help()>
+        <span id=Vp1 class=tiptext></span></div>
+        <div class=tip><input id=bc1 type=button value='⛶' onclick=RecenterButton()>
+        <span class=tiptext># 42 #</span></div>
+        <select id=Lang onchange='UpdateLang(1)'></select>
+        <select id=IFace onchange='SetInterface()'>
           <option selected disabled># 32 #</option>
           <option># 33 #</option>
           <option># 34 #</option>
         </select>
-        <select id=Font1 onchange=UpdateFont1></select>
-        <select id=Size1 onchange=UpdateFont1></select>
-        <select id=xs onchange=xschange></select>
+        <select id=Font1 onchange=UpdateFont1()></select>
+        <select id=Size1 onchange=UpdateFont1()></select>
+        <select id=xs onchange=xschange()></select>
+        <select id=Theme onchange=SetTheme()>
+        </select>
       </div>
       <br><br>
-      <input type=checkbox id=wd onclick=OptionReset># 7 #<br><br>
+      <input type=checkbox id=wd onclick=OptionReset()># 7 #<br><br>
       <div id=bwid>
-        <input type=button id=xb value='# 2 #' onclick=Submit>
-        <input type=button id=ob value='# 3 #' onclick=Options>
-        <input type=button id=rb value='# 6 #' onclick=Restore>
-        <input type=button id=lb value='# 4 #' onclick=LoadSettings>
-        <input type=button id=sb value='# 5 #' onclick=SaveSettings>
+        <input type=button id=xb value='# 2 #' onclick=Submit()>
+        <input type=button id=ob value='# 3 #' onclick=Options()>
+        <input type=button id=rb value='# 6 #' onclick=Restore()>
+        <input type=button id=lb value='# 4 #' onclick=LoadSettings()>
+        <input type=button id=sb value='# 5 #' onclick=SaveSettings()>
         <br><br>
       </div>
     </div>
     </div>
     <div id=Sec1>
+    <input type=checkbox id=ica onclick=IncludeAll() Checked>
     +++
     </div>
   </div>
@@ -1796,30 +2086,36 @@ End Sub
   <div id=Pg2>
     <div id=fix2>
     <div id=f2in>
-      <input type=button value='&#223;' ID=BkP2 OnClick=P2Exit>
+      <input type=button value='&#223;' id=BkP2 onclick=P2Exit()>
+      <div class='tip fl1'><input type=button value='# 31 #' onclick=Help()>
+      <span id=Vp2 class=tiptext></span></div>
+      <div class='tip fl2'><input id=bc2 type=button value='⛶' onclick=RecenterButton()>
+      <span class=tiptext># 42 #</span></div>
+      <div class='tip fl3'><input id=ba type=button value='⮀' onclick=Arrange()>
+      <span class=tiptext># 36 #</span></div>
       <h3 id=P2tt class=ft2></h3>
       <div id=cs></div>
       <table id=tab1>
         <colgroup>
-          <col style='width:3.2em; min-width:3.2em; max-width:3.2em; text-align:center'>
-          <col style='width:1.8em; min-width:1.8em; max-width:1.8em; text-align:center'>
-          <col style='width:1.8em; min-width:1.8em; max-width:1.8em; text-align:center'>
-          <col style='width:1.8em; min-width:1.8em; max-width:1.8em; text-align:center'>
-          <col style='width:1.8em; min-width:1.8em; max-width:1.8em; text-align:center'>
-          <col style='width:4.7em; min-width:4.7em; max-width:4.7em; text-align:center'>
-          <col style='width:3.0em; min-width:3.0em; max-width:3.0em; text-align:center'>
-          <col style='width:3.0em; min-width:3.0em; max-width:3.0em; text-align:center'>
+          <col style='width:3.2em; min-width:3.2em; max-width:3.2em'>
+          <col style='width:1.9em; min-width:1.9em; max-width:1.9em'>
+          <col style='width:1.9em; min-width:1.9em; max-width:1.9em'>
+          <col style='width:1.9em; min-width:1.9em; max-width:1.9em'>
+          <col style='width:1.9em; min-width:1.9em; max-width:1.9em'>
+          <col style='width:4.6em; min-width:4.6em; max-width:4.6em'>
+          <col style='width:3.0em; min-width:3.0em; max-width:3.0em'>
+          <col style='width:3.0em; min-width:3.0em; max-width:3.0em'>
         </colgroup>
         <tbody>
           <tr>
-          <th><div class=tip><input type=button id=cbg value='{ }' onclick=GroupByClick style='height=2em; width:2em'><span class=tiptext># 22 #</span></div></th>
-          <th><div class=tip><input type=button id=cbs1 value='⮬' onclick=SortBy1Click style='height=2em; width:1.5em'><span class=tiptext># 14 #</span></div></th>
-          <th><div class=tip><input type=button id=cbs2 value='⮬' onclick=SortBy2Click style='height=2em; width:1.5em'><span class=tiptext># 15 #</span></div></th>
-          <th><div class=tip><input type=button id=cbs3 value='⮬' onclick=SortBy3Click style='height=2em; width:1.5em'><span class=tiptext># 16 #</span></div></th>
-          <th><div class=tip><input type=button id=cbs4 value='⮬' onclick=SortBy4Click style='height=2em; width:1.5em'><span class=tiptext># 17 #</span></div></th>
-          <th><div class=tip><input type=button id=cbw value='⟷' onclick=WidthClick style='width:2.4em'><span class=tiptext># 18 #</span></div></th>
-          <th><div class=tip><input type=button id=cbo value='✔✔' onclick=View1Click style='width:2em'><span class=tiptext># 19 #</span></div></th>
-          <th><div class=tip><input type=button id=cbc value='✔' onclick=View2Click style='width:2em'><span class=tiptext># 20 #</span></div></th>
+          <th><div class=tip><input type=button id=cbg value='{⮬}' onclick=GroupByClick() style='height:2em; padding:0; width:2em'><span class=tiptext># 22 #</span></div></th>
+          <th><div class=tip><input type=button id=cbs1 value='⮬' onclick=SortBy1Click() style='height:2em; padding:0; width:1.6em'><span class=tiptext># 14 #</span></div></th>
+          <th><div class=tip><input type=button id=cbs2 value='⮬' onclick=SortBy2Click() style='height:2em; padding:0; width:1.6em'><span class=tiptext># 15 #</span></div></th>
+          <th><div class=tip><input type=button id=cbs3 value='⮬' onclick=SortBy3Click() style='height:2em; padding:0; width:1.6em'><span class=tiptext># 16 #</span></div></th>
+          <th><div class=tip><input type=button id=cbs4 value='⮬' onclick=SortBy4Click() style='height:2em; padding:0; width:1.6em'><span class=tiptext># 17 #</span></div></th>
+          <th><div class=tip><input type=button id=cbw value='⟷' onclick=WidthClick() style='height:2em; padding:0; width:2em'><span class=tiptext># 18 #</span></div></th>
+          <th><div class=tip><input type=button id=cbo value='⋮⋮⋮' onclick=View1Click() style='height:2em; padding:0; width:2em'><span class=tiptext># 19 #</span></div></th>
+          <th><div class=tip><input type=button id=cbc value='⋮' onclick=View2Click() style='height:2em; padding:0; width:2em'><span class=tiptext># 20 #</span></div></th>
           </tr>
         </tbody>
       </table>
@@ -1829,14 +2125,14 @@ End Sub
     <div id=tcin>
       <table id=tab2>
         <colgroup>
-          <col style='width:3.2em; min-width:3.2em; max-width:3.2em; text-align:center'>
-          <col style='width:1.8em; min-width:1.8em; max-width:1.8em; text-align:center'>
-          <col style='width:1.8em; min-width:1.8em; max-width:1.8em; text-align:center'>
-          <col style='width:1.8em; min-width:1.8em; max-width:1.8em; text-align:center'>
-          <col style='width:1.8em; min-width:1.8em; max-width:1.8em; text-align:center'>
-          <col style='width:4.7em; min-width:4.7em; max-width:4.7em; text-align:center'>
-          <col style='width:3.0em; min-width:3.0em; max-width:3.0em; text-align:center'>
-          <col style='width:3.0em; min-width:3.0em; max-width:3.0em; text-align:center'>
+          <col style='width:3.2em; min-width:3.2em; max-width:3.2em'>
+          <col style='width:1.9em; min-width:1.9em; max-width:1.9em'>
+          <col style='width:1.9em; min-width:1.9em; max-width:1.9em'>
+          <col style='width:1.9em; min-width:1.9em; max-width:1.9em'>
+          <col style='width:1.9em; min-width:1.9em; max-width:1.9em'>
+          <col style='width:4.6em; min-width:4.6em; max-width:4.6em'>
+          <col style='width:3.0em; min-width:3.0em; max-width:3.0em'>
+          <col style='width:3.0em; min-width:3.0em; max-width:3.0em'>
         </colgroup>
         <tbody>
           ~~~
@@ -1848,32 +2144,30 @@ End Sub
 
   <div id=Pg3>
     <div id=P3hd>
-      <input type=button value='&#223;' ID=BkP3 OnClick=Back2Pg1>
-      <select id=Font2 onchange=UpdateFont2></select>
-      <select id=Size2 onchange=UpdateSize2></select>
+      <input type=button value='&#223;' ID=BkP3 OnClick=Back2Pg1()>
+      <select id=Font2 onchange=UpdateFont2()></select>
+      <select id=Size2 onchange=UpdateSize2()></select>
     </div>
-    <textarea id=Txt1 wrap=off onscroll=Txt1Scroll></textarea>
-    <textarea id=Txt2 wrap=off onscroll=Txt2Scroll></textarea>
+    <textarea id=Txt1 wrap=off onscroll=Txt1Scroll()></textarea>
+    <textarea id=Txt2 wrap=off onscroll=Txt2Scroll()></textarea>
   </div>
 
   <div id=Pg4>
-    <input type=button value='&#223;' ID=BkP4 OnClick=Back2Pg1>
+    <input type=button value='&#223;' ID=BkP4 OnClick=Back2Pg1()>
     <h2># 3 #</h2>
     <input type=checkbox id=se Checked># 8 #<br><br>
     <input type=checkbox id=cv Checked># 27 #<br><br>
     <div id=Sec4>
-      <input type=checkbox id=so Checked onclick=OptionSearchOnly># 9 #<br><br>
+      <input type=checkbox id=so Checked onclick=OptionSearchOnly()># 9 #<br><br>
       <input type=checkbox id=vf Checked># 29 #<br><br>
-      <input type=checkbox id=fd onclick=OptionFileDialogs># 12 #<br>
-      <select id=fdv></select>&nbsp;<input type=checkbox id=fdg checked># 25 #<br><br>
-      <input type=checkbox id=tp onclick=OptionThisPC># 13 #<br>
-      <select id=tpv></select>&nbsp;<input type=checkbox id=tpg checked># 25 #<br><br>
-      <input type=checkbox id=nw onclick=OptionNetwork># 30 #<br>
-      <select id=nwv></select>&nbsp;<input type=checkbox id=nwg checked># 25 #<br><br>
+      <input type=checkbox id=nf># 35 #<br><br>
+      <input type=checkbox id=tp onclick=OptionThisPC()># 13 #<br>
+      <div id=otp><select id=tpv></select> <input type=checkbox id=tpg checked># 25 #</div><br>
+      <input type=checkbox id=nw onclick=OptionNetwork()># 30 #<br>
+      <div id=onw><select id=nwv></select> <input type=checkbox id=nwg checked># 25 #</div><br>
       <div id=ao>
       <input type=checkbox id=gn Checked># 10 #<br><br>
       <input type=checkbox id=ka># 11 #<br><br>
-      <input type=checkbox id=nf># 35 #<br><br>
       </div>
     </div>
   </div>

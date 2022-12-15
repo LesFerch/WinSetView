@@ -6,17 +6,17 @@ You can also manually navigate your browser to: https://lesferch.github.io/WinSe
 
 This is the quick start guide. For more details, please see the [complete user manual](./Manual.md).
 
-[![image](https://user-images.githubusercontent.com/79026235/152910441-59ba653c-5607-4f59-90c0-bc2851bf2688.png)Download the zip file](https://github.com/LesFerch/WinSetView/archive/refs/heads/main.zip)
+[![image](https://user-images.githubusercontent.com/79026235/152910441-59ba653c-5607-4f59-90c0-bc2851bf2688.png)Download the zip file](https://github.com/LesFerch/WinSetView/archive/refs/heads/beta.zip)
 
 ## Globally Set Explorer Folder Views
 
 Compatible with Windows 7, 8, 10, and 11.
 
-[Version 2.46](./VersionHistory.md)
+[Version 2.52](./VersionHistory.md)
 
 # Summary
 
-WinSetView provides an *easy* way to set Windows File Explorer default folder views. For example, if you want Details view, with a particular selection of column headings enabled across all folders, then WinSetView will do that for you.
+WinSetView provides an easy way to set Windows File Explorer default folder views. For example, if you want Details view, with a particular selection of column headings enabled across all folders, then WinSetView will do that for you.
 
 # How to Download and Run
 
@@ -35,19 +35,19 @@ For detailed instructions, please see: [Download Help Guide](./DownloadHelp.md)
 
 Simple step by step instructions follow.
 
-**Note**: Nothing in Windows is changed, and no settings are saved, until the **Submit** button is pressed. Feel free to experiment with the WinSetView interface and just **X** out and restart the app to get back to where you started.
+**Note**: Nothing in Windows is changed, and no settings are saved, until the **Submit** button is pressed. Feel free to experiment with the WinSetView interface and just **X** out and restart the app to get back to where you started. Display options such as **font**, **font size**, and **theme** are also saved to the INI file and are therefore also only saved when you click **Submit**. Only the WinSetView window size and position are saved automatically when you click **X** to exit the app.
 
 For complete details, please see the [manual](./Manual.md).
 
 ## Step 1: Select Your Interface Language (Optional)
 
-![image](https://user-images.githubusercontent.com/79026235/152623334-30205834-2ab9-4778-a0ef-70632a0fa2b3.png)
+![image](https://user-images.githubusercontent.com/79026235/206563088-85288970-e666-4824-8b54-07ff83e01c54.png)
 
 WinSetView should open in the same language to which you have Windows set. If not, select the correct language from the drop down menu.
 
-## Step 2: Select Your Preferred Global Default View
+## Step 2: Select Your Preferred Default View
 
-![image](https://user-images.githubusercontent.com/79026235/152623339-6703bd0c-f1a2-4634-a01f-779d2dbb9930.png)
+![image](https://user-images.githubusercontent.com/79026235/206563583-ded1543d-0acb-4229-9129-b7f98abc6ee9.png)
 
 Select the default view you want applied to most (or all) folders from the drop down menu under the **Global** heading. Most users go with **Details**, but pick what *you* like as your default.
 
@@ -55,23 +55,23 @@ Select the default view you want applied to most (or all) folders from the drop 
 
 ## Step 3: Select Your Preferred Default Column Headings (Optional)
 
-![image](https://user-images.githubusercontent.com/79026235/152623349-50a7d709-6cd5-4987-9b12-4db9defeacaf.png)
+![image](https://user-images.githubusercontent.com/79026235/206564056-d32f1e30-324a-4aa0-8e0d-98834b0725a2.png)
 
 If you are happy with the default Details-view column headings (as shown on screen) then skip this step.
 
 **Note**: Column headings shown in blue are only displayed in *search results* (by default). It is, therefore, recommended to keep the **Folder path** column heading.
 
-![image](https://user-images.githubusercontent.com/79026235/152623354-f8272ef5-d85f-42f5-85d0-362eba5be445.png)
+![image](https://user-images.githubusercontent.com/79026235/206564277-95e4619e-8799-4f0e-afa3-eddcdadb6407.png)
 
 Otherwise, click the **Columns** button to bring up the column headings selection page.
 
-![image](https://user-images.githubusercontent.com/79026235/152623377-22665b75-2dd2-4d33-a9ce-004ae19643a8.png)
+![image](https://user-images.githubusercontent.com/79026235/207390444-83f4aaff-4425-4b61-9d86-617dddbbbfe9.png)
 
-The column headings selection page allows you to select your desired column headings (and their order), group-by options, sort options, and column widths. The [manual](./Manual.md) provides full details, but you can also hover over or click on elements to see how the interface works. **Hint**: To change column *order*, unselect the column headings and then reselect them in the desired order. The order is shown at the top of the screen.
+The column headings selection page allows you to select your desired column headings (and their order), group-by options, sort options, and column widths. The [manual](./Manual.md) provides full details, but you can also hover over or click on elements to see how the interface works.
 
 ## Step 4: Set Views for Specific Folder Types (Optional)
 
-![image](https://user-images.githubusercontent.com/79026235/152627959-333fc640-ac9d-41e5-9a2f-9918617e364b.png)
+![image](https://user-images.githubusercontent.com/79026235/206572556-a0fdda21-b3e8-4743-9a4c-a1543417ecdd.png)
 
 Please note that WinSetView allows you to set the default view for every folder type in Windows, but, by *default*, they will all get the same settings as your **Global** settings, as long as the **Inherit** button is checked.
 
@@ -81,17 +81,17 @@ For any folder type (e.g. **Pictures**) that you wish to have a *different* defa
 
 ## Step 5: Check and Set Your Desired Options
 
-![image](https://user-images.githubusercontent.com/79026235/152623384-10c8163e-51f8-4d0a-af86-47ec225103b4.png)
+![image](https://user-images.githubusercontent.com/79026235/206564644-a5ae3e5b-7f64-4db8-a4e2-6ae3f4f28728.png)
 
 Click The **Options** button.
 
-![image](https://user-images.githubusercontent.com/79026235/193393425-e00ff132-68d2-4be7-a5bd-0cd0ac9452c0.png)
+![image](https://user-images.githubusercontent.com/79026235/206564999-9aa1cef3-2cb0-4e46-9c4e-d49f8783c386.png)
 
 Review the settings on that page and adjust as desired. See the [manual](./Manual.md) for full details.
 
 ## Step 6: Apply the Selections to Windows File Explorer
 
-![image](https://user-images.githubusercontent.com/79026235/152623344-d7932266-3159-4357-a996-55d9c91d17b3.png)
+![image](https://user-images.githubusercontent.com/79026235/206563746-57bb1482-3a7c-4687-85dd-454376753f67.png)
 
 Once you're happy with your selections, make those settings apply to Windows File Explorer by clicking the **Submit** button.
 

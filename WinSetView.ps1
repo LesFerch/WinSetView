@@ -85,11 +85,14 @@ If (-Not(Test-Path -Path $File)) {
 
 $BagM = '"HKCU\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\BagMRU"'
 $Bags = '"HKCU\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags"'
+$Shel = '"HKCU\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags\AllFolders\Shell"'
+$ShPS = 'HKCU:\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags\AllFolders\Shell'
 $Strm = '"HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Streams"'
 $Defs = '"HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Streams\Defaults"'
 $CUFT = '"HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\FolderTypes"'
 $LMFT = '"HKLM\Software\Microsoft\Windows\CurrentVersion\Explorer\FolderTypes"'
 $Advn = '"HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced"'
+
 $ImpR = '[HKEY_CURRENT_USER\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags\AllFolders\'
 
 $TempDir  = "$env:TEMP"
@@ -100,6 +103,7 @@ $T1       = "$TempDir\WinSetView1.tmp"
 $T2       = "$TempDir\WinSetView2.tmp"
 $T3       = "$TempDir\WinSetView3.tmp"
 $T4       = "$TempDir\WinSetView4.tmp"
+$ShellBak = "$TempDir\ShellBak.reg"
 $TimeStr  = (get-date).ToString('yyyy-MM-dd-HHmm-ss')
 
 # Use script folder if we have write access. Otherwise use AppData folder.
@@ -115,6 +119,7 @@ $BakFile  = "$AppData\Backup\$TimeStr.reg"
 $Custom   = "$AppData\WinSetViewCustom.reg"
 
 Function RestartExplorer {
+  Reg Import $ShellBak
   Get-process explorer | Stop-Process
   Explorer $PSScriptRoot
   Exit
@@ -140,9 +145,6 @@ Else {
   $ResetThumbs = [Int]$iniContent['Options']['ResetThumbs']
   $SearchOnly = [Int]$iniContent['Options']['SearchOnly']
   $SetVirtualFolders = [Int]$iniContent['Options']['SetVirtualFolders']
-  $FileDialogOption = [Int]$iniContent['Options']['FileDialogOption']
-  $FileDialogView = [Int]$iniContent['Options']['FileDialogView']
-  $FileDialogNG = [Int]$iniContent['Options']['FileDialogNG']
   $ThisPCoption = [Int]$iniContent['Options']['ThisPCoption']
   $ThisPCView = [Int]$iniContent['Options']['ThisPCView']
   $ThisPCNG = [Int]$iniContent['Options']['ThisPCNG']
@@ -178,6 +180,11 @@ Remove-Item $T1 2>$Null
 Remove-Item $T2 2>$Null
 Remove-Item $T3 2>$Null
 Remove-Item $T4 2>$Null
+
+Remove-Item $ShellBak 2>$Null
+Remove-Item -Path "$ShPS\*" -Recurse 2>$Null
+Remove-ItemProperty -Path "$ShPS" -Name  Logo 2>$Null
+Reg Export $Shel $ShellBak /y 2>$Null
 
 # Clear current Explorer view registry values
 
@@ -264,8 +271,8 @@ If ($NetworkOption -ne 0) {
   If (Test-Path -Path $RegFile) {Reg Import $RegFile}
 }
 
-If ($Generic -eq 1) {Reg Add "$Bags\AllFolders\Shell" /v FolderType /d Generic /t REG_SZ /f}
-If ($NoFolderThumbs -eq 1) {Reg Add "$Bags\AllFolders\Shell" /v Logo /d none /t REG_SZ /f}
+If ($Generic -eq 1) {Reg Add "$Shel" /v FolderType /d Generic /t REG_SZ /f}
+If ($NoFolderThumbs -eq 1) {Reg Add "$Shel" /v Logo /d none /t REG_SZ /f}
 If ($ResetThumbs -eq 1) {Remove-Item -ErrorAction Ignore "$Env:LocalAppData\Microsoft\Windows\Explorer\thumbcache*.db"}
 
 If ($SetVirtualFolders -eq 1) {
@@ -305,7 +312,7 @@ $PathItems = @{
   'ItemFolderNameDisplay' = ''
 }
 
-If ($FileDialogOption -eq 1) {$RegData = "Windows Registry Editor Version 5.00`r`n`r`n"}
+$RegData = "Windows Registry Editor Version 5.00`r`n`r`n"
 
 Get-ChildItem $FolderTypes | Get-ItemProperty | ForEach {
 
@@ -314,6 +321,11 @@ Get-ChildItem $FolderTypes | Get-ItemProperty | ForEach {
     $Include = [Int]$iniContent[$FT]['Include']
     
     If ($Include -eq 1) {
+
+      $FileDialogOption = [Int]$iniContent[$FT]['FileDialogOption']
+      $FileDialogView = [Int]$iniContent[$FT]['FileDialogView']
+      $FileDialogNG = [Int]$iniContent[$FT]['FileDialogNG']
+
       If (($FileDialogOption -eq 1) -And ($FT -ne 'Global')) {
         $GUID = $iniContent[$FT]['GUID']
         SetViewValues($FileDialogView)
@@ -322,10 +334,13 @@ Get-ChildItem $FolderTypes | Get-ItemProperty | ForEach {
       }
       $GroupBy = $iniContent[$FT]['GroupBy']
       If ($GroupBy -ne '') {$GroupBy = "System.$GroupBy"}
+      $GroupByOrder = $iniContent[$FT]['GroupByOrder']
+      If ($GroupByOrder -eq '+') {$GroupByOrder = 1} Else {$GroupByOrder = 0}
       $SortBy = 'prop:' + $iniContent[$FT]['SortBy']
       $SortBy = $SortBy -Replace '\+','+System.'
       $SortBy = $SortBy -Replace '-','-System.'
       $View = $iniContent[$FT]['View']
+
       $CustomIconSize = $iniContent[$FT]['IconSize']
       SetViewValues($View)
       If ($CustomIconSize -ne '') {$IconSize = $CustomIconSize}
@@ -353,6 +368,7 @@ Get-ChildItem $FolderTypes | Get-ItemProperty | ForEach {
           Set-ItemProperty -Path $ChildKey -Name 'LogicalViewMode' -Value $LVMode
           Set-ItemProperty -Path $ChildKey -Name 'IconSize' -Value $IconSize
           Set-ItemProperty -Path $ChildKey -Name 'GroupBy' -Value $GroupBy
+          Set-ItemProperty -Path $ChildKey -Name 'GroupAscending' -Value $GroupByOrder
           Set-ItemProperty -Path $ChildKey -Name 'SortByList' -Value $SortBy
           Set-ItemProperty -Path $ChildKey -Name 'ColumnList' -Value $ColumnList
         }

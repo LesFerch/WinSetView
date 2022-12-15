@@ -1,3 +1,29 @@
+## 2.52
+
+Enhancement: The File Explorer window size and position is now retained.
+
+Enhancement: The WinSetView window size and position is now remembered. Also added a "Re-center" button to center the app on the primary display.
+
+Enhancement: Display tweaks made to work better with Window's high contrast mode.
+
+Enhancement: Changed icons for Details and Right-Click column headings.
+
+Enhancement: Updated column clear dialogs to new format that matches scale of main screen.
+
+Enhancement: When a new version is available, the "Help" button changes to "Update" with the version information in the tooltip.
+
+Feature added: Separate views for File Open/Save dialogs can now be set on a per folder type basis.
+
+Feature added: The Grouping column heading button now has ascending and descending order options.
+
+Feature added: Drag sort dialog added for rearranging column headings.
+
+Feature added: Copy and Paste buttons added for easy copying of view settings from one folder type to another.
+
+Feature added: Uncheck/Recheck all checkbox added to the Advanced interface (handy when you want the majority of the folder type views left at Windows defaults).
+
+Feature added: There's now an extendable Theme menu with light and dark themes provided.
+
 ## 2.46
 
 Enhancement: Windows 11 "Home" folder now indicated for all languages.
