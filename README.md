@@ -59,7 +59,7 @@ Select the default view you want applied to most (or all) folders from the drop 
 
 If you are happy with the default Details-view column headings (as shown on screen) then skip this step.
 
-**Note**: Column headings shown in blue are only displayed in *search results* (by default). It is, therefore, recommended to keep the **Folder path** column heading.
+**Note**: Column headings shown in blue are only displayed in *search results* (by default). It is, therefore, recommended to keep the **Folder path** (**File location** in Windows 11) column heading.
 
 ![image](https://user-images.githubusercontent.com/79026235/206564277-95e4619e-8799-4f0e-afa3-eddcdadb6407.png)
 
