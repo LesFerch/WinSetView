@@ -18,7 +18,7 @@ WinSetView.hta (GUI tool to select desired views)
 <script language="VBScript">
 Option Explicit
 
-Const Version = "2.52"
+Const Version = "2.53"
 
 Set oWSH = CreateObject("Wscript.Shell")
 
@@ -331,10 +331,10 @@ Sub UpdateCheck
   CheckVer = Left(FullVer,4)
   MyVer = Left(Version,4)
   If Not IsNumeric(CheckVer) Then Exit Sub
-  If CheckVer>MyVer Or ((CheckVer=MyVer) and (Not BetaVer)) Then
+  If CheckVer>MyVer Or (Beta And (CheckVer=MyVer) and (Not BetaVer)) Then
     If Not BetaVer Then Beta = False
     hb.Value = ArrLang(46)
-    Vp1.innerHTML = Version & " (" & ArrLang(45) & " " & FullVer & ")"
+    Vp1.innerHTML = Version & " (" & ArrLang(45) & " " & CheckVer & ")"
     RequiredWidth = twid.ScrollWidth + Int(BaseScale * 50)
   End If
 End Sub

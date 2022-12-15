@@ -1,4 +1,4 @@
-## 2.52
+## 2.53
 
 Enhancement: The File Explorer window size and position is now retained.
 
