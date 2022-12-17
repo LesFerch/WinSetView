@@ -73,6 +73,7 @@ Dim ArrSortBy, ArrIncludeFlag, ArrIconSize, ModalHTA, ArrThemes
 Dim ColShowLabels, FTCopyIdx, ThemeFile, SectionList, sTheme, CurBld, LWinVer
 Dim TempArray, RetVal, DialogArgs, DialogOptions, id, GrpUpArrow, GrpDnArrow
 Dim CopyIcon, PasteIcon, InsIcon, Warning, OptIcon, DialogTop, HighContrast, Beta
+Dim Txt1Data, Txt2Data
 
 Z = vbCRLF
 Q = Chr(34)
@@ -959,17 +960,17 @@ Sub Inspection(i)
   Key = "\Software\Microsoft\Windows\CurrentVersion\Explorer\FolderTypes\"
   oWSH.Run "Reg Export " & "HKLM" & Key & ArrFolderTypeGUID(i) & " " & Q & TempFile & Q & " /y",0,True
   Set oFile = oFSO.OpenTextFile(TempFile,ForReading,,Unicode)
-  Data = oFile.ReadAll
+  Txt1Data = oFile.ReadAll
   oFile.Close
-  Txt1.Value = Data
+  Txt1.Value = Txt1Data
 
   oFSO.DeleteFile TempFile
   oWSH.Run "Reg Export " & "HKCU" & Key & ArrFolderTypeGUID(i) & " " & Q & TempFile & Q & " /y",0,True
   If oFSO.FileExists(TempFile) Then
     Set oFile = oFSO.OpenTextFile(TempFile,ForReading,,Unicode)
-    Data = oFile.ReadAll
+    Txt2Data = oFile.ReadAll
     oFile.Close
-    Txt2.Value = Data
+    Txt2.Value = Txt2Data
   End If
 
   YScrollPos = Document.documentElement.ScrollTop
@@ -1763,6 +1764,10 @@ End Sub
 
 Sub UpdateSize2
   SelectedSize2 = Size2.Options(Size2.SelectedIndex).Value
+  Txt1.InnerText = ""
+  Txt2.InnerText = ""
+  Txt1.Value = Txt1Data
+  Txt2.Value = Txt2Data
   Txt1.Style.FontSize = SelectedSize2 & "pt"
   Txt2.Style.FontSize = SelectedSize2 & "pt"
   Pg3.Style.Display = "none"
