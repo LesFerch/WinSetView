@@ -274,7 +274,7 @@ If ($NetworkOption -ne 0) {
 
 If ($Generic -eq 1) {Reg Add "$Shel" /v FolderType /d Generic /t REG_SZ /f}
 If ($NoFolderThumbs -eq 1) {Reg Add "$Shel" /v Logo /d none /t REG_SZ /f}
-If ($ResetThumbs -eq 1) {Remove-Item -ErrorAction Ignore "$Env:LocalAppData\Microsoft\Windows\Explorer\thumbcache*.db"}
+If ($ResetThumbs -eq 1) {Remove-Item -ErrorAction SilentlyContinue "$Env:LocalAppData\Microsoft\Windows\Explorer\thumbcache*.db"}
 
 If ($SetVirtualFolders -eq 1) {
   $GUID = $iniContent['Generic']['GUID']
