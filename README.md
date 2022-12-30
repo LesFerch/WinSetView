@@ -79,6 +79,8 @@ For any folder type (e.g. **Pictures**) that you wish to have a *different* defa
 
 **Note**: You don't have to set the other similar folder types separately. For example, **Pictures Library** will use the same settings as **Pictures** as long as **Inherit** is checked for **Pictures Library**.
 
+**Note**: If you *uncheck* a folder type, then that folder type will display with its Windows default view settings (i.e. the view you would get for a new user account).
+
 ## Step 5: Check and Set Your Desired Options
 
 ![image](https://user-images.githubusercontent.com/79026235/206564644-a5ae3e5b-7f64-4db8-a4e2-6ae3f4f28728.png)
@@ -96,6 +98,8 @@ Review the settings on that page and adjust as desired. See the [manual](./Manua
 Once you're happy with your selections, make those settings apply to Windows File Explorer by clicking the **Submit** button.
 
 You can always run WinSetView again to change any settings and you can revert back to a previous state using the **Restore** button. You also have the option of setting File Explorer back to Windows defaults by checking **Reset Views to Windows Defaults** and then clicking **Submit**.
+
+**Note**: If you use the **Reset Views to Windows Defaults** feature, be sure to check the settings under **Options**.
 
 ![image](https://user-images.githubusercontent.com/79026235/152911332-6492dd9e-63fa-4f38-8325-335110cbb9a6.png)
 [See the complete user manual](./Manual.md)
