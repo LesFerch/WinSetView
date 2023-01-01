@@ -284,7 +284,7 @@ Note: The *Relevance* column heading (*Search.Rank* property) is *only* shown in
 \
 **Use General Items view for connected devices**
 
-Connected devices, such as phones and tablets, normally open in **Tiles** view with no option to easily change the view. The **Apply to folders** option is grayed out for such devices, requiring view changes to be done folder by folder. Enabling the **Use General Items view for connected devices** option causes such devices to open in the same view that has been set for **General Items**.
+Connected devices, such as phones and tablets, normally open in **Tiles** view with no option to easily change the view. The **Apply to folders** option is grayed out (or available but does nothing) for such devices, requiring view changes to be done folder by folder. Enabling the **Use General Items view for connected devices** option causes such devices to open in the same view that has been set for **General Items**.
 
 Only the view mode (e.g. List, Details, etc.) applies to the connected device. There is a separate set of column headings for such devices and no documented method to change the defaults.
 
