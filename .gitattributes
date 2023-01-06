@@ -1,3 +1,4 @@
 LICENSE export-ignore
 *.md    export-ignore
 .git*   export-ignore
+src     export-ignore
