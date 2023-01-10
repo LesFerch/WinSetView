@@ -25,6 +25,8 @@ Alternatively, you can open the folder (usually the **Downloads** folder) using 
 
 Right-click the downloaded zip file and select **Extract All...**.
 
+**Note**: If you have a third-party unzip tool installed (such as 7-Zip, Bandizip, WinZip, WinRAR, etc.) then you may see different unzip options when you right-click the zip file. Any option that unzips the file will do. If there is something like a "smart unzip" option, that is usually the best choice, and won't require editing the unzip path, as indicated below.
+
 ![02](https://user-images.githubusercontent.com/79026235/153107248-5f0ccc0b-ca21-4102-8492-1df02129f978.png)
 
 Edit the displayed folder path to remove the **WinSetView-main** part and then click **Extract**.
@@ -39,44 +41,43 @@ Once the extraction is complete, you should have a **WinSetView-main** folder. Y
 
 ## Step 3: Open the App
 
-Double-click **WinSetView.hta** to open the app.
+Open the extracted folder and you should see **WinSetView.exe**. If you do not see the **exe** file extension, check **File name extensions** in the Windows File Explorer **View** menu.
 
-**Note**: If you do not see the **hta** file extension, check **File name extensions** in the Windows File Explorer **View** menu.
+![image](https://user-images.githubusercontent.com/79026235/211452575-65e95101-6251-4260-9843-20ca02426cf7.png)
 
-![image](https://user-images.githubusercontent.com/79026235/153104503-bd7122e4-6e9e-4a41-abbb-707935cc77a7.png)
+To avoid annoying "unrecognized app" notifications, right-click **WinSetView.exe** and select **Properties**:
 
-If, after double-clicking the HTA file, you see something like the screenshot below, then the HTA file extension has been associated with Notepad (or some other text editor). See the instructions below for correctly associating the HTA extension.
+![image](https://user-images.githubusercontent.com/79026235/211460037-48b4a394-b38e-424b-b74c-e216d498d89e.png)
 
-![image](https://user-images.githubusercontent.com/79026235/159400974-6f39145d-737f-427d-93e2-c8645991f5ad.png)
+Then check **Unblock**, and click **OK**.
 
-If, after double-clicking the HTA file, you see something like the screenshots below, then the HTA file extension has been associated with a browser, such as Edge or Chrome. See the instructions below for correctly associating the HTA extension.
+Double-click **WinSetView.exe** to open the app.
 
-![image](https://user-images.githubusercontent.com/79026235/159401808-1a005148-059c-42f0-85b6-7c79f6658334.png)
-![image](https://user-images.githubusercontent.com/79026235/159401820-8e9fb277-07b7-4214-9f42-0f9d9847c220.png)
+WinSetView.exe requires .Net 4.x which is normally already installed. If it's missing, you will see an error similar to this:
 
-## How to correct the HTA file association
+![image](https://user-images.githubusercontent.com/79026235/211448690-82bf997a-e931-47b1-a9ac-b77768de5ff8.png)
 
-Right-click **WinsetView.hta**, move down to **Open with** and select **Choose another app**.
+You can correct the above error by downloading and running the .Net 4.8 installer by clicking this Microsoft [link](https://go.microsoft.com/fwlink/?linkid=2088631).
 
-![image](https://user-images.githubusercontent.com/79026235/159409762-d2cac00b-0630-4df4-8501-82fc14b7d2f8.png)
+WinSetView should now load. However, if you did not unblock the file, you will probably see this message:
 
-Select (single-click) **Microsoft (R) HTML Application host**, check **Always use this app to open .hta files** and then click **OK**.
+![image](https://user-images.githubusercontent.com/79026235/211442632-d4362bed-3600-4c32-b2c1-417b320684b7.png)
 
-![image](https://user-images.githubusercontent.com/79026235/159409923-d67519d3-4cfb-4e22-a83a-07eb9483507e.png)
+Click the **More info** link and you should see:
 
-## Step 4: Allow the App to Run
+![image](https://user-images.githubusercontent.com/79026235/211442671-34f91125-e915-4c5e-a61e-a30bb556d393.png)
 
-Windows security will not allow a downloaded app to run without your permission. When the following prompt appears, *uncheck* **Always ask before opening this file** and then click **Run**. This message will not appear again for this app.
+Click **Run anyway** to run the app.
 
-![image](https://user-images.githubusercontent.com/79026235/153104571-8ffb3e64-c1b5-4c66-b67e-723e29601fdf.png)
+**Note**: Even though WinSetView.exe is code-signed, with a certificate issued by Comodo, the Smartscreen block will still come up because non-incorporated individual developers cannot purchase (and typically cannot afford) an extended verification (EV) certificate required to get full trust. The fact that WinSetView is provided as an open-source app via GitHub, with my personal contact information available for all to see, is much more reassurance of safety than any certificate provides. The bad actors out there can find ways to code-sign their malware. Knowing where you got the app is much more important. Although there are many trustworthy download sites, the best practice is to download from the author's web page. If you got this app from my [web page](https://lesferch.github.io/WinSetView/), that's your best protection.
 
-If you see the following error message, then you either only extracted **WinSetView.hta** or you are trying to run it directly from the zip file without first extracting the files. Please review the instructions and try again.
+**Note**: WinSetView.exe is just a launcher that runs WinSetView.hta. If you prefer, you can directly run the HTA file, as long as HTA files are correctly associated on your machine. The association does not need to be correct to launch the app using the EXE.
 
-![image](https://user-images.githubusercontent.com/79026235/153110135-41cee079-b244-4bae-ae5d-add8d3f2754a.png)
+**Note**: On some computers, MSHTA.exe (the Microsoft program that loads HTA files) may be blocked or redirected to another executable causing an error message to be displayed or causing nothing to run. The block may be caused by third party antivirus/antimalware software or may be caused by a group policy setting. If you're using a company owned computer then I wouldn't recommend tampering with such settings, but if it's your own machine, you can temporarily disable those restrictions. A version of WinSetView, that does not depend on MSHTA.exe, is currently in the works. In the meantime, if you can't run WinSetView, feel free to open an issue on the [issues page](https://github.com/LesFerch/WinSetView/issues) and I'll do my best to help provide a workaround.
 
-Assuming you did not see the above error message, **WinSetView.hta** may take a few seconds to load the fist time. This delay is just Windows setting things up to allow an **hta** script to run. Subsequent launches of the app should only take about 1 second.
+If you are comfortable at the command line, a good option is to run WinSetView on another computer to create an INI file with your preferred view settings. Then run `.\WinSetView.ps1 .\AppData\Win10.ini` (or whatever the INI file name is) on the target computer. You may need to first allow PowerShell scripts to run by entering a command such as: `Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope CurrentUser`
 
-To use the app, please follow the steps in the guide below...
+To use WinSetView, please follow the steps in the quick start guide:
 
 ![image](https://user-images.githubusercontent.com/79026235/152913587-d294de81-c8ca-428d-b351-09a564854eff.png)
 [See the quick start guide](./README.md)

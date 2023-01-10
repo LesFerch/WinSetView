@@ -17,9 +17,9 @@ This is the complete user manual. See the link below for the quick start guide.
 Compatible with Windows 7, 8, 10, and 11.
 
 Les Ferch, lesferch@gmail.com\
-GitHub repository created 2021-03-26, last updated 2022-12-15
+GitHub repository created 2021-03-26, last updated 2023-01-09
 
-[Version 2.53](./VersionHistory.md)
+[Version 2.60](./VersionHistory.md)
 
 # Summary
 
@@ -254,7 +254,7 @@ This folder type controls the view you see for the *Searches* item within your u
 
 ## Options Menu
 
-![image](https://user-images.githubusercontent.com/79026235/206564999-9aa1cef3-2cb0-4e46-9c4e-d49f8783c386.png)
+![image](https://user-images.githubusercontent.com/79026235/210031709-b0188acd-ac5e-4b70-a549-3833dda6889f.png)
 
 **Show File Extensions**
 
@@ -264,6 +264,21 @@ By default, Windows hides file extensions for known file types. This is generall
 **Enable compact view in Windows 11**
 
 By default, Windows 11 spreads out items in list, details, and small icons views. This makes it easier to select items using a touch interface, at the expense of less information in the same space. Enabling *compact view* sets the spacing back to the tighter spacing used in Windows 10.
+
+\
+**Classic context menu in Windows 11**
+
+When checked, the registry setting that restores the Windows 10 style context (right-click) menu will be applied.
+
+\
+**No Internet in Windows search**
+
+When checked, the registry setting that makes Windows search local only (i.e. no Internet results) will be applied.
+
+\
+**Disable search highlights**
+
+When checked, the registry settings that turns off search highlights will be applied.
 
 \
 **Show paths in search results only**
@@ -476,7 +491,7 @@ This folder must exist and contain the **en-US** folder and language files in or
 
 ## Tools Folder
 
-WinSetView does NOT need the Tools folder to run. It contains supplemental tools for system administrators and power users.
+WinSetView does NOT need the Tools folder to run. It contains supplemental tools for system administrators, power users, or anyone wishing to create another language translation for WinSetView.
 
 **WinSetBack.ps1**
 

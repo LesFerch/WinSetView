@@ -12,7 +12,7 @@ This is the quick start guide. For more details, please see the [complete user m
 
 Compatible with Windows 7, 8, 10, and 11.
 
-[Version 2.53](./VersionHistory.md)
+[Version 2.60](./VersionHistory.md)
 
 # Summary
 
@@ -24,12 +24,11 @@ WinSetView provides an easy way to set Windows File Explorer default folder view
 
 1. Download the zip file using the link above.
 2. Extract the entire zip file.
-3. Run **WinSetView.hta**.
-4. At the UAC prompt, uncheck **Always ask before opening this file** and then click **Run**.
+3. Right-click **WinSetView.exe**, select **Properties**, check **Unblock**, and click **OK**.
+4. Run **WinSetView.exe**.
+5. If you skipped step 3, then, in the SmartScreen window, click **More info** and then **Run anyway**.
 
-**Note**: If **WinSetView.hta** does not open, or you get something other than the expected UAC prompt, ensure that the **HTA** file extension is associated with **Microsoft (R) HTML Application host** (MSHTA.exe).
-
-For detailed instructions, please see: [Download Help Guide](./DownloadHelp.md)
+**Note**: If the app does not launch or you wish to read more about Smartscreen prompts, please see: [Download Help Guide](./DownloadHelp.md)
 
 # How to Use
 
@@ -87,7 +86,7 @@ For any folder type (e.g. **Pictures**) that you wish to have a *different* defa
 
 Click The **Options** button.
 
-![image](https://user-images.githubusercontent.com/79026235/206564999-9aa1cef3-2cb0-4e46-9c4e-d49f8783c386.png)
+![image](https://user-images.githubusercontent.com/79026235/210031658-e1acb74c-b448-4974-8765-8c3725f9071e.png)
 
 Review the settings on that page and adjust as desired. See the [manual](./Manual.md) for full details.
 
