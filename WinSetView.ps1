@@ -10,6 +10,8 @@ Param (
   $File = ''
 )
 
+#Set-PSDebug -Trace 1
+
 $host.ui.RawUI.WindowTitle = "WinSetView"
 
 # Read entire INI file into a dictionary object
@@ -92,6 +94,10 @@ $Defs = '"HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Streams\Defaul
 $CUFT = '"HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\FolderTypes"'
 $LMFT = '"HKLM\Software\Microsoft\Windows\CurrentVersion\Explorer\FolderTypes"'
 $Advn = '"HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced"'
+$Clcm = '"HKCU\Software\Classes\CLSID\{86CA1AA0-34AA-4E8B-A509-50C905BAE2A2}"'
+$Srch = '"HKCU\Software\Microsoft\Windows\CurrentVersion\Search"'
+$Srhl = '"HKCU\Software\Microsoft\Windows\CurrentVersion\SearchSettings"'
+$Srdc = '"HKCU\Software\Microsoft\Windows\CurrentVersion\Feeds\DSB"'
 
 $ImpR = '[HKEY_CURRENT_USER\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags\AllFolders\'
 
@@ -105,6 +111,8 @@ $T3       = "$TempDir\WinSetView3.tmp"
 $T4       = "$TempDir\WinSetView4.tmp"
 $ShellBak = "$TempDir\ShellBak.reg"
 $TimeStr  = (get-date).ToString('yyyy-MM-dd-HHmm-ss')
+$RegExe   = "$env:SystemRoot\System32\Reg.exe"
+$CmdExe   = "$env:SystemRoot\System32\Cmd.exe"
 
 # Use script folder if we have write access. Otherwise use AppData folder.
 
@@ -119,17 +127,17 @@ $BakFile  = "$AppData\Backup\$TimeStr.reg"
 $Custom   = "$AppData\WinSetViewCustom.reg"
 
 Function RestartExplorer {
-  Reg Import $ShellBak
+  & $RegExe Import $ShellBak
   Get-process explorer | Stop-Process
   Explorer $PSScriptRoot
   Exit
 }
 
 Function DeleteUserKeys {
-  Reg Delete $BagM /f 2>$Null
-  Reg Delete $Bags /f 2>$Null
-  Reg Delete $CUFT /f 2>$Null
-  If ($KeepViews -eq 0) {Reg Delete $Defs /f 2>$Null}
+  & $RegExe Delete $BagM /f 2>$Null
+  & $RegExe Delete $Bags /f 2>$Null
+  & $RegExe Delete $CUFT /f 2>$Null
+  If ($KeepViews -eq 0) {& $RegExe Delete $Defs /f 2>$Null}
 }
 
 If ($FileExt -eq '.reg') {
@@ -169,12 +177,12 @@ Remove-Item $T2 2>$Null
 Remove-Item $T3 2>$Null
 Remove-Item $T4 2>$Null
 
-Reg Export $BagM $T1 /y 2>$Null
-Reg Export $Bags $T2 /y 2>$Null
-Reg Export $Strm $T3 /y 2>$Null
-Reg Export $CUFT $T4 /y 2>$Null
+& $RegExe Export $BagM $T1 /y 2>$Null
+& $RegExe Export $Bags $T2 /y 2>$Null
+& $RegExe Export $Strm $T3 /y 2>$Null
+& $RegExe Export $CUFT $T4 /y 2>$Null
 
-Cmd /c Copy $T1+$T2+$T3+$T4 $BakFile >$Null 2>$Null
+& $CmdExe /c Copy $T1+$T2+$T3+$T4 $BakFile >$Null 2>$Null
 
 Remove-Item $T1 2>$Null
 Remove-Item $T2 2>$Null
@@ -185,7 +193,7 @@ Remove-Item $ShellBak 2>$Null
 Remove-Item -Path "$ShPS\*" -Recurse 2>$Null
 Remove-ItemProperty -Path "$ShPS" -Name  Logo 2>$Null
 Remove-ItemProperty -Path "$ShPS" -Name  FolderType 2>$Null
-Reg Export $Shel $ShellBak /y 2>$Null
+& $RegExe Export $Shel $ShellBak /y 2>$Null
 
 # Clear current Explorer view registry values
 
@@ -194,36 +202,58 @@ DeleteUserKeys
 # Restore from backup, restart Explorer, exit
 
 If ($FileExt -eq '.reg') {
-  Reg Import $File
+  & $RegExe Import $File
   RestartExplorer
 }
 
 # Set option to hide or show file extensions
 
 $ShowExt = [Int]$iniContent['Options']['ShowExt']
-Reg Add $Advn /v HideFileExt /t REG_DWORD /d (1-$ShowExt) /f
+& $RegExe Add $Advn /v HideFileExt /t REG_DWORD /d (1-$ShowExt) /f
 
 # Set Windows 11 option to enable or disable compact view
 # This value is ignored on older Windows versions
 
 $CompView = [Int]$iniContent['Options']['CompView']
-Reg Add $Advn /v UseCompactMode /t REG_DWORD /d ($CompView) /f
+& $RegExe Add $Advn /v UseCompactMode /t REG_DWORD /d ($CompView) /f
+
+# Enable/disable classic context menu in Windows 11
+# This value is ignored on older Windows versions
+
+$ClassicContextMenu = [Int]$iniContent['Options']['ClassicContextMenu']
+If ($ClassicContextMenu -eq 1) {& $RegExe Add $Clcm"\InprocServer32" /reg:64 /f 2>$Null}
+Else {& $RegExe Delete $Clcm /reg:64 /f 2>$Null}
+
+# Turn off/on Internet in Windows search
+
+$NoSearchInternet = [Int]$iniContent['Options']['NoSearchInternet']
+$NoSearchInternet = 1-$NoSearchInternet
+$NoSearchHighlights = [Int]$iniContent['Options']['NoSearchHighlights']
+$NoSearchHighlights = 1-$NoSearchHighlights
+& $RegExe Add $Srch /v BingSearchEnabled /t REG_DWORD /d ($NoSearchInternet) /f
+& $RegExe Add $Srhl /v IsDynamicSearchBoxEnabled /t REG_DWORD /d ($NoSearchHighlights) /f
+& $RegExe Add $Srdc /v ShowDynamicContent /t REG_DWORD /d ($NoSearchHighlights) /f
+
+# Enable/disable folder thumbnails
+
+If ($NoFolderThumbs -eq 1) {& $RegExe Add "$Shel" /v Logo /d none /t REG_SZ /f}
+If ($ResetThumbs -eq 1) {Remove-Item -ErrorAction SilentlyContinue "$Env:LocalAppData\Microsoft\Windows\Explorer\thumbcache*.db"}
 
 # If reset, restart Explorer and exit
 
 If ($Reset -eq 1) {
-  Reg Delete $Strm /f 2>$Null
+  & $RegExe Delete $Strm /f 2>$Null
   RestartExplorer
 }
 
 # Function to help Set up views for This PC
 
 Function SetBagValues ($Key) {
-  Reg Add $Key /v LogicalViewMode /d $LVMode /t REG_DWORD /f >$Null
-  Reg Add $Key /v Mode /d $Mode /t REG_DWORD /f >$Null
+  & $RegExe Add $Key /v LogicalViewMode /d $LVMode /t REG_DWORD /f >$Null
+  & $RegExe Add $Key /v Mode /d $Mode /t REG_DWORD /f >$Null
   $Group = 1-$ThisPCNG
-  Reg Add $Key /v GroupView /d $Group /t REG_DWORD /f >$Null
-  If ($LVMode -eq 3) {Reg Add $Key /v IconSize /d $IconSize /t REG_DWORD /f >$Null}
+  & $RegExe Add $Key /v GroupView /d $Group /t REG_DWORD /f >$Null
+  If ($LVMode -eq 3) {& $RegExe Add $Key /v IconSize /d $IconSize /t REG_DWORD /f >$Null}
 }
 
 # Set view values based on selection index
@@ -254,10 +284,10 @@ Function BuildRegData($Key) {
 # This PC does not have a unique GUID so we'll set it's view via a Bags entry:
 
 If ($ThisPCoption -ne 0) {
-  Reg Add "$BagM" /v NodeSlots /d '02' /t REG_BINARY /f
-  Reg Add "$BagM" /v MRUListEx /d '00000000ffffffff' /t REG_BINARY /f >$Null
-  Reg Add "$BagM" /v '0' /d '14001F50E04FD020EA3A6910A2D808002B30309D0000' /t REG_BINARY /f >$Null
-  Reg Add "$BagM\0" /v NodeSlot /d 1 /t REG_DWORD /f >$Null
+  & $RegExe Add "$BagM" /v NodeSlots /d '02' /t REG_BINARY /f
+  & $RegExe Add "$BagM" /v MRUListEx /d '00000000ffffffff' /t REG_BINARY /f >$Null
+  & $RegExe Add "$BagM" /v '0' /d '14001F50E04FD020EA3A6910A2D808002B30309D0000' /t REG_BINARY /f >$Null
+  & $RegExe Add "$BagM\0" /v NodeSlot /d 1 /t REG_DWORD /f >$Null
   SetViewValues($ThisPCView)
   $GUID = '{5C4F28B5-F869-4E84-8E60-F11DB97C5CC7}'
   SetBagValues("$Bags\1\ComDlg\$GUID")
@@ -269,21 +299,19 @@ If ($ThisPCoption -ne 0) {
 If ($NetworkOption -ne 0) {
   $Group = 1-$NetworkNG
   $RegFile = ".\AppParts\NetworkView\$NetworkView-$Group.reg"
-  If (Test-Path -Path $RegFile) {Reg Import $RegFile}
+  If (Test-Path -Path $RegFile) {& $RegExe Import $RegFile}
 }
 
-If ($Generic -eq 1) {Reg Add "$Shel" /v FolderType /d Generic /t REG_SZ /f}
-If ($NoFolderThumbs -eq 1) {Reg Add "$Shel" /v Logo /d none /t REG_SZ /f}
-If ($ResetThumbs -eq 1) {Remove-Item -ErrorAction SilentlyContinue "$Env:LocalAppData\Microsoft\Windows\Explorer\thumbcache*.db"}
+If ($Generic -eq 1) {& $RegExe Add "$Shel" /v FolderType /d Generic /t REG_SZ /f}
 
 If ($SetVirtualFolders -eq 1) {
   $GUID = $iniContent['Generic']['GUID']
   $GroupBy = $iniContent['Generic']['GroupBy']
   SetViewValues([Int]$iniContent['Generic']['View'])
-  Reg Add "$Bags\AllFolders\Shell\$GUID" /v Mode /d "$Mode" /t REG_DWORD /f
-  Reg Add "$Bags\AllFolders\Shell\$GUID" /v LogicalViewMode /d "$LVMode" /t REG_DWORD /f
-  If ($LVMode -eq 3) {Reg Add "$Bags\AllFolders\Shell\$GUID" /v IconSize /d "$IconSize" /t REG_DWORD /f}
-  If ($GroupBy -eq '') {Reg Add "$Bags\AllFolders\Shell\$GUID" /v GroupView /d 0 /t REG_DWORD /f}
+  & $RegExe Add "$Bags\AllFolders\Shell\$GUID" /v Mode /d "$Mode" /t REG_DWORD /f
+  & $RegExe Add "$Bags\AllFolders\Shell\$GUID" /v LogicalViewMode /d "$LVMode" /t REG_DWORD /f
+  If ($LVMode -eq 3) {& $RegExe Add "$Bags\AllFolders\Shell\$GUID" /v IconSize /d "$IconSize" /t REG_DWORD /f}
+  If ($GroupBy -eq '') {& $RegExe Add "$Bags\AllFolders\Shell\$GUID" /v GroupView /d 0 /t REG_DWORD /f}
 }
 
 # Set Explorer folder view defaults:
@@ -295,11 +323,11 @@ If ($SetVirtualFolders -eq 1) {
 
 # Copy FolderType key from HKLM to HKCU by exporting and importing
 
-Reg Export $LMFT $RegFile1 /y
+& $RegExe Export $LMFT $RegFile1 /y
 $Data = Get-Content $RegFile1
 $Data = $Data -Replace 'HKEY_LOCAL_MACHINE','HKEY_CURRENT_USER'
 Out-File -InputObject $Data -encoding Unicode -filepath $RegFile1
-Reg Import $RegFile1
+& $RegExe Import $RegFile1
 
 $FolderTypes = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\FolderTypes'
 
@@ -380,18 +408,18 @@ Get-ChildItem $FolderTypes | Get-ItemProperty | ForEach {
 
 # Export results for use with comparison tools such as WinMerge
 
-Reg Export $CUFT $RegFile2 /y
+& $RegExe Export $CUFT $RegFile2 /y
 
 # Import Reg data to force dialog views
 # This is MUCH faster than creating the keys using PowerShell
 
 If ($FileDialogOption -eq 1) {
   Out-File -InputObject $RegData -filepath $T1
-  Reg Import $T1
+  & $RegExe Import $T1
 }
 
 # Import Reg data for any custom settings
 
-If (Test-Path -Path $Custom) {Reg Import $Custom}
+If (Test-Path -Path $Custom) {& $RegExe Import $Custom}
 
 RestartExplorer

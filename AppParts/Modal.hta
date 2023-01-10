@@ -28,20 +28,22 @@ Theme = Args(4) '0:Light 1:Dark 2:High Contrast
 Set oWSH = CreateObject("Wscript.Shell")
 CurBld = oWSH.RegRead("HKLM\Software\Microsoft\Windows NT\CurrentVersion\CurrentBuild")
 
+WidthIcon = "⟷"
+PixInputIcon = "⟷."
+NameWarnIcon = "⚠"
+optIcon = "⚙"
+DetailsIcon = "⋮⋮⋮"
+RightClickIcon = "⋮"
+
+If CurBld<10000 Then
+  WidthIcon = "←→"
+  PixInputIcon = "←→."
+  NameWarnIcon = "!"
+  OptIcon = "☼"
+  DetailsIcon = "⋮⋮"
+End If
+
 Sub window_onLoad
-  WidthIcon = "⟷"
-  PixInputIcon = "⟷."
-  NameWarnIcon = "⚠"
-  optIcon = "⚙"
-  DetailsIcon = "⋮⋮⋮"
-  RightClickIcon = "⋮"
-  If CurBld<10000 Then
-    WidthIcon = "←→"
-    PixInputIcon = "←→."
-    NameWarnIcon = "!"
-    OptIcon = "☼"
-    DetailsIcon = "⋮⋮"
-  End If
 
   Document.Body.Style.FontFamily = Font
   Document.Body.Style.FontSize = FontSize & "pt"
@@ -129,7 +131,10 @@ Sub window_onLoad
       Next
       list.innerHTML = html
   End Select
-  window.dialogHeight = document.body.scrollHeight + 8 & "px"
+
+  y = document.body.scrollHeight
+  window.dialogHeight = y + 8 & "px"
+
   If document.title=OptIcon Then
     fc1.Checked = False
     fc2.Checked = True
