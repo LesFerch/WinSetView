@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <!--
 WinSetView (Globally Set Explorer Folder Views)
 Les Ferch, lesferch@gmail.com, GitHub repository created 2021-03-26
@@ -19,7 +19,7 @@ WinSetView.hta (GUI tool to select desired views)
 <script language="VBScript">
 Option Explicit
 
-Const Version = "2.60"
+Const Version = "2.61"
 
 SetLocale(1033)
 Const ForReading = 1
@@ -46,7 +46,7 @@ Dim ArrFD, ArrFDV, ArrFDG, LParen, RParen, DetailsIcon, RightClickIcon
 Dim ArrLang, ArrView, ArrColData, ArrColDataItem, ArrColumnEntry, ArrColumnList, ArrLine
 Dim ArrData(21), ArrFolderTypeGUID(60), ArrFolderType(60), ArrFolderTypeLang(60), ArrInherit(60)
 Dim ArrColumnLists, ArrGroupBy, ArrInheritFlag, ArrHTML1, ArrHTML2, ArrViewChoice
-Dim ArrSortBy, ArrIncludeFlag, ArrIconSize, ModalHTA, ArrThemes
+Dim ArrSortBy, ArrIncludeFlag, ArrIconSize, ArrThemes, ModalHTA, FileDialogHTA
 Dim ColShowLabels, FTCopyIdx, ThemeFile, SectionList, sTheme, CurBld, LWinVer
 Dim TempArray, RetVal, DialogArgs, DialogOptions, id, GrpUpArrow, GrpDnArrow
 Dim CopyIcon, PasteIcon, InsIcon, Warning, OptIcon, DialogTop, HighContrast, Beta
@@ -137,13 +137,15 @@ End If
   
 Temp = oWSH.ExpandEnvironmentStrings("%Temp%")
 TempFile = Temp & "\WinSetView.tmp"
-LangDir = ".\Language\"
-PartsDir = ".\AppParts\"
-AppData = ".\AppData"
-Backup = ".\AppData\Backup"
+
+LangDir = MyFolder & "\Language\"
+PartsDir = MyFolder & "\AppParts\"
+AppData = MyFolder & "\AppData"
+Backup = MyFolder & "\AppData\Backup"
 FontsFile = PartsDir & "Fonts.txt"
 FileDialogExe = PartsDir & "FileDialog.exe"
 ModalHTA = PartsDir & "Modal.hta"
+FileDialogHTA = PartsDir & "FileDialog.hta"
 ThemeFile = PartsDir & "Themes.ini"
 
 If WinVer="7" Or WinVer="8" Then
@@ -188,6 +190,7 @@ If oFSO.FileExists(TestFile) Then
   oFSO.DeleteFile(TestFile)
 Else
   AppData = oWSH.ExpandEnvironmentStrings("%APPDATA%") & "\WinSetView"
+  Backup = AppData & "\Backup"
 End If
 If Not oFSO.FolderExists(AppData) Then oFSO.CreateFolder(AppData)
 If Not oFSO.FolderExists(Backup) Then oFSO.CreateFolder(Backup)
@@ -322,6 +325,7 @@ Sub window_OnLoad
 End Sub
 
 Sub ExeCheck
+  oWSH.Run "TaskKill /im FileDialog.exe /f",0,False
   WinSys = oWSH.ExpandEnvironmentStrings("%SystemRoot%") & "\System32\"
   If Not oFSO.FileExists(WinSys & "WindowsPowerShell\v1.0\PowerShell.exe") Then ExeErr = ExeErr & "PowerShell.exe" & Z
   ArrExe = Split("TaskKill.exe,Reg.exe,Cmd.exe",",")
@@ -816,82 +820,55 @@ End Function
 ' Load Settings button
 
 Sub LoadSettings
-  oWSH.Run "TaskKill /im FileDialog.exe /f",0,True
-  If Not oFSO.FileExists(FileDialogExe) Then
-    MsgBox "File missing: " & FileDialogExe,vbCritical,"Error"
-  Else
-    oWSH.Run FileDialogExe & " Open Multi ""*.ini|*.ini"" ..\AppData",0,False
-    Window.SetTimeOut "GetINIFile()", 500
+  If RestartFileDialog() Then
+    DialogArgs = FileDialogExe & " Open Multi ""*.ini|*.ini"" """ & AppData & """"
+    File = ShowModalDialog(FileDialogHTA,DialogArgs,DialogOptions)
+    lb.blur
+    If File="" Or File="?" Then Exit Sub
+    KeepAdvanced = True
+    Set oSettings = Ini2Dict(File)
+    SetLang
+    UpdateLang False
   End If
 End Sub
 
 ' Save Settings button
 
 Sub SaveSettings
-  oWSH.Run "TaskKill /im FileDialog.exe /f",0,True
-  If Not oFSO.FileExists(FileDialogExe) Then
-    MsgBox "File missing: " & FileDialogExe,vbCritical,"Error"
-  Else
-    oWSH.Run FileDialogExe & " Save ""*.ini|*.ini"" ..\AppData",0,False
-    Window.SetTimeOut "SaveINIFile()", 500
+  If RestartFileDialog() Then
+    DialogArgs = FileDialogExe & " Save ""*.ini|*.ini"" """ & AppData & """"
+    File = ShowModalDialog(FileDialogHTA,DialogArgs,DialogOptions)
+    sb.blur
+    If File="" Or File="?" Then Exit Sub
+    Var2Ini(File)
   End If
 End Sub
 
 ' Restore button
 
 Sub Restore
+  If RestartFileDialog() Then
+    DialogArgs = FileDialogExe & " Open Multi ""*.reg|*.reg"" """ & Backup & """"
+    File = ShowModalDialog(FileDialogHTA,DialogArgs,DialogOptions)
+    rb.blur
+    If File="" Or File="?" Then Exit Sub
+    RunScript File
+  End If
+End Sub
+
+Function RestartFileDialog()
+  DialogOptions = "dialogWidth:1px; dialogHeight:1px; dialogLeft:999999999; dialogTop:999999999"
+  RestartFileDialog = True
   oWSH.Run "TaskKill /im FileDialog.exe /f",0,True
   If Not oFSO.FileExists(FileDialogExe) Then
     MsgBox "File missing: " & FileDialogExe,vbCritical,"Error"
-  Else
-    oWSH.Run FileDialogExe & " Open Multi ""*.reg|*.reg"" ..\AppData\Backup",0,False
-    Window.SetTimeOut "GetRegFile()", 500
+    RestartFileDialog = False
   End If
-End Sub
-
-' Wait for Open INI filename to be selected in FileDialog.exe
-
-Sub GetINIFile
-  On Error Resume Next
-  File = oWSH.RegRead("HKCU\Software\FileDialog\")
-  On Error Goto 0
-  If File="?" Then
-    Window.SetTimeOut "GetINIFile()", 500
-  Else
-    If File<>"" Then
-      KeepAdvanced = True
-      Set oSettings = Ini2Dict(File)
-      SetLang
-      UpdateLang False
-    End If
+  If Not oFSO.FileExists(FileDialogHTA) Then
+    MsgBox "File missing: " & FileDialogHTA,vbCritical,"Error"
+    RestartFileDialog = False
   End If
-End Sub
-
-' Wait for Save INI filename to be entered/selected in FileDialog.exe
-
-Sub SaveINIFile
-  On Error Resume Next
-  File = oWSH.RegRead("HKCU\Software\FileDialog\")
-  On Error Goto 0
-  If File="?" Then
-    Window.SetTimeOut "SaveINIFile()", 500
-  Else
-    If File<>"" Then Var2Ini(File)
-  End If
-End Sub
-
-' Wait for Open REG filename to be selected in FileDialog.exe
-
-Sub GetRegFile
-  On Error Resume Next
-  File = oWSH.RegRead("HKCU\Software\FileDialog\")
-  On Error Goto 0
-  If File="?" Then
-    Window.SetTimeOut "GetRegFile()", 500
-  Else
-    If File<>"" Then RunScript File
-  End If
-End Sub
+End Function
 
 ' Write vars to INI file
 

@@ -101,18 +101,19 @@ $Srdc = '"HKCU\Software\Microsoft\Windows\CurrentVersion\Feeds\DSB"'
 
 $ImpR = '[HKEY_CURRENT_USER\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags\AllFolders\'
 
-$TempDir  = "$env:TEMP"
-$AppData  = "$env:APPDATA\WinSetView"
-$RegFile1 = "$TempDir\WinSetView1.reg"
-$RegFile2 = "$TempDir\WinSetView2.reg"
-$T1       = "$TempDir\WinSetView1.tmp"
-$T2       = "$TempDir\WinSetView2.tmp"
-$T3       = "$TempDir\WinSetView3.tmp"
-$T4       = "$TempDir\WinSetView4.tmp"
-$ShellBak = "$TempDir\ShellBak.reg"
-$TimeStr  = (get-date).ToString('yyyy-MM-dd-HHmm-ss')
-$RegExe   = "$env:SystemRoot\System32\Reg.exe"
-$CmdExe   = "$env:SystemRoot\System32\Cmd.exe"
+$TempDir   = "$env:TEMP"
+$AppData   = "$env:APPDATA\WinSetView"
+$RegFile1  = "$TempDir\WinSetView1.reg"
+$RegFile2  = "$TempDir\WinSetView2.reg"
+$T1        = "$TempDir\WinSetView1.tmp"
+$T2        = "$TempDir\WinSetView2.tmp"
+$T3        = "$TempDir\WinSetView3.tmp"
+$T4        = "$TempDir\WinSetView4.tmp"
+$ShellBak  = "$TempDir\ShellBak.reg"
+$TimeStr   = (get-date).ToString('yyyy-MM-dd-HHmm-ss')
+$RegExe    = "$env:SystemRoot\System32\Reg.exe"
+$CmdExe    = "$env:SystemRoot\System32\Cmd.exe"
+$IcaclsExe = "$env:SystemRoot\System32\Icacls.exe"
 
 # Use script folder if we have write access. Otherwise use AppData folder.
 
@@ -126,9 +127,16 @@ If (Test-Path -Path $TestFile) {
 $BakFile  = "$AppData\Backup\$TimeStr.reg"
 $Custom   = "$AppData\WinSetViewCustom.reg"
 
+Function ResetThumbCache {
+  $ThumbCacheFiles = "$Env:LocalAppData\Microsoft\Windows\Explorer\thumbcache_*.db"
+  & $IcaclsExe $ThumbCacheFiles /grant Everyone:F >$Null 2>$Null
+  Remove-Item -Force -ErrorAction SilentlyContinue $ThumbCacheFiles
+}
+
 Function RestartExplorer {
   & $RegExe Import $ShellBak
   Get-process explorer | Stop-Process
+  If ($ResetThumbs -eq 1) {ResetThumbCache}
   Explorer $PSScriptRoot
   Exit
 }
@@ -237,7 +245,6 @@ $NoSearchHighlights = 1-$NoSearchHighlights
 # Enable/disable folder thumbnails
 
 If ($NoFolderThumbs -eq 1) {& $RegExe Add "$Shel" /v Logo /d none /t REG_SZ /f}
-If ($ResetThumbs -eq 1) {Remove-Item -ErrorAction SilentlyContinue "$Env:LocalAppData\Microsoft\Windows\Explorer\thumbcache*.db"}
 
 # If reset, restart Explorer and exit
 
