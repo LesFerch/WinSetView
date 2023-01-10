@@ -1,3 +1,11 @@
+## 2.61
+
+Bug Fix: Thumbnail cache is now consistenty reset when using "Disable folder thumbnails"
+
+Bug Fix: Starting location for Restore/Load/Save correct now when running from a read-only directory.
+
+Bug Fix: Corrected error that could occur when Restore/Load/Save are repeatedly clicked. Fixed by making those dialogs modal.
+
 ## 2.60
 
 Feature added: Option to enable the classic context menu in Windows 11
