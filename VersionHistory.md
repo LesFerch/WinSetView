@@ -1,6 +1,6 @@
 ## 2.61
 
-Bug Fix: Thumbnail cache is now consistenty reset when using "Disable folder thumbnails"
+Bug Fix: Thumbnail cache is now consistently reset when using "Disable folder thumbnails"
 
 Bug Fix: Starting location for Restore/Load/Save correct now when running from a read-only directory.
 
@@ -14,7 +14,7 @@ Feature added: Option to have no Internet results in Windows search
 
 Feature added: Option to disable search highlights
 
-Enhancement: A WinSetView.exe launcher is now included to simplfy execution on computers where MSHTA.exe is not correctly associated to HTA files.
+Enhancement: A WinSetView.exe launcher is now included to simplify execution on computers where MSHTA.exe is not correctly associated to HTA files.
 
 Enhancement: Now runs without error on machines where System32 is missing from the Path environment variable
 
