@@ -69,6 +69,8 @@ Click the **More info** link and you should see:
 
 Click **Run anyway** to run the app.
 
+**Note**: On Windows 11, the Publisher will be displayed as **US, New York, Leslie S Ferch, Leslie S Ferch**.
+
 **Note**: Even though WinSetView.exe is code-signed, with a certificate issued by Sectigo, the SmartScreen block will still come up because non-incorporated individual developers cannot purchase (and typically cannot afford) an extended verification (EV) certificate required to get full trust. The fact that WinSetView is provided as an open-source app via GitHub, with my personal contact information available for all to see, is much more reassurance of safety than any certificate provides. The bad actors out there can find ways to code-sign their malware. Knowing where you got the app is much more important. Although there are many trustworthy download sites, the best practice is to download from the author's web page. If you got this app from my [web page](https://lesferch.github.io/WinSetView/), that's your best protection.
 
 **Note**: WinSetView.exe is just a launcher that runs WinSetView.hta. If you prefer, you can directly run the HTA file, as long as HTA files are correctly associated on your machine. The association does not need to be correct to launch the app using the EXE.
