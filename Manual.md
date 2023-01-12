@@ -318,13 +318,6 @@ If this option is checked, *This PC* will be set to the view selected. If this o
 **Note**: Because **This PC** does not have its own GUID, this option creates registry values (in the BagMRU/Bags keys) that would be the same as if you manually browsed to this folder and set the view. These settings are prone to returning to Windows defaults (see *Apply to Folders "Bug"* below).
 
 \
-**Set view for "Network"**
-
-If this option is checked, *Network* will be set to the view selected. If this option is unchecked, this virtual folder will retain its Windows default of *Tiles* and group by *Category*.
-
-**Note**: The **Network** virtual folder does not have a *FolderType* registry entry, but does have its own GUID, so this option creates registry values in the *AllFolders* registry key, which is not affected by the *Apply to Folders "Bug"*.
-
-\
 **Make All Folders Generic** (Advanced interface)
 
 This option sets a registry value that tells Explorer to make all folders to be type *Generic* (i.e. *General Items*).
@@ -655,7 +648,7 @@ Here's an overview of the steps the PowerShell script performs to set Explorer v
 \
 3) Set any direct registry entries, such as *Show File Extensions* and *Make All Folders Generic*, for the current user.
 \
-4) If custom *This PC and/or Network* views have been selected, create registry entries for those views.
+4) If a custom view for *This PC* has been selected, create registry entries for that view.
 \
 5) Copy FolderTypes key from HKEY_LOCAL_MACHINE (HKLM) to HKEY_CURRENT_USER (HKCU).
 \
