@@ -195,6 +195,14 @@ End If
 If Not oFSO.FolderExists(AppData) Then oFSO.CreateFolder(AppData)
 If Not oFSO.FolderExists(Backup) Then oFSO.CreateFolder(Backup)
 
+' Copy INI files to redirected AppData folder
+
+If AppData <> MyFolder & "\AppData" Then
+  On Error Resume Next
+  oFSO.CopyFile MyFolder & "\AppData\*.ini",AppData & "\", False
+  On Error Goto 0
+End If
+
 ' See if there are any backup reg files in the Backup folder
 
 Set oFolder = oFSO.GetFolder(Backup)
