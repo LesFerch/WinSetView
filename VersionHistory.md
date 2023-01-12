@@ -1,3 +1,7 @@
+## 2.62
+
+Bug Fix: The new modal Restore/Load/Save dialogs now work when there is a space in WinSetView's path.
+
 ## 2.61
 
 Bug Fix: Thumbnail cache is now consistently reset when using "Disable folder thumbnails"
