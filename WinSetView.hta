@@ -551,8 +551,6 @@ Sub UpdateLang(OnChange)
       Set oOption = Document.createElement("Option")
       oOption.Text =  ArrView(j) 
       oOption.Value = j
-      If j=0 Then oOption.Disabled = True
-      nwv.Add(oOption)
     Next
       
     ' Populate each folder type setting (View, IconSize, GroupBy, SortBy, and Columns to display)
@@ -801,11 +799,8 @@ Sub Dict2Dom
   si.checked = SetInitial("[Options]NoSearchInternet",0)
   sh.checked = SetInitial("[Options]NoSearchHighlights",0)
   tp.checked = SetInitial("[Options]ThisPCoption",1)
-  nw.checked = SetInitial("[Options]NetworkOption",1)
   tpg.Checked = SetInitial("[Options]ThisPCNG",0)
-  nwg.Checked = SetInitial("[Options]NetworkNG",0)
   tpv.SelectedIndex = SetInitial("[Options]ThisPCView",3)
-  nwv.SelectedIndex = SetInitial("[Options]NetworkView",3)
   xs.SelectedIndex = SetInitial("[Options]Scroll",1)
   IFace.SelectedIndex = SetInitial("[Options]Interface",1)
   Theme.SelectedIndex = SetInitial("[Options]ThemeIndex",1)
@@ -904,9 +899,6 @@ Sub Var2Ini(INIFile)
   oFile.Write "ThisPCoption=" & Abs(Int(tp.Checked)) & Z
   oFile.Write "ThisPCView=" & tpv.SelectedIndex & Z
   oFile.Write "ThisPCNG=" & Abs(Int(tpg.Checked)) & Z
-  oFile.Write "NetworkOption=" & Abs(Int(nw.Checked)) & Z
-  oFile.Write "NetworkView=" & nwv.SelectedIndex & Z
-  oFile.Write "NetworkNG=" & Abs(Int(nwg.Checked)) & Z
   For i = 0 To UBFolderType
     oFile.Write "[" & ArrFolderType(i) & "]" & Z
     If i>0 Then 
@@ -1035,7 +1027,6 @@ Sub Options
   Pg1.Style.Display = "none"
   Pg4.Style.Display = "inline"
   OptionThisPC
-  OptionNetwork
 End Sub
 
 Sub Arrange
@@ -1333,14 +1324,6 @@ Sub OptionThisPC
     otp.Style.Display = "block"
   Else
     otp.Style.Display = "none"
-  End If
-End Sub
-
-Sub OptionNetwork
-  If nw.Checked=True Then
-    onw.Style.Display = "block"
-  Else
-    onw.Style.Display = "none"
   End If
 End Sub
 
@@ -1997,7 +1980,6 @@ End Sub
   .X3HC {font-style:normal}
   .X4HC {font-style:italic}
   #tpv  {margin-left:1.5em; margin-top:3pt}
-  #nwv  {margin-left:1.5em; margin-top:3pt}
   .is   {width:2em}
   .noshow {display:none}
 
@@ -2154,8 +2136,6 @@ End Sub
       <input type=checkbox id=vf Checked># 29 #<br><br>
       <input type=checkbox id=tp onclick=OptionThisPC()># 13 #<br>
       <div id=otp><select id=tpv></select> <input type=checkbox id=tpg checked># 25 #</div><br>
-      <input type=checkbox id=nw onclick=OptionNetwork()># 30 #<br>
-      <div id=onw><select id=nwv></select> <input type=checkbox id=nwg checked># 25 #</div><br>
       <div id=ao>
       <input type=checkbox id=gn Checked># 10 #<br><br>
       <input type=checkbox id=ka># 11 #<br><br>

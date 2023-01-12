@@ -164,9 +164,6 @@ Else {
   $ThisPCoption = [Int]$iniContent['Options']['ThisPCoption']
   $ThisPCView = [Int]$iniContent['Options']['ThisPCView']
   $ThisPCNG = [Int]$iniContent['Options']['ThisPCNG']
-  $NetworkOption = [Int]$iniContent['Options']['NetworkOption']
-  $NetworkView = [Int]$iniContent['Options']['NetworkView']
-  $NetworkNG = [Int]$iniContent['Options']['NetworkNG']
 
   If ($Reset -eq 1) {
     Write-Host `n'Reset to Windows defaults...'`n
@@ -286,8 +283,7 @@ Function BuildRegData($Key) {
   $Script:RegData += '"GroupView"=dword:' + $Group + "`r`n"
 }
 
-# The FolderTypes key does not include entries for This PC and Network
-
+# The FolderTypes key does not include entries for This PC
 # This PC does not have a unique GUID so we'll set it's view via a Bags entry:
 
 If ($ThisPCoption -ne 0) {
@@ -299,14 +295,6 @@ If ($ThisPCoption -ne 0) {
   $GUID = '{5C4F28B5-F869-4E84-8E60-F11DB97C5CC7}'
   SetBagValues("$Bags\1\ComDlg\$GUID")
   SetBagValues("$Bags\1\Shell\$GUID")
-}
-
-# Have to use a reg file to set the Network view:
-
-If ($NetworkOption -ne 0) {
-  $Group = 1-$NetworkNG
-  $RegFile = ".\AppParts\NetworkView\$NetworkView-$Group.reg"
-  If (Test-Path -Path $RegFile) {& $RegExe Import $RegFile}
 }
 
 If ($Generic -eq 1) {& $RegExe Add "$Shel" /v FolderType /d Generic /t REG_SZ /f}
