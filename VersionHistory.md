@@ -86,8 +86,6 @@ Enhancement: FileDialog.exe updated to latest version (no impact on WinSetView f
 
 Bug Fix: "Set view for This PC" now enables grouping when "No Grouping" is unchecked.
 
-Bug Fix: "Set view for Network" now actually works.
-
 ## 2.41
 
 Enhancement: Added Vietnamese language.
@@ -128,7 +126,7 @@ Bug Fix: Removed "Language=en-US" from default INI file so that system language 
 
 ## 2.20
 
-Feature added: "Set view for Network" (actually never worked - fixed in 2.42)
+Feature added: "Set view for Network" (unreliable - removed in 2.62)
 
 ## 2.16
 
