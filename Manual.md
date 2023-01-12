@@ -254,7 +254,7 @@ This folder type controls the view you see for the *Searches* item within your u
 
 ## Options Menu
 
-![image](https://user-images.githubusercontent.com/79026235/210031709-b0188acd-ac5e-4b70-a549-3833dda6889f.png)
+![image](https://user-images.githubusercontent.com/79026235/211965448-012361a2-c867-4d76-89e2-349f70d75bff.png)
 
 **Show File Extensions**
 
