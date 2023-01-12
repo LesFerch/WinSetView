@@ -2,6 +2,8 @@
 
 Bug Fix: The new modal Restore/Load/Save dialogs now work when there is a space in WinSetView's path.
 
+Change: Cannot fiind a way to reliably set Network view. Option has been removed.
+
 ## 2.61
 
 Bug Fix: Thumbnail cache is now consistently reset when using "Disable folder thumbnails"
