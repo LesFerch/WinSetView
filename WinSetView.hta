@@ -19,7 +19,7 @@ WinSetView.hta (GUI tool to select desired views)
 <script language="VBScript">
 Option Explicit
 
-Const Version = "2.61"
+Const Version = "2.62"
 
 SetLocale(1033)
 Const ForReading = 1
@@ -821,7 +821,7 @@ End Function
 
 Sub LoadSettings
   If RestartFileDialog() Then
-    DialogArgs = FileDialogExe & " Open Multi ""*.ini|*.ini"" """ & AppData & """"
+    DialogArgs = """" & FileDialogExe & """" & " Open Multi ""*.ini|*.ini"" """ & AppData & """"
     File = ShowModalDialog(FileDialogHTA,DialogArgs,DialogOptions)
     lb.blur
     If File="" Or File="?" Then Exit Sub
@@ -836,7 +836,7 @@ End Sub
 
 Sub SaveSettings
   If RestartFileDialog() Then
-    DialogArgs = FileDialogExe & " Save ""*.ini|*.ini"" """ & AppData & """"
+    DialogArgs = """" & FileDialogExe & """" & " Save ""*.ini|*.ini"" """ & AppData & """"
     File = ShowModalDialog(FileDialogHTA,DialogArgs,DialogOptions)
     sb.blur
     If File="" Or File="?" Then Exit Sub
@@ -848,7 +848,7 @@ End Sub
 
 Sub Restore
   If RestartFileDialog() Then
-    DialogArgs = FileDialogExe & " Open Multi ""*.reg|*.reg"" """ & Backup & """"
+    DialogArgs = """" & FileDialogExe & """" & " Open Multi ""*.reg|*.reg"" """ & Backup & """"
     File = ShowModalDialog(FileDialogHTA,DialogArgs,DialogOptions)
     rb.blur
     If File="" Or File="?" Then Exit Sub
