@@ -474,7 +474,7 @@ This folder contains files that are required for *WinSetView.hta* to function.
 
 **FileDialog.hta** is a launcher for **FileDialog.exe** to make it open modal.
 
-**FileDialog.exe** provides the open/save dialog used by WinSetView for the *Load Settings*, *Save Settings*, and *Restore* buttons. This executable is written in C#. The source code is can be found [here](https://github.com/LesFerch/FileDialog).
+**FileDialog.exe** provides the open/save dialog used by WinSetView for the *Load Settings*, *Save Settings*, and *Restore* buttons. This executable is written in C#. The source code can be found [here](https://github.com/LesFerch/FileDialog).
 
 **Fonts.txt** contains a list of fonts to display in the WinSetView font selection menu.
 
