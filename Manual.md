@@ -25,7 +25,9 @@ GitHub repository created 2021-03-26, last updated 2023-01-11
 
 WinSetView provides an easy way to set Windows File Explorer default folder views. For example, if you want Details view, with a particular selection of column headings enabled across all folders, then WinSetView will do that for you. WinSetView sets registry values, as discussed in various websites online, that Explorer will use to let you get the folder views set up just the way you want. It does NOT modify File Explorer or add any tasks or services.
 
-WinSetView is comprised of two main files: **WinSetView.hta** (HTML GUI with VBScript code) and **WinSetView.ps1** (PowerShell command line script) and numerous supporting files (see the Files section below for details). Double-click **WinSetView.hta** to open the GUI. When you click **Submit**, it will pass your choices as an INI file to WinSetView.ps1, which will make the registry changes and then restart Explorer.
+WinSetView is comprised of three main files: **WinSetView.exe** (Launcher), **WinSetView.hta** (HTML GUI with VBScript code), and **WinSetView.ps1** (PowerShell command line script) and numerous supporting files (see the Files section below for details). Double-click **WinSetView.exe** to start the app. You can also start the app by double-clicking WinSetView.hta, as long as HTA files are properly associated to MSHTA.exe.
+
+Clicking **Submit** passes your choices as an INI file to WinSetView.ps1 which will make the registry changes and then restart Explorer.
 
 Each option, and related Explorer background information, is detailed below, but if you just want to get to it, the interface is pretty much self-explanatory. For best results, close all open applications before running WinSetView. Open applications can prevent open/save dialog views from being updated.
 
@@ -470,13 +472,18 @@ Please note, for system administrators setting up new users, it may be more effi
 
 This folder contains files that are required for *WinSetView.hta* to function.
 
-The **Fonts.txt** file contains a list of fonts to display in the WinSetView font selection menu. If this file is missing, only the two currently selected fonts will be shown.
+**FileDialog.hta** is a launcher for **FileDialog.exe** to make it open modal.
 
-The **FileDialog.exe** file provides the open/save dialog used by WinSetView for the *Load Settings*, *Save Settings*, and *Restore* buttons. This executable is written in C#. The source code is FileDialog.cs.
+**FileDialog.exe** provides the open/save dialog used by WinSetView for the *Load Settings*, *Save Settings*, and *Restore* buttons. This executable is written in C#. The source code is can be found [here](https://github.com/LesFerch/FileDialog).
 
-The **Modal.hta** file provides the modal dialogs that are displayed by WinSetView, such as the column re-order dialog.
+**Fonts.txt** contains a list of fonts to display in the WinSetView font selection menu.
 
-The **Themes.ini** file contains the WinSetView light and dark themes. This file can be edited to change the existing themes or add new themes.
+**Modal.hta** provides modal dialogs that are displayed by WinSetView, such as the column re-order dialog.
+
+**Themes.ini** contains the WinSetView light and dark themes. This file can be edited to change the existing themes or add new themes.
+
+**WinSetView.ico** provides the icon for WinSetView.hta.
+
 
 ## Language Folder
 
