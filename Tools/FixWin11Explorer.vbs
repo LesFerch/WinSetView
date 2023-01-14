@@ -2,7 +2,7 @@ Set oWSH = WScript.CreateObject("WScript.Shell")
 Set oFSO = CreateObject("Scripting.FileSystemObject")
 
 CurBld = oWSH.RegRead("HKLM\Software\Microsoft\Windows NT\CurrentVersion\CurrentBuild")
-If CurBld<22000 Or CurBld>=25000 Then
+If CurBld<22000 Or CurBld>=23000 Then
   MsgBox "Not supported on this build",vbInformation,"Notice"
   WScript.Quit
 End If
@@ -17,7 +17,7 @@ SystemRoot = oWSH.ExpandEnvironmentStrings("%SYSTEMROOT%")
 Z = VBCRLF
 B1 = vbInformation + vbOKCancel
 
-Response = MsgBox("Click Yes for previous Windows style (if available)" & Z & Z & "Click No for the Windows default",vbYesNoCancel,"Select your preferred Explorer ribbon")
+Response = MsgBox("Click Yes for Windows 10 Explorer" & Z & Z & "Click No for Windows 11 Explorer",vbYesNoCancel,"Select your preferred Explorer version")
 
 Sub RestartExplorer
     oWSH.Run "Powershell.exe -ExecutionPolicy Bypass -Command Get-process explorer | Stop-Process",0,True
