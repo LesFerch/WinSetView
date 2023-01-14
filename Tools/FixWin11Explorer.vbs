@@ -43,9 +43,7 @@ If Response = vbYes Then
 End If
 
 If Response = vbNo Then
-  On Error Resume Next
   oWSH.RegWrite RegShellValue, "Explorer.exe", "REG_SZ"
-  On Error Goto 0
   Response = MsgBox("The shell is now set to Explorer.exe" & Z & Z & "Click OK to restart Explorer now",B1,"Notice")
   RestartExplorer
 End If
