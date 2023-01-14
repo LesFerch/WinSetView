@@ -20,10 +20,8 @@ B1 = vbInformation + vbOKCancel
 Response = MsgBox("Click Yes for previous Windows style (if available)" & Z & Z & "Click No for the Windows default",vbYesNoCancel,"Select your preferred Explorer ribbon")
 
 Sub RestartExplorer
-  If Response = vbOK Then
     oWSH.Run "Powershell.exe -ExecutionPolicy Bypass -Command Get-process explorer | Stop-Process",0,True
     oWSH.Run "Explorer.exe",1,False
-  End If
 End Sub
 
 If Response = vbYes Then
@@ -36,7 +34,7 @@ If Response = vbYes Then
   If oFSO.FileExists(StdOut) Then
     oWSH.RegWrite RegShellValue, StdOut, "REG_SZ"
     Response = MsgBox("The following file is now set as the shell:" & Z & Z & StdOut & Z & Z & "Click OK to restart Explorer now",B1,"Notice")
-    RestartExplorer
+    If Response = vbOK Then RestartExplorer
   Else
     MsgBox "File not found:" & Z & Z & StdOut,,"Error"
   End If
@@ -45,5 +43,5 @@ End If
 If Response = vbNo Then
   oWSH.RegWrite RegShellValue, "Explorer.exe", "REG_SZ"
   Response = MsgBox("The shell is now set to Explorer.exe" & Z & Z & "Click OK to restart Explorer now",B1,"Notice")
-  RestartExplorer
+  If Response = vbOK Then RestartExplorer
 End If
