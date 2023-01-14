@@ -33,7 +33,7 @@ If Response = vbYes Then
     If InStr(1,StdOut,"winsxs",1)>0 Then Exit Do
   Loop
   StdOut = Trim(Replace(StdOut, "\windows\WinSxS", SystemRoot & "\WinSxS"))
-  If oFSO.FileExists (StdOut) Then
+  If oFSO.FileExists(StdOut) Then
     oWSH.RegWrite RegShellValue, StdOut, "REG_SZ"
     Response = MsgBox("The following file is now set as the shell:" & Z & Z & StdOut & Z & Z & "Click OK to restart Explorer now",B1,"Notice")
     RestartExplorer
