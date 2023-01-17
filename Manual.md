@@ -36,7 +36,7 @@ All changes made by WinSetView are per-user within the HKEY_CURRENT_USER hive in
 **Note**: For USB-connected phones and tablets, WinSetView provides an option to have them displayed in the same view as generic (General Items) folders (e.g. Details view), but it cannot control the Details view column headings for such devices.
 
 # Interface
-![image](https://user-images.githubusercontent.com/79026235/206638150-afea48d5-0e76-4b11-9dec-49f946d3d86c.png)
+![image](https://user-images.githubusercontent.com/79026235/212801305-7ee13476-ba06-409a-9a20-c92658c5415f.png)
 
 **Note**: For Windows 7 and 8, some of the icons used in the program will differ from Windows 10 and 11 due to issues with those older Windows versions being able to display all Unicode characters.
 
@@ -140,7 +140,7 @@ You can group by any property in ascending or descending order, or turn off grou
 
 The **⚙ (Options)** button allows you to select a _different_ view for File Open/Save dialogs. For example, if you have set **List** as your default view, but want **Details** in File Open/Save dialogs, this is where you would set that up.
 
-![image](https://user-images.githubusercontent.com/79026235/206568776-06b2cc04-6d9a-45f0-964c-1f5b702129a9.png)
+![image](https://user-images.githubusercontent.com/79026235/212802136-fb2ee03a-63b6-401f-a4b6-99c58913d9a2.png)
 
 Separate File Dialog views can be set under Global as well as under any specific folder type. This is an improvement over previous versions of WinSetView that only had one global File Dialog view settings in the Options menu.
 
@@ -256,7 +256,7 @@ This folder type controls the view you see for the *Searches* item within your u
 
 ## Options Menu
 
-![image](https://user-images.githubusercontent.com/79026235/211965448-012361a2-c867-4d76-89e2-349f70d75bff.png)
+![image](https://user-images.githubusercontent.com/79026235/212801829-279180e8-9cfa-4a4d-aac9-541ac143c4f7.png)
 
 **Show File Extensions**
 
@@ -345,7 +345,7 @@ Note: If **Make All Folders Generic** is also checked, only **Downloads**, **Lib
 
 ## Columns
 
-![image](https://user-images.githubusercontent.com/79026235/207390444-83f4aaff-4425-4b61-9d86-617dddbbbfe9.png)
+![image](https://user-images.githubusercontent.com/79026235/212802264-437b3834-2d93-4899-871b-5ce038389450.png)
 
 Clicking the **Columns** button brings up the column (properties) selection page for the current folder type. Column headings, in Explorer Details view, correspond to file and folder *properties*.
 
@@ -357,11 +357,11 @@ Next, the currently selected column headings, that will display in File Explorer
 
 Clicking the column re-order button **⮀** will bring up a dialog that will allow you to rearrange the column headings by dragging them up or down in the presented list.:
 
-![image](https://user-images.githubusercontent.com/79026235/206568121-561881d0-1f28-487d-af7e-10d0d955a33d.png)
+![image](https://user-images.githubusercontent.com/79026235/212802828-69c5b513-c11c-4c45-aeec-ac37f94987db.png)
 
 The column order can also be set by removing each column heading and then adding them back in the desired order, but it is easier to use the re-order dialog. Note that the re-order dialog will allow any order, but will display the following warning if the **Name** property is not the first column:
 
-![image](https://user-images.githubusercontent.com/79026235/206568423-07760488-0399-4889-9b21-c6d4bc3a2afc.png)
+![image](https://user-images.githubusercontent.com/79026235/212802992-e934be7b-cdec-450b-87f7-206342ee0028.png)
 
 The issue with software that uses the "legacy" type dialogs (such as IrfanView) is that those type of dialogs assume that **Name** is always the first column. So, for example, if **Size** is set as the first column, and you are in any view other than **Details**, you will just see a bunch of icons with sizes and no names.
 
@@ -399,7 +399,7 @@ Please note that you can set the width as small as 1em, but Explorer will expand
 
 If you wish to enter the column width in *pixels*, hold **Alt** and **click** the input width field you wish to adjust. A dialog will open showing the width in pixels:
 
-![image](https://user-images.githubusercontent.com/79026235/206568603-54566b79-a29d-4d72-b405-bd679672d68a.png)
+![image](https://user-images.githubusercontent.com/79026235/212803196-c3150a47-bf51-42be-b82e-8df743ddee75.png)
 
 The pixel value will vary depending on screen pixel density, whereas the value in ems will be constant across different display configurations. Please note that WinSetView sets the column *default* width which can only be set to whole (integer) em values. Windows File Explorer lets you set the width down to the pixel, but that is stored as a setting within the volatile *Bags* registry key *overriding* the default value. WinSetView deals with *default* settings only.
 

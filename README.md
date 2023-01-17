@@ -42,13 +42,13 @@ For complete details, please see the [manual](./Manual.md).
 
 ## Step 1: Select Your Interface Language (Optional)
 
-![image](https://user-images.githubusercontent.com/79026235/206563088-85288970-e666-4824-8b54-07ff83e01c54.png)
+![image](https://user-images.githubusercontent.com/79026235/212799679-32d5ed24-d32c-40c2-b0e8-515fe87ccda4.png)
 
 WinSetView should open in the same language to which you have Windows set. If not, select the correct language from the drop down menu.
 
 ## Step 2: Select Your Preferred Default View
 
-![image](https://user-images.githubusercontent.com/79026235/206563583-ded1543d-0acb-4229-9129-b7f98abc6ee9.png)
+![image](https://user-images.githubusercontent.com/79026235/212799961-94baaa51-9867-4352-bf05-6bf85700816e.png)
 
 Select the default view you want applied to most (or all) folders from the drop down menu under the **Global** heading. Most users go with **Details**, but pick what *you* like as your default.
 
@@ -56,23 +56,23 @@ Select the default view you want applied to most (or all) folders from the drop 
 
 ## Step 3: Select Your Preferred Default Column Headings (Optional)
 
-![image](https://user-images.githubusercontent.com/79026235/206564056-d32f1e30-324a-4aa0-8e0d-98834b0725a2.png)
+![image](https://user-images.githubusercontent.com/79026235/212800200-92905a94-4812-48bf-9343-b6da213a1db6.png)
 
 If you are happy with the default Details-view column headings (as shown on screen) then skip this step.
 
 **Note**: Column headings shown in blue are only displayed in *search results* (by default). It is, therefore, recommended to keep the **Folder path** (**File location** in Windows 11) column heading.
 
-![image](https://user-images.githubusercontent.com/79026235/206564277-95e4619e-8799-4f0e-afa3-eddcdadb6407.png)
+![image](https://user-images.githubusercontent.com/79026235/212800314-6aea1ee9-19d4-400a-80ec-8ded2db274e9.png)
 
 Otherwise, click the **Columns** button to bring up the column headings selection page.
 
-![image](https://user-images.githubusercontent.com/79026235/207390444-83f4aaff-4425-4b61-9d86-617dddbbbfe9.png)
+![image](https://user-images.githubusercontent.com/79026235/212800459-1b7d81a9-89f0-45ad-bc1c-96ecf2cbeeed.png)
 
 The column headings selection page allows you to select your desired column headings (and their order), group-by options, sort options, and column widths. The [manual](./Manual.md) provides full details, but you can also hover over or click on elements to see how the interface works.
 
 ## Step 4: Set Views for Specific Folder Types (Optional)
 
-![image](https://user-images.githubusercontent.com/79026235/206572556-a0fdda21-b3e8-4743-9a4c-a1543417ecdd.png)
+![image](https://user-images.githubusercontent.com/79026235/212804789-76da14da-2d1d-4424-93e3-71fece79eae7.png)
 
 Please note that WinSetView allows you to set the default view for every folder type in Windows, but, by *default*, they will all get the same settings as your **Global** settings, as long as the **Inherit** button is checked.
 
@@ -84,17 +84,17 @@ For any folder type (e.g. **Pictures**) that you wish to have a *different* defa
 
 ## Step 5: Check and Set Your Desired Options
 
-![image](https://user-images.githubusercontent.com/79026235/206564644-a5ae3e5b-7f64-4db8-a4e2-6ae3f4f28728.png)
+![image](https://user-images.githubusercontent.com/79026235/212800697-ba77d373-03ef-4a50-8e92-f04612413a50.png)
 
 Click The **Options** button.
 
-![image](https://user-images.githubusercontent.com/79026235/211965331-572434f4-c04d-42ad-a8cc-8e57710365c6.png)
+![image](https://user-images.githubusercontent.com/79026235/212800805-81ee30dd-c59f-490a-921c-088b137f61c9.png)
 
 Review the settings on that page and adjust as desired. See the [manual](./Manual.md) for full details.
 
 ## Step 6: Apply the Selections to Windows File Explorer
 
-![image](https://user-images.githubusercontent.com/79026235/206563746-57bb1482-3a7c-4687-85dd-454376753f67.png)
+![image](https://user-images.githubusercontent.com/79026235/212800982-ac98d273-d5f4-400c-87c7-d1a5e687341e.png)
 
 Once you're happy with your selections, make those settings apply to Windows File Explorer by clicking the **Submit** button.
 
