@@ -517,7 +517,7 @@ Windows 11 Explorer has some bugs in regards to setting folder type. You cannot 
 
 On Windows 11, run this script to rollback Explorer to the Windows 10 version. Nothing is downloaded. This process just changes the **Shell** registry setting to point to the older Explorer.exe that's already included with Windows 11.
 
-This will fix the folder type setting bug. You may also want to use this script if you just prefer the Windows 10 style Explorer ribbon. Of course, rolling back Explorer to the old version will mean giving up the new Explorer tabs feature.
+This will eliminate the folder type setting bug. You may also want to use this script if you just prefer the Windows 10 style Explorer ribbon. Of course, rolling back Explorer to the old version will mean giving up the new Explorer tabs feature.
 
 # Background
 
