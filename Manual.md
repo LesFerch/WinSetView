@@ -82,7 +82,7 @@ When checked, and applied via **Submit**, this option clears the registry keys t
 
 ## Submit
 
-Execute the PowerShell script to apply the selected options to the registry and restart Explorer.
+Execute the PowerShell script to apply the selected options to the registry and restart Explorer. Do not click Submit when Explorer is busy copying/moving/deleting files.
 
 When **Submit** is clicked, the current selections in WinSetView are saved to an INI file (Win10.ini on Windows 10 and 11) and that INI file name is passed to WinSetView.ps1.
 
@@ -510,6 +510,14 @@ This script captures Explorer view settings that can't be set in WinSetView, suc
 Rename CaptureCustom.reg to WinSetViewCustom.reg and place it in the AppData folder to have it applied by WinSetView. WinSetView.ps1 will import the file WinSetViewCustom.reg after all other settings are applied. This will override any settings applied by WinSetView!
 
 Please, if you don't know what you're doing, avoid this level of customization!
+
+**RollbackExplorer.vbs**
+
+Windows 11 Explorer has some bugs in regards to setting folder type. You cannot change the folder type on a whole folder tree on removable drives and you cannot override the automatically detected folder type on "Local disks". The old File Explorer does not have these issues.
+
+On Windows 11, run this script to rollback Explorer to the Windows 10 version. Nothing is downloaded. This process just changes the **Shell** registry setting to point to the older Explorer.exe that's already included with Windows 11.
+
+This will fix the folder type setting bug. You may also want to use this script if you just prefer the Windows 10 style Explorer ribbon. Of course, rolling back Explorer to the old version will mean giving up the new Explorer tabs feature.
 
 # Background
 
