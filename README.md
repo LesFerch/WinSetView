@@ -38,6 +38,8 @@ Simple step by step instructions follow.
 
 **Note**: For best results, close all open applications before running WinSetView. Open applications can prevent open/save dialog views from being updated.
 
+**Note**: Clicking **Submit** will apply the registry setting changes and restart Explorer. Do not click Submit when Explorer is busy copying/moving/deleting files.
+
 For complete details, please see the [manual](./Manual.md).
 
 ## Step 1: Select Your Interface Language (Optional)
