@@ -568,6 +568,10 @@ The **Customize this folder...** menu item allows you to change the current fold
 
 To use this option, click in a folder's white space, select **Customize this folder...**, select the desired folder type, such as *Pictures*, from the menu, check **Also apply this template to all subfolders** (if you want the change to apply to subfolders), and then click **Apply**. This will change the folder's type and it will then be displayed using the view settings for that folder type.
 
+**Note**: Windows 11 currently has some bugs in regards to the **Customize this folder...** feature. There are issues with both "Local Disks" (such a C:) and "removable" drives, such as flash drives. On "Local Disks", Windows 11 File Explorer aggressively applies automatic folder type discovery making it impossible to override the automatically detected folder type. On removable drives (ones that are NOT "Local Disk") Windows 11 File Explorer will ignore attempts to set an entire folder tree to the folder type of your choice, leaving the folders set to type "General items". You can, usually, set the folder type by setting one folder at a time.
+
+Currently, the only way to eliminate these bugs is to roll back Explorer to the Windows 10 version (which is included with Windows 11, but hidden). You can use the included tool **RollbackExplorer.vbs** to do that.
+
 ## General Items (Generic) Folders
 
 Without WinSetView, you can get closer to a global view by setting a generic folder, such as C:\\, to your desired views and then use the **Apply to Folders** button to set all other generic folders the same. But, by default, there are many folders that are not generic folders. To get even closer to a global view, you can set a registry value that will make most folders become generic (i.e. type *General items*). That registry value is:
