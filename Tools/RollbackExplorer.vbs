@@ -22,7 +22,7 @@ B1 = vbInformation + vbOKCancel + vbSystemModal
 Response = MsgBox("Click Yes for Windows 10 Explorer" & Z & Z & "Click No for Windows 11 Explorer",vbYesNoCancel+vbSystemModal,"Select your preferred Explorer version")
 
 Sub RestartExplorer
-  oWSH.Run "Powershell.exe -ExecutionPolicy Bypass -Command Stop-Process -Processname explorer",0,True
+  oWSH.Run "Powershell.exe -ExecutionPolicy Bypass -Command Stop-Process -Force -Processname explorer",0,True
   WScript.Sleep 1000
   oWSH.Run Q & MyFolder & Q
 End Sub
