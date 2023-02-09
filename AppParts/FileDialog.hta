@@ -17,6 +17,10 @@ If CmdLine="" Then
   self.close
 End If
 
+'If FileDialog.exe is run here, the main window will be unselectable, but
+'another open window will jump to the front when the file dialog is closed.
+'Running it from window_onLoad is the better option.
+
 Sub window_onLoad
   oWSH.Run CmdLine,1,True
   On Error Resume Next
