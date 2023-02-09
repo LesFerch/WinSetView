@@ -366,8 +366,13 @@ Sub UpdateCheck
     If Not BetaVer Then Beta = False
     hb.Value = ArrLang(46)
     Vp1.innerHTML = Version & " (" & ArrLang(45) & " " & CheckVer & ")"
-    RequiredWidth = twid.ScrollWidth + Int(BaseScale * 50)
+    UpdateRequiredWidth
   End If
+End Sub
+
+Sub UpdateRequiredWidth
+  RequiredWidth = twid.ScrollWidth + Int(BaseScale * 50)
+  If RequiredWidth>screen.availWidth Then RequiredWidth = screen.availWidth
 End Sub
 
 ' The following code is needed for scaling the checkboxes and radio buttons
@@ -1068,7 +1073,7 @@ Sub RunScript(Param)
   If Right(Param,3)="ini" Then
     If window.event.altKey Then x = "-NoExit"
   End If
-  CmdLine = "Powershell.exe " & x & " -ExecutionPolicy Bypass -File .\WinSetView.ps1 " & Chr(34) & Param & Chr(34)
+  CmdLine = "Powershell.exe " & x & " -NoLogo -ExecutionPolicy Bypass -File .\WinSetView.ps1 " & Chr(34) & Param & Chr(34)
   oWSH.Run CmdLine,1,False
   Window.Close
 End Sub
@@ -1693,8 +1698,7 @@ Sub UpdateFont1
     oElement.Style.FontSize = SelectedSize1 & "pt"
   Next
 
-  RequiredWidth = twid.ScrollWidth + Int(BaseScale * 50)
-  If RequiredWidth>screen.availWidth Then RequiredWidth = screen.availWidth
+  UpdateRequiredWidth
 
   UpdateCheck
   Recenter

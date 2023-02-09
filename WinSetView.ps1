@@ -135,7 +135,7 @@ Function ResetThumbCache {
 
 Function RestartExplorer {
   & $RegExe Import $ShellBak
-  Get-process explorer | Stop-Process
+  Stop-Process -Force -ErrorAction SilentlyContinue -ProcessName Explorer
   If ($ResetThumbs -eq 1) {ResetThumbCache}
   Explorer $PSScriptRoot
   Exit
