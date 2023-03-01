@@ -70,7 +70,7 @@ Otherwise, click the **Columns** button to bring up the column headings selectio
 
 ![image](https://user-images.githubusercontent.com/79026235/212800459-1b7d81a9-89f0-45ad-bc1c-96ecf2cbeeed.png)
 
-The column headings selection page allows you to select your desired column headings (and their order), group-by options, sort options, and column widths. The [manual](./Manual.md) provides full details, but you can also hover over or click on elements to see how the interface works.
+The column headings selection page allows you to select your desired column headings (and their order), group-by options, sort options, and column widths. The [manual](./Manual.md#columns) provides full details, but you can also hover over or click on elements to see how the interface works.
 
 ## Step 4: Set Views for Specific Folder Types (Optional)
 
@@ -92,7 +92,7 @@ Click The **Options** button.
 
 ![image](https://user-images.githubusercontent.com/79026235/212800805-81ee30dd-c59f-490a-921c-088b137f61c9.png)
 
-Review the settings on that page and adjust as desired. See the [manual](./Manual.md) for full details.
+Review the settings on that page and adjust as desired. See the [manual](./Manual.md#options-menu) for full details.
 
 ## Step 6: Apply the Selections to Windows File Explorer
 
