@@ -85,10 +85,10 @@ If (-Not(Test-Path -Path $File)) {
   Exit
 }
 
+#Keys for use with Reg.exe command line
 $BagM = '"HKCU\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\BagMRU"'
 $Bags = '"HKCU\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags"'
 $Shel = '"HKCU\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags\AllFolders\Shell"'
-$ShPS = 'HKCU:\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags\AllFolders\Shell'
 $Strm = '"HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Streams"'
 $Defs = '"HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Streams\Defaults"'
 $CUFT = '"HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\FolderTypes"'
@@ -98,9 +98,22 @@ $Clcm = '"HKCU\Software\Classes\CLSID\{86CA1AA0-34AA-4E8B-A509-50C905BAE2A2}"'
 $Srch = '"HKCU\Software\Microsoft\Windows\CurrentVersion\Search"'
 $Srhl = '"HKCU\Software\Microsoft\Windows\CurrentVersion\SearchSettings"'
 $Srdc = '"HKCU\Software\Microsoft\Windows\CurrentVersion\Feeds\DSB"'
+$BwgM = '"HKCU\Software\Microsoft\Windows\Shell\BagMRU"'
+$Bwgs = '"HKCU\Software\Microsoft\Windows\Shell\Bags"'
+$Desk = '"HKCU\Software\Microsoft\Windows\Shell\Bags\1\Desktop"'
 
+#Keys for use with PowerShell
+$ShPS = 'HKCU:\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags\AllFolders\Shell'
+
+#Keys for building REG files
 $ImpR = '[HKEY_CURRENT_USER\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags\AllFolders\'
+$DMR1 = '[HKEY_CURRENT_USER\Software\Microsoft\Windows\Shell\BagMRU]'
+$DMR2 = '"NodeSlots"=hex:02'
+$DMR3 = '"MRUListEx"=hex:ff,ff,ff,ff'
+$DMR4 = '"NodeSlot"=dword:00000001'
+$DMRU = "$DMR1`r`n$DMR2`r`n$DMR3`r`n$DMR4"
 
+#File paths
 $TempDir   = "$env:TEMP"
 $AppData   = "$env:APPDATA\WinSetView"
 $RegFile1  = "$TempDir\WinSetView1.reg"
@@ -109,7 +122,10 @@ $T1        = "$TempDir\WinSetView1.tmp"
 $T2        = "$TempDir\WinSetView2.tmp"
 $T3        = "$TempDir\WinSetView3.tmp"
 $T4        = "$TempDir\WinSetView4.tmp"
+$T5        = "$TempDir\WinSetView5.tmp"
+$T6        = "$TempDir\WinSetView6.tmp"
 $ShellBak  = "$TempDir\ShellBak.reg"
+$DeskBak   = "$TempDir\DeskBak.reg"
 $TimeStr   = (get-date).ToString('yyyy-MM-dd-HHmm-ss')
 $RegExe    = "$env:SystemRoot\System32\Reg.exe"
 $CmdExe    = "$env:SystemRoot\System32\Cmd.exe"
@@ -135,6 +151,7 @@ Function ResetThumbCache {
 
 Function RestartExplorer {
   & $RegExe Import $ShellBak
+  & $RegExe Import $DeskBak
   Stop-Process -Force -ErrorAction SilentlyContinue -ProcessName Explorer
   If ($ResetThumbs -eq 1) {ResetThumbCache}
   Explorer $PSScriptRoot
@@ -142,6 +159,8 @@ Function RestartExplorer {
 }
 
 Function DeleteUserKeys {
+  & $RegExe Delete $BwgM /f 2>$Null
+  & $RegExe Delete $Bwgs /f 2>$Null
   & $RegExe Delete $BagM /f 2>$Null
   & $RegExe Delete $Bags /f 2>$Null
   & $RegExe Delete $CUFT /f 2>$Null
@@ -177,22 +196,32 @@ Else {
 
 If (!(Test-Path -Path "$AppData\Backup")) {Mkdir "$AppData\Backup" >$Null}
 
-Remove-Item $T1 2>$Null
-Remove-Item $T2 2>$Null
-Remove-Item $T3 2>$Null
-Remove-Item $T4 2>$Null
+# Backup current Desktop view details
+& $RegExe Export $Desk $DeskBak /y 2>$Null
+Add-Content -Path $DeskBak -Value $DMRU
 
+Function RemoveTempFiles {
+  Remove-Item $T1 2>$Null
+  Remove-Item $T2 2>$Null
+  Remove-Item $T3 2>$Null
+  Remove-Item $T4 2>$Null
+  Remove-Item $T5 2>$Null
+  Remove-Item $T6 2>$Null
+}
+
+RemoveTempFiles
+
+& $RegExe Delete $Desk /f 2>$Null
 & $RegExe Export $BagM $T1 /y 2>$Null
 & $RegExe Export $Bags $T2 /y 2>$Null
 & $RegExe Export $Strm $T3 /y 2>$Null
 & $RegExe Export $CUFT $T4 /y 2>$Null
+& $RegExe Export $BwgM $T5 /y 2>$Null
+& $RegExe Export $Bwgs $T6 /y 2>$Null
 
-& $CmdExe /c Copy $T1+$T2+$T3+$T4 $BakFile >$Null 2>$Null
+& $CmdExe /c Copy $T1+$T2+$T3+$T4+$T5+$T6 $BakFile >$Null 2>$Null
 
-Remove-Item $T1 2>$Null
-Remove-Item $T2 2>$Null
-Remove-Item $T3 2>$Null
-Remove-Item $T4 2>$Null
+RemoveTempFiles
 
 Remove-Item $ShellBak 2>$Null
 Remove-Item -Path "$ShPS\*" -Recurse 2>$Null
@@ -322,7 +351,7 @@ If ($SetVirtualFolders -eq 1) {
 $Data = Get-Content $RegFile1
 $Data = $Data -Replace 'HKEY_LOCAL_MACHINE','HKEY_CURRENT_USER'
 Out-File -InputObject $Data -encoding Unicode -filepath $RegFile1
-& $RegExe Import $RegFile1
+& $RegExe Import $RegFile1 /reg:64
 
 $FolderTypes = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\FolderTypes'
 
