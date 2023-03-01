@@ -1,3 +1,9 @@
+## 2.63
+
+Bug Fix: Views for UNC paths (e.g. \\192.168.1.1\Share) are now cleared so that the new folder view defaults will take effect. Network drives mapped to drive letters were never affected by this issue.
+
+Change: The RollbackExplorer.vbs script has been removed from the package because it is not compatible with Windows 11 build 22621.1344 (or higher).
+
 ## 2.62
 
 Bug Fix: The new modal Restore/Load/Save dialogs now work when there is a space in WinSetView's path.
