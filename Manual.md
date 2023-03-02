@@ -440,13 +440,13 @@ In addition to the path-related properties explained earlier, here are explanati
 **Date Created**: This is the date/time the file was initially written to storage.\
 **Date accessed**: Date file was last opened (rarely accurate due to deferred updates).
 
-**Size**: The file size in KB\
+**Size**: The file size in KB or MB\
 **Attributes**: File attributes such as Archive[A], Hidden[H], System[S], Read-only[R]\
 **File Version**: Applicable to files that have a version header, such as .exe files\
 **Owner**: File owner in computer\userid format
 
 **Item type**: The file's type based on file extension. Example: MPEG Layer 3\
-**Type**: Usually same as File type, but may show associated app name in search results.\
+**Type**: Usually same as Item type, but may show associated app name in search results.\
 **Perceived type**: File category. Examples: Audio, Video\
 **Kind**: Similar to Perceived type. Examples: Music, Video\
 **Content type**: Essentially Perceived type + Item type. Example: audio/mpeg\
@@ -456,17 +456,17 @@ Note: The **File extension** column heading is not available on Windows 7.
 
 # Files
 
-In addition to the two main files: **WinSetView.hta** (HTML GUI with VBScript code) and **WinSetView.ps1** (PowerShell command line script) the following folders and files are included:
+In addition to the three main files: **WinSetView.exe** (Launcher), **WinSetView.hta** (HTML GUI with VBScript code), and **WinSetView.ps1** (PowerShell command line script) the following folders and files are included:
 
 ## AppData Folder
 
-This folder contains INI files which hold the options selected with the WinSetView interface. Due to the folder type and column heading (property) lists differing among Windows versions, there are separate INI files for Windows 7, 8, and 10. Windows 11 uses the same settings as Windows 10.
+This folder contains INI files which hold the options selected with the WinSetView interface. Due to the folder type and column heading (property) lists differing among Windows versions, there are separate INI files for Windows 7, 8, and 10. Windows 11 uses the same settings file as Windows 10.
 
 This folder will also contain a *Backups* folder after first run containing REG files that can be used with the Restore option to rollback to a previous state of Explorer view settings.
 
 For system administrators and power users, please note that the *WinSetView.ps1* script will accept one INI file or one REG file as a command line parameter. You can also pass INI files to WinSetView.ps1 using *WinSetView.vbs* (which may be moved from Tools to AppData).
 
-Please note, for system administrators setting up new users, it may be more efficient to capture the results of WinSetView to a REG file and apply that file using the command **reg import filename.reg** rather than running WinSetView for each new user. Two different scripts for capturing Explorer view settings to a REG file are provided in the Tools folder. See below for more details.
+Please note, for system administrators setting up *new* user profiles, it may be more efficient to capture the results of WinSetView to a REG file and apply that file using the command **reg import filename.reg** rather than running WinSetView for each new user. Two different scripts for capturing Explorer view settings to a REG file are provided in the Tools folder. See below for more details.
 
 ## AppParts Folder
 
@@ -491,11 +491,11 @@ This folder must exist and contain the **en-US** folder and language files in or
 
 ## Tools Folder
 
-WinSetView does NOT need the Tools folder to run. It contains supplemental tools for system administrators, power users, or anyone wishing to create another language translation for WinSetView.
+WinSetView does NOT need the Tools folder to run. It contains supplemental tools for system administrators and power users.
 
 **WinSetBack.ps1**
 
-PowerShell script for backing up and restoring all Explorer view related settings. System administrators can use WinSetBack.ps1, after running WinSetView and making any further manual view settings, to back up all view settings to a single REG file. The REG file can be applied to a new user account with a simple REG IMPORT command.
+PowerShell script for backing up and restoring all Explorer view related settings. System administrators can use WinSetBack.ps1, after running WinSetView and making any further manual view settings, to back up all view settings to a single REG file. The REG file can be applied to a *new* user account with a simple REG IMPORT command. This approach will not work for updating profiles that are already in use (unless it's combined with code to delete the user's Bags/BagMRU registry keys to clear the existing saved views).
 
 **WinSetBack.cmd**
 
@@ -513,7 +513,7 @@ Please, if you don't know what you're doing, avoid this level of customization!
 
 **RollbackExplorer.vbs**
 
-This script has been removed from the WinSetView package. It is not compatible with Windows 11 build 22621.1344 or higher. If you run it on that build or above, Explorer will go into an inifinite reload loop. If that happens to you, just press **Ctrl-Alt-Del**, select **Task Manager**, click the **Run new task** button, browse to **RollbackExplorer.vbs** and run it. Then click the **No** button to go back to the Windows 11 Explorer. You may have to lgout/login or restart to get everthing back to normal.
+This script has been removed from the WinSetView package. It is not compatible with Windows 11 build 22621.1344 or higher. If you run it on that build or above, Explorer will go into an inifinite reload loop. If that happens to you, just press **Ctrl-Alt-Del**, select **Task Manager**, click the **Run new task** button, browse to **RollbackExplorer.vbs** and run it. Then click the **No** button to go back to the Windows 11 Explorer. You may have to logout/login or restart to get everthing back to normal.
 
 Recommended: Install the program [StartAllBack](https://www.startallback.com/) to get back the Windows 10 ribbon and the ability to properly set folder types.
 
