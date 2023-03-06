@@ -5,7 +5,7 @@ You can also manually navigate your browser to: https://lesferch.github.io/WinSe
 -->
 Follow the steps below to download, extract, and run WinSetView for the first time.
 
-**Note**: If you got WinSetView from [here](https://lesferch.github.io/WinSetView), it's 100% clean, but you may find that some security software will detect it as potentially unwanted or potentially malicious. That's the nature of such software. It will err on the side of caution. If you encounter that situation, you will need to disable or, at least, dial-back the protection settings of your security software.
+**Note**: If you got WinSetView from [here](https://lesferch.github.io/WinSetView), it's 100% clean, but you may find that some security software will falsely detect it as potentially unwanted or potentially malicious. That's the nature of such software. It will err on the side of caution. If you encounter that situation, you will need to disable or, at least, dial-back the protection settings of your security software.
 
 ## Step 1: Click the WinSetView Download Link
 
