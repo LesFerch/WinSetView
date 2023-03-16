@@ -485,6 +485,8 @@ This folder contains files that are required for *WinSetView.hta* to function.
 
 **Modal.hta** provides modal dialogs that are displayed by WinSetView, such as the column re-order dialog.
 
+**seguiemj.eot** Contains a few character glyphs for some of the button labels.
+
 **Themes.ini** contains the WinSetView light and dark themes. This file can be edited to change the existing themes or add new themes.
 
 **WinSetView.ico** provides the icon for WinSetView.hta.
