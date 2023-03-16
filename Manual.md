@@ -17,9 +17,9 @@ This is the complete user manual. See the link below for the quick start guide.
 Compatible with Windows 7, 8, 10, and 11.
 
 Les Ferch, lesferch@gmail.com\
-GitHub repository created 2021-03-26, last updated 2023-02-28
+GitHub repository created 2021-03-26, last updated 2023-03-16
 
-[Version 2.63](./VersionHistory.md)
+[Version 2.64](./VersionHistory.md)
 
 # Summary
 
@@ -36,7 +36,7 @@ All changes made by WinSetView are per-user within the HKEY_CURRENT_USER hive in
 **Note**: For USB-connected phones and tablets, WinSetView provides an option to have them displayed in the same view as generic (General Items) folders (e.g. Details view), but it cannot control the Details view column headings for such devices.
 
 # Interface
-![image](https://user-images.githubusercontent.com/79026235/212801305-7ee13476-ba06-409a-9a20-c92658c5415f.png)
+![image](https://user-images.githubusercontent.com/79026235/225511870-ab4f7c92-2b95-4dcb-ae71-6dbb38e2445b.png)
 
 **Note**: For Windows 7 and 8, some of the icons used in the program will differ from Windows 10 and 11 due to issues with those older Windows versions being able to display all Unicode characters.
 
@@ -140,7 +140,7 @@ You can group by any property in ascending or descending order, or turn off grou
 
 The **⚙ (Options)** button allows you to select a _different_ view for File Open/Save dialogs. For example, if you have set **List** as your default view, but want **Details** in File Open/Save dialogs, this is where you would set that up.
 
-![image](https://user-images.githubusercontent.com/79026235/212802136-fb2ee03a-63b6-401f-a4b6-99c58913d9a2.png)
+![image](https://user-images.githubusercontent.com/79026235/225512601-991e73fd-f7ee-48d3-9bc2-698a225d42c9.png)
 
 Separate File Dialog views can be set under Global as well as under any specific folder type. This is an improvement over previous versions of WinSetView that only had one global File Dialog view settings in the Options menu.
 
@@ -168,11 +168,11 @@ The 🔍 button is a feature for *technical users* that provides a quick, synchr
 
 Note: For power users who have their own comparison tool installed, such as WinMerge or Beyond Compare, a before/after comparison can be done by going to the Windows Temp directory and comparing the files *WinSetView1.reg* and *WinSetView2.reg*.
 
-**Copy (🗐)**
+**Copy (📋)**
 
 Click the Copy button to copy the settings for that folder type to the copy buffer.
 
-**Paste (🖉)**
+**Paste (🖌️)**
 
 Click the Paste button to replace the folder type's settings with the settings in the copy buffer.
 
@@ -256,7 +256,7 @@ This folder type controls the view you see for the *Searches* item within your u
 
 ## Options Menu
 
-![image](https://user-images.githubusercontent.com/79026235/212801829-279180e8-9cfa-4a4d-aac9-541ac143c4f7.png)
+![image](https://user-images.githubusercontent.com/79026235/225512977-185d21d7-50e3-4b61-bbd3-0a1720c3d759.png)
 
 **Show File Extensions**
 
@@ -283,6 +283,16 @@ When checked, the registry setting that makes Windows search local only (i.e. no
 When checked, the registry settings that turns off search highlights will be applied.
 
 \
+**Disable folder thumbnails**
+
+This option sets a registry value that tells Explorer to NOT create a thumbnail icon for *folders*. It has no effect on thumbnails for *files*.
+
+\
+**Unhide the AppData folder**
+
+When checked, the hidden attribute is removed from the current user's AppData folder. Unchecking the option re-applies the hidden attribute.
+
+\
 **Show paths in search results only**
 
 When this option is checked, path and folder name column headings in Details view are only shown in search results. Such headings are shown in *blue*. The following column headings are affected by this setting:
@@ -306,11 +316,6 @@ Connected devices, such as phones and tablets, normally open in **Tiles** view w
 Only the view mode (e.g. List, Details, etc.) applies to the connected device. There is a separate set of column headings for such devices and no documented method to change the defaults.
 
 Please note that this option actually causes all virtual folders, that share the General Items GUID, such as **This PC**, to be displayed with the same view as **General Items**. However, the separate view settings, available for *This PC*, can be used to override the General Items view.
-
-\
-**Disable folder thumbnails**
-
-This option sets a registry value that tells Explorer to NOT create a thumbnail icon for *folders*. It has no effect on thumbnails for *files*.
 
 \
 **Set view for "This PC"**

@@ -12,7 +12,7 @@ This is the quick start guide. For more details, please see the [complete user m
 
 Compatible with Windows 7, 8, 10, and 11.
 
-[Version 2.63](./VersionHistory.md)
+[Version 2.64](./VersionHistory.md)
 
 # Summary
 
@@ -52,7 +52,7 @@ WinSetView should open in the same language to which you have Windows set. If no
 
 ## Step 2: Select Your Preferred Default View
 
-![image](https://user-images.githubusercontent.com/79026235/212799961-94baaa51-9867-4352-bf05-6bf85700816e.png)
+![image](https://user-images.githubusercontent.com/79026235/225508740-10f921ae-d344-4e1e-b5b5-f399153dc4b3.png)
 
 Select the default view you want applied to most (or all) folders from the drop down menu under the **Global** heading. Most users go with **Details**, but pick what *you* like as your default.
 
@@ -60,13 +60,13 @@ Select the default view you want applied to most (or all) folders from the drop 
 
 ## Step 3: Select Your Preferred Default Column Headings (Optional)
 
-![image](https://user-images.githubusercontent.com/79026235/212800200-92905a94-4812-48bf-9343-b6da213a1db6.png)
+![image](https://user-images.githubusercontent.com/79026235/225509075-25858eb6-e3db-40da-8851-f8d54e4bb741.png)
 
 If you are happy with the default Details-view column headings (as shown on screen) then skip this step.
 
 **Note**: Column headings shown in blue are only displayed in *search results* (by default). It is, therefore, recommended to keep the **Folder path** (**File location** in Windows 11) column heading.
 
-![image](https://user-images.githubusercontent.com/79026235/212800314-6aea1ee9-19d4-400a-80ec-8ded2db274e9.png)
+![image](https://user-images.githubusercontent.com/79026235/225509257-107739c0-0eaf-4acf-98a6-6af7ae363006.png)
 
 Otherwise, click the **Columns** button to bring up the column headings selection page.
 
@@ -76,7 +76,7 @@ The column headings selection page allows you to select your desired column head
 
 ## Step 4: Set Views for Specific Folder Types (Optional)
 
-![image](https://user-images.githubusercontent.com/79026235/212804789-76da14da-2d1d-4424-93e3-71fece79eae7.png)
+![image](https://user-images.githubusercontent.com/79026235/225509811-7ba045dc-1f38-4a37-b8f4-83cf28f8e81c.png)
 
 Please note that WinSetView allows you to set the default view for every folder type in Windows, but, by *default*, they will all get the same settings as your **Global** settings, as long as the **Inherit** button is checked.
 
@@ -88,11 +88,11 @@ For any folder type (e.g. **Pictures**) that you wish to have a *different* defa
 
 ## Step 5: Check and Set Your Desired Options
 
-![image](https://user-images.githubusercontent.com/79026235/212800697-ba77d373-03ef-4a50-8e92-f04612413a50.png)
+![image](https://user-images.githubusercontent.com/79026235/225509975-c6397acd-9382-452f-a5fa-26d0cdc499ed.png)
 
 Click The **Options** button.
 
-![image](https://user-images.githubusercontent.com/79026235/212800805-81ee30dd-c59f-490a-921c-088b137f61c9.png)
+![image](https://user-images.githubusercontent.com/79026235/225510374-bff2763b-7500-4b37-b1f0-7c9a3c8192b9.png)
 
 Review the settings on that page and adjust as desired. See the [manual](./Manual.md#options-menu) for full details.
 

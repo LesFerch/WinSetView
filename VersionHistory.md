@@ -1,3 +1,9 @@
+## 2.64
+
+Feature added: Option to unhide the AppData folder
+
+Enhancement: Better looking button icons
+
 ## 2.63
 
 Bug Fix: Views for UNC paths (e.g. \\\192.168.1.1\Share) are now cleared so that the new folder view defaults will take effect. Network drives mapped to drive letters were never affected by this issue.
