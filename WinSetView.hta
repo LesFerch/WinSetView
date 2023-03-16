@@ -19,7 +19,7 @@ WinSetView.hta (GUI tool to select desired views)
 <script language="VBScript">
 Option Explicit
 
-Const Version = "2.63"
+Const Version = "2.64"
 
 SetLocale(1033)
 Const ForReading = 1
@@ -49,7 +49,7 @@ Dim ArrColumnLists, ArrGroupBy, ArrInheritFlag, ArrHTML1, ArrHTML2, ArrViewChoic
 Dim ArrSortBy, ArrIncludeFlag, ArrIconSize, ArrThemes, ModalHTA, FileDialogHTA
 Dim ColShowLabels, FTCopyIdx, ThemeFile, SectionList, sTheme, CurBld, LWinVer
 Dim TempArray, RetVal, DialogArgs, DialogOptions, id, GrpUpArrow, GrpDnArrow
-Dim CopyIcon, PasteIcon, InsIcon, Warning, OptIcon, DialogTop, HighContrast, Beta
+Dim Warning, OptIcon, DialogTop, HighContrast, Beta
 Dim Txt1Data, Txt2Data, WinSys, ExeErr, ArrExe
 Dim WinSizePos, aWinSizePos, GotError
 
@@ -155,9 +155,6 @@ If WinVer="7" Or WinVer="8" Then
   GrpDnArrow = "(↓)"
   LRArrow = "←→"
   OptIcon = "☼"
-  CopyIcon = "©"
-  PasteIcon = "✍"
-  InsIcon = "≈"
   Warning = "!"
   DetailsIcon = "⋮⋮"
   RightClickIcon = "⋮"
@@ -168,9 +165,6 @@ Else
   GrpDnArrow = "(⮯)"
   LRArrow = "⟷"
   OptIcon = "⚙"
-  CopyIcon = "🗐"
-  PasteIcon = "🖉"
-  InsIcon = "🔍"
   Warning = "⚠"
   DetailsIcon = "⋮⋮⋮"
   RightClickIcon = "⋮"
@@ -808,6 +802,7 @@ Sub Dict2Dom
   vf.Checked = SetInitial("[Options]SetVirtualFolders",1)
   ka.checked = SetInitial("[Options]KeepViews",0)
   nf.checked = SetInitial("[Options]NoFolderThumbs",0)
+  ua.checked = SetInitial("[Options]UnhideAppData",0)
   cm.checked = SetInitial("[Options]ClassicContextMenu",0)
   si.checked = SetInitial("[Options]NoSearchInternet",0)
   sh.checked = SetInitial("[Options]NoSearchHighlights",0)
@@ -899,6 +894,7 @@ Sub Var2Ini(INIFile)
   oFile.Write "SetVirtualFolders=" & Abs(Int(vf.Checked)) & Z
   oFile.Write "KeepViews=" & Abs(Int(ka.Checked)) & Z
   oFile.Write "NoFolderThumbs=" & Abs(Int(nf.Checked)) & Z
+  oFile.Write "UnhideAppData=" & Abs(Int(ua.Checked)) & Z
   oFile.Write "ClassicContextMenu=" & Abs(Int(cm.Checked)) & Z
   oFile.Write "NoSearchInternet=" & Abs(Int(si.Checked)) & Z
   oFile.Write "NoSearchHighlights=" & Abs(Int(sh.Checked)) & Z
@@ -1680,7 +1676,7 @@ Sub UpdateFont1
   Set oElements = Document.GetElementsByTagName("input")
   For Each oElement in oElements
     If oElement.Type="button" Or oElement.Type="text" Then
-      oElement.Style.FontFamily = SelectedFont1
+      If oElement.className<>"icon" Then oElement.Style.FontFamily = SelectedFont1
       oElement.Style.FontSize = SelectedSize1 & "pt"
     End If
     If oElement.Type="checkbox" Or oElement.Type="radio" Then
@@ -1701,6 +1697,7 @@ Sub UpdateFont1
   UpdateRequiredWidth
 
   UpdateCheck
+
   Recenter
 
   Sec1.Style.MarginTop = fix1.ScrollHeight
@@ -1870,9 +1867,9 @@ Sub BuildPages
     Xinc = "":Xcop = "": Xpas = "": Xln2 =""
     If i>0 Then
       Xinc = "<input type=checkbox id=" & i & "Include onclick=IncludeChange(" & i & ") Checked>"
-      Xcop = "<div class=tip><input type=button id=" & i & "Copy value=" & CopyIcon & " onclick=FTCopy(" & i & ")><span class=tiptext># 40 #</span></div> "
-      Xpas = "<div class=tip><input type=button id=" & i & "Paste value=" & PasteIcon & " onclick=FTPaste(" & i & ")><span class=tiptext># 41 #</span></div>"
-      Xln2 = "<div class=fo><input type=checkbox id=" & i & "Inherit onclick=InheritChange(" & i & ") Checked># 21 # <input type=button id=" & i & "Inspect value=" & InsIcon & " style='padding:0' onclick=Inspection(" & i & ")></div>"
+      Xcop = "<div class=tip><input type=button class=icon id=" & i & "Copy value=📋 onclick=FTCopy(" & i & ")><span class=tiptext># 40 #</span></div> "
+      Xpas = "<div class=tip><input type=button class=icon id=" & i & "Paste value=🖌️ onclick=FTPaste(" & i & ")><span class=tiptext># 41 #</span></div>"
+      Xln2 = "<div class=fo><input type=checkbox id=" & i & "Inherit onclick=InheritChange(" & i & ") Checked># 21 # <input type=button class=icon id=" & i & "Inspect value=🔍 style='padding:0' onclick=Inspection(" & i & ")></div>"
       Xvue = "<div class=fo id=" & i & "FTView></div>"
     End If
     ArrHTML1(i) = Xinc & "<div class=ft id=" & i & "FTtitle>" & ArrFolderTypeLang(i) & "</div><br>" & Z &_
@@ -1880,7 +1877,7 @@ Sub BuildPages
     "<div class=fo id=" & i & "FTcontrols><select id=" & i & "View onchange=ViewChange(" & i & ")></select>" & Z &_
     "<input type=text class=is id=" & i & "IconSize OnChange=IconSizeChange(" & i & ")>" & Z &_
     "<input type=button id=" & i & "SelCol value='# 24 #' onclick=SelectColumns(" & i & ")>" & Z &_
-    "<div class=tip><input type=button id=" & i & "Option value=" & OptIcon & " onclick=FTOptions(" & i & ")><span class=tiptext># 3 #</span></div>" & Z &_
+    "<div class=tip><input type=button class=icon id=" & i & "Option value=⚙ onclick=FTOptions(" & i & ")><span class=tiptext># 3 #</span></div>" & Z &_
     Xcop & Xpas & "</div>" & Z &_
     Xvue & Z &_
     "<div class=cta id=" & i & "ColShow></div>" & Z &_
@@ -1942,8 +1939,10 @@ End Sub
 </script>
 
 <style>
+  @font-face {font-family:Segoe UI Emoji; src:url(AppParts/seguiemj.eot)}
   body  {background-color:LemonChiffon; font-family:Segoe UI; font-size:11pt}
-  input[type="button"] {font-family:Segoe UI; font-size:11pt}
+  input[type="button"] {font-family:Segoe UI Emoji; font-size:11pt}
+  .icon {font-family:Segoe UI Emoji}
   select {font-family:Segoe UI; font-size:11pt}
   textarea {font-family:Consolas; font-size:10pt}
   h2    {font-size:1.5em}
@@ -1951,6 +1950,7 @@ End Sub
   #gn   {margin-top:3pt}
   #ka   {margin-top:3pt}
   #nf   {margin-top:3pt}
+  #ua   {margin-top:3pt}
   #cm   {margin-top:3pt}
   #si   {margin-top:3pt}
   #sh   {margin-top:3pt}
@@ -2143,6 +2143,7 @@ End Sub
     <input type=checkbox id=si># 48 #<br><br>
     <input type=checkbox id=sh># 49 #<br><br>
     <input type=checkbox id=nf># 35 #<br><br>
+    <input type=checkbox id=ua># 50 #<br><br>
     <div id=Sec4>
       <input type=checkbox id=so Checked onclick=OptionSearchOnly()># 9 #<br><br>
       <input type=checkbox id=vf Checked># 29 #<br><br>

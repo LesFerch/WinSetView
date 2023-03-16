@@ -130,6 +130,7 @@ $TimeStr   = (get-date).ToString('yyyy-MM-dd-HHmm-ss')
 $RegExe    = "$env:SystemRoot\System32\Reg.exe"
 $CmdExe    = "$env:SystemRoot\System32\Cmd.exe"
 $IcaclsExe = "$env:SystemRoot\System32\Icacls.exe"
+$UAppData  = "$env:UserProfile\AppData"
 
 # Use script folder if we have write access. Otherwise use AppData folder.
 
@@ -178,6 +179,7 @@ Else {
   $Generic = [Int]$iniContent['Options']['Generic']
   $NoFolderThumbs = [Int]$iniContent['Options']['NoFolderThumbs']
   $ResetThumbs = [Int]$iniContent['Options']['ResetThumbs']
+  $UnhideAppData = [Int]$iniContent['Options']['UnhideAppData']
   $SearchOnly = [Int]$iniContent['Options']['SearchOnly']
   $SetVirtualFolders = [Int]$iniContent['Options']['SetVirtualFolders']
   $ThisPCoption = [Int]$iniContent['Options']['ThisPCoption']
@@ -271,6 +273,11 @@ $NoSearchHighlights = 1-$NoSearchHighlights
 # Enable/disable folder thumbnails
 
 If ($NoFolderThumbs -eq 1) {& $RegExe Add "$Shel" /v Logo /d none /t REG_SZ /f}
+
+# Unhide / Hide AppData folder
+
+If ($UnhideAppData -eq 1) {& $CmdExe /c attrib -h "$UAppData"}
+Else {& $CmdExe /c attrib +h "$UAppData"}
 
 # If reset, restart Explorer and exit
 
