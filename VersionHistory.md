@@ -1,3 +1,7 @@
+## 2.65
+
+Bug Fix: Custom icon size was not being applied to "General items" type folders or "This PC" when the option "Use General Items view for connected devices" was also checked.
+
 ## 2.64
 
 Feature added: Option to unhide the AppData folder

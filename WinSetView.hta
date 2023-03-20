@@ -19,17 +19,16 @@ WinSetView.hta (GUI tool to select desired views)
 <script language="VBScript">
 Option Explicit
 
-Const Version = "2.64"
+Const Version = "2.65"
 
 SetLocale(1033)
 Const ForReading = 1
 Const ForWriting = 2
 Const Unicode = -1
 Const Ansi = 0
-Const HKCU = &H80000001
 
-Dim o, oWSH, oFSO, oFolder, oFile, oFiles, oOption, oReg, oElement, oElements
-Dim oFolderTypes, oWMI, oSettings, oSearchOnly, oOption1, oOption2, oThemes
+Dim o, oWSH, oFSO, oFolder, oFile, oFiles, oOption, oElement, oElements
+Dim oFolderTypes, oSettings, oSearchOnly, oOption1, oOption2, oThemes
 Dim i, j, Q, V, X, Y, Z, Temp, TestFile, Section, CheckCount, Value, Key, ArrKeys, Result, SubKey
 Dim AvailHeight, HeadHeight, RequiredWidth, CurrentWidth, Maximized, Fonts, TestFileName
 Dim AppData, NTVer, WinVer, MajVer, Folder, INIFile, rbShow, BodyHTML, TaggedHTML, Tag, Item
@@ -60,8 +59,6 @@ KeepAdvanced = False
 Beta = Instr(LCase(Version),"beta")>0
 
 Set oFSO = CreateObject("Scripting.FileSystemObject")
-Set oReg = GetObject("winmgmts:\\.\root\default:StdRegProv")
-Set oWMI = GetObject("winmgmts:\\.\root\cimv2")
 Set oWSH = CreateObject("Wscript.Shell")
 
 WinSizePos = ""

@@ -327,7 +327,9 @@ If ($ThisPCoption -ne 0) {
   & $RegExe Add "$BagM" /v MRUListEx /d '00000000ffffffff' /t REG_BINARY /f >$Null
   & $RegExe Add "$BagM" /v '0' /d '14001F50E04FD020EA3A6910A2D808002B30309D0000' /t REG_BINARY /f >$Null
   & $RegExe Add "$BagM\0" /v NodeSlot /d 1 /t REG_DWORD /f >$Null
+  $CustomIconSize = $iniContent['Generic']['IconSize']
   SetViewValues($ThisPCView)
+  If ($CustomIconSize -ne '') {$IconSize = $CustomIconSize}
   $GUID = '{5C4F28B5-F869-4E84-8E60-F11DB97C5CC7}'
   SetBagValues("$Bags\1\ComDlg\$GUID")
   SetBagValues("$Bags\1\Shell\$GUID")
@@ -338,7 +340,9 @@ If ($Generic -eq 1) {& $RegExe Add "$Shel" /v FolderType /d Generic /t REG_SZ /f
 If ($SetVirtualFolders -eq 1) {
   $GUID = $iniContent['Generic']['GUID']
   $GroupBy = $iniContent['Generic']['GroupBy']
+  $CustomIconSize = $iniContent['Generic']['IconSize']
   SetViewValues([Int]$iniContent['Generic']['View'])
+  If ($CustomIconSize -ne '') {$IconSize = $CustomIconSize}
   & $RegExe Add "$Bags\AllFolders\Shell\$GUID" /v Mode /d "$Mode" /t REG_DWORD /f
   & $RegExe Add "$Bags\AllFolders\Shell\$GUID" /v LogicalViewMode /d "$LVMode" /t REG_DWORD /f
   If ($LVMode -eq 3) {& $RegExe Add "$Bags\AllFolders\Shell\$GUID" /v IconSize /d "$IconSize" /t REG_DWORD /f}
