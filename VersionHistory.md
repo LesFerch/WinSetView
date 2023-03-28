@@ -1,3 +1,7 @@
+## 2.66
+
+Bug Fix: Microsoft Store apps, that save folder views in a Windows Container hive file, such as the Windows 11 Notepad and Paint, now get their file dialog views set by WinSetView.
+
 ## 2.65
 
 Bug Fix: Custom icon size was not being applied to "General items" type folders or "This PC" when the option "Use General Items view for connected devices" was also checked.

@@ -130,6 +130,7 @@ $TimeStr   = (get-date).ToString('yyyy-MM-dd-HHmm-ss')
 $RegExe    = "$env:SystemRoot\System32\Reg.exe"
 $CmdExe    = "$env:SystemRoot\System32\Cmd.exe"
 $IcaclsExe = "$env:SystemRoot\System32\Icacls.exe"
+$KillExe   = "$env:SystemRoot\System32\TaskKill.exe"
 $UAppData  = "$env:UserProfile\AppData"
 
 # Use script folder if we have write access. Otherwise use AppData folder.
@@ -150,9 +151,29 @@ Function ResetThumbCache {
   Remove-Item -Force -ErrorAction SilentlyContinue $ThumbCacheFiles
 }
 
+Function ResetStoreAppViews {
+  $Exclude = 'WindowsTerminal','WebViewHost','MSTeams','Win32Bridge.Server','PhoneExperienceHost','ClipChamp','ClipChamp.CLI'
+  $Stor = 'HKCU:\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Compatibility Assistant\Store'
+  $Pkgs = "$env:LocalAppData\Packages"
+  $Key = Get-Item -Path $Stor
+  ForEach ($ValueName in $($Key.GetValueNames())) {
+    If ($ValueName.ToLower() -Match 'c:\\program files\\windowsapps\\') {
+      $FileName = Split-Path $ValueName -Leaf
+      $FileNameBase = [System.IO.Path]::GetFileNameWithoutExtension($FileName)
+      If ($Exclude -NotContains $FileNameBase) {
+        & $KillExe /im $FileName >$Null 2>$Null
+      }
+    }
+  }
+  Get-ChildItem $Pkgs -Directory | ForEach-Object {
+    Remove-Item -Force -ErrorAction SilentlyContinue "$Pkgs\$_\SystemAppData\Helium\UserClasses.dat"
+  }
+}
+
 Function RestartExplorer {
   & $RegExe Import $ShellBak
   & $RegExe Import $DeskBak
+  ResetStoreAppViews
   Stop-Process -Force -ErrorAction SilentlyContinue -ProcessName Explorer
   If ($ResetThumbs -eq 1) {ResetThumbCache}
   Explorer $PSScriptRoot
