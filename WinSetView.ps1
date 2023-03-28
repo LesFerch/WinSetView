@@ -173,7 +173,7 @@ Function ResetStoreAppViews {
 Function RestartExplorer {
   & $RegExe Import $ShellBak
   & $RegExe Import $DeskBak
-  ResetStoreAppViews
+  If ($WinVer -ne '7') {ResetStoreAppViews}
   Stop-Process -Force -ErrorAction SilentlyContinue -ProcessName Explorer
   If ($ResetThumbs -eq 1) {ResetThumbCache}
   Explorer $PSScriptRoot
