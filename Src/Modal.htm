@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" http-equiv="X-UA-Compatible" content="IE=8">
+<script language="VBScript">
+SetLocale(1033)
+Dim RetVal, ReturnArray
+Dim WidthIcon, PixInputIcon, NameWarnIcon, optIcon, DetailsIcon, RightClickIcon
+Dim Item2Move: Item2Move = ""
+Dim param
+Set param = window.external.Argument
+
+aArgs = Split(param.param1,";")
+param.param1 = ""
+document.title = aArgs(0)
+
+Font = aArgs(1)
+FontSize = aArgs(2)
+Scale = CDbl(aArgs(3))
+Theme = aArgs(4) '0:Light 1:Dark 2:High Contrast
+
+Set oWSH = CreateObject("Wscript.Shell")
+CurBld = oWSH.RegRead("HKLM\Software\Microsoft\Windows NT\CurrentVersion\CurrentBuild")
+
+WidthIcon = "⟷"
+PixInputIcon = "⟷."
+NameWarnIcon = "⚠"
+optIcon = "⚙"
+DetailsIcon = "⋮⋮⋮"
+RightClickIcon = "⋮"
+
+If CurBld<10000 Then
+  WidthIcon = "←→"
+  PixInputIcon = "←→."
+  NameWarnIcon = "!"
+  OptIcon = "☼"
+  DetailsIcon = "⋮⋮"
+End If
+
+Sub window_onLoad
+
+  If document.title="GetPadValues" Then Exit Sub
+
+  Document.Body.Style.FontFamily = Font
+  Document.Body.Style.FontSize = FontSize & "pt"
+
+  Set oElements = Document.GetElementsByTagName("input")
+  For Each oElement in oElements
+    If oElement.Type="button" Or oElement.Type="text" Then
+      oElement.Style.FontFamily = Font
+      oElement.Style.FontSize = FontSize & "pt"
+      If oElement.Type="button" And CurBld<10000 Then oElement.Value = "√"
+    End If
+    If oElement.Type="checkbox" Or oElement.Type="radio" Then
+      oElement.Style.Zoom = Scale
+    End If
+  Next
+  Set oElements = Document.GetElementsByTagName("select")
+  For Each oElement in oElements
+    oElement.Style.FontFamily = Font
+    oElement.Style.FontSize = FontSize & "pt"
+  Next
+
+  MvClass = "mv"
+
+  If Theme="1" Then
+    MvClass = "mvdark"
+    document.body.style.color = "White"
+    document.body.style.backgroundColor = "#3C3C3C"
+    Set oElements = Document.GetElementsByTagName("select")
+    For Each oElement in oElements
+      oElement.Style.color = "GhostWhite"
+      oElement.Style.backgroundColor = "Black"
+      oElement.Style.borderColor = "Black"
+    Next
+    Set oElements = Document.GetElementsByTagName("input")
+      For Each oElement in oElements
+        If oElement.Type="text" Or oElement.Type="button" Then
+          oElement.Style.color = "GhostWhite"
+          oElement.Style.backgroundColor = "Black"
+          oElement.Style.borderColor = "Black"
+        End If
+      Next
+  End If
+
+  If Theme="2" Then
+    MvClass = "mvhc"
+  End If
+
+  Select Case document.title
+    Case DetailsIcon
+      DetailsDiv.Style.Display = "inline"
+      DetailsMsg.innerHTML = aArgs(8)
+    Case RightClickIcon
+      RightClickDiv.Style.Display = "inline"
+      RightClickMsg.innerHTML = aArgs(8)
+    Case WidthIcon
+      WidthDiv.Style.Display = "inline"
+      WidthMsg.innerHTML = aArgs(8)
+    Case NameWarnIcon
+      NameWarnDiv.Style.Display = "inline"
+      NameWarnMsg.innerHTML = aArgs(8)
+    Case PixInputIcon
+      PixDiv.Style.Display = "inline"
+      PixMsg.innerHTML = aArgs(8)
+      InputPix.Value = aArgs(9)
+      InputPix.Select
+    Case OptIcon
+      DialogViewDiv.Style.Display = "inline"
+      fl1.innerHTML = aArgs(8)
+      fl2.innerHTML = aArgs(9)
+      ArrView = Split(aArgs(10),"|")
+      For i = 0 To 8
+        Set oOption = Document.createElement("Option")
+        oOption.Text =  ArrView(i) 
+        oOption.Value = i
+        If i=0 Then oOption.Disabled = True
+        fs1.Add(oOption)
+      Next
+    Case Else
+      ArrangeDiv.Style.Display = "inline"
+      InputArray = Split(aArgs(8),"|")
+      ReDim ReturnArray(UBound(InputArray))
+      For i = 0 To UBound(InputArray)
+        html = html & "<div id=" & i & " class=" & MvClass & " unselectable=on onmousedown=DragMoveStart(" & i & ") onmouseover=DragMoveSwap(" & i & ")>" & InputArray(i) & "</div>" & VBCRLF
+        ReturnArray(i) = i
+      Next
+      list.innerHTML = html
+  End Select
+
+  y = document.body.scrollHeight
+  window.moveTo aArgs(6), aArgs(7)
+  window.resizeTo aArgs(5),y + 56
+  
+  If document.title=OptIcon Then
+    fc1.Checked = False
+    fc2.Checked = True
+    If aArgs(11)="1" Then fc1.Checked = True
+    If aArgs(12)="0" Then fc2.Checked = False
+    If aArgs(13)="" Then aArgs(13)="1"
+    fs1.SelectedIndex = Int(aArgs(13))
+    fc1Clicked
+  End If
+End Sub
+
+Sub fc1Clicked
+  If fc1.Checked Then
+    FDOptions.Style.Visibility = "visible"
+  Else
+    FDOptions.Style.Visibility = "hidden"
+  End If
+End Sub
+
+Sub DoneFD
+  param.param1 = Abs(Int(fc1.Checked)) & "|" & fs1.SelectedIndex & "|" & Abs(Int(fc2.Checked))
+  window.external.close
+End Sub
+
+Sub DoneArrange
+  param.param1 = Join(ReturnArray,"|")
+  window.external.close
+End Sub
+
+Sub DoneDetails
+  param.param1 = "1"
+  window.external.close
+End Sub
+
+Sub DoneRightClick
+  param.param1 = "1"
+  window.external.close
+End Sub
+
+Sub DoneWidth
+  param.param1 = "1"
+  window.external.close
+End Sub
+
+Sub DonePix
+  param.param1 = InputPix.Value
+  window.external.close
+End Sub
+
+Sub document_onmouseup
+  Item2Move = ""
+End Sub
+
+Sub document_onkeydown
+  If window.event.keyCode=13 Then 'Enter key pressed
+    Select Case document.title
+      Case DetailsIcon
+        DoneDetails
+      Case RightClickIcon
+        DoneRightClick
+      Case WidthIcon
+        DoneWidth
+      Case NameWarnIcon
+        window.external.close
+      Case PixInputIcon
+        DonePix
+      Case OptIcon
+        DoneFD
+      Case Else
+        DoneArrange
+    End Select
+  End If
+End Sub
+
+Sub DragMoveStart(i)
+  Item2Move = i
+End Sub
+
+Sub DragMoveSwap(i)
+  If Item2Move="" Then Exit Sub
+  If Item2Move=i Then Exit Sub
+  a = document.getElementById(i).innerHTML
+  b = document.getElementById(item2Move).innerHTML
+  document.getElementById(i).innerHTML = b
+  document.getElementById(item2Move).innerHTML = a
+  a = ReturnArray(i)
+  b = ReturnArray(item2Move)
+  ReturnArray(i) = b
+  ReturnArray(item2Move) = a
+  Item2Move = i
+End Sub
+
+</script>
+
+<style>
+body {background-color:LemonChiffon; font-family:Segoe UI; font-size:11pt; margin-top:3pt; margin-left:3pt; margin-right:3pt; text-align:center}
+.mv {margin-top:-1px; border:1px solid black; padding:2pt; background-color:White; cursor:ns-resize}
+.mv:hover {background-color:Cyan}
+.mvdark {margin-top:-1px; border:1px solid black; padding:2pt; background-color:DimGrey; cursor:ns-resize}
+.mvdark:hover {background-color:MidnightBlue}
+.mvhc {margin-top:-1px; border:1px solid black; padding:2pt; font-weight:normal; cursor:ns-resize}
+.mvhc:hover {font-weight:bold}
+.NoShow {display:none}
+.TM3 {margin-top:3pt}
+.W100 {width:100%}
+</style>
+
+</head>
+
+<body>
+<div id=ArrangeDiv class=NoShow>
+  <div id=list></div>
+  <input type=button class='TM3 W100' id=OKarrange value=✔ onclick=DoneArrange>
+</div>
+<div id=DetailsDiv class=NoShow>
+  <div id=DetailsMsg></div>
+  <input type=button class='TM3 W100' id=OKDetails value=✔ onclick=DoneDetails>
+</div>
+<div id=RightClickDiv class=NoShow>
+  <div id=RightClickMsg></div>
+  <input type=button class='TM3 W100' id=OKRightClick value=✔ onclick=DoneRightClick>
+</div>
+<div id=WidthDiv class=NoShow>
+  <div id=WidthMsg></div>
+  <input type=button class='TM3 W100' id=OKWidth value=✔ onclick=DoneWidth>
+</div>
+<div id=NameWarnDiv class=NoShow>
+  <div id=NameWarnMsg></div>
+</div>
+<div id=PixDiv class=NoShow>
+  <div id=PixMsg></div>
+  <input class=TM3 type=text id=InputPix>
+  <input type=button class='TM3 W100' id=OKpix value=✔ onclick=DonePix>
+</div>
+<div id=DialogViewDiv class=NoShow>
+  <input type=checkbox id=fc1 onclick=fc1Clicked><span id=fl1></span>
+  <div id=FDOptions class=TM3>
+    <select id=fs1></select><br>
+    <input class=TM3 type=checkbox id=fc2 checked><span id=fl2></span><br>
+  </div>
+  <input type=button class='TM3 W100' id=OKFD value=✔ onclick=DoneFD>
+</div>
+</body>
+</html>
