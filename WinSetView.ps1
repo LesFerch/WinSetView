@@ -250,6 +250,7 @@ Remove-Item $ShellBak 2>$Null
 Remove-Item -Path "$ShPS\*" -Recurse 2>$Null
 Remove-ItemProperty -Path "$ShPS" -Name  Logo 2>$Null
 Remove-ItemProperty -Path "$ShPS" -Name  FolderType 2>$Null
+Remove-ItemProperty -Path "$ShPS" -Name  SniffedFolderType 2>$Null
 & $RegExe Export $Shel $ShellBak /y 2>$Null
 
 # Clear current Explorer view registry values
