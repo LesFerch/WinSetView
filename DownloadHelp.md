@@ -7,7 +7,7 @@ Follow the steps below to download, extract, and run WinSetView for the first ti
 
 **Note**: If you got WinSetView from [here](https://lesferch.github.io/WinSetView), it's 100% clean, but you may find that some security software will falsely detect it as potentially unwanted or potentially malicious. That's the nature of such software. It will err on the side of caution. If you encounter that situation, you will need to disable or, at least, dial-back the protection settings of your security software. For example, in **Bitdefender**, you must temporarily turn off **Advanced Threat Defense** to allow WinSetView to launch the its PowerShell script that applies the folder view settings.
 
-**Note**: Windows Defender should not have any issue with WinSetView, but if you've installed Windows from a recovery partition or older ISO file, you may be running Defender with old definitions that falsely detect it as malware. Please ensure that Windows Defender is fully up to date before attempting to dowload or run WinSetView. If you still have an issue with Windows Defender, please open an issue on the [WinSetView issue page](https://github.com/LesFerch/WinSetView/issues).
+**Note**: Windows Defender should not have any issue with WinSetView, but if you've installed Windows from a recovery partition or older ISO file, you may be running Defender with old definitions that falsely detect it as malware. Please ensure that Windows Defender is fully up to date before attempting to dowload or run WinSetView. If you still have an issue with Windows Defender, please open an issue on the [issues page](https://github.com/LesFerch/WinSetView/issues).
 
 ## Step 1: Click the WinSetView Download Link
 
