@@ -1,6 +1,6 @@
 # How to Download and Run
 <!--
-To view this document formatted (instead of as raw text) just click the Help button in WinSetView.hta.
+To view this document formatted (instead of as raw text) just click the Help button in WinSetView.
 You can also manually navigate your browser to: https://lesferch.github.io/WinSetView.
 -->
 Follow the steps below to download, extract, and run WinSetView for the first time.
@@ -47,23 +47,17 @@ Once the extraction is complete, you should have a **WinSetView-main** folder. Y
 
 Open the extracted folder and you should see **WinSetView.exe**. If you do not see the **exe** file extension, check **File name extensions** in the Windows File Explorer **View** menu.
 
-![image](https://user-images.githubusercontent.com/79026235/211452575-65e95101-6251-4260-9843-20ca02426cf7.png)
+![image](https://user-images.githubusercontent.com/79026235/229966497-b357c88d-45fa-4a5d-993e-661b8d18ead4.png)
 
 To avoid annoying "unrecognized app" notifications, right-click **WinSetView.exe** and select **Properties**:
 
-![image](https://user-images.githubusercontent.com/79026235/211460037-48b4a394-b38e-424b-b74c-e216d498d89e.png)
+![image](https://user-images.githubusercontent.com/79026235/229967070-dbf01447-601d-49ab-bafb-2d87ab299ef8.png)
 
 Then check **Unblock**, and click **OK**.
 
 Double-click **WinSetView.exe** to open the app.
 
-WinSetView.exe requires .Net 4.x which is normally already installed. If it's missing, you will see an error similar to this:
-
-![image](https://user-images.githubusercontent.com/79026235/211448690-82bf997a-e931-47b1-a9ac-b77768de5ff8.png)
-
-You can correct the above error by downloading and running the .Net 4.8 installer by clicking this Microsoft [link](https://go.microsoft.com/fwlink/?linkid=2088631).
-
-WinSetView should now load. However, if you did not unblock the file, you will probably see this message:
+If you did not unblock the file, you will probably see this message:
 
 ![image](https://user-images.githubusercontent.com/79026235/211442632-d4362bed-3600-4c32-b2c1-417b320684b7.png)
 
@@ -76,12 +70,6 @@ Click **Run anyway** to run the app.
 **Note**: On Windows 11, the Publisher will be displayed as **US, New York, Leslie S Ferch, Leslie S Ferch**.
 
 **Note**: Even though WinSetView.exe is code-signed, with a certificate issued by Sectigo, the SmartScreen block will still come up because non-incorporated individual developers cannot purchase (and typically cannot afford) an extended verification (EV) certificate required to get full trust. The fact that WinSetView is provided as an open-source app via GitHub, with my personal contact information available for all to see, is much more reassurance of safety than any certificate provides. The bad actors out there can find ways to code-sign their malware. Knowing where you got the app is much more important. Although there are many trustworthy download sites, the best practice is to download from the author's web page. If you got this app from my [web page](https://lesferch.github.io/WinSetView/), that's your best protection.
-
-**Note**: WinSetView.exe is just a launcher that runs WinSetView.hta. If you prefer, you can directly run the HTA file, as long as HTA files are correctly associated on your machine. The association does not need to be correct to launch the app using the EXE.
-
-**Note**: On some computers, MSHTA.exe (the Microsoft program that loads HTA files) may be blocked or redirected to another executable causing an error message to be displayed or causing nothing to run. The block may be caused by third party antivirus/antimalware software or may be caused by a group policy setting. If you're using a company owned computer then I wouldn't recommend tampering with such settings, but if it's your own machine, you can temporarily disable those restrictions. A version of WinSetView, that does not depend on MSHTA.exe, is currently in the works. In the meantime, if you can't run WinSetView, feel free to open an issue on the [issues page](https://github.com/LesFerch/WinSetView/issues) and I'll do my best to help provide a workaround.
-
-If you are comfortable at the command line, a good option is to run WinSetView on another computer to create an INI file with your preferred view settings. Then run `.\WinSetView.ps1 .\AppData\Win10.ini` (or whatever the INI file name is) on the target computer. You may need to first allow PowerShell scripts to run by entering a command such as: `Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope CurrentUser`
 
 To use WinSetView, please follow the steps in the quick start guide:
 

@@ -1,6 +1,6 @@
 # WinSetView
 <!--
-To view this document formatted (instead of as raw text) just click the Help button in WinSetView.hta.
+To view this document formatted (instead of as raw text) just click the Help button in WinSetView.
 You can also manually navigate your browser to: https://lesferch.github.io/WinSetView.
 -->
 
@@ -17,15 +17,15 @@ This is the complete user manual. See the link below for the quick start guide.
 Compatible with Windows 7, 8, 10, and 11.
 
 Les Ferch, lesferch@gmail.com\
-GitHub repository created 2021-03-26, last updated 2023-03-28
+GitHub repository created 2021-03-26, last updated 2023-04-04
 
-[Version 2.66](./VersionHistory.md)
+[Version 2.70](./VersionHistory.md)
 
 # Summary
 
 WinSetView provides an easy way to set Windows File Explorer default folder views. For example, if you want Details view, with a particular selection of column headings enabled across all folders, then WinSetView will do that for you. WinSetView sets registry values, as discussed in various websites online, that Explorer will use to let you get the folder views set up just the way you want. It does NOT modify File Explorer or add any tasks or services.
 
-WinSetView is comprised of three main files: **WinSetView.exe** (Launcher), **WinSetView.hta** (HTML GUI with VBScript code), and **WinSetView.ps1** (PowerShell command line script) and numerous supporting files (see the Files section below for details). Double-click **WinSetView.exe** to start the app. You can also start the app by double-clicking WinSetView.hta, as long as HTA files are properly associated to MSHTA.exe.
+WinSetView is comprised of two main files: **WinSetView.exe** (HTML application) and **WinSetView.ps1** (PowerShell command line script) and numerous supporting files (see the Files section below for details). Double-click **WinSetView.exe** to start the app.
 
 Clicking **Submit** passes your choices as an INI file to WinSetView.ps1 which will make the registry changes and then restart Explorer.
 
@@ -461,7 +461,7 @@ Note: The **File extension** column heading is not available on Windows 7.
 
 # Files
 
-In addition to the three main files: **WinSetView.exe** (Launcher), **WinSetView.hta** (HTML GUI with VBScript code), and **WinSetView.ps1** (PowerShell command line script) the following folders and files are included:
+In addition to the two main files: **WinSetView.exe** (HTML application), and **WinSetView.ps1** (PowerShell command line script) the following folders and files are included:
 
 ## AppData Folder
 
@@ -475,26 +475,16 @@ Please note, for system administrators setting up *new* user profiles, it may be
 
 ## AppParts Folder
 
-This folder contains files that are required for *WinSetView.hta* to function.
-
-**FileDialog.hta** is a launcher for **FileDialog.exe** to make it open modal.
-
-**FileDialog.exe** provides the open/save dialog used by WinSetView for the *Load Settings*, *Save Settings*, and *Restore* buttons. This executable is written in C#. The source code can be found [here](https://github.com/LesFerch/FileDialog).
+This folder contains files that are used by *WinSetView.exe*.
 
 **Fonts.txt** contains a list of fonts to display in the WinSetView font selection menu.
 
-**Modal.hta** provides modal dialogs that are displayed by WinSetView, such as the column re-order dialog.
-
-**seguiemj.eot** Contains a few character glyphs for some of the button labels.
-
 **Themes.ini** contains the WinSetView light and dark themes. This file can be edited to change the existing themes or add new themes.
-
-**WinSetView.ico** provides the icon for WinSetView.hta.
 
 
 ## Language Folder
 
-This folder must exist and contain the **en-US** folder and language files in order to run *WinSetView.hta*. All other language folders are optional. This folder is not needed for WinSetView.ps1.
+This folder must exist and contain the **en-US** folder and language files in order to run *WinSetView.exe*. All other language folders are optional. This folder is not needed for WinSetView.ps1.
 
 ## Tools Folder
 
@@ -517,12 +507,6 @@ This script captures Explorer view settings that can't be set in WinSetView, suc
 Rename CaptureCustom.reg to WinSetViewCustom.reg and place it in the AppData folder to have it applied by WinSetView. WinSetView.ps1 will import the file WinSetViewCustom.reg after all other settings are applied. This will override any settings applied by WinSetView!
 
 Please, if you don't know what you're doing, avoid this level of customization!
-
-**RollbackExplorer.vbs**
-
-This script has been removed from the WinSetView package. It is not compatible with Windows 11 build 22621.1344 or higher. If you run it on that build or above, Explorer will go into an inifinite reload loop. If that happens to you, just press **Ctrl-Alt-Del**, select **Task Manager**, click the **Run new task** button, browse to **RollbackExplorer.vbs** and run it. Then click the **No** button to go back to the Windows 11 Explorer. You may have to logout/login or restart to get everthing back to normal.
-
-Recommended: Install the program [StartAllBack](https://www.startallback.com/) to get back the Windows 10 ribbon and the ability to properly set folder types.
 
 # Command Line Operation
 
@@ -575,7 +559,7 @@ To use this option, click in a folder's white space, select **Customize this fol
 
 **Note**: Windows 11 currently has some bugs in regards to the **Customize this folder...** feature. There are issues with both "Local Disks" (such a C:) and "removable" drives, such as flash drives. On "Local Disks", Windows 11 File Explorer aggressively applies automatic folder type discovery making it impossible to override the automatically detected folder type. On removable drives (ones that are NOT "Local Disk") Windows 11 File Explorer will ignore attempts to set an entire folder tree to the folder type of your choice, leaving the folders set to type "General items". You can, usually, set the folder type by setting one folder at a time.
 
-Currently, as of Windows 11 build 22621.1344, the only way (that I'm aware of) to eliminate these bugs is to install the program [StartAllBack](https://www.startallback.com/) and select the Windows 10 style ribbon option. The previously-provided RollbackExplorer.vbs script no longer works.
+Until Microsoft releases a fix for these issues, one option is to install the program [StartAllBack](https://www.startallback.com/) and select the Windows 10 style ribbon option. This has the beneficial side-effect of eliminating the Windows 11 folder type setting bugs.
 
 ## General Items (Generic) Folders
 
@@ -709,7 +693,7 @@ I have not included any right to left languages, such as Arabic, with WinSetView
 
 ## Language Files 
 
-The **WinSetView.hta** script looks for a **Language** folder in the same location as the script. The Language folder contains one folder for each supported language (e.g. *en-US*). Within each language folder are the following files:
+The **WinSetView.exe** script looks for a **Language** folder in the same location as the script. The Language folder contains one folder for each supported language (e.g. *en-US*). Within each language folder are the following files:
 
 *Columns-Win11.txt\
 Columns-Win10.txt\
@@ -739,6 +723,8 @@ Please refer to the *en-US* folder when creating or editing a translation.
 Save all edited language files as type **Unicode (UTF-16)**.
 
 # Acknowledgements
+
+Thanks to **Jean-Hervé Lescop** of Adersoft for updates to VbsEdit to accommodate WinSetView.
 
 Thanks to **Keith Miller** at TenForums.com for documenting the FolderTypes approach to setting default views.
 

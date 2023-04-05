@@ -1,6 +1,6 @@
 # WinSetView
 <!--
-To view this document formatted (instead of as raw text) just click the Help button in WinSetView.hta.
+To view this document formatted (instead of as raw text) just click the Help button in WinSetView.
 You can also manually navigate your browser to: https://lesferch.github.io/WinSetView.
 -->
 
@@ -12,7 +12,7 @@ This is the quick start guide. For more details, please see the [complete user m
 
 Compatible with Windows 7, 8, 10, and 11.
 
-[Version 2.66](./VersionHistory.md)
+[Version 2.70](./VersionHistory.md)
 
 # Summary
 
