@@ -8,21 +8,21 @@ This is the quick start guide. For more details, please see the [complete user m
 
 [![image](https://user-images.githubusercontent.com/79026235/152910441-59ba653c-5607-4f59-90c0-bc2851bf2688.png)Download the zip file](https://github.com/LesFerch/WinSetView/archive/refs/heads/main.zip)
 
-## Globally Set Explorer Folder Views
+### Globally Set Explorer Folder Views
 
 Compatible with Windows 7, 8, 10, and 11.
 
 [Version 2.70](./VersionHistory.md)
 
-# Summary
+## Summary
 
 WinSetView provides an easy way to set Windows File Explorer default folder views. For example, if you want Details view, with a particular selection of column headings enabled across all folders, then WinSetView will do that for you.
 
 For more details, please see the [extended summary](./README-more.md).
 
-# How to Download and Run
+## How to Download and Run
 
-## Quick Instructions
+### Quick Instructions
 
 1. Download the zip file using the link above.
 2. Extract the entire zip file.
@@ -32,7 +32,7 @@ For more details, please see the [extended summary](./README-more.md).
 
 **Note**: If your security software blocks the download or the app does not launch or you wish to read more about SmartScreen prompts, please see: [Download Help Guide](./DownloadHelp.md)
 
-# How to Use
+## How to Use
 
 Simple step by step instructions follow.
 
@@ -44,13 +44,13 @@ Simple step by step instructions follow.
 
 For complete details, please see the [manual](./Manual.md).
 
-## Step 1: Select Your Interface Language (Optional)
+### Step 1: Select Your Interface Language (Optional)
 
 ![image](https://user-images.githubusercontent.com/79026235/212799679-32d5ed24-d32c-40c2-b0e8-515fe87ccda4.png)
 
 WinSetView should open in the same language to which you have Windows set. If not, select the correct language from the drop down menu.
 
-## Step 2: Select Your Preferred Default View
+### Step 2: Select Your Preferred Default View
 
 ![image](https://user-images.githubusercontent.com/79026235/225508740-10f921ae-d344-4e1e-b5b5-f399153dc4b3.png)
 
@@ -58,7 +58,7 @@ Select the default view you want applied to most (or all) folders from the drop 
 
 **Note**: If you choose one of the **icons** options, a number will appear next to the drop down menu indicating the icon size. You can manually type in a custom size, such as 72, which would give you icons half-way between medium and large.
 
-## Step 3: Select Your Preferred Default Column Headings (Optional)
+### Step 3: Select Your Preferred Default Column Headings (Optional)
 
 ![image](https://user-images.githubusercontent.com/79026235/225509075-25858eb6-e3db-40da-8851-f8d54e4bb741.png)
 
@@ -72,9 +72,9 @@ Otherwise, click the **Columns** button to bring up the column headings selectio
 
 ![image](https://user-images.githubusercontent.com/79026235/212800459-1b7d81a9-89f0-45ad-bc1c-96ecf2cbeeed.png)
 
-The column headings selection page allows you to select your desired column headings (and their order), group-by options, sort options, and column widths. The [manual](./Manual.md#columns) provides full details, but you can also hover over or click on elements to see how the interface works.
+The column headings selection page allows you to select your desired column headings (and their order), group-by options, sort options, and column widths. The [manual](./Manual.md##columns) provides full details, but you can also hover over or click on elements to see how the interface works.
 
-## Step 4: Set Views for Specific Folder Types (Optional)
+### Step 4: Set Views for Specific Folder Types (Optional)
 
 ![image](https://user-images.githubusercontent.com/79026235/225509811-7ba045dc-1f38-4a37-b8f4-83cf28f8e81c.png)
 
@@ -86,7 +86,7 @@ For any folder type (e.g. **Pictures**) that you wish to have a *different* defa
 
 **Note**: If you *uncheck* a folder type, then that folder type will display with its Windows default view settings (i.e. the view you would get for a new user account).
 
-## Step 5: Check and Set Your Desired Options
+### Step 5: Check and Set Your Desired Options
 
 ![image](https://user-images.githubusercontent.com/79026235/225509975-c6397acd-9382-452f-a5fa-26d0cdc499ed.png)
 
@@ -94,9 +94,9 @@ Click The **Options** button.
 
 ![image](https://user-images.githubusercontent.com/79026235/225510374-bff2763b-7500-4b37-b1f0-7c9a3c8192b9.png)
 
-Review the settings on that page and adjust as desired. See the [manual](./Manual.md#options-menu) for full details.
+Review the settings on that page and adjust as desired. See the [manual](./Manual.md##options-menu) for full details.
 
-## Step 6: Apply the Selections to Windows File Explorer
+### Step 6: Apply the Selections to Windows File Explorer
 
 ![image](https://user-images.githubusercontent.com/79026235/212800982-ac98d273-d5f4-400c-87c7-d1a5e687341e.png)
 

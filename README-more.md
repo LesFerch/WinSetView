@@ -20,7 +20,7 @@ WinSetView...
 
 * Can also be used to reset all folder views to **Windows defaults**.
 
-* Can be used via the **command line** (for Power users and System Administrators). See the [*Tools Folder*](./Manual.md#tools-folder) section in the [manual](./Manual.md) for more details.
+* Can be used via the **command line** (for Power users and System Administrators). See the [*Command Line*](./Manual.md##command-line) section in the [manual](./Manual.md) for more details.
 
 WinSetView will **correct** the following conditions (when the cause is registry corruption):
 
