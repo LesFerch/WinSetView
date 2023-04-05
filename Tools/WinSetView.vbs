@@ -7,7 +7,7 @@ MyPath = Left(MyPath,InStrRev(MyPath,"\"))
 oShell.CurrentDirectory = MyPath
 
 If Not oFSO.FileExists(INIFile) Then
-  Msg = "Run WinSetView.hta to create or update INI file." & vbCRLF & vbCRLF
+  Msg = "Run WinSetView.exe to create or update INI file." & vbCRLF & vbCRLF
   Msg = Msg & "Then drop INI file on this script to run "
   Msg = Msg & "WinSetView.ps1 with the saved settings." & vbCRLF & vbCRLF
   Msg = Msg & "This script can be relocated to the WinSetView AppData folder."
