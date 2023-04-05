@@ -1,6 +1,12 @@
+## 2.70
+
+Enhancement: WinSetView.exe is now a VbsEdit HTML application that contains the HTA code along with its own replacement for MSHTA.exe. This will allow it to run on computers where MSHTA has been blocked. Version 2.66 will remain available in case there are any issues with this new package.
+
 ## 2.66
 
 Bug Fix: Microsoft Store apps, that save folder views in a Windows Container hive file, such as the Windows 11 Notepad and Paint, now get their file dialog views set by WinSetView.
+
+Note: This is the last version that runs via MSHTA.exe.
 
 ## 2.65
 
