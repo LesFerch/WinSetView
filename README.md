@@ -30,7 +30,7 @@ For more details, please see the [extended summary](./README-more.md).
 4. Run **WinSetView.exe**.
 5. If you skipped step 3, then, in the SmartScreen window, click **More info** and then **Run anyway**.
 
-**Note**: If the app does not launch or you wish to read more about SmartScreen prompts, please see: [Download Help Guide](./DownloadHelp.md)
+**Note**: If your security software blocks the download or the app does not launch or you wish to read more about SmartScreen prompts, please see: [Download Help Guide](./DownloadHelp.md)
 
 # How to Use
 
