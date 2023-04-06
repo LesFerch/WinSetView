@@ -1,6 +1,7 @@
 ## 2.71
 
 Bug Fix: If WinSetView is closed while minimized, it now re-opens on screen.
+
 Bug Fix: WinSetView now re-centers its window correctly with a top-positioned taskbar.
 
 ## 2.70
