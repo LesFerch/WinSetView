@@ -19,7 +19,7 @@ WinSetView.htm (GUI tool to select desired views)
 <script language="VBScript">
 Option Explicit
 
-Const Version = "2.70"
+Const Version = "2.71"
 
 SetLocale(1033)
 Const ForReading = 1
@@ -55,7 +55,7 @@ Dim ColShowLabels, FTCopyIdx, ThemeFile, SectionList, sTheme, CurBld, LWinVer
 Dim TempArray, RetVal, DialogArgs, DialogOptions, id, GrpUpArrow, GrpDnArrow
 Dim Warning, OptIcon, DialogTop, HighContrast, Beta
 Dim Txt1Data, Txt2Data, WinSys, ExeErr, ArrExe
-Dim WinSizePos, aWinSizePos, GotError
+Dim WinSizePos, aWinSizePos, GotError, TaskbarTop
 
 Z = vbCRLF
 Q = Chr(34)
@@ -67,24 +67,40 @@ Set oFSO = CreateObject("Scripting.FileSystemObject")
 Set oWSH = CreateObject("Wscript.Shell")
 
 WinSizePos = ""
+TaskbarTop = False
 On Error Resume Next
 WinSizePos = oWSH.RegRead("HKCU\Software\WinSetView\WinSizePos")
+TaskbarTop = oWSH.RegRead("HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\StuckRects2\Settings")(12) = 1
+TaskbarTop = oWSH.RegRead("HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\StuckRects3\Settings")(12) = 1
 On Error Goto 0
+
+Function TaskbarAdjust(y)
+  If TaskbarTop Then
+    Dim TaskbarHeight
+    TaskbarHeight = screen.height - screen.availHeight + 4
+    If y<TaskbarHeight Then y = TaskbarHeight
+  End If
+  TaskbarAdjust = y
+End Function
 
 If WinSizePos<>"" Then
   aWinSizePos = Split(WinSizePos,",")
-  On Error Resume Next
-  Window.ResizeTo aWinSizePos(0),aWinSizePos(1)
-  Window.MoveTo aWinSizePos(2),aWinSizePos(3)
-  GotError = Err.Number<>0
-  On Error Goto 0
+  If CInt(aWinSizePos(2))=-32000 Then
+    WinSizePos=""
+  Else
+    On Error Resume Next
+    Window.ResizeTo aWinSizePos(0), aWinSizePos(1)
+    Window.MoveTo aWinSizePos(2), aWinSizePos(3)
+    GotError = Err.Number<>0
+    On Error Goto 0
+  End If
 End If
 
 If WinSizePos="" Or GotError Then
   RequiredWidth = 700
   If RequiredWidth>screen.availWidth Then RequiredWidth = screen.availWidth
   Window.ResizeTo RequiredWidth, screen.availHeight
-  Window.MoveTo (screen.availWidth - RequiredWidth) / 2, 4
+  Window.MoveTo (screen.availWidth - RequiredWidth) / 2, TaskbarAdjust(4)
 End If
 
 Set oSearchOnly = CreateObject("Scripting.Dictionary")
@@ -227,7 +243,7 @@ Sub window_onUnload
   h = window.external.Height
   x = window.external.Left
   y = window.external.Top
-  oWSH.RegWrite "HKCU\Software\WinSetView\WinSizePos",w & "," & h & "," & x & "," & y
+  If x<>-32000 Then oWSH.RegWrite "HKCU\Software\WinSetView\WinSizePos",w & "," & h & "," & x & "," & y
 End Sub
 
 Sub window_OnLoad
@@ -326,7 +342,7 @@ End Sub
 Sub ExeCheck
   WinSys = oWSH.ExpandEnvironmentStrings("%SystemRoot%") & "\System32\"
   If Not oFSO.FileExists(WinSys & "WindowsPowerShell\v1.0\PowerShell.exe") Then ExeErr = ExeErr & "PowerShell.exe" & Z
-  ArrExe = Split("TaskKill.exe,Reg.exe,Cmd.exe",",")
+  ArrExe = Split("TaskKill.exe,Icacls.exe,Reg.exe,Cmd.exe",",")
   For i = 0 To UBound(ArrExe)
     If Not oFSO.FileExists(WinSys & ArrExe(i)) Then ExeErr = ExeErr & ArrExe(i) & Z
   Next
@@ -1716,7 +1732,7 @@ End Sub
 Sub Recenter
   If  WinSizePos="" Then
     Self.ResizeTo RequiredWidth, screen.availHeight
-    Self.MoveTo (screen.availWidth - RequiredWidth) / 2, 4
+    Self.MoveTo (screen.availWidth - RequiredWidth) / 2, TaskbarAdjust(4)
   End If
 End Sub
 

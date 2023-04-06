@@ -1,3 +1,8 @@
+## 2.71
+
+Bug Fix: If WinSetView is closed while minimized, it now re-opens on screen.
+Bug Fix: WinSetView now re-centers its window correctly with a top-positioned taskbar.
+
 ## 2.70
 
 Enhancement: WinSetView.exe is now a VbsEdit HTML application that contains the HTA code along with its own replacement for MSHTA.exe. This will allow it to run on computers where MSHTA has been blocked. Version 2.66 will remain available in case there are any issues with this new package.
