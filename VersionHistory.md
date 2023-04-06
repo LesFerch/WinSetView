@@ -6,7 +6,7 @@ Bug Fix: WinSetView now re-centers its window correctly with a top-positioned ta
 
 ## 2.70
 
-Enhancement: WinSetView.exe is now a VbsEdit HTML application that contains the HTA code along with its own replacement for MSHTA.exe. This will allow it to run on computers where MSHTA has been blocked. Version 2.66 will remain available in case there are any issues with this new package.
+Enhancement: WinSetView.exe is now a VbsEdit HTML application. This will allow it to run on computers where MSHTA has been blocked. Version 2.66 will remain available in case there are any issues with this new package.
 
 ## 2.66
 
