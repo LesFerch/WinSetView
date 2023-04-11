@@ -2,6 +2,8 @@
 
 Starting with version 2.70, WinSetView is a VbsEdit HTML application. Follow the steps below to debug and create WinSetView.exe.
 
+If you are an end-user, please ignore this document!
+
 ## Exe Creation Steps
 
 1. Install **VbsEdit 23.3.28.5** or newer.
