@@ -6,13 +6,13 @@ Bug Fix: WinSetView now re-centers its window correctly with a top-positioned ta
 
 ## 2.70
 
-Enhancement: WinSetView.exe is now a VbsEdit HTML application. This will allow it to run on computers where MSHTA has been blocked. Version 2.66 will remain available in case there are any issues with this new package.
+Enhancement: WinSetView.exe is now a VbsEdit HTML application. That is, the HTA file has been replaced by an EXE file. This will allow it to run on computers where MSHTA has been blocked. Version 2.66 will remain available in case there are any issues with this new package.
 
 ## 2.66
 
 Bug Fix: Microsoft Store apps, that save folder views in a Windows Container hive file, such as the Windows 11 Notepad and Paint, now get their file dialog views set by WinSetView.
 
-Note: This is the last version that runs via MSHTA.exe.
+Note: This is the last version that runs via MSHTA.exe. That is, this is the last version that includes an HTA file.
 
 ## 2.65
 
