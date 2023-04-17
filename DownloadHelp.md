@@ -74,4 +74,4 @@ Click **Run anyway** to run the app.
 To use WinSetView, please follow the steps in the quick start guide:
 
 ![image](https://user-images.githubusercontent.com/79026235/152913587-d294de81-c8ca-428d-b351-09a564854eff.png)
-[See the quick start guide](./README.md)
+[See the quick start guide](./README.md#how-to-use)
