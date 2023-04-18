@@ -477,6 +477,6 @@ If ($FileDialogOption -eq 1) {
 
 # Import Reg data for any custom settings
 
-If (Test-Path -Path $Custom) {& $RegExe Import $Custom}
+If (Test-Path -Path $Custom) {& $RegExe Import $Custom /reg:64}
 
 RestartExplorer
