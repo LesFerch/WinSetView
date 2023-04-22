@@ -19,7 +19,7 @@ WinSetView.htm (GUI tool to select desired views)
 <script language="VBScript">
 Option Explicit
 
-Const Version = "2.71"
+Const Version = "2.72"
 
 SetLocale(1033)
 Const ForReading = 1
@@ -815,6 +815,7 @@ Sub Dict2Dom
   ka.checked = SetInitial("[Options]KeepViews",0)
   nf.checked = SetInitial("[Options]NoFolderThumbs",0)
   ua.checked = SetInitial("[Options]UnhideAppData",0)
+  sc.checked = SetInitial("[Options]ClassicSearch",0)
   cm.checked = SetInitial("[Options]ClassicContextMenu",0)
   si.checked = SetInitial("[Options]NoSearchInternet",0)
   sh.checked = SetInitial("[Options]NoSearchHighlights",0)
@@ -899,6 +900,7 @@ Sub Var2Ini(INIFile)
   oFile.Write "KeepViews=" & Abs(Int(ka.Checked)) & Z
   oFile.Write "NoFolderThumbs=" & Abs(Int(nf.Checked)) & Z
   oFile.Write "UnhideAppData=" & Abs(Int(ua.Checked)) & Z
+  oFile.Write "ClassicSearch=" & Abs(Int(sc.Checked)) & Z
   oFile.Write "ClassicContextMenu=" & Abs(Int(cm.Checked)) & Z
   oFile.Write "NoSearchInternet=" & Abs(Int(si.Checked)) & Z
   oFile.Write "NoSearchHighlights=" & Abs(Int(sh.Checked)) & Z
@@ -1869,7 +1871,10 @@ End Sub
 Sub Help
   x = "https://lesferch.github.io/WinSetView"
   If Beta Then x = "https://github.com/LesFerch/WinSetView/blob/beta/README.md"
+  On Error Resume Next
   oWSH.Run x
+  If Err.number<>0 Then MsgBox "An error occurred attempting to open" & Z & Z & x
+  On Error GoTo 0
 End Sub
 
 ' HTML interface starts here with the script-generated pages
@@ -1966,6 +1971,7 @@ End Sub
   #ka   {margin-top:3pt}
   #nf   {margin-top:3pt}
   #ua   {margin-top:3pt}
+  #sc   {margin-top:3pt}
   #cm   {margin-top:3pt}
   #si   {margin-top:3pt}
   #sh   {margin-top:3pt}
@@ -2159,6 +2165,7 @@ End Sub
     <input type=checkbox id=sh># 49 #<br><br>
     <input type=checkbox id=nf># 35 #<br><br>
     <input type=checkbox id=ua># 50 #<br><br>
+    <input type=checkbox id=sc># 51 #<br><br>
     <div id=Sec4>
       <input type=checkbox id=so Checked onclick=OptionSearchOnly()># 9 #<br><br>
       <input type=checkbox id=vf Checked># 29 #<br><br>

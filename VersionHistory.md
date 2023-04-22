@@ -1,3 +1,9 @@
+## 2.72
+
+Feature added: Option to enable Classic Search in Windows 10.
+
+Bug Fix: In order to work with the new Windows App SDK version of File Explorer (currently only available in the Canary build) the HomeFolder type is now always set to group by group.
+
 ## 2.71
 
 Bug Fix: If WinSetView is closed while minimized, it now re-opens on screen.
@@ -6,13 +12,13 @@ Bug Fix: WinSetView now re-centers its window correctly with a top-positioned ta
 
 ## 2.70
 
-Enhancement: WinSetView.exe is now a VbsEdit HTML application. That is, the HTA file has been replaced by an EXE file. This will allow it to run on computers where MSHTA has been blocked. Version 2.66 will remain available in case there are any issues with this new package.
+Enhancement: WinSetView.exe is now a VbsEdit HTML application. This will allow it to run on computers where MSHTA has been blocked. Version 2.66 will remain available in case there are any issues with this new package.
 
 ## 2.66
 
 Bug Fix: Microsoft Store apps, that save folder views in a Windows Container hive file, such as the Windows 11 Notepad and Paint, now get their file dialog views set by WinSetView.
 
-Note: This is the last version that runs via MSHTA.exe. That is, this is the last version that includes an HTA file.
+Note: This is the last version that runs via MSHTA.exe.
 
 ## 2.65
 

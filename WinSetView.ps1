@@ -39,6 +39,8 @@ Function Get-IniContent ($FilePath) {
 $Key = 'HKLM:\Software\Microsoft\Windows NT\CurrentVersion'
 $Value = 'CurrentVersion'
 $NTVer = (Get-ItemProperty -Path $Key -Name $Value).$Value
+$Value = 'CurrentBuild'
+$CurBld = (Get-ItemProperty -Path $Key -Name $Value).$Value
 If ($NTVer -eq '6.1') {$WinVer = '7'}
 If (($NTVer -eq '6.2') -Or ($NTVer -eq '6.3')) {$WinVer = '8'}
 $Value = 'CurrentMajorVersionNumber'
@@ -201,6 +203,7 @@ Else {
   $NoFolderThumbs = [Int]$iniContent['Options']['NoFolderThumbs']
   $ResetThumbs = [Int]$iniContent['Options']['ResetThumbs']
   $UnhideAppData = [Int]$iniContent['Options']['UnhideAppData']
+  $ClassicSearch = [Int]$iniContent['Options']['ClassicSearch']
   $SearchOnly = [Int]$iniContent['Options']['SearchOnly']
   $SetVirtualFolders = [Int]$iniContent['Options']['SetVirtualFolders']
   $ThisPCoption = [Int]$iniContent['Options']['ThisPCoption']
@@ -296,10 +299,18 @@ $NoSearchHighlights = 1-$NoSearchHighlights
 
 If ($NoFolderThumbs -eq 1) {& $RegExe Add "$Shel" /v Logo /d none /t REG_SZ /f}
 
-# Unhide / Hide AppData folder
+# Unhide/hide AppData folder
 
 If ($UnhideAppData -eq 1) {& $CmdExe /c attrib -h "$UAppData"}
 Else {& $CmdExe /c attrib +h "$UAppData"}
+
+# Enable/disable classic search
+
+If (($CurBld -ge 18363) -And ($CurBld -lt 21996)) {
+  $Key = "HKCU\Software\Classes\CLSID\{1d64637d-31e9-4b06-9124-e83fb178ac6e}"
+  If ($ClassicSearch -eq 1) {& $RegExe add "$Key\TreatAs" /ve /t REG_SZ /d "{64bc32b5-4eec-4de7-972d-bd8bd0324537}" /reg:64 /f 2>$Null}
+  Else {& $RegExe delete $Key /reg:64 /f 2>$Null}
+}
 
 # If reset, restart Explorer and exit
 
@@ -419,8 +430,12 @@ Get-ChildItem $FolderTypes | Get-ItemProperty | ForEach {
         BuildRegData('ComDlgLegacy')
       }
       $GroupBy = $iniContent[$FT]['GroupBy']
-      If ($GroupBy -ne '') {$GroupBy = "System.$GroupBy"}
       $GroupByOrder = $iniContent[$FT]['GroupByOrder']
+      If ($FT -eq 'HomeFolder') {
+        $GroupBy = 'Home.Grouping'
+        $GroupByOrder = '+'
+      }
+      If ($GroupBy -ne '') {$GroupBy = "System.$GroupBy"}
       If ($GroupByOrder -eq '+') {$GroupByOrder = 1} Else {$GroupByOrder = 0}
       $SortBy = 'prop:' + $iniContent[$FT]['SortBy']
       $SortBy = $SortBy -Replace '\+','+System.'

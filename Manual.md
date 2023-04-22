@@ -17,9 +17,9 @@ This is the complete user manual. See the link below for the quick start guide.
 Compatible with Windows 7, 8, 10, and 11.
 
 Les Ferch, lesferch@gmail.com\
-GitHub repository created 2021-03-26, last updated 2023-04-06
+GitHub repository created 2021-03-26, last updated 2023-04-21
 
-[Version 2.71](./VersionHistory.md)
+[Version 2.72](./VersionHistory.md)
 
 ## Summary
 
@@ -256,7 +256,7 @@ This folder type controls the view you see for the *Searches* item within your u
 
 ### Options Menu
 
-![image](https://user-images.githubusercontent.com/79026235/225512977-185d21d7-50e3-4b61-bbd3-0a1720c3d759.png)
+![image](https://user-images.githubusercontent.com/79026235/233754513-6a6d4863-7de1-425f-a183-62eaaadb23f5.png)
 
 **Show File Extensions**
 
@@ -291,6 +291,11 @@ This option sets a registry value that tells Explorer to NOT create a thumbnail 
 **Unhide the AppData folder**
 
 When checked, the hidden attribute is removed from the current user's AppData folder. Unchecking the option re-applies the hidden attribute.
+
+\
+**Enable Classic Search in Windows 10**
+
+When checked, Windows search will be reverted to the version prior to the release of Windows 10 1909. Classic search includes results as you type and **Date modified:** calendar and **Size:** category pop-ups.
 
 \
 **Show paths in search results only**
