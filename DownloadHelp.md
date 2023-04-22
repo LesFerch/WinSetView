@@ -71,11 +71,11 @@ Click **Run anyway** to run the app.
 
 **Note**: Even though WinSetView.exe is code-signed, with a certificate issued by Sectigo, the SmartScreen block will still come up because non-incorporated individual developers cannot purchase (and typically cannot afford) an extended verification (EV) certificate required to get full trust. The fact that WinSetView is provided as an open-source app via GitHub, with my personal contact information available for all to see, is much more reassurance of safety than any certificate provides. The bad actors out there can find ways to code-sign their malware. Knowing where you got the app is much more important. Although there are many trustworthy download sites, the best practice is to download from the author's web page. If you got this app from my [web page](https://lesferch.github.io/WinSetView/), that's your best protection.
 
-**Note**: WinSetView requires VBScript in order to run. If WinSetView opens to a blank page or just a minimized icon, VBScript may have been disabled. The latest insider builds of Windows 11 provide an option to uninstall VBScript via Apps > Optional features:
+**Note**: WinSetView requires VBScript in order to run. If WinSetView opens to a blank page or just a minimized icon, VBScript may have been disabled or uninstalled. The latest insider builds of Windows 11 provide an option to uninstall VBScript via Apps > Optional features:
 
 ![image](https://user-images.githubusercontent.com/79026235/233753663-f28a2dc3-6bac-48bc-83af-c2a9c51c7e73.png)
 
-Do not use that option if you want to run WinSetView! If you've already uninstalled VBScript, you can reinstall it via the **View features** button next to **Add an optional feature** at the top of that same page.
+Do not uninstall VBScript! If you've already uninstalled VBScript, you can reinstall it via the **View features** button next to **Add an optional feature** at the top of that same page.
 
 To use WinSetView, please follow the steps in the quick start guide:
 
