@@ -1,3 +1,7 @@
+## 2.73
+
+Bug Fix: Corrected issue with dialogs in the app being sized too small vertically.
+
 ## 2.72
 
 Feature added: Option to enable Classic Search in Windows 10.
