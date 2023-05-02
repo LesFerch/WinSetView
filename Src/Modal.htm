@@ -22,6 +22,11 @@ Theme = aArgs(4) '0:Light 1:Dark 2:High Contrast
 Set oWSH = CreateObject("Wscript.Shell")
 CurBld = oWSH.RegRead("HKLM\Software\Microsoft\Windows NT\CurrentVersion\CurrentBuild")
 
+BaseScale = 1.0
+On Error Resume Next
+BaseScale = oWSH.RegRead("HKCU\Control Panel\Desktop\WindowMetrics\AppliedDPI") / 96
+On Error Goto 0
+
 WidthIcon = "⟷"
 PixInputIcon = "⟷."
 NameWarnIcon = "⚠"
@@ -130,7 +135,7 @@ Sub window_onLoad
 
   y = document.body.scrollHeight
   window.moveTo aArgs(6), aArgs(7)
-  window.resizeTo aArgs(5),y + 56
+  window.resizeTo aArgs(5),y + (56 * BaseScale)
   
   If document.title=OptIcon Then
     fc1.Checked = False
