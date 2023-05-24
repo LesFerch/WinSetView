@@ -677,17 +677,17 @@ Note: Default views for all folder types can be found in the *FolderTypes* key, 
 Here's an overview of the steps the PowerShell script performs to set Explorer views as per the selected options:
 
 1) Backup the existing user's registry keys that hold Explorer views
-\
+
 2) Delete those keys (except *Streams/Defaults* if *Keep "Apply to Folders" Views* is checked).
-\
+
 3) Set any direct registry entries, such as *Show File Extensions* and *Make All Folders Generic*, for the current user.
-\
+
 4) If a custom view for *This PC* has been selected, create registry entries for that view.
-\
+
 5) Copy FolderTypes key from HKEY_LOCAL_MACHINE (HKLM) to HKEY_CURRENT_USER (HKCU).
-\
+
 6) Edit FolderTypes key in HKCU per user's selections.
-\
+
 7) Restart Explorer.
 
 ## Language Support
