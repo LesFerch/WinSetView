@@ -1,3 +1,13 @@
+## 2.74
+
+Bug Fix: Fixed issue on Windows 7 and 8 that caused Desktop icons to get auto-arranged.
+
+Enhancement: Now exits with error if MSHTML version is less than 11 (applicable to a non-updated Windows 7).
+
+Enhancement: New option (in Advanced interface) to allow non-standard grouping of the Home / Quick Access folder.
+
+Enhancement: Toolbars are now preserved when using the option "Reset Views to Windows Defaults"
+
 ## 2.73
 
 Bug Fix: Corrected issue with dialogs in the app being sized too small vertically.

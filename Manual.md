@@ -17,9 +17,9 @@ This is the complete user manual. See the link below for the quick start guide.
 Compatible with Windows 7, 8, 10, and 11.
 
 Les Ferch, lesferch@gmail.com\
-GitHub repository created 2021-03-26, last updated 2023-05-01
+GitHub repository created 2021-03-26, last updated 2023-06-01
 
-[Version 2.73](./VersionHistory.md)
+[Version 2.74](./VersionHistory.md)
 
 ## Summary
 
@@ -352,6 +352,16 @@ This option retains any folder views that have been saved using Explorer's **App
 If you really want to use this option, be sure to use the **Apply to Folders** button in Explorer for each folder type view you want to set. That is, in *Explorer*, set your desired view for **Downloads**, then go to **View**, **Options**, **Change folder and search options**, **View** tab, and click **Apply to Folders**. Repeat those steps for **Documents**, **Music**, **Pictures**, and **Videos**. All of those views will then take precedence over any Global view set with *WinSetView*.
 
 Note: If **Make All Folders Generic** is also checked, only **Downloads**, **Libraries**, and **Search Results** will get their views from any view saved via Explorer's **Apply to Folders** button. Of course, if you later change a folder to type **Documents**, **Music**, **Pictures**, or **Videos**, it will then pick up the view settings that were saved using **Apply to Folders**.
+
+\
+**Do not force standard grouping on Home / Quick Access** (Advanced interface)
+
+When this option is unchecked (default), the Home / Quick Access folder will always be grouped by Group. That is, the folder will have headings for pinned items, recent files, and recent folders.
+
+When this option is checked, the grouping (and sorting) options displayed for Home / Quick Access will be applied.
+
+**WARNING**: Setting grouping to (None) for Home / Quick Access is known to cause the pre-release App SDK version of File Explorer to crash. This may or may not be an issue with the production release.
+
 
 ### Columns
 

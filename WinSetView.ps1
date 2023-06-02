@@ -103,17 +103,13 @@ $Srdc = '"HKCU\Software\Microsoft\Windows\CurrentVersion\Feeds\DSB"'
 $BwgM = '"HKCU\Software\Microsoft\Windows\Shell\BagMRU"'
 $Bwgs = '"HKCU\Software\Microsoft\Windows\Shell\Bags"'
 $Desk = '"HKCU\Software\Microsoft\Windows\Shell\Bags\1\Desktop"'
+$TBar = '"HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Streams\Desktop"'
 
 #Keys for use with PowerShell
 $ShPS = 'HKCU:\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags\AllFolders\Shell'
 
 #Keys for building REG files
 $ImpR = '[HKEY_CURRENT_USER\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags\AllFolders\'
-$DMR1 = '[HKEY_CURRENT_USER\Software\Microsoft\Windows\Shell\BagMRU]'
-$DMR2 = '"NodeSlots"=hex:02'
-$DMR3 = '"MRUListEx"=hex:ff,ff,ff,ff'
-$DMR4 = '"NodeSlot"=dword:00000001'
-$DMRU = "$DMR1`r`n$DMR2`r`n$DMR3`r`n$DMR4"
 
 #File paths
 $TempDir   = "$env:TEMP"
@@ -128,6 +124,7 @@ $T5        = "$TempDir\WinSetView5.tmp"
 $T6        = "$TempDir\WinSetView6.tmp"
 $ShellBak  = "$TempDir\ShellBak.reg"
 $DeskBak   = "$TempDir\DeskBak.reg"
+$TBarBak   = "$TempDir\TBarBak.reg"
 $TimeStr   = (get-date).ToString('yyyy-MM-dd-HHmm-ss')
 $RegExe    = "$env:SystemRoot\System32\Reg.exe"
 $CmdExe    = "$env:SystemRoot\System32\Cmd.exe"
@@ -175,6 +172,9 @@ Function ResetStoreAppViews {
 Function RestartExplorer {
   & $RegExe Import $ShellBak
   & $RegExe Import $DeskBak
+  & $RegExe Import $TBarBak
+  & $RegExe Add "$BwgM" /v NodeSlots /d '02' /t REG_BINARY /f >$Null
+  & $RegExe Add "$BwgM" /v NodeSlot /d 1 /t REG_DWORD /f >$Null
   If ($WinVer -ne '7') {ResetStoreAppViews}
   Stop-Process -Force -ErrorAction SilentlyContinue -ProcessName Explorer
   If ($ResetThumbs -eq 1) {ResetThumbCache}
@@ -204,6 +204,7 @@ Else {
   $ResetThumbs = [Int]$iniContent['Options']['ResetThumbs']
   $UnhideAppData = [Int]$iniContent['Options']['UnhideAppData']
   $ClassicSearch = [Int]$iniContent['Options']['ClassicSearch']
+  $HomeGrouping = [Int]$iniContent['Options']['HomeGrouping']
   $SearchOnly = [Int]$iniContent['Options']['SearchOnly']
   $SetVirtualFolders = [Int]$iniContent['Options']['SetVirtualFolders']
   $ThisPCoption = [Int]$iniContent['Options']['ThisPCoption']
@@ -224,7 +225,7 @@ If (!(Test-Path -Path "$AppData\Backup")) {Mkdir "$AppData\Backup" >$Null}
 
 # Backup current Desktop view details
 & $RegExe Export $Desk $DeskBak /y 2>$Null
-Add-Content -Path $DeskBak -Value $DMRU
+& $RegExe Export $TBar $TBarBak /y 2>$Null
 
 Function RemoveTempFiles {
   Remove-Item $T1 2>$Null
@@ -431,7 +432,7 @@ Get-ChildItem $FolderTypes | Get-ItemProperty | ForEach {
       }
       $GroupBy = $iniContent[$FT]['GroupBy']
       $GroupByOrder = $iniContent[$FT]['GroupByOrder']
-      If ($FT -eq 'HomeFolder') {
+      If (($FT -eq 'HomeFolder') -And ($HomeGrouping -eq 0)) {
         $GroupBy = 'Home.Grouping'
         $GroupByOrder = '+'
       }

@@ -19,7 +19,7 @@ WinSetView.htm (GUI tool to select desired views)
 <script language="VBScript">
 Option Explicit
 
-Const Version = "2.73"
+Const Version = "2.74"
 
 SetLocale(1033)
 Const ForReading = 1
@@ -32,7 +32,7 @@ Class ClassParam
   Dim param1
 End Class
 
-Dim o, oWSH, oFSO, oFolder, oFile, oFiles, oOption, oElement, oElements
+Dim o, oWSH, oFSO, oApp, oFolder, oFile, oFiles, oOption, oElement, oElements
 Dim oFolderTypes, oSettings, oSearchOnly, oOption1, oOption2, oThemes
 Dim i, j, Q, V, X, Y, Z, Temp, TestFile, Section, CheckCount, Value, Key, ArrKeys, Result, SubKey
 Dim AvailHeight, HeadHeight, RequiredWidth, CurrentWidth, Maximized, Fonts, TestFileName
@@ -55,7 +55,7 @@ Dim ColShowLabels, FTCopyIdx, ThemeFile, SectionList, sTheme, CurBld, LWinVer
 Dim TempArray, RetVal, DialogArgs, DialogOptions, id, GrpUpArrow, GrpDnArrow
 Dim Warning, OptIcon, DialogTop, HighContrast, Beta
 Dim Txt1Data, Txt2Data, WinSys, ExeErr, ArrExe
-Dim WinSizePos, aWinSizePos, GotError, TaskbarTop
+Dim WinSizePos, aWinSizePos, GotError, TaskbarTop, MSHTMLVer
 
 Z = vbCRLF
 Q = Chr(34)
@@ -65,6 +65,7 @@ Beta = Instr(LCase(Version),"beta")>0
 
 Set oFSO = CreateObject("Scripting.FileSystemObject")
 Set oWSH = CreateObject("Wscript.Shell")
+Set oApp = CreateObject("Shell.Application")
 
 WinSizePos = ""
 TaskbarTop = False
@@ -131,7 +132,19 @@ If CurBld>=22000 Then LWinVer = "11"
 
 If WinVer<>"7" And WinVer<>"8" And WinVer<>"10" Then
   MsgBox "Windows 7, 8, 10, or higher is required.",vbCritical,"Error"
-  Self.Close
+  self.close
+  window.close
+  Exit Sub
+End If
+
+WinSys = oWSH.ExpandEnvironmentStrings("%SystemRoot%") & "\System32\"
+Set oFile = oApp.Namespace(0).ParseName(WinSys & "MSHTML.dll")
+MSHTMLVer = CInt(Split(oFile.ExtendedProperty("System.Software.ProductVersion"),".")(0))
+
+If MSHTMLVer<11 Then
+  MsgBox "MSHTML 11 is required. Update IE to get the latest MSHTML.",vbCritical,"Error"
+  self.close
+  window.close
   Exit Sub
 End If
 
@@ -148,7 +161,8 @@ If InStr(MyFolder,"[") Or InStr(MyFolder,"]") Then
   b = "Due to a PowerShell issue, this script cannot run from a directory containing '[' or ']'"
   c = Z & Z & "Please rename the current directory."
   MsgBox a & b & c,vbCritical,"Error"
-  Self.Close
+  self.close
+  window.close
   Exit Sub
 End If
   
@@ -340,7 +354,6 @@ Sub ClearBlock(Folder)
 End Sub
 
 Sub ExeCheck
-  WinSys = oWSH.ExpandEnvironmentStrings("%SystemRoot%") & "\System32\"
   If Not oFSO.FileExists(WinSys & "WindowsPowerShell\v1.0\PowerShell.exe") Then ExeErr = ExeErr & "PowerShell.exe" & Z
   ArrExe = Split("TaskKill.exe,Icacls.exe,Reg.exe,Cmd.exe",",")
   For i = 0 To UBound(ArrExe)
@@ -348,7 +361,8 @@ Sub ExeCheck
   Next
   If ExeErr<>"" Then
     MsgBox "The following required system files were not found:" & Z & Z & ExeErr,vbCritical,"Error"
-    Self.Close
+    self.close
+    window.close
     Exit Sub
   End If
 End Sub
@@ -433,7 +447,8 @@ Sub SetLang
     Else
       MsgBox "Language folder missing: " & LangDir & Language,vbCritical,"Error"
     End If
-    Self.Close
+    self.close
+    window.close
     Exit Sub
   End If
 End Sub
@@ -816,6 +831,7 @@ Sub Dict2Dom
   nf.checked = SetInitial("[Options]NoFolderThumbs",0)
   ua.checked = SetInitial("[Options]UnhideAppData",0)
   sc.checked = SetInitial("[Options]ClassicSearch",0)
+  hg.checked = SetInitial("[Options]HomeGrouping",0)
   cm.checked = SetInitial("[Options]ClassicContextMenu",0)
   si.checked = SetInitial("[Options]NoSearchInternet",0)
   sh.checked = SetInitial("[Options]NoSearchHighlights",0)
@@ -901,6 +917,7 @@ Sub Var2Ini(INIFile)
   oFile.Write "NoFolderThumbs=" & Abs(Int(nf.Checked)) & Z
   oFile.Write "UnhideAppData=" & Abs(Int(ua.Checked)) & Z
   oFile.Write "ClassicSearch=" & Abs(Int(sc.Checked)) & Z
+  oFile.Write "HomeGrouping=" & Abs(Int(hg.Checked)) & Z
   oFile.Write "ClassicContextMenu=" & Abs(Int(cm.Checked)) & Z
   oFile.Write "NoSearchInternet=" & Abs(Int(si.Checked)) & Z
   oFile.Write "NoSearchHighlights=" & Abs(Int(sh.Checked)) & Z
@@ -1088,7 +1105,8 @@ Sub RunScript(Param)
   End If
   CmdLine = "Powershell.exe " & x & " -NoLogo -ExecutionPolicy Bypass -File .\WinSetView.ps1 " & Chr(34) & Param & Chr(34)
   oWSH.Run CmdLine,1,False
-  Window.Close
+  self.close
+  window.close
 End Sub
 
 ' Set values for column selection page
@@ -2174,6 +2192,7 @@ End Sub
       <div id=ao>
       <input type=checkbox id=gn Checked># 10 #<br><br>
       <input type=checkbox id=ka># 11 #<br><br>
+      <input type=checkbox id=hg># 52 #<br><br>
       </div>
     </div>
   </div>
