@@ -1,3 +1,7 @@
+## 2.75
+
+Bug Fix: Fixed Windows 11 Sort menu items grayed out (in views other than Details) when the option "Use General Items view for connected devices" is checked.
+
 ## 2.74
 
 Bug Fix: Fixed issue on Windows 7 and 8 that caused Desktop icons to get auto-arranged.

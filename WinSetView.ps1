@@ -377,6 +377,7 @@ If ($SetVirtualFolders -eq 1) {
   $CustomIconSize = $iniContent['Generic']['IconSize']
   SetViewValues([Int]$iniContent['Generic']['View'])
   If ($CustomIconSize -ne '') {$IconSize = $CustomIconSize}
+  & $RegExe Add "$Bags\AllFolders\Shell\$GUID" /v FFlags /d '0x41200001' /t REG_DWORD /f
   & $RegExe Add "$Bags\AllFolders\Shell\$GUID" /v Mode /d "$Mode" /t REG_DWORD /f
   & $RegExe Add "$Bags\AllFolders\Shell\$GUID" /v LogicalViewMode /d "$LVMode" /t REG_DWORD /f
   If ($LVMode -eq 3) {& $RegExe Add "$Bags\AllFolders\Shell\$GUID" /v IconSize /d "$IconSize" /t REG_DWORD /f}
