@@ -17,9 +17,9 @@ This is the complete user manual. See the link below for the quick start guide.
 Compatible with Windows 7, 8, 10, and 11.
 
 Les Ferch, lesferch@gmail.com\
-GitHub repository created 2021-03-26, last updated 2023-06-09
+GitHub repository created 2021-03-26, last updated 2023-06-16
 
-[Version 2.75](./VersionHistory.md)
+[Version 2.76](./VersionHistory.md)
 
 ## Summary
 
@@ -397,11 +397,15 @@ The top row of the table consists of a fixed row of buttons for selecting **Grou
 This column will be disabled by default and the button at the top of the column will appear as an **X**. In this mode, no property is selected for grouping (i.e. *Group by* = *None*). To enable the column, click the **X**. The button will switch to **(⮬)** (for group by ascending) and a column of radio buttons will appear. Select the radio button beside the property you wish to group by. Only one property can be selected. Clicking the heading button again will switch to **(⮯)** (for group by descending). Clicking the heading button once more will hide the radio buttons and set grouping to none.
 
 \
-**⮬ (Sort 1, Sort 2, Sort 3, Sort 4)**
+**⮬ (Sort 1, Sort 2, Sort 3)**
 
-There are four Sort columns to allow sorting Explorer file/folder views on up to four different properties. Click a Sort column heading button to cycle between *ascending* (**⮬**), *descending* (**⮯**), or *disabled* (**X**). The first Sort column cannot be disabled. That is, at least one property must be selected for sorting. By default, *Sort by* is set to the Name (ItemNameDisplay) property in *ascending* order.
+There are three Sort columns to allow sorting Explorer file/folder views on up to three different properties. Click a Sort column heading button to cycle between *ascending* (**⮬**), *descending* (**⮯**), or *disabled* (**X**). The first Sort column cannot be disabled. That is, at least one property must be selected for sorting. By default, *Sort by* is set to the Name (ItemNameDisplay) property in *ascending* order.
 
 With a Sort column enabled (ascending or descending), click a radio button beside the property you wish to sort by.
+
+**Note**: Sort 2 and Sort 3 are used to create a multi-level sort. If Sort 1 is set to something unique, such as Name, there is no point in setting a Sort 2 or Sort 3. However, if Sort 1 is set to something non-unique, such as Type, then Sort 2 could be set to something else, such as Date modified or Name to create a two-level sort. A three level sort could be set up for Music folders with something like Artist for Sort 1, Album for Sort 2, and Title for Sort 3.
+
+**Note**: Prior to WinSetView 2.76 there were four Sort columns, but it has been determined that Windows only supports up to 3 sort levels via the FolderTypes registry key (that's used to set the default folder views) even though it's possible to set four sort levels via the File Explorer GUI by Shift-clicking column headings.
 
 \
 **⟷ (Column Width)**

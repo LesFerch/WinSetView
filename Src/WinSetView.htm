@@ -19,7 +19,7 @@ WinSetView.htm (GUI tool to select desired views)
 <script language="VBScript">
 Option Explicit
 
-Const Version = "2.75"
+Const Version = "2.76"
 
 SetLocale(1033)
 Const ForReading = 1
@@ -1113,6 +1113,10 @@ End Sub
 
 Sub SelectColumns(i)
   FTindex = i
+
+  'These two lines added June 2023 to disable Sort 4
+  ArrSort4(FTindex)=""
+  cbs4.style.display = "none"
 
   'Reset everything
   For i = 0 To UBound(ArrColData)

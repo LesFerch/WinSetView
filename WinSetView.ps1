@@ -439,11 +439,17 @@ Get-ChildItem $FolderTypes | Get-ItemProperty | ForEach {
       }
       If ($GroupBy -ne '') {$GroupBy = "System.$GroupBy"}
       If ($GroupByOrder -eq '+') {$GroupByOrder = 1} Else {$GroupByOrder = 0}
-      $SortBy = 'prop:' + $iniContent[$FT]['SortBy']
+
+      #Code added June 2023 to disable Sort 4
+      $SortBy = $iniContent[$FT]['SortBy']
+      If ($SortBy.Split(';').Count -eq 4) {
+        $SortBy = $SortBy.SubString(0,$SortBy.LastIndexOf(';'))
+      }
+      $SortBy = 'prop:' + $SortBy
       $SortBy = $SortBy -Replace '\+','+System.'
       $SortBy = $SortBy -Replace '-','-System.'
-      $View = $iniContent[$FT]['View']
 
+      $View = $iniContent[$FT]['View']
       $CustomIconSize = $iniContent[$FT]['IconSize']
       SetViewValues($View)
       If ($CustomIconSize -ne '') {$IconSize = $CustomIconSize}
