@@ -1,3 +1,13 @@
+## 2.77
+
+Bug Fix: Fixed issue on Windows 7 x64 that caused an error with the Change column order feature.
+
+Enhancement: Now displays an error message if VBScript.dll has been disabled or uninstalled.
+
+Enhancement: Now fully compatible with PowerShell running in Constrained Language Mode.
+
+Enhancement: An irrelevant error message, that showed in the console only for a new user, is now suppressed.
+
 ## 2.76
 
 Bug Fix: Sort 4 removed because Explorer does not handle more than three sort levels via the FolderTypes registry key, even though Microsoft has four sort levels set in that key for Music library and Music search results. A fourth sort level causes sorting to revert to the default of sort by Name and can also cause the ribbon's Sort menu items to be grayed out in Windows 11 or not shown at all in Windows 10.

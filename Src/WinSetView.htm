@@ -17,9 +17,28 @@ WinSetView.htm (GUI tool to select desired views)
   contextmenu=no
 >
 <script language="VBScript">
+Dim TestVar
+</script>
+<script language="JScript">
+try { if (TestVar) {} }
+catch(Err) {
+  msg = "VBScript has been disabled or uninstalled.";
+  try {
+    oWSH = new ActiveXObject("WScript.Shell");
+    oWSH.Popup(msg,0,"Error",16);
+  }
+  catch(Err) {
+    alert(msg);
+  }
+  self.close();
+  window.close();
+}
+</script>
+
+<script language="VBScript">
 Option Explicit
 
-Const Version = "2.76"
+Const Version = "2.77"
 
 SetLocale(1033)
 Const ForReading = 1
@@ -986,13 +1005,14 @@ End Sub
 
 Function Modal(Title,Args,DialogTop)
 
-  Dim w, t
+  Dim w, t, wx
 
   t = Abs(Int(Instr(LCase(sTheme),"dark")>0))
   If HighContrast Then t = 2
 
   w = Int(Document.documentElement.clientWidth)
-  w = Math.Min(w,Int(350*Scale))
+  wx = Int(350*Scale)
+  If wx<w Then w = wx
   
   x = window.screenLeft+Int(2*Scale)
   y = DialogTop
@@ -1103,7 +1123,7 @@ Sub RunScript(Param)
   If Right(Param,3)="ini" Then
     If window.event.altKey Then x = "-NoExit"
   End If
-  CmdLine = "Powershell.exe " & x & " -NoLogo -ExecutionPolicy Bypass -File .\WinSetView.ps1 " & Chr(34) & Param & Chr(34)
+  CmdLine = "Powershell.exe " & x & " -NoLogo -NoProfile -ExecutionPolicy Bypass -File .\WinSetView.ps1 " & Chr(34) & Param & Chr(34)
   oWSH.Run CmdLine,1,False
   self.close
   window.close

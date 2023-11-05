@@ -12,7 +12,10 @@ Param (
 
 #Set-PSDebug -Trace 1
 
-$host.ui.RawUI.WindowTitle = "WinSetView"
+$Constrained = $false
+If ($ExecutionContext.SessionState.LanguageMode -eq "ConstrainedLanguage") {$Constrained = $true}
+
+If (-Not $Constrained) {$host.ui.RawUI.WindowTitle = "WinSetView"}
 
 # Read entire INI file into a dictionary object
 
@@ -87,6 +90,11 @@ If (-Not(Test-Path -Path $File)) {
   Exit
 }
 
+If ($Constrained) {
+  Write-Host `n"Settings on this computer put PowerShell in Constrained Language Mode."
+  Write-Host "Some steps may take a bit longer to work around this restriction."
+}
+
 #Keys for use with Reg.exe command line
 $BagM = '"HKCU\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\BagMRU"'
 $Bags = '"HKCU\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags"'
@@ -152,27 +160,47 @@ Function ResetThumbCache {
 
 Function ResetStoreAppViews {
   $Exclude = 'WindowsTerminal','WebViewHost','MSTeams','Win32Bridge.Server','PhoneExperienceHost','ClipChamp','ClipChamp.CLI'
-  $Stor = 'HKCU:\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Compatibility Assistant\Store'
   $Pkgs = "$env:LocalAppData\Packages"
-  $Key = Get-Item -Path $Stor
-  ForEach ($ValueName in $($Key.GetValueNames())) {
-    If ($ValueName.ToLower() -Match 'c:\\program files\\windowsapps\\') {
-      $FileName = Split-Path $ValueName -Leaf
-      $FileNameBase = [System.IO.Path]::GetFileNameWithoutExtension($FileName)
-      If ($Exclude -NotContains $FileNameBase) {
-        & $KillExe /im $FileName >$Null 2>$Null
-      }
-    }
-  }
+  If ($Constrained) {KillStoreAppsConstrained} Else {KillStoreApps}
   Get-ChildItem $Pkgs -Directory | ForEach-Object {
     Remove-Item -Force -ErrorAction SilentlyContinue "$Pkgs\$_\SystemAppData\Helium\UserClasses.dat"
   }
 }
 
+Function KillStoreApps {
+  $Stor = 'HKCU:\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Compatibility Assistant\Store'
+  $Key = Get-Item -Path $Stor
+  ForEach ($ValueName in $($Key.GetValueNames())) {
+    If ($ValueName -match 'c:\\program files\\windowsapps\\') {
+      $FileName = Split-Path $ValueName -Leaf
+      $FileNameBase = $FileName.ToLower().Replace(".exe","")
+      If ($Exclude -NotContains $FileNameBase) {
+        & $KillExe /im $FileName >$Null 2>$Null
+      }
+    }
+  }
+}
+
+Function KillStoreAppsConstrained {
+  $Stor = 'HKCU\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Compatibility Assistant\Store'
+  $registryValues = & $RegExe query "$Stor"
+  $registryValues | ForEach-Object {
+    $parts = $_.Trim() -split "  "
+    $valueName = $parts[0]
+    if ($valueName -match 'c:\\program files\\windowsapps\\') {
+      $FileName = Split-Path $valueName -Leaf
+      $FileNameBase = $FileName.ToLower().Replace(".exe","")
+      if ($Exclude -notcontains $FileNameBase) {
+        & $KillExe /im $FileName >$Null 2>$Null
+      }
+    }
+  }
+}
+
 Function RestartExplorer {
-  & $RegExe Import $ShellBak
-  & $RegExe Import $DeskBak
-  & $RegExe Import $TBarBak
+  & $RegExe Import $ShellBak 2>$Null
+  & $RegExe Import $DeskBak 2>$Null
+  & $RegExe Import $TBarBak 2>$Null
   & $RegExe Add "$BwgM" /v NodeSlots /d '02' /t REG_BINARY /f >$Null
   & $RegExe Add "$BwgM" /v NodeSlot /d 1 /t REG_DWORD /f >$Null
   If ($WinVer -ne '7') {ResetStoreAppViews}

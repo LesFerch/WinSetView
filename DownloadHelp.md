@@ -71,13 +71,17 @@ Click **Run anyway** to run the app.
 
 **Note**: Even though WinSetView.exe is code-signed, with a certificate issued by Sectigo, the SmartScreen block will still come up because non-incorporated individual developers cannot purchase (and typically cannot afford) an extended verification (EV) certificate required to get full trust. The fact that WinSetView is provided as an open-source app via GitHub, with my personal contact information available for all to see, is much more reassurance of safety than any certificate provides. The bad actors out there can find ways to code-sign their malware. Knowing where you got the app is much more important. Although there are many trustworthy download sites, the best practice is to download from the author's web page. If you got this app from my [web page](https://lesferch.github.io/WinSetView/), that's your best protection.
 
-## VBScript
+## Possible Launch Error
 
-**Note**: If WinSetView opens to a blank page or just a minimized icon, VBScript may have been disabled or uninstalled. The latest insider builds of Windows 11 provide an option to uninstall VBScript via Apps > Optional features:
+The following error will be displayed if VBScript has been disabled or uninstalled:
 
-![image](https://user-images.githubusercontent.com/79026235/233753663-f28a2dc3-6bac-48bc-83af-c2a9c51c7e73.png)
+![image](https://github.com/LesFerch/WinSetView/assets/79026235/a11c3e97-670f-4f09-8b4a-7b656cb3849b)
 
-Do not uninstall VBScript! If you've already uninstalled VBScript, using the option shown above, you can reinstall it via the **View features** button next to **Add an optional feature** at the top of that same page.
+If the above error is displayed, you will need to undo whatever change was made to disable VBScript on your computer. If your computer is managed by an IT department, it's possible that VBScript has been intentionally disabled, in which case, please see the [Command Line Operation](https://lesferch.github.io/WinSetView/Manual.html#command-line-operation) section in the manual.
+
+If the above error is displayed and you are running **Windows 11**, please check **Settings**, **System**, **Optional features**, **View features**, and then scroll down and see if there is a **VBScript** item. If so, check it and click **Next** and then **Install**.
+
+## How to Use
 
 To use WinSetView, please follow the steps in the quick start guide:
 
