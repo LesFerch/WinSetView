@@ -314,7 +314,7 @@ When checked, the hidden attribute is removed from the current user's AppData fo
 
 #### Disable suggestion notices
 
-When checked, the following "suggestion" notifications (found in "Notifications % Actions") will be turned off.
+When checked, the following "suggestion" notifications (found in "Notifications & Actions") will be turned off.
 
 ![image](https://github.com/LesFerch/WinSetView/assets/79026235/4c147f26-d570-470d-bc29-61d5972a1779)
 
