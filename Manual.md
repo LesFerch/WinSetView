@@ -274,7 +274,7 @@ This folder type controls the view you see for the *Searches* item within your u
 ![image](https://github.com/LesFerch/WinSetView/assets/79026235/679a75b9-5a5a-41f3-8d99-cdf231a7a421)
 
 
-**Note**: All options, except those with lock icon, can be changed by a Standard user. The items with the lock icon require Administrator rights to change. A UAC prompt will appear after clicking **Submit** if one or more of those options are being changed.
+**Note**: All options, except those with a lock icon, can be changed by a Standard user. The items with the lock icon require Administrator rights to change. A UAC prompt will appear after clicking **Submit** if one or more of those options are being changed.
 
 
 #### Show File Extensions
