@@ -12,7 +12,7 @@ This is the quick start guide. For more details, please see the [complete user m
 
 Compatible with Windows 7, 8, 10, and 11.
 
-[Version 2.77](./VersionHistory.md)
+[Version 2.80](./VersionHistory.md)
 
 ## Summary
 
@@ -92,9 +92,9 @@ For any folder type (e.g. **Pictures**) that you wish to have a *different* defa
 
 Click The **Options** button.
 
-![image](https://user-images.githubusercontent.com/79026235/233790993-1635ab5b-c0e3-4114-b7e8-c53d7fcd933e.png)
+![image](https://github.com/LesFerch/WinSetView/assets/79026235/679a75b9-5a5a-41f3-8d99-cdf231a7a421)
 
-Review the settings on that page and adjust as desired. See the [manual](./Manual.md#options-menu) for full details.
+Review the settings on that page and adjust as desired. See the [manual](./Manual.md#options-menu) for full details. Options with a lock icon require Administrative access and will automatically pop up a UAC prompt if changed.
 
 ### Step 6: Apply the Selections to Windows File Explorer
 

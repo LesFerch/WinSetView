@@ -38,7 +38,7 @@ catch(Err) {
 <script language="VBScript">
 Option Explicit
 
-Const Version = "2.77"
+Const Version = "2.80"
 
 SetLocale(1033)
 Const ForReading = 1
@@ -846,12 +846,15 @@ Sub Dict2Dom
   gn.checked = SetInitial("[Options]Generic",0)
   so.Checked = SetInitial("[Options]SearchOnly",1)
   vf.Checked = SetInitial("[Options]SetVirtualFolders",1)
-  ka.checked = SetInitial("[Options]KeepViews",0)
+  ns.checked = SetInitial("[Options]NoSuggestions",1)
+  nn.checked = SetInitial("[Options]NoNumericalSort",0)
+  ts.checked = SetInitial("[Options]Win10Search",0)
+  ee.checked = SetInitial("[Options]Win11Explorer",0)
   nf.checked = SetInitial("[Options]NoFolderThumbs",0)
   ua.checked = SetInitial("[Options]UnhideAppData",0)
   sc.checked = SetInitial("[Options]ClassicSearch",0)
   hg.checked = SetInitial("[Options]HomeGrouping",0)
-  cm.checked = SetInitial("[Options]ClassicContextMenu",0)
+  cm.checked = SetInitial("[Options]ClassicContextMenu",1)
   si.checked = SetInitial("[Options]NoSearchInternet",0)
   sh.checked = SetInitial("[Options]NoSearchHighlights",0)
   tp.checked = SetInitial("[Options]ThisPCoption",1)
@@ -890,7 +893,7 @@ End Function
 ' Load Settings button
 
 Sub LoadSettings
-  File = FileDialog("Open",AppData,"*.ini|*.ini",True,False)
+  File = FileDialog("Open",AppData,"*.ini|*.ini",False,False)
   If File<>"" Then
     KeepAdvanced = True
     Set oSettings = Ini2Dict(File)
@@ -909,7 +912,7 @@ End Sub
 ' Restore button
 
 Sub Restore
-  File = FileDialog("Open",Backup,"*.reg|*.reg",True,False)
+  File = FileDialog("Open",Backup,"*.reg|*.reg",False,False)
   If File<>"" Then RunScript File
 End Sub
 
@@ -932,7 +935,10 @@ Sub Var2Ini(INIFile)
   oFile.Write "Generic=" & Abs(Int(gn.Checked)) & Z
   oFile.Write "SearchOnly=" & Abs(Int(so.Checked)) & Z
   oFile.Write "SetVirtualFolders=" & Abs(Int(vf.Checked)) & Z
-  oFile.Write "KeepViews=" & Abs(Int(ka.Checked)) & Z
+  oFile.Write "NoSuggestions=" & Abs(Int(ns.Checked)) & Z
+  oFile.Write "NoNumericalSort=" & Abs(Int(nn.Checked)) & Z
+  oFile.Write "Win10Search=" & Abs(Int(ts.Checked)) & Z
+  oFile.Write "Win11Explorer=" & Abs(Int(ee.Checked)) & Z
   oFile.Write "NoFolderThumbs=" & Abs(Int(nf.Checked)) & Z
   oFile.Write "UnhideAppData=" & Abs(Int(ua.Checked)) & Z
   oFile.Write "ClassicSearch=" & Abs(Int(sc.Checked)) & Z
@@ -1089,6 +1095,7 @@ Sub Options
   YScrollPos = Document.documentElement.ScrollTop
   Pg1.Style.Display = "none"
   Pg4.Style.Display = "inline"
+  OptionTS
   OptionThisPC
 End Sub
 
@@ -1357,7 +1364,6 @@ Sub OptionReset
     Sec4.Style.visibility = "hidden"
     lb.Style.visibility = "hidden"
     sb.Style.visibility = "hidden"
-    ao.Style.visibility = "hidden"
   Else
     FTHide = False
     Sec1.Style.visibility = "visible"
@@ -1365,7 +1371,6 @@ Sub OptionReset
     If IFace.SelectedIndex=2 Then
       lb.Style.visibility = "visible"
       sb.Style.visibility = "visible"
-      ao.Style.visibility = "visible"
     End If
   End If
   For i = 1 To UBFolderType
@@ -1387,8 +1392,16 @@ Sub OptionSearchOnly
   SetColShowColor
 End Sub
 
+Sub OptionTS
+  If ts.Checked Then
+    tss.Style.Display = "inline"
+  Else
+    tss.Style.Display = "none"
+  End If
+End Sub
+
 Sub OptionThisPC
-  If tp.Checked=True Then
+  If tp.Checked Then
     otp.Style.Display = "block"
   Else
     otp.Style.Display = "none"
@@ -1843,7 +1856,6 @@ Sub SetInterface
   If IFace.SelectedIndex=1 Then
     lb.Style.visibility = "hidden"
     sb.Style.visibility = "hidden"
-    ao.Style.visibility = "hidden"
     ica.Style.Display = "none"
     For i = 1 To UBFolderType
       Document.GetElementByID(i & "Inspect").Style.Display = "none"
@@ -1852,7 +1864,6 @@ Sub SetInterface
     If Not wd.Checked Then
       lb.Style.visibility = "visible"
       sb.Style.visibility = "visible"
-      ao.Style.visibility = "visible"
       ica.Style.Display = "inline"
       For i = 1 To UBFolderType
         If ArrIncludeFlag(i)="1" Then Document.GetElementByID(i & "Inspect").Style.Display = "inline"
@@ -2010,7 +2021,10 @@ End Sub
   h2    {font-size:1.5em}
   h3    {font-size:1.2em}
   #gn   {margin-top:3pt}
-  #ka   {margin-top:3pt}
+  #ns   {margin-top:3pt}
+  #nn   {margin-top:3pt}
+  #ts   {margin-top:3pt}
+  #ee   {margin-top:3pt}
   #nf   {margin-top:3pt}
   #ua   {margin-top:3pt}
   #sc   {margin-top:3pt}
@@ -2207,17 +2221,20 @@ End Sub
     <input type=checkbox id=sh># 49 #<br><br>
     <input type=checkbox id=nf># 35 #<br><br>
     <input type=checkbox id=ua># 50 #<br><br>
-    <input type=checkbox id=sc># 51 #<br><br>
+    <input type=checkbox id=ns># 11 #<br><br>
+    <input type=checkbox id=nn># 53 #<br><br>
+    <input type=checkbox id=ts onclick=OptionTS()># 54 #<br><br>
+    <div id=tss style='display:none'>
+      <input type=checkbox id=sc># 51 #<br><br>
+    </div>
+    <input type=checkbox id=ee># 55 #<br><br>
     <div id=Sec4>
       <input type=checkbox id=so Checked onclick=OptionSearchOnly()># 9 #<br><br>
       <input type=checkbox id=vf Checked># 29 #<br><br>
+      <input type=checkbox id=gn Checked># 10 #<br><br>
+      <input type=checkbox id=hg># 52 #<br><br>
       <input type=checkbox id=tp onclick=OptionThisPC()># 13 #<br>
       <div id=otp><select id=tpv></select> <input type=checkbox id=tpg checked># 25 #</div><br>
-      <div id=ao>
-      <input type=checkbox id=gn Checked># 10 #<br><br>
-      <input type=checkbox id=ka># 11 #<br><br>
-      <input type=checkbox id=hg># 52 #<br><br>
-      </div>
     </div>
   </div>
 </body>

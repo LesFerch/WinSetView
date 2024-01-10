@@ -1,3 +1,17 @@
+## 2.80
+
+Feature added: Option to disable "Let's finish" and other "suggestions".
+
+Feature added: Option to disable numerical sort order.
+
+Feature added: Option to enable feature 18755234 (Windows 10 search).
+
+Feature added: Option to disable feature 40729001 (Windows 11 Explorer).
+
+Enhancement: All options are now visible in the Standard interface.
+
+Enhancement: Improvements to theme colors.
+
 ## 2.77
 
 Bug Fix: Fixed issue on Windows 7 x64 that caused an error with the Change column order feature.

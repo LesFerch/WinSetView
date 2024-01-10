@@ -44,6 +44,8 @@ $Value = 'CurrentVersion'
 $NTVer = (Get-ItemProperty -Path $Key -Name $Value).$Value
 $Value = 'CurrentBuild'
 $CurBld = (Get-ItemProperty -Path $Key -Name $Value).$Value
+$Value = 'UBR'
+$UBR = (Get-ItemProperty -Path $Key -Name $Value).$Value
 If ($NTVer -eq '6.1') {$WinVer = '7'}
 If (($NTVer -eq '6.2') -Or ($NTVer -eq '6.3')) {$WinVer = '8'}
 $Value = 'CurrentMajorVersionNumber'
@@ -112,6 +114,9 @@ $BwgM = '"HKCU\Software\Microsoft\Windows\Shell\BagMRU"'
 $Bwgs = '"HKCU\Software\Microsoft\Windows\Shell\Bags"'
 $Desk = '"HKCU\Software\Microsoft\Windows\Shell\Bags\1\Desktop"'
 $TBar = '"HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Streams\Desktop"'
+$Lets = '"HKCU\Software\Microsoft\Windows\CurrentVersion\UserProfileEngagement"'
+$Remd = '"HKCU\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager"'
+$PolE = '"HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer"'
 
 #Keys for use with PowerShell
 $ShPS = 'HKCU:\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags\AllFolders\Shell'
@@ -139,6 +144,7 @@ $CmdExe    = "$env:SystemRoot\System32\Cmd.exe"
 $IcaclsExe = "$env:SystemRoot\System32\Icacls.exe"
 $KillExe   = "$env:SystemRoot\System32\TaskKill.exe"
 $UAppData  = "$env:UserProfile\AppData"
+$StageExe  = "$PSScriptRoot\Tools\StagingTool.exe"
 
 # Use script folder if we have write access. Otherwise use AppData folder.
 
@@ -216,7 +222,7 @@ Function DeleteUserKeys {
   & $RegExe Delete $BagM /f 2>$Null
   & $RegExe Delete $Bags /f 2>$Null
   & $RegExe Delete $CUFT /f 2>$Null
-  If ($KeepViews -eq 0) {& $RegExe Delete $Defs /f 2>$Null}
+  & $RegExe Delete $Defs /f 2>$Null
 }
 
 If ($FileExt -eq '.reg') {
@@ -226,7 +232,6 @@ Else {
 
   $iniContent = Get-IniContent $File
   $Reset = $iniContent['Options']['Reset']
-  $KeepViews = [Int]$iniContent['Options']['KeepViews']
   $Generic = [Int]$iniContent['Options']['Generic']
   $NoFolderThumbs = [Int]$iniContent['Options']['NoFolderThumbs']
   $ResetThumbs = [Int]$iniContent['Options']['ResetThumbs']
@@ -296,25 +301,27 @@ If ($FileExt -eq '.reg') {
   RestartExplorer
 }
 
-# Set option to hide or show file extensions
+# Enable/disable show of file extensions
 
 $ShowExt = [Int]$iniContent['Options']['ShowExt']
 & $RegExe Add $Advn /v HideFileExt /t REG_DWORD /d (1-$ShowExt) /f
 
-# Set Windows 11 option to enable or disable compact view
-# This value is ignored on older Windows versions
+# Enable/disable compact view in Windows 11
 
-$CompView = [Int]$iniContent['Options']['CompView']
-& $RegExe Add $Advn /v UseCompactMode /t REG_DWORD /d ($CompView) /f
+If ($CurBld -ge 21996) {
+  $CompView = [Int]$iniContent['Options']['CompView']
+  & $RegExe Add $Advn /v UseCompactMode /t REG_DWORD /d ($CompView) /f
+}
 
 # Enable/disable classic context menu in Windows 11
-# This value is ignored on older Windows versions
 
-$ClassicContextMenu = [Int]$iniContent['Options']['ClassicContextMenu']
-If ($ClassicContextMenu -eq 1) {& $RegExe Add $Clcm"\InprocServer32" /reg:64 /f 2>$Null}
-Else {& $RegExe Delete $Clcm /reg:64 /f 2>$Null}
+If ($CurBld -ge 21996) {
+  $ClassicContextMenu = [Int]$iniContent['Options']['ClassicContextMenu']
+  If ($ClassicContextMenu -eq 1) {& $RegExe Add $Clcm"\InprocServer32" /reg:64 /f 2>$Null}
+  Else {& $RegExe Delete $Clcm /reg:64 /f 2>$Null}
+}
 
-# Turn off/on Internet in Windows search
+# Enable/disable Internet in Windows search
 
 $NoSearchInternet = [Int]$iniContent['Options']['NoSearchInternet']
 $NoSearchInternet = 1-$NoSearchInternet
@@ -334,12 +341,83 @@ If ($UnhideAppData -eq 1) {& $CmdExe /c attrib -h "$UAppData"}
 Else {& $CmdExe /c attrib +h "$UAppData"}
 
 # Enable/disable classic search
+# Only applicable if "new" search is enabled
+# If "new" search is disabled, then you get classic search
 
 If (($CurBld -ge 18363) -And ($CurBld -lt 21996)) {
   $Key = "HKCU\Software\Classes\CLSID\{1d64637d-31e9-4b06-9124-e83fb178ac6e}"
   If ($ClassicSearch -eq 1) {& $RegExe add "$Key\TreatAs" /ve /t REG_SZ /d "{64bc32b5-4eec-4de7-972d-bd8bd0324537}" /reg:64 /f 2>$Null}
   Else {& $RegExe delete $Key /reg:64 /f 2>$Null}
 }
+
+# Enable/disable Windows 10 "new" search (UAC)
+
+If (($CurBld -ge 19045) -And ($CurBld -lt 21996) -And ($UBR -ge 3754)) {
+
+  $Win10Search = $iniContent['Options']['Win10Search']
+
+  $CurVal = & $StageExe /query '18755234'
+  $CurVal = $CurVal[3]
+  $CurVal = $CurVal.SubString($CurVal.Length - 7)
+  If ($CurVal -eq "enabled") {$CurVal = '1'} else {$CurVal = '0'}
+
+  If ($CurVal -ne $Win10Search) {
+    $Action = '/enable'
+    If ($Win10Search -eq '0') {$Action = '/disable'}
+    $C2 = "$StageExe $Action 18755234"
+  }
+}
+
+# Enable/disable Windows 11 App SDK Explorer (UAC)
+
+If (($CurBld -ge 22621) -And ($UBR -ge 1972)) {
+
+  $Win11Explorer = $iniContent['Options']['Win11Explorer']
+
+  $CurVal = & $StageExe /query '40729001'
+  $CurVal = $CurVal[3]
+  $CurVal = $CurVal.SubString($CurVal.Length - 7)
+  If ($CurVal -eq "enabled") {$CurVal = '0'} else {$CurVal = '1'}
+
+  If ($CurVal -ne $Win11Explorer) {
+    $Action = '/enable'
+    If ($Win11Explorer -eq '1') {$Action = '/disable'}
+    $C2 = "$StageExe $Action 40729001"
+  }
+}
+
+# Enable/disable numerical sort order (UAC)
+
+$CurVal = & $RegExe Query $PolE /v NoStrCmpLogical 2>$Null
+If ($CurVal.Length -eq 4) {$CurVal = $CurVal[2][-1]} Else {$CurVal = 0}
+
+$NoNumericalSort = $iniContent['Options']['NoNumericalSort']
+
+If ($CurVal -ne $NoNumericalSort) {
+  $NoNumericalSort = [int]$NoNumericalSort
+  $C1 = "$RegExe Add $PolE /v NoStrCmpLogical /t REG_DWORD /d $NoNumericalSort /f"
+}
+
+# Execute commands that require UAC elevation
+
+$Cmd = "$C1$C2$C3"
+If ($Cmd -ne '') {
+  $Cmd = "$C1;$C2;$C3"
+  Try {
+  Start-Process -WindowStyle Hidden -FilePath "powershell.exe" -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command $Cmd" -Verb RunAs 2>$Null
+  }
+  Catch {
+  }
+}
+
+
+# Enable/disable "Let's finish setting up", "Welcome experience", and "Tips and tricks"
+
+$NoSuggestions = [Int]$iniContent['Options']['NoSuggestions']
+$NoSuggestions = 1-$NoSuggestions
+& $RegExe Add $Lets /v ScoobeSystemSettingEnabled /t REG_DWORD /d ($NoSuggestions) /f
+& $RegExe Add $remd /v SubscribedContent-310093Enabled /t REG_DWORD /d ($NoSuggestions) /f
+& $RegExe Add $remd /v SubscribedContent-338389Enabled /t REG_DWORD /d ($NoSuggestions) /f
 
 # If reset, restart Explorer and exit
 
