@@ -213,7 +213,7 @@ As of Windows 10 1903, the **Downloads** folder is its own folder type that has 
 
 You can leave *Inherit* checked and just let *Downloads* use your Global settings, or uncheck Inherit and select specific settings for this folder type. Be assured, either way, if you set *Group by* to *(None)* you will never see grouping in this folder again.
 
-**Note**: In Windows 10, only the Downloads root is type "Downloads". In Windpws 11, all subfolders of Downloads are also type "Downloads".
+**Note**: In Windows 10, only the Downloads root is type "Downloads". In Windows 11, all subfolders of Downloads are also type "Downloads".
 
 **General Items**
 
@@ -373,12 +373,12 @@ In late 2023, Microsoft pushed out an "update" that reverted Windows 10 back to 
 
 This option is only available when feature 18755234 is enabled. Once feature 18755234 is enabled, you can use this option to toggle between the "new" search and the "classic" search. You can use this option to enable "classic" search but keep the taller address / search bar of "new" search.
 
-**Note**: "Classic" search includes results as you type and **Date modified:** calendar and **Size:** category pop-ups. "New" search waits for you to press **Enter** and displays a signficant history dropdown list.
+**Note**: "Classic" search includes results as you type and **Date modified:** calendar and **Size:** category pop-ups. "New" search waits for you to press **Enter** and displays a significant history dropdown list.
 
 
 #### Disable feature 40729001 (Windows 11 Explorer) 🔐
 
-Thew new, App SDK based, version of Explorer in Windows 11 has many shortcomings. Among them, no support for drag and drop to folders via the address bar and no direct editing of metadata in the Details pane. It also has some annoying quirks like trimming trailing spaces in the search bar if you pause too long. You can get back the previous Explorer, that does not have those issues, by disabling feature 40729001.
+The new, App SDK based, version of Explorer in Windows 11 has many shortcomings. Among them, no support for drag and drop to folders via the address bar and no direct editing of metadata in the Details pane. It also has some annoying quirks like trimming trailing spaces in the search bar if you pause too long. You can get back the previous Explorer, that does not have those issues, by disabling feature 40729001.
 
 **Note**: Going back to the previous Explorer means giving up full tab support (i.e. no tear or join tabs). Also note that the option "Also apply this template to all subfolders" is broken in both old and new Explorers. You have to go back to the [Windows 10 Explorer in Windows 11](https://lesferch.github.io/OldExplorer/) to get that functionality.
 
