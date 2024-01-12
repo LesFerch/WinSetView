@@ -376,8 +376,8 @@ If (($CurBld -ge 22621) -And ($UBR -ge 1972)) {
 
   $CurVal = & $StageExe /query '40729001'
   $CurVal = $CurVal[3]
-  $CurVal = $CurVal.SubString($CurVal.Length - 7)
-  If ($CurVal -eq "enabled") {$CurVal = '0'} else {$CurVal = '1'}
+  $CurVal = $CurVal.SubString($CurVal.Length - 8)
+  If ($CurVal -eq "disabled") {$CurVal = '1'} else {$CurVal = '0'}
 
   If ($CurVal -ne $Win11Explorer) {
     $Action = '/enable'
