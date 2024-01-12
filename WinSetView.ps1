@@ -350,6 +350,18 @@ If (($CurBld -ge 18363) -And ($CurBld -lt 21996)) {
   Else {& $RegExe delete $Key /reg:64 /f 2>$Null}
 }
 
+# Enable/disable numerical sort order (UAC)
+
+$CurVal = & $RegExe Query $PolE /v NoStrCmpLogical 2>$Null
+If ($CurVal.Length -eq 4) {$CurVal = $CurVal[2][-1]} Else {$CurVal = 0}
+
+$NoNumericalSort = $iniContent['Options']['NoNumericalSort']
+
+If ($CurVal -ne $NoNumericalSort) {
+  $NoNumericalSort = [int]$NoNumericalSort
+  $C1 = "$RegExe Add $PolE /v NoStrCmpLogical /t REG_DWORD /d $NoNumericalSort /f"
+}
+
 # Enable/disable Windows 10 "new" search (UAC)
 
 If (($CurBld -ge 19045) -And ($CurBld -lt 21996) -And ($UBR -ge 3754)) {
@@ -370,7 +382,7 @@ If (($CurBld -ge 19045) -And ($CurBld -lt 21996) -And ($UBR -ge 3754)) {
 
 # Enable/disable Windows 11 App SDK Explorer (UAC)
 
-If (($CurBld -ge 22621) -And ($UBR -ge 1972)) {
+If ($CurBld -ge 22631) {
 
   $Win11Explorer = $iniContent['Options']['Win11Explorer']
 
@@ -382,20 +394,8 @@ If (($CurBld -ge 22621) -And ($UBR -ge 1972)) {
   If ($CurVal -ne $Win11Explorer) {
     $Action = '/enable'
     If ($Win11Explorer -eq '1') {$Action = '/disable'}
-    $C2 = "$StageExe $Action 40729001"
+    $C3 = "$StageExe $Action 40729001"
   }
-}
-
-# Enable/disable numerical sort order (UAC)
-
-$CurVal = & $RegExe Query $PolE /v NoStrCmpLogical 2>$Null
-If ($CurVal.Length -eq 4) {$CurVal = $CurVal[2][-1]} Else {$CurVal = 0}
-
-$NoNumericalSort = $iniContent['Options']['NoNumericalSort']
-
-If ($CurVal -ne $NoNumericalSort) {
-  $NoNumericalSort = [int]$NoNumericalSort
-  $C1 = "$RegExe Add $PolE /v NoStrCmpLogical /t REG_DWORD /d $NoNumericalSort /f"
 }
 
 # Execute commands that require UAC elevation
