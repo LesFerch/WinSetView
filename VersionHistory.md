@@ -1,3 +1,9 @@
+## 2.91
+
+Bug fix: Legacy row and icon spacing is not compatible with dark mode. It is now disabled and hidden when the computer is in dark mode.
+
+Enhancement: Black and white lock icon replaced with color UAC shield icon.
+
 ## 2.90
 
 Feature added: Option to use Windows 10 Explorer on Windows 11.
