@@ -7,7 +7,7 @@ Follow the steps below to download, extract, and run WinSetView for the first ti
 
 **Note**: If you got WinSetView from [here](https://lesferch.github.io/WinSetView), it's 100% clean, but you may find that some security software will falsely detect it as potentially unwanted or potentially malicious. That's the nature of such software. It will err on the side of caution. If you encounter that situation, you will need to disable or, at least, dial-back the protection settings of your security software. For example, in **Bitdefender**, you must temporarily turn off **Advanced Threat Defense** to allow WinSetView to launch the PowerShell script that applies the folder view settings.
 
-**Note**: Windows Defender should not have any issue with WinSetView, but if you've installed Windows from a recovery partition or older ISO file, you may be running Defender with old definitions that falsely detect it as malware. Please ensure that Windows Defender is fully up to date before attempting to download or run WinSetView. If you still have an issue with Windows Defender, please open an issue on the [issues page](https://github.com/LesFerch/WinSetView/issues).
+**Note**: Windows Defender should not have any issue with WinSetView, but if you've installed Windows from a recovery partition or older ISO file, you may be running Defender with old definitions that falsely detect it as malware. Please ensure that Windows Defender is fully up to date before attempting to download or run WinSetView. If you still have an issue with Windows Defender, please try clearing the Windows Defender history using [this tool](https://lesferch.github.io/ClearDefenderHistory/). If problems persist, please open an issue on the [issues page](https://github.com/LesFerch/WinSetView/issues).
 
 ## Step 1: Click the WinSetView Download Link
 
@@ -51,7 +51,7 @@ Open the extracted folder and you should see **WinSetView.exe**. If you do not s
 
 To avoid annoying "unrecognized app" notifications, right-click **WinSetView.exe** and select **Properties**:
 
-![image](https://user-images.githubusercontent.com/79026235/229967070-dbf01447-601d-49ab-bafb-2d87ab299ef8.png)
+![image](https://github.com/LesFerch/WinSetView/assets/79026235/3c74acd5-90ba-4d65-b0ba-2333e24c1bf8)
 
 Then check **Unblock**, and click **OK**.
 
@@ -59,17 +59,17 @@ Double-click **WinSetView.exe** to open the app.
 
 If you did not unblock the file, you will probably see this message:
 
-![image](https://user-images.githubusercontent.com/79026235/211442632-d4362bed-3600-4c32-b2c1-417b320684b7.png)
+![image](https://github.com/LesFerch/WinSetView/assets/79026235/6176a166-1c62-4c92-8e32-acd968023bc5)
 
 Click the **More info** link and you should see:
 
-![image](https://user-images.githubusercontent.com/79026235/211442671-34f91125-e915-4c5e-a61e-a30bb556d393.png)
+![image](https://github.com/LesFerch/WinSetView/assets/79026235/750966d4-4daa-400b-9da2-0a329cddb3da)
 
 Click **Run anyway** to run the app.
 
-**Note**: On Windows 11, the Publisher will be displayed as **US, New York, Leslie S Ferch, Leslie S Ferch**.
+**Note**: On Windows 11, the Publisher will be displayed as **US, New York, Pleasantville, Open Source Developer, Open Source Developer, Leslie Ferch**.
 
-**Note**: Even though WinSetView.exe is code-signed, with a certificate issued by Sectigo, the SmartScreen block will still come up because non-incorporated individual developers cannot purchase (and typically cannot afford) an extended verification (EV) certificate required to get full trust. The fact that WinSetView is provided as an open-source app via GitHub, with my personal contact information available for all to see, is much more reassurance of safety than any certificate provides. The bad actors out there can find ways to code-sign their malware. Knowing where you got the app is much more important. Although there are many trustworthy download sites, the best practice is to download from the author's web page. If you got this app from my [web page](https://lesferch.github.io/WinSetView/), that's your best protection.
+**Note**: Even though WinSetView.exe is code-signed, with a certificate issued by Certum, the SmartScreen block will still come up because non-incorporated individual developers cannot purchase (and typically cannot afford) an extended verification (EV) certificate required to get full trust. The fact that WinSetView is provided as an open-source app via GitHub, with my personal contact information available for all to see, is much more reassurance of safety than any certificate provides. The bad actors out there can find ways to code-sign their malware. Knowing where you got the app is much more important. Although there are many trustworthy download sites, the best practice is to download from the author's web page. If you got this app from my [web page](https://lesferch.github.io/WinSetView/), that's your best protection.
 
 ## Possible Launch Error
 

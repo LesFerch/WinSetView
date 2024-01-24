@@ -17,9 +17,9 @@ This is the complete user manual. See the link below for the quick start guide.
 Compatible with Windows 7, 8, 10, and 11.
 
 Les Ferch, lesferch@gmail.com\
-GitHub repository created 2021-03-26, last updated 2024-01-09
+GitHub repository created 2021-03-26, last updated 2024-01-23
 
-[Version 2.80](./VersionHistory.md)
+[Version 2.90](./VersionHistory.md)
 
 ## Summary
 
@@ -153,7 +153,7 @@ You can group by any property in ascending or descending order, or turn off grou
 
 The **⚙ (Options)** button allows you to select a _different_ view for File Open/Save dialogs. For example, if you have set **List** as your default view, but want **Details** in File Open/Save dialogs, this is where you would set that up.
 
-![image](https://github.com/LesFerch/WinSetView/assets/79026235/be83143c-9e2d-4186-a853-cf5de8d56acc)
+![image](https://github.com/LesFerch/WinSetView/assets/79026235/48fcc9a5-b650-4412-b350-9145740a7a5d)
 
 Separate File Dialog views can be set under Global as well as under any specific folder type. This is an improvement over previous versions of WinSetView that only had one global File Dialog view settings in the Options menu.
 
@@ -271,7 +271,7 @@ This folder type controls the view you see for the *Searches* item within your u
 
 ### Options Menu
 
-![image](https://github.com/LesFerch/WinSetView/assets/79026235/679a75b9-5a5a-41f3-8d99-cdf231a7a421)
+![image](https://github.com/LesFerch/WinSetView/assets/79026235/311432d1-5a61-4d72-bbe3-0542619bab18)
 
 
 **Note**: All options, except those with a lock icon, can be changed by a Standard user. The items with the lock icon require Administrator rights to change. A UAC prompt will appear after clicking **Submit** if one or more of those options are being changed.
@@ -319,6 +319,14 @@ When checked, the following "suggestion" notifications (found in "Notifications 
 ![image](https://github.com/LesFerch/WinSetView/assets/79026235/4c147f26-d570-470d-bc29-61d5972a1779)
 
 
+### Use Windows 10 Explorer on Windows 11
+
+When checked, a registry setting will be applied that will cause Windows 11 to use the Windows 10 Explorer as its default file manager. That's the Explorer that has the ribbon interface and is normally only used in Windows 11 for the Control Panel. The feature "Also apply this template to all subfolders" works in this Explorer version.
+
+**Note**: When this option is enabled, Explorer always opens at a fixed size and position on your primary display.
+
+![image](https://github.com/LesFerch/WinSetView/assets/79026235/2aef729f-38ad-469c-b6d7-de796800992a)
+
 #### Disable numerical sort 🔐
 
 When unchecked, files are sorted numerically where possible. When checked, files are sorted only by their ASCII values. For example:
@@ -363,6 +371,8 @@ As you can see from the examples above, which setting is best depends on how you
 
 Why this option, which should be available to any user to toggle as needed, is locked down as a policy that requires Administrator rights to change, is one of the many mysteries of Windows design.
 
+**Note**: This option works in Windows 10 and Windows 11. In theory, it should also work in Windows 7, but it did not work in my tests on Windows 7.
+
 
 #### Enable feature 18755234 (Windows 10 Search) 🔐
 
@@ -380,7 +390,42 @@ This option is only available when feature 18755234 is enabled. Once feature 187
 
 The new, App SDK based, version of Explorer in Windows 11 has many shortcomings. Among them, no support for drag and drop to folders via the address bar and no direct editing of metadata in the Details pane. It also has some annoying quirks like trimming trailing spaces in the search bar if you pause too long. You can get back the previous Explorer, that does not have those issues, by disabling feature 40729001.
 
-**Note**: Going back to the previous Explorer means giving up full tab support (i.e. no tear or join tabs). Also note that the option "Also apply this template to all subfolders" is broken in both old and new Explorers. You have to go back to the [Windows 10 Explorer in Windows 11](https://lesferch.github.io/OldExplorer/) to get that functionality.
+**Note**: Going back to the previous Explorer means giving up full tab support (i.e. no tear or join tabs). Also note that the option "Also apply this template to all subfolders" is broken in both old and new Explorers. You have to go back to the Windows 10 Explorer to get that functionality.
+
+**Note**: Explorer will change after the next RESTART.
+
+
+#### Fix Desktop place in legacy dialogs in Windows 11 🔐
+
+In Windows 11, legacy file open/save dialogs, that are still used in some programs, such as IrfanView, Audacity, and RegEdit, show redundant items when you click the "Desktop" icon in the left panel. This registry setting causes the "Desktop" icon to only display files and folders that you have placed on the Desktop.
+
+Before:\
+![image](https://github.com/LesFerch/WinSetView/assets/79026235/8cc5416a-60b7-4bf7-a2a2-f22e1019c347)
+
+After:\
+![image](https://github.com/LesFerch/WinSetView/assets/79026235/5097e2a5-7502-4da5-a2d1-a0f0352ba143)
+
+
+#### Set a custom start folder for Explorer
+
+This option allows you to set the start folder for Explorer to any path you choose. This option works on Windows 10 and Windows 11. It does not work on Windows 7.
+
+![image](https://github.com/LesFerch/WinSetView/assets/79026235/367ac18d-ebe7-4ff4-abb9-f33917cf4bfc)
+
+
+#### Legacy row and icon spacing
+
+When this option is checked, rows in List and Details views will be closer together and icon spacing will slightly different. You may see that file names in icon views are wrapped better (i.e. less breaking in the middle of words) with this option enabled.
+
+**Note**: With this option enabled, you can freely rearrange files and folders in Details and Icon views, but those arrangements will be forgotten when the folder is closed, unless you are running Windows 7, Windows 8.x, or a Windows 10 build that is lower than 1703.
+
+
+#### Disable full row select
+
+When this option is checked, only the file name is highlighted in Details view, instead of the whole row.
+
+This option only appears when **Legacy row and icon spacing** is checked because the folder flags that enable the legacy spacing are required to disable full row select.
+
 
 #### Show paths in search results only
 
@@ -409,7 +454,9 @@ Please note that this option actually causes all virtual folders, that share the
 
 #### Set view for "This PC"
 
-If this option is checked, *This PC* will be set to the view selected. If this option is unchecked, this virtual folder will retain its Windows default of *Tiles* and group by *Type*.
+If this option is checked, *This PC* will be set to the view selected.
+
+If this option is unchecked, this virtual folder will retain its Windows default of *Tiles* and group by *Type*, unless **Use General Items view for connected devices** is selected, in which case, "This PC" will be in General Items view.
 
 **Note**: Because **This PC** does not have its own GUID, this option creates registry values (in the BagMRU/Bags keys) that would be the same as if you manually browsed to this folder and set the view. These settings are prone to returning to Windows defaults (see *Apply to Folders "Bug"* below).
 
@@ -425,6 +472,8 @@ Please note that, even with this setting enabled, you can still change any folde
 Checking this option also causes **Folder Type Discovery** to be disabled. That's the windows feature that automatically changes a folder's type based on its contents. If you want your folder views to change with content, don't check this item. If you want a consistent view across all folders, regardless of content, you *may* want to check this option.
 
 Please note there is no separate setting for **Folder Type Discovery**. If you want Folder Type Discovery *off*, you must make all folders generic. However, as noted above, you can change any folder (or tree of folders) back to a specific folder type at any time.
+
+**Note**: Enabling this option will make the Home / Quick access view the same as "General items" if you're running the Windows 10 Explorer or the pre-App SDK Explorer in Windows 11. For the App SDK Explorer in Windows 11 (i.e. the latest Explorer), it will cause the Home view to lose its headings (i.e. it will not be grouped). Therefore, the WinSetVow option "Do not force standard grouping on Home / Quick Access" has no effect when "Make All Folders Generic" is enabled.
 
 
 #### Do not force standard grouping on Home / Quick Access
@@ -448,11 +497,11 @@ Next, the currently selected column headings, that will display in File Explorer
 
 Clicking the column re-order button **⮀** will bring up a dialog that will allow you to rearrange the column headings by dragging them up or down in the presented list.:
 
-![image](https://user-images.githubusercontent.com/79026235/212802828-69c5b513-c11c-4c45-aeec-ac37f94987db.png)
+![image](https://github.com/LesFerch/WinSetView/assets/79026235/0a2e303b-a74b-4f95-b548-e181b24e0b31)
 
 The column order can also be set by removing each column heading and then adding them back in the desired order, but it is easier to use the re-order dialog. Note that the re-order dialog will allow any order, but will display the following warning if the **Name** property is not the first column:
 
-![image](https://user-images.githubusercontent.com/79026235/212802992-e934be7b-cdec-450b-87f7-206342ee0028.png)
+![image](https://github.com/LesFerch/WinSetView/assets/79026235/01dd2ab9-b27b-4b17-8f85-7b6ef54ac442)
 
 The issue with software that uses the "legacy" type dialogs (such as IrfanView) is that those type of dialogs assume that **Name** is always the first column. So, for example, if **Size** is set as the first column, and you are in any view other than **Details**, you will just see a bunch of icons with sizes and no names.
 
@@ -494,7 +543,7 @@ Please note that you can set the width as small as 1em, but Explorer will expand
 
 If you wish to enter the column width in *pixels*, hold **Alt** and **click** the input width field you wish to adjust. A dialog will open showing the width in pixels:
 
-![image](https://user-images.githubusercontent.com/79026235/212803196-c3150a47-bf51-42be-b82e-8df743ddee75.png)
+![image](https://github.com/LesFerch/WinSetView/assets/79026235/43adc8df-422b-4e46-8ed7-bbe9b6e8be06)
 
 The pixel value will vary depending on screen pixel density, whereas the value in ems will be constant across different display configurations. Please note that WinSetView sets the column *default* width which can only be set to whole (integer) em values. Windows File Explorer lets you set the width down to the pixel, but that is stored as a setting within the volatile *Bags* registry key *overriding* the default value. WinSetView deals with *default* settings only.
 
@@ -654,7 +703,7 @@ To use this option, click in a folder's white space, select **Customize this fol
 
 **Note**: Windows 11 currently has some bugs in regards to the **Customize this folder...** feature. There are issues with both "Local Disks" (such a C:) and "removable" drives, such as flash drives. On "Local Disks", Windows 11 File Explorer aggressively applies automatic folder type discovery making it impossible to override the automatically detected folder type. On removable drives (ones that are NOT "Local Disk") Windows 11 File Explorer will ignore attempts to set an entire folder tree to the folder type of your choice, leaving the folders set to type "General items". You can, usually, set the folder type by setting one folder at a time.
 
-Until Microsoft releases a fix for these issues, one option is to install the program [StartAllBack](https://www.startallback.com/) and select the Windows 10 style ribbon option. This has the beneficial side-effect of eliminating the Windows 11 folder type setting bugs.
+If you need the capability to set the folder type reliably, you may want to consider enabling the option to use the Windows 10 Explorer on Windows 11.
 
 ### General Items (Generic) Folders
 
@@ -817,9 +866,9 @@ Thanks to **Jean-Hervé Lescop** of Adersoft for updates to VbsEdit to accommoda
 
 Thanks to **Keith Miller** at TenForums.com for documenting the FolderTypes approach to setting default views.
 
-Thanks to **Patrick Hannemann** for the German (de-DE) translation.
+Thanks to **Patrick Hannemann** for the initial German (de-DE) translation.
 
-Thanks to **Ringo Xue** for the Simplified Chinese (zh-CN) translation.
+Thanks to **Ringo Xue** for the initial Simplified Chinese (zh-CN) translation.
 
 Thanks to my daughter **Dana** for the Japanese (ja-JP) translation.
 

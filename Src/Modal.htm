@@ -14,6 +14,9 @@ aArgs = Split(param.param1,";")
 param.param1 = ""
 document.title = aArgs(0)
 
+aColor = param.param2
+param.param2 = ""
+
 Font = aArgs(1)
 FontSize = aArgs(2)
 Scale = CDbl(aArgs(3))
@@ -44,7 +47,8 @@ End If
 
 Sub window_onLoad
 
-  If document.title="GetPadValues" Then Exit Sub
+  Document.body.style.color = aColor(0)
+  Document.body.Style.backgroundColor = aColor(1)
 
   Document.Body.Style.FontFamily = Font
   Document.Body.Style.FontSize = FontSize & "pt"
@@ -54,6 +58,9 @@ Sub window_onLoad
     If oElement.Type="button" Or oElement.Type="text" Then
       oElement.Style.FontFamily = Font
       oElement.Style.FontSize = FontSize & "pt"
+      oElement.Style.color = aColor(0)
+      oElement.Style.backgroundColor = aColor(2)
+      oElement.Style.borderColor = aColor(2)
       If oElement.Type="button" And CurBld<10000 Then oElement.Value = "√"
     End If
     If oElement.Type="checkbox" Or oElement.Type="radio" Then
@@ -64,33 +71,15 @@ Sub window_onLoad
   For Each oElement in oElements
     oElement.Style.FontFamily = Font
     oElement.Style.FontSize = FontSize & "pt"
+    oElement.Style.color = aColor(0)
+    oElement.Style.backgroundColor = aColor(2)
+    oElement.Style.borderColor = aColor(2)
   Next
 
-  MvClass = "mv"
 
-  If Theme="1" Then
-    MvClass = "mvdark"
-    document.body.style.color = "White"
-    document.body.style.backgroundColor = "#3C3C3C"
-    Set oElements = Document.GetElementsByTagName("select")
-    For Each oElement in oElements
-      oElement.Style.color = "GhostWhite"
-      oElement.Style.backgroundColor = "Black"
-      oElement.Style.borderColor = "Black"
-    Next
-    Set oElements = Document.GetElementsByTagName("input")
-      For Each oElement in oElements
-        If oElement.Type="text" Or oElement.Type="button" Then
-          oElement.Style.color = "GhostWhite"
-          oElement.Style.backgroundColor = "Black"
-          oElement.Style.borderColor = "Black"
-        End If
-      Next
-  End If
-
-  If Theme="2" Then
-    MvClass = "mvhc"
-  End If
+  If Theme="0" Then MvClass = "mv"
+  If Theme="1" Then MvClass = "mvdark"
+  If Theme="2" Then MvClass = "mvhc"
 
   Select Case document.title
     Case DetailsIcon

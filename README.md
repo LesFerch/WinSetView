@@ -92,7 +92,7 @@ For any folder type (e.g. **Pictures**) that you wish to have a *different* defa
 
 Click The **Options** button.
 
-![image](https://github.com/LesFerch/WinSetView/assets/79026235/679a75b9-5a5a-41f3-8d99-cdf231a7a421)
+![image](https://github.com/LesFerch/WinSetView/assets/79026235/311432d1-5a61-4d72-bbe3-0542619bab18)
 
 Review the settings on that page and adjust as desired. See the [manual](./Manual.md#options-menu) for full details. Options with a lock icon require Administrative access and will automatically pop up a UAC prompt if changed.
 

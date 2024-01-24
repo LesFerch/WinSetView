@@ -38,7 +38,7 @@ catch(Err) {
 <script language="VBScript">
 Option Explicit
 
-Const Version = "2.80"
+Const Version = "2.90"
 
 SetLocale(1033)
 Const ForReading = 1
@@ -49,6 +49,7 @@ Const Ansi = 0
 ' Class for passing parameters
 Class ClassParam
   Dim param1
+  Dim param2
 End Class
 
 Dim o, oWSH, oFSO, oApp, oFolder, oFile, oFiles, oOption, oElement, oElements
@@ -58,7 +59,7 @@ Dim AvailHeight, HeadHeight, RequiredWidth, CurrentWidth, Maximized, Fonts, Test
 Dim AppData, NTVer, WinVer, MajVer, Folder, INIFile, rbShow, BodyHTML, TaggedHTML, Tag, Item
 Dim Language,LangDir, LangFile, LangCount, LangData, LangIndex, UBFolderType, YScrollPos
 Dim ViewFile, ViewData, FolderTypeFile, Scale, FontsFile, Backup, F1, F2, FTHide, KeepAdvanced
-Dim ColFile, ColData, SelectedFont1, SelectedFont2, FontFile, LRArrow, ResetThumbs
+Dim ColFile, ColData, SelectedFont1, SelectedFont2, FontFile, LRArrow, aColor(3)
 Dim CmdLine, Line, Order, sOrder, SelectedSize1, SelectedSize2, GUID, Found, VirtualStore
 Dim C1, C2, LastColSel, FTindex, Data, Show, TempFile, File, PartsDir, ToolsDir
 Dim ColWid, ColShow, SortBy, BaseScale, UpArrow, DnArrow, MyPath, MyFolder, a, b, c
@@ -850,6 +851,12 @@ Sub Dict2Dom
   nn.checked = SetInitial("[Options]NoNumericalSort",0)
   ts.checked = SetInitial("[Options]Win10Search",0)
   ee.checked = SetInitial("[Options]Win11Explorer",0)
+  ls.checked = SetInitial("[Options]LegacySpacing",0)
+  fr.checked = SetInitial("[Options]NoFullRowSelect",0)
+  ld.checked = SetInitial("[Options]LegacyDialogFix",0)
+  es.checked = SetInitial("[Options]ExplorerStart",0)
+  esi.value = SetInitial("[Options]ExplorerStartPath","C:\")
+  ex.checked = SetInitial("[Options]Win10Explorer",0)
   nf.checked = SetInitial("[Options]NoFolderThumbs",0)
   ua.checked = SetInitial("[Options]UnhideAppData",0)
   sc.checked = SetInitial("[Options]ClassicSearch",0)
@@ -868,7 +875,7 @@ End Sub
 Function SetInitial(DictEntry,Default)
   SetInitial = oSettings.Item(DictEntry)
   If SetInitial="" Then SetInitial = Default
-  SetInitial = Int(SetInitial)
+  If IsNumeric(Default) Then SetInitial = Int(SetInitial)
 End Function
 
 Function FileDialog(Action,Path,Filter,EnableMulti,ReturnMulti)
@@ -939,6 +946,12 @@ Sub Var2Ini(INIFile)
   oFile.Write "NoNumericalSort=" & Abs(Int(nn.Checked)) & Z
   oFile.Write "Win10Search=" & Abs(Int(ts.Checked)) & Z
   oFile.Write "Win11Explorer=" & Abs(Int(ee.Checked)) & Z
+  oFile.Write "LegacySpacing=" & Abs(Int(ls.Checked)) & Z
+  oFile.Write "NoFullRowSelect=" & Abs(Int(fr.Checked)) & Z
+  oFile.Write "LegacyDialogFix=" & Abs(Int(ld.Checked)) & Z
+  oFile.Write "ExplorerStart=" & Abs(Int(es.Checked)) & Z
+  oFile.Write "ExplorerStartPath=" & esi.value & Z
+  oFile.Write "Win10Explorer=" & Abs(Int(ex.Checked)) & Z
   oFile.Write "NoFolderThumbs=" & Abs(Int(nf.Checked)) & Z
   oFile.Write "UnhideAppData=" & Abs(Int(ua.Checked)) & Z
   oFile.Write "ClassicSearch=" & Abs(Int(sc.Checked)) & Z
@@ -946,13 +959,6 @@ Sub Var2Ini(INIFile)
   oFile.Write "ClassicContextMenu=" & Abs(Int(cm.Checked)) & Z
   oFile.Write "NoSearchInternet=" & Abs(Int(si.Checked)) & Z
   oFile.Write "NoSearchHighlights=" & Abs(Int(sh.Checked)) & Z
-  On Error Resume Next
-  x = oWSH.RegRead("HKCU\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags\AllFolders\Shell\Logo")
-  On Error Goto 0
-  ResetThumbs=0
-  If x<>"none" And nf.Checked Then ResetThumbs=1
-  If x="none" And Not nf.Checked Then ResetThumbs=1
-  oFile.Write "ResetThumbs=" & ResetThumbs & Z
   oFile.Write "ThisPCoption=" & Abs(Int(tp.Checked)) & Z
   oFile.Write "ThisPCView=" & tpv.SelectedIndex & Z
   oFile.Write "ThisPCNG=" & Abs(Int(tpg.Checked)) & Z
@@ -1025,9 +1031,10 @@ Function Modal(Title,Args,DialogTop)
 
   DialogArgs = Title & ";" & SelectedFont1 & ";" & SelectedSize1 & ";" & Scale & ";" & t & ";" & w & ";" & x & ";" & y & ";" & Args
   
-	Dim param,aArgs
+	Dim param
 	Set param = New ClassParam
 	param.param1 = DialogArgs
+	param.param2 = aColor
 
   window.external.CustomDialog "Modal.htm", param, w, 480, 0
 
@@ -1096,7 +1103,10 @@ Sub Options
   Pg1.Style.Display = "none"
   Pg4.Style.Display = "inline"
   OptionTS
+  OptionLS
+  OptionES
   OptionThisPC
+  Sec4.Style.MarginTop = fix4.ScrollHeight - (Scale*20)
 End Sub
 
 Sub Arrange
@@ -1361,13 +1371,13 @@ Sub OptionReset
   If wd.Checked Then
     FTHide = True
     Sec1.Style.visibility = "hidden"
-    Sec4.Style.visibility = "hidden"
+    FVOptions.Style.visibility = "hidden"
     lb.Style.visibility = "hidden"
     sb.Style.visibility = "hidden"
   Else
     FTHide = False
     Sec1.Style.visibility = "visible"
-    Sec4.Style.visibility = "visible"
+    FVOptions.Style.visibility = "visible"
     If IFace.SelectedIndex=2 Then
       lb.Style.visibility = "visible"
       sb.Style.visibility = "visible"
@@ -1397,6 +1407,22 @@ Sub OptionTS
     tss.Style.Display = "inline"
   Else
     tss.Style.Display = "none"
+  End If
+End Sub
+
+Sub OptionLS
+  If ls.Checked Then
+    lss.Style.Display = "inline"
+  Else
+    lss.Style.Display = "none"
+  End If
+End Sub
+
+Sub OptionES
+  If es.Checked Then
+    esd.Style.Display = "inline"
+  Else
+    esd.Style.Display = "none"
   End If
 End Sub
 
@@ -1876,10 +1902,17 @@ End Sub
 Sub SetTheme
   If UBound(ArrThemes)=-1 Then Exit Sub
   sTheme = "[" & ArrThemes(Theme.SelectedIndex-1) & "]"
+
+  ' Colors also used modal dialogs
+  aColor(0) = oThemes.Item(sTheme & "MainText")
+  aColor(1) = oThemes.Item(sTheme & "MainBackground")
+  aColor(2) = oThemes.Item(sTheme & "ButtonBackground")
+  
   Document.body.Style.color = oThemes.Item(sTheme & "MainText")
   Document.body.Style.backgroundColor = oThemes.Item(sTheme & "MainBackground")
   fix1.Style.backgroundColor = oThemes.Item(sTheme & "MainBackground")
   fix2.Style.backgroundColor = oThemes.Item(sTheme & "MainBackground")
+  fix4.Style.backgroundColor = oThemes.Item(sTheme & "MainBackground")
   txt1.Style.color = oThemes.Item(sTheme & "InspectText")
   txt1.Style.backgroundColor = oThemes.Item(sTheme & "InspectBackground")
   txt2.Style.color = oThemes.Item(sTheme & "InspectText")
@@ -2009,39 +2042,48 @@ Sub document_onKeyDown
   End If
 End Sub
 
+Sub UpdateESI
+  esi.value = ess.options(ess.SelectedIndex).value
+  ess.SelectedIndex = 0
+  ess.blur
+End Sub
+
+Sub OptionESI
+  ess.SelectedIndex = 0
+  esi.select
+End Sub
+
+Sub OptionESB
+  Set oFolder = oApp.BrowseForFolder(0,"",1,"")
+  If oFolder is Nothing Then Exit Sub
+  esi.value = ""
+  esi.value = oFolder.self.path
+  ess.SelectedIndex = 0
+End Sub
+
 </script>
 
 <style>
   @font-face {font-family:Segoe UI Emoji; src:url(seguiemj.eot)}
-  body  {background-color:LemonChiffon; font-family:Segoe UI; font-size:11pt}
+  body  {background-color:#B8D8E9; font-family:Segoe UI; font-size:11pt}
   input[type="button"] {font-family:Segoe UI Emoji; font-size:11pt}
   .icon {font-family:Segoe UI Emoji}
   select {font-family:Segoe UI; font-size:11pt}
   textarea {font-family:Consolas; font-size:10pt}
   h2    {font-size:1.5em}
   h3    {font-size:1.2em}
-  #gn   {margin-top:3pt}
-  #ns   {margin-top:3pt}
-  #nn   {margin-top:3pt}
-  #ts   {margin-top:3pt}
-  #ee   {margin-top:3pt}
-  #nf   {margin-top:3pt}
-  #ua   {margin-top:3pt}
-  #sc   {margin-top:3pt}
-  #cm   {margin-top:3pt}
-  #si   {margin-top:3pt}
-  #sh   {margin-top:3pt}
-  #so   {margin-top:3pt}
   .cta  {margin-top:5pt; width:100%}
-  #fix1 {position:fixed; left:0; top:0; width:100%; background-color:LemonChiffon}
+  #fix1 {position:fixed; left:0; top:0; width:100%; background-color:#B8D8E9}
   #f1in {margin-left:5pt; margin-top:5pt}
   #twid {display:inline; white-space:nowrap}
   #bwid {display:inline; white-space:nowrap}
   #Sec1 {margin-top:106pt}
-  #fix2 {position:fixed; left:0; top:0; width:100%; background-color:LemonChiffon}
+  #fix2 {position:fixed; left:0; top:0; width:100%; background-color:#B8D8E9}
   #f2in {margin-top:5pt; margin-bottom:0pt}
   #Pg2  {display:none}
   #Pg3  {display:none}
+  #fix4 {position:fixed; left:0; top:0; width:100%; background-color:#B8D8E9}
+  #f4in {margin-left:5pt; margin-right:5pt}
   #Pg4  {display:none}
   .cw   {width:38%; height:100%; font-size:1em}
   #BkP2 {float:right; margin-right:10pt; font-family:WingDings; width:3em}
@@ -2071,6 +2113,7 @@ End Sub
   #tpv  {margin-left:1.5em; margin-top:3pt}
   .is   {width:2em}
   .noshow {display:none}
+  .opt  {line-height:250%}
 
   #tab1 tbody td {text-align:center}
   #tab2 tbody td {text-align:center}
@@ -2208,33 +2251,67 @@ End Sub
   </div>
 
   <div id=Pg4>
-    <input type=button value='&#223;' ID=BkP4 OnClick=Back2Pg1()>
-    <div class='tip fl2'><input type=button value='# 31 #' onclick=Help()>
-    <span id=Vp3 class=tiptext></span></div>
-    <div class='tip fl3'><input id=bc3 type=button value='⛶' onclick=RecenterButton()>
-    <span class=tiptext># 42 #</span></div>
-    <h2># 3 #</h2>
-    <input type=checkbox id=se Checked># 8 #<br><br>
-    <input type=checkbox id=cv Checked># 27 #<br><br>
-    <input type=checkbox id=cm># 47 #<br><br>
-    <input type=checkbox id=si># 48 #<br><br>
-    <input type=checkbox id=sh># 49 #<br><br>
-    <input type=checkbox id=nf># 35 #<br><br>
-    <input type=checkbox id=ua># 50 #<br><br>
-    <input type=checkbox id=ns># 11 #<br><br>
-    <input type=checkbox id=nn># 53 #<br><br>
-    <input type=checkbox id=ts onclick=OptionTS()># 54 #<br><br>
-    <div id=tss style='display:none'>
-      <input type=checkbox id=sc># 51 #<br><br>
+    <div id=fix4>
+    <div id=f4in>
+      <input type=button value='&#223;' ID=BkP4 OnClick=Back2Pg1()>
+      <div class='tip fl2'><input type=button value='# 31 #' onclick=Help()>
+      <span id=Vp3 class=tiptext></span></div>
+      <div class='tip fl3'><input id=bc3 type=button value='⛶' onclick=RecenterButton()>
+      <span class=tiptext># 42 #</span></div>
+      <h2># 3 #</h2>
     </div>
-    <input type=checkbox id=ee># 55 #<br><br>
-    <div id=Sec4>
-      <input type=checkbox id=so Checked onclick=OptionSearchOnly()># 9 #<br><br>
-      <input type=checkbox id=vf Checked># 29 #<br><br>
-      <input type=checkbox id=gn Checked># 10 #<br><br>
-      <input type=checkbox id=hg># 52 #<br><br>
-      <input type=checkbox id=tp onclick=OptionThisPC()># 13 #<br>
-      <div id=otp><select id=tpv></select> <input type=checkbox id=tpg checked># 25 #</div><br>
+    </div>
+    <div class=opt id=Sec4>
+      <input type=checkbox id=se Checked># 8 #<br>
+      <input type=checkbox id=cv Checked># 27 #<br>
+      <input type=checkbox id=cm># 47 #<br>
+      <input type=checkbox id=si># 48 #<br>
+      <input type=checkbox id=sh># 49 #<br>
+      <input type=checkbox id=nf># 35 #<br>
+      <input type=checkbox id=ua># 50 #<br>
+      <input type=checkbox id=ns># 11 #<br>
+      <input type=checkbox id=ex># 57 #<br>
+      <input type=checkbox id=nn># 53 #<br>
+      <input type=checkbox id=ts onclick=OptionTS()># 54 #<br>
+      <div id=tss style='display:none'>
+        <input type=checkbox id=sc># 51 #<br>
+      </div>
+      <input type=checkbox id=ee># 55 #<br>
+      <input type=checkbox id=ld># 56 #<br>
+      <input type=checkbox id=es onclick=OptionES()># 58 #<br>
+      <div id=esd>
+        <input id=esi type="text" value="C:\" style=width:99% onclick=OptionESI()><br>
+        <select id=ess  onchange=UpdateESI()>
+          <option selected disabled># 59 #</option>
+          <option >shell:MyComputerFolder</option>
+          <option >shell:Profile</option>
+          <option>shell:Desktop</option>
+          <option>shell:ThisPCDesktopFolder</option>
+          <option>shell:Downloads</option>
+          <option>shell:Local Documents</option>
+          <option>shell:Local Music</option>
+          <option>shell:Local Pictures</option>
+          <option>shell:Local Videos</option>
+          <option>shell:Libraries</option>
+          <option>shell:DocumentsLibrary</option>
+          <option>shell:MusicLibrary</option>
+          <option>shell:PicturesLibrary</option>
+          <option>shell:VideosLibrary</option>
+        </select>
+        <input type=button id=edb class=icon value=📁 style='height:1.7em' onclick=OptionESB()><br>
+      </div>
+      <div id=FVOptions>
+        <input type=checkbox id=ls onclick=OptionLS()># 60 #<br>
+        <div id=lss style='display:none'>
+          <input type=checkbox id=fr># 61 #<br>
+        </div>
+        <input type=checkbox id=so Checked onclick=OptionSearchOnly()># 9 #<br>
+        <input type=checkbox id=vf Checked># 29 #<br>
+        <input type=checkbox id=gn Checked># 10 #<br>
+        <input type=checkbox id=hg># 52 #<br>
+        <input type=checkbox id=tp onclick=OptionThisPC()># 13 #<br>
+        <div id=otp><select id=tpv></select> <input type=checkbox id=tpg checked># 25 #</div>
+      </div>
     </div>
   </div>
 </body>

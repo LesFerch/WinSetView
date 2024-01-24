@@ -28,7 +28,7 @@ WinSetView will **correct** the following conditions (when the cause is registry
 2. Folder Properties, Customize, **Optimize this folder for** is not working properly.
 3. Folder views are reverting back to **Windows defaults**.
 
-**Note**: **Windows 11** currently has some folder view bugs in regards to setting folder type for entire folder trees on removable drives and overriding the automatically detected folder type on "Local disks". Those bugs can, for now, be eliminated by installing a program that patches Explorer, such as **[StartAllBack](https://www.startallback.com)** (with the Explorer style option set to one of the classic views).
+**Note**: **Windows 11** currently has some folder view bugs in regards to setting folder type for entire folder trees on removable drives and overriding the automatically detected folder type on "Local disks". WinSetView provides an option to use the Windows 10 Explorer on Windows 11 to avoid those bugs.
 
 ![image](https://user-images.githubusercontent.com/79026235/152913587-d294de81-c8ca-428d-b351-09a564854eff.png)
 [See the quick start guide](./README.md)
