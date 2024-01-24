@@ -415,7 +415,7 @@ This option allows you to set the start folder for Explorer to any path you choo
 
 #### Legacy row and icon spacing
 
-When this option is checked, rows in List and Details views will be closer together and icon spacing will slightly different. You may see that file names in icon views are wrapped better (i.e. less breaking in the middle of words) with this option enabled.
+When this option is enabled, rows in List and Details views are closer together, icon spacing is slightly different, and file names in icon views are not be wrapped.
 
 **Note**: With this option enabled, you can freely rearrange files and folders in Details and Icon views, but those arrangements will be forgotten when the folder is closed, unless you are running Windows 7, Windows 8.x, or a Windows 10 build that is lower than 1703.
 
