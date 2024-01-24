@@ -38,7 +38,7 @@ catch(Err) {
 <script language="VBScript">
 Option Explicit
 
-Const Version = "2.90"
+Const Version = "2.91"
 
 SetLocale(1033)
 Const ForReading = 1
@@ -74,7 +74,7 @@ Dim ArrSortBy, ArrIncludeFlag, ArrIconSize, ArrThemes
 Dim ColShowLabels, FTCopyIdx, ThemeFile, SectionList, sTheme, CurBld, LWinVer
 Dim TempArray, RetVal, DialogArgs, DialogOptions, id, GrpUpArrow, GrpDnArrow
 Dim Warning, OptIcon, DialogTop, HighContrast, Beta
-Dim Txt1Data, Txt2Data, WinSys, ExeErr, ArrExe
+Dim Txt1Data, Txt2Data, WinSys, ExeErr, ArrExe, UseLight, DarkMode
 Dim WinSizePos, aWinSizePos, GotError, TaskbarTop, MSHTMLVer
 
 Z = vbCRLF
@@ -93,7 +93,11 @@ On Error Resume Next
 WinSizePos = oWSH.RegRead("HKCU\Software\WinSetView\WinSizePos")
 TaskbarTop = oWSH.RegRead("HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\StuckRects2\Settings")(12) = 1
 TaskbarTop = oWSH.RegRead("HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\StuckRects3\Settings")(12) = 1
+UseLight = oWSH.RegRead("HKCU\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize\AppsUseLightTheme")
 On Error Goto 0
+
+DarkMode = True
+If UseLight="" Or UseLight=1 Then DarkMode = False
 
 Function TaskbarAdjust(y)
   If TaskbarTop Then
@@ -1104,6 +1108,7 @@ Sub Options
   Pg4.Style.Display = "inline"
   OptionTS
   OptionLS
+  OptionLSDiv
   OptionES
   OptionThisPC
   Sec4.Style.MarginTop = fix4.ScrollHeight - (Scale*20)
@@ -1414,6 +1419,13 @@ Sub OptionLS
   If ls.Checked Then
     lss.Style.Display = "inline"
   Else
+    lss.Style.Display = "none"
+  End If
+End Sub
+
+Sub OptionLSDiv
+  If DarkMode Then
+    LSDiv.Style.Display = "none"
     lss.Style.Display = "none"
   End If
 End Sub
@@ -2114,6 +2126,7 @@ End Sub
   .is   {width:2em}
   .noshow {display:none}
   .opt  {line-height:250%}
+  .shield {height:1em; vertical-align:middle}
 
   #tab1 tbody td {text-align:center}
   #tab2 tbody td {text-align:center}
@@ -2271,13 +2284,13 @@ End Sub
       <input type=checkbox id=ua># 50 #<br>
       <input type=checkbox id=ns># 11 #<br>
       <input type=checkbox id=ex># 57 #<br>
-      <input type=checkbox id=nn># 53 #<br>
-      <input type=checkbox id=ts onclick=OptionTS()># 54 #<br>
+      <input type=checkbox id=nn># 53 # <img class=shield src='uac.png'><br>
+      <input type=checkbox id=ts onclick=OptionTS()># 54 # <img class=shield src='uac.png'><br>
       <div id=tss style='display:none'>
         <input type=checkbox id=sc># 51 #<br>
       </div>
-      <input type=checkbox id=ee># 55 #<br>
-      <input type=checkbox id=ld># 56 #<br>
+      <input type=checkbox id=ee># 55 # <img class=shield src='uac.png'><br>
+      <input type=checkbox id=ld># 56 # <img class=shield src='uac.png'><br>
       <input type=checkbox id=es onclick=OptionES()># 58 #<br>
       <div id=esd>
         <input id=esi type="text" value="C:\" style=width:99% onclick=OptionESI()><br>
@@ -2301,9 +2314,11 @@ End Sub
         <input type=button id=edb class=icon value=📁 style='height:1.7em' onclick=OptionESB()><br>
       </div>
       <div id=FVOptions>
-        <input type=checkbox id=ls onclick=OptionLS()># 60 #<br>
-        <div id=lss style='display:none'>
-          <input type=checkbox id=fr># 61 #<br>
+        <div id=lsdiv>
+          <input type=checkbox id=ls onclick=OptionLS()># 60 #<br>
+          <div id=lss style='display:none'>
+            <input type=checkbox id=fr># 61 #<br>
+          </div>
         </div>
         <input type=checkbox id=so Checked onclick=OptionSearchOnly()># 9 #<br>
         <input type=checkbox id=vf Checked># 29 #<br>

@@ -164,6 +164,15 @@ If (Test-Path -Path $TestFile) {
 $BakFile  = "$AppData\Backup\$TimeStr.reg"
 $Custom   = "$AppData\WinSetViewCustom.reg"
 
+# Check for dark mode
+
+$Value = 'AppsUseLightTheme'
+$Key = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize'
+$UseLight = (Get-ItemProperty -Path $Key -Name $Value  -ErrorAction SilentlyContinue).$Value
+$DarkMode = $false
+If (($UseLight -is [int]) -And ($UseLight -eq 0)) { $DarkMode = $true }
+
+
 Function ResetThumbCache {
   $ThumbCacheFiles = "$Env:LocalAppData\Microsoft\Windows\Explorer\thumbcache_*.db"
   & $IcaclsExe $ThumbCacheFiles /grant Everyone:F >$Null 2>$Null
@@ -311,11 +320,18 @@ If ($FileExt -eq '.reg') {
 
 # Enable/Disable full row select (requires legacy spacing)
 
-$LegacySpacing = [Int]$iniContent['Options']['LegacySpacing']
-$NoFullRowSelect = 0
-If ($LegacySpacing -eq 1) {
-  $NoFullRowSelect = [Int]$iniContent['Options']['NoFullRowSelect']
+If ($DarkMode) {
+  $LegacySpacing = 0
+  $NoFullRowSelect = 0
 }
+Else {
+  $LegacySpacing = [Int]$iniContent['Options']['LegacySpacing']
+  $NoFullRowSelect = 0
+  If ($LegacySpacing -eq 1) {
+    $NoFullRowSelect = [Int]$iniContent['Options']['NoFullRowSelect']
+  }
+}
+
 & $RegExe Add $Advn /v FullRowSelect /t REG_DWORD /d (1-$NoFullRowSelect) /f
 
 

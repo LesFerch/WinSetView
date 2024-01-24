@@ -17,9 +17,9 @@ This is the complete user manual. See the link below for the quick start guide.
 Compatible with Windows 7, 8, 10, and 11.
 
 Les Ferch, lesferch@gmail.com\
-GitHub repository created 2021-03-26, last updated 2024-01-23
+GitHub repository created 2021-03-26, last updated 2024-01-24
 
-[Version 2.90](./VersionHistory.md)
+[Version 2.91](./VersionHistory.md)
 
 ## Summary
 
@@ -271,10 +271,10 @@ This folder type controls the view you see for the *Searches* item within your u
 
 ### Options Menu
 
-![image](https://github.com/LesFerch/WinSetView/assets/79026235/311432d1-5a61-4d72-bbe3-0542619bab18)
+![image](https://github.com/LesFerch/WinSetView/assets/79026235/723b2a7a-e755-427f-b066-51ef87303df1)
 
 
-**Note**: All options, except those with a lock icon, can be changed by a Standard user. The items with the lock icon require Administrator rights to change. A UAC prompt will appear after clicking **Submit** if one or more of those options are being changed.
+![image](https://github.com/LesFerch/WinSetView/assets/79026235/31d5617f-6617-4e14-9b8e-0efb2c2b9896) **Note**: All options, except those with a shield icon, can be changed by a Standard user. The items with the shield icon require Administrator rights to change. A UAC prompt will appear after clicking **Submit** if one or more of those options are being changed.
 
 
 #### Show File Extensions
@@ -327,7 +327,7 @@ When checked, a registry setting will be applied that will cause Windows 11 to u
 
 ![image](https://github.com/LesFerch/WinSetView/assets/79026235/2aef729f-38ad-469c-b6d7-de796800992a)
 
-#### Disable numerical sort 🔐
+#### Disable numerical sort ![image](https://github.com/LesFerch/WinSetView/assets/79026235/31d5617f-6617-4e14-9b8e-0efb2c2b9896)
 
 When unchecked, files are sorted numerically where possible. When checked, files are sorted only by their ASCII values. For example:
 
@@ -374,7 +374,7 @@ Why this option, which should be available to any user to toggle as needed, is l
 **Note**: This option works in Windows 10 and Windows 11. In theory, it should also work in Windows 7, but it did not work in my tests on Windows 7.
 
 
-#### Enable feature 18755234 (Windows 10 Search) 🔐
+#### Enable feature 18755234 (Windows 10 Search) ![image](https://github.com/LesFerch/WinSetView/assets/79026235/31d5617f-6617-4e14-9b8e-0efb2c2b9896)
 
 In late 2023, Microsoft pushed out an "update" that reverted Windows 10 back to the "classic" search of Windows 10 build 1903 and earlier. If you like the classic search, then you can leave this option alone. If you prefer the "new" search that Windows 10 had from 2019 to 2023, check this box to enable that feature.
 
@@ -386,7 +386,7 @@ This option is only available when feature 18755234 is enabled. Once feature 187
 **Note**: "Classic" search includes results as you type and **Date modified:** calendar and **Size:** category pop-ups. "New" search waits for you to press **Enter** and displays a significant history dropdown list.
 
 
-#### Disable feature 40729001 (Windows 11 Explorer) 🔐
+#### Disable feature 40729001 (Windows 11 Explorer) ![image](https://github.com/LesFerch/WinSetView/assets/79026235/31d5617f-6617-4e14-9b8e-0efb2c2b9896)
 
 The new, App SDK based, version of Explorer in Windows 11 has many shortcomings. Among them, no support for drag and drop to folders via the address bar and no direct editing of metadata in the Details pane. It also has some annoying quirks like trimming trailing spaces in the search bar if you pause too long. You can get back the previous Explorer, that does not have those issues, by disabling feature 40729001.
 
@@ -395,7 +395,7 @@ The new, App SDK based, version of Explorer in Windows 11 has many shortcomings.
 **Note**: Explorer will change after the next RESTART.
 
 
-#### Fix Desktop place in legacy dialogs in Windows 11 🔐
+#### Fix Desktop place in legacy dialogs in Windows 11 ![image](https://github.com/LesFerch/WinSetView/assets/79026235/31d5617f-6617-4e14-9b8e-0efb2c2b9896)
 
 In Windows 11, legacy file open/save dialogs, that are still used in some programs, such as IrfanView, Audacity, and RegEdit, show redundant items when you click the "Desktop" icon in the left panel. This registry setting causes the "Desktop" icon to only display files and folders that you have placed on the Desktop.
 
@@ -415,9 +415,11 @@ This option allows you to set the start folder for Explorer to any path you choo
 
 #### Legacy row and icon spacing
 
-When this option is enabled, rows in List and Details views are closer together, icon spacing is slightly different, and file names in icon views are not be wrapped.
+**Note**: This option will not appear if your computer is in dark mode, as it is not compatible (text will be black). If you previously enabled this option while in light mode, clicking Submit in WinSetView will automatically clear this setting so that you will be returned to light text on a dark background.
 
-**Note**: With this option enabled, you can freely rearrange files and folders in Details and Icon views, but those arrangements will be forgotten when the folder is closed, unless you are running Windows 7, Windows 8.x, or a Windows 10 build that is lower than 1703.
+When this option is enabled, rows in List and Details views are closer together, icon spacing is slightly different, and file names in icon views are not wrapped.
+
+Also, when this option enabled, you can freely rearrange files and folders in Details and Icon views, but those arrangements will be forgotten when the folder is closed, unless you are running Windows 7, Windows 8.x, or a Windows 10 build that is lower than 1703.
 
 
 #### Disable full row select
