@@ -150,7 +150,7 @@ $CmdExe    = "$env:SystemRoot\System32\Cmd.exe"
 $IcaclsExe = "$env:SystemRoot\System32\Icacls.exe"
 $KillExe   = "$env:SystemRoot\System32\TaskKill.exe"
 $UAppData  = "$env:UserProfile\AppData"
-$StageExe  = "$PSScriptRoot\Tools\StagingTool.exe"
+$ViveExe  = "$PSScriptRoot\AppParts\ViVeTool.exe"
 
 # Use script folder if we have write access. Otherwise use AppData folder.
 
@@ -211,7 +211,7 @@ Function KillStoreAppsConstrained {
     if ($valueName -match 'c:\\program files\\windowsapps\\') {
       $FileName = Split-Path $valueName -Leaf
       $FileNameBase = $FileName.ToLower().Replace(".exe","")
-      if ($Exclude -notcontains $FileNameBase) {
+      if ($Exclude -NotContains $FileNameBase) {
         & $KillExe /im $FileName >$Null 2>$Null
       }
     }
@@ -408,15 +408,13 @@ If (($CurBld -ge 19045) -And ($CurBld -lt 21996) -And ($UBR -ge 3754)) {
 
   $Win10Search = $iniContent['Options']['Win10Search']
 
-  $CurVal = & $StageExe /query '18755234'
-  $CurVal = $CurVal[3]
-  $CurVal = $CurVal.SubString($CurVal.Length - 7)
-  If ($CurVal -eq "enabled") {$CurVal = '1'} else {$CurVal = '0'}
+  $CurVal = & $ViveExe /query /id:18755234
+  If ($CurVal[4] -Match 'Enabled') {$CurVal = '1'} Else {$CurVal = '0'}
 
   If ($CurVal -ne $Win10Search) {
     $Action = '/enable'
     If ($Win10Search -eq '0') {$Action = '/disable'}
-    $C2 = "$StageExe $Action 18755234"
+    $C2 = "$ViveExe $Action /id:18755234"
   }
 }
 
@@ -426,15 +424,13 @@ If ($CurBld -ge 22631) {
 
   $Win11Explorer = $iniContent['Options']['Win11Explorer']
 
-  $CurVal = & $StageExe /query '40729001'
-  $CurVal = $CurVal[3]
-  $CurVal = $CurVal.SubString($CurVal.Length - 8)
-  If ($CurVal -eq "disabled") {$CurVal = '1'} else {$CurVal = '0'}
+  $CurVal = & $ViveExe /query /id:40729001
+  If ($CurVal[4] -Match 'Disabled') {$CurVal = '1'} Else {$CurVal = '0'}
 
   If ($CurVal -ne $Win11Explorer) {
     $Action = '/enable'
     If ($Win11Explorer -eq '1') {$Action = '/disable'}
-    $C3 = "$StageExe $Action 40729001"
+    $C3 = "$ViveExe $Action /id:40729001"
   }
 }
 
