@@ -12,7 +12,7 @@ This is the quick start guide. For more details, please see the [complete user m
 
 Compatible with Windows 7, 8, 10, and 11.
 
-[Version 2.91](./VersionHistory.md)
+[Version 2.92](./VersionHistory.md)
 
 ## Summary
 
@@ -92,7 +92,7 @@ For any folder type (e.g. **Pictures**) that you wish to have a *different* defa
 
 Click The **Options** button.
 
-![image](https://github.com/LesFerch/WinSetView/assets/79026235/0bc32892-f9c1-462b-ab1d-b7445feab329)
+![image](https://github.com/LesFerch/WinSetView/assets/79026235/cb4f92c1-91fa-4763-aeeb-defc0a08a900)
 
 Review the settings on that page and adjust as desired. See the [manual](./Manual.md#options-menu) for full details. Options with a shield icon require Administrative access and will automatically pop up a UAC prompt if changed.
 

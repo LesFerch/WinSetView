@@ -17,9 +17,9 @@ This is the complete user manual. See the link below for the quick start guide.
 Compatible with Windows 7, 8, 10, and 11.
 
 Les Ferch, lesferch@gmail.com\
-GitHub repository created 2021-03-26, last updated 2024-01-24
+GitHub repository created 2021-03-26, last updated 2024-02-07
 
-[Version 2.91](./VersionHistory.md)
+[Version 2.92](./VersionHistory.md)
 
 ## Summary
 
@@ -271,7 +271,7 @@ This folder type controls the view you see for the *Searches* item within your u
 
 ### Options Menu
 
-![image](https://github.com/LesFerch/WinSetView/assets/79026235/723b2a7a-e755-427f-b066-51ef87303df1)
+![image](https://github.com/LesFerch/WinSetView/assets/79026235/cb4f92c1-91fa-4763-aeeb-defc0a08a900)
 
 
 ![image](https://github.com/LesFerch/WinSetView/assets/79026235/31d5617f-6617-4e14-9b8e-0efb2c2b9896) **Note**: All options, except those with a shield icon, can be changed by a Standard user. The items with the shield icon require Administrator rights to change. A UAC prompt will appear after clicking **Submit** if one or more of those options are being changed.
@@ -388,7 +388,7 @@ This option is only available when feature 18755234 is enabled. Once feature 187
 
 #### Disable feature 40729001 (Windows 11 Explorer) ![image](https://github.com/LesFerch/WinSetView/assets/79026235/31d5617f-6617-4e14-9b8e-0efb2c2b9896)
 
-**Update**: As of Windows 11 build revision 3085 (KB5034204) this option no longer has any effect.
+**Note**: As of Windows 11 build revision 3085 (KB5034204) this option no longer has any effect and will only be shown if you are running an older build.
 
 The new, App SDK based, version of Explorer in Windows 11 has many shortcomings. Among them, no support for drag and drop to folders via the address bar and no direct editing of metadata in the Details pane. It also has some annoying quirks like trimming trailing spaces in the search bar if you pause too long. You can get back the previous Explorer, that does not have those issues, by disabling feature 40729001.
 
@@ -397,9 +397,9 @@ The new, App SDK based, version of Explorer in Windows 11 has many shortcomings.
 **Note**: Explorer will change after the next RESTART.
 
 
-#### Fix Desktop place in legacy dialogs in Windows 11 ![image](https://github.com/LesFerch/WinSetView/assets/79026235/31d5617f-6617-4e14-9b8e-0efb2c2b9896)
+#### Fix Desktop place in legacy dialogs ![image](https://github.com/LesFerch/WinSetView/assets/79026235/31d5617f-6617-4e14-9b8e-0efb2c2b9896)
 
-In Windows 11, legacy file open/save dialogs, that are still used in some programs, such as IrfanView, Audacity, and RegEdit, show redundant items when you click the "Desktop" icon in the left panel. This registry setting causes the "Desktop" icon to only display files and folders that you have placed on the Desktop.
+Legacy file open/save dialogs, that are still used in some programs, such as IrfanView, Audacity, and RegEdit, show redundant items when you click the "Desktop" icon in the left panel. It's particularly cluttered in Windows 11. This registry setting causes the "Desktop" icon to only display files and folders that you have placed on the Desktop.
 
 Before:\
 ![image](https://github.com/LesFerch/WinSetView/assets/79026235/8cc5416a-60b7-4bf7-a2a2-f22e1019c347)
@@ -407,12 +407,16 @@ Before:\
 After:\
 ![image](https://github.com/LesFerch/WinSetView/assets/79026235/5097e2a5-7502-4da5-a2d1-a0f0352ba143)
 
+**Note**: With this option enabled on Windows 10, and older Windows 11 builds, the legacy dialog "Quick Access" item will change to "Frequent folders", but will show the same items.
 
-#### Set a custom start folder for Explorer
 
-This option allows you to set the start folder for Explorer to any path you choose. This option works on Windows 10 and Windows 11. It does not work on Windows 7.
+#### Set a start folder for Explorer
 
-![image](https://github.com/LesFerch/WinSetView/assets/79026235/367ac18d-ebe7-4ff4-abb9-f33917cf4bfc)
+This option allows you to set the start folder for Explorer to "This PC", "Home / Quick Access", "Downloads", or any path you choose. This option works on Windows 10 and Windows 11. It does not work on Windows 7.
+
+**Note**: The options "This PC" and "Home / Quick Access" are exactly the same setting you see in Folder Options beside "Open File Explorer to". The "Downloads" option is a minor variation of that setting and will result in a blank beside "Open File Explorer to". Setting any other path using the "Other" option creates a totally different registry entry that uses the "DelegateExecute" feature. That setting is known to not work with the WindHawk "Classic navigation bar" mod.
+
+![image](https://github.com/LesFerch/WinSetView/assets/79026235/b65f725d-1569-4e05-998e-a855b415bba7)
 
 
 #### Legacy row and icon spacing

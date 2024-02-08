@@ -51,7 +51,7 @@ Open the extracted folder and you should see **WinSetView.exe**. If you do not s
 
 To avoid annoying "unrecognized app" notifications, right-click **WinSetView.exe** and select **Properties**:
 
-![image](https://github.com/LesFerch/WinSetView/assets/79026235/3c74acd5-90ba-4d65-b0ba-2333e24c1bf8)
+![image](https://github.com/LesFerch/WinSetView/assets/79026235/f1e8ee66-ffe5-4f07-9fa1-e6f41f51f1cf)
 
 Then check **Unblock**, and click **OK**.
 

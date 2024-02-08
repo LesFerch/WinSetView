@@ -38,7 +38,7 @@ catch(Err) {
 <script language="VBScript">
 Option Explicit
 
-Const Version = "2.91"
+Const Version = "2.92"
 
 SetLocale(1033)
 Const ForReading = 1
@@ -71,11 +71,11 @@ Dim ArrLang, ArrView, ArrColData, ArrColDataItem, ArrColumnEntry, ArrColumnList,
 Dim ArrData(21), ArrFolderTypeGUID(60), ArrFolderType(60), ArrFolderTypeLang(60), ArrInherit(60)
 Dim ArrColumnLists, ArrGroupBy, ArrInheritFlag, ArrHTML1, ArrHTML2, ArrViewChoice
 Dim ArrSortBy, ArrIncludeFlag, ArrIconSize, ArrThemes
-Dim ColShowLabels, FTCopyIdx, ThemeFile, SectionList, sTheme, CurBld, LWinVer
+Dim ColShowLabels, FTCopyIdx, ThemeFile, SectionList, sTheme, CurBld, LWinVer, UBR
 Dim TempArray, RetVal, DialogArgs, DialogOptions, id, GrpUpArrow, GrpDnArrow
 Dim Warning, OptIcon, DialogTop, HighContrast, Beta
 Dim Txt1Data, Txt2Data, WinSys, ExeErr, ArrExe, UseLight, DarkMode
-Dim WinSizePos, aWinSizePos, GotError, TaskbarTop, MSHTMLVer
+Dim WinSizePos, aWinSizePos, GotError, TaskbarTop, MSHTMLVer, eso
 
 Z = vbCRLF
 Q = Chr(34)
@@ -149,10 +149,12 @@ If NTVer="6.2" Or NTVer="6.3" Then WinVer = "8"
 On Error Resume Next
 MajVer = oWSH.RegRead("HKLM\Software\Microsoft\Windows NT\CurrentVersion\CurrentMajorVersionNumber")
 CurBld = oWSH.RegRead("HKLM\Software\Microsoft\Windows NT\CurrentVersion\CurrentBuild")
+UBR = oWSH.RegRead("HKLM\Software\Microsoft\Windows NT\CurrentVersion\UBR")
+
 On Error Goto 0
 If MajVer>=10 Then WinVer = "10"
 LWinVer = WinVer
-If CurBld>=22000 Then LWinVer = "11"
+If CurBld>=21996 Then LWinVer = "11"
 
 If WinVer<>"7" And WinVer<>"8" And WinVer<>"10" Then
   MsgBox "Windows 7, 8, 10, or higher is required.",vbCritical,"Error"
@@ -874,6 +876,11 @@ Sub Dict2Dom
   xs.SelectedIndex = SetInitial("[Options]Scroll",1)
   IFace.SelectedIndex = SetInitial("[Options]Interface",1)
   Theme.SelectedIndex = SetInitial("[Options]ThemeIndex",1)
+  eso = SetInitial("[Options]ExplorerStartOption",2)
+  If eso=1 Then rbes1.checked = True
+  If eso=2 Then rbes2.checked = True
+  If eso=3 Then rbes3.checked = True
+  If eso=4 Then rbes4.checked = True
 End Sub
 
 Function SetInitial(DictEntry,Default)
@@ -954,6 +961,11 @@ Sub Var2Ini(INIFile)
   oFile.Write "NoFullRowSelect=" & Abs(Int(fr.Checked)) & Z
   oFile.Write "LegacyDialogFix=" & Abs(Int(ld.Checked)) & Z
   oFile.Write "ExplorerStart=" & Abs(Int(es.Checked)) & Z
+  If rbes1.checked Then eso = 1
+  If rbes2.checked Then eso = 2
+  If rbes3.checked Then eso = 3
+  If rbes4.checked Then eso = 4
+  oFile.Write "ExplorerStartOption=" & eso & Z
   oFile.Write "ExplorerStartPath=" & esi.value & Z
   oFile.Write "Win10Explorer=" & Abs(Int(ex.Checked)) & Z
   oFile.Write "NoFolderThumbs=" & Abs(Int(nf.Checked)) & Z
@@ -1112,6 +1124,7 @@ Sub Options
   OptionES
   OptionThisPC
   Sec4.Style.MarginTop = fix4.ScrollHeight - (Scale*20)
+  If CurBld>=22621 And UBR>="3007" And UBR<"3085" Then ees.Style.Display = "inline"
 End Sub
 
 Sub Arrange
@@ -1433,8 +1446,14 @@ End Sub
 Sub OptionES
   If es.Checked Then
     esd.Style.Display = "inline"
+    If rbes4.checked Then
+      esd2.Style.Display = "inline"
+    Else
+      esd2.Style.Display = "none"
+    End If
   Else
     esd.Style.Display = "none"
+    esd2.Style.Display = "none"
   End If
 End Sub
 
@@ -2289,18 +2308,24 @@ End Sub
       <div id=tss style='display:none'>
         <input type=checkbox id=sc># 51 #<br>
       </div>
-      <input type=checkbox id=ee># 55 # <img class=shield src='uac.png'><br>
+      <div id=ees style='display:none'>
+        <input type=checkbox id=ee># 55 # <img class=shield src='uac.png'><br>
+      </div>
       <input type=checkbox id=ld># 56 # <img class=shield src='uac.png'><br>
       <input type=checkbox id=es onclick=OptionES()># 58 #<br>
       <div id=esd>
+        <input type=radio name=eso id=rbes1 value=1 onclick=OptionES()># 62 # &nbsp
+        <input type=radio name=eso id=rbes2 value=2 onclick=OptionES()># 63 # &nbsp
+        <input type=radio name=eso id=rbes3 value=3 onclick=OptionES()># 64 # &nbsp
+        <input type=radio name=eso id=rbes4 value=4 onclick=OptionES()># 65 #
+      </div>
+      <div id=esd2>
         <input id=esi type="text" value="C:\" style=width:99% onclick=OptionESI()><br>
         <select id=ess  onchange=UpdateESI()>
           <option selected disabled># 59 #</option>
-          <option >shell:MyComputerFolder</option>
-          <option >shell:Profile</option>
+          <option>shell:Profile</option>
           <option>shell:Desktop</option>
           <option>shell:ThisPCDesktopFolder</option>
-          <option>shell:Downloads</option>
           <option>shell:Local Documents</option>
           <option>shell:Local Music</option>
           <option>shell:Local Pictures</option>

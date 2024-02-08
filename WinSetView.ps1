@@ -420,7 +420,7 @@ If (($CurBld -ge 19045) -And ($CurBld -lt 21996) -And ($UBR -ge 3754)) {
 
 # Enable/disable Windows 11 App SDK Explorer (UAC)
 
-If ($CurBld -ge 22631) {
+If (($CurBld -ge 22621) -And ($UBR -ge 3007) -And ($UBR -lt 3085)) {
 
   $Win11Explorer = $iniContent['Options']['Win11Explorer']
 
@@ -436,7 +436,7 @@ If ($CurBld -ge 22631) {
 
 # Enable/disable Windows 10 Explorer on Windows 11
 
-If ($CurBld -ge 22631) {
+If (($CurBld -ge 21996) -And ($UBR -ge 3007)) {
 
   $Win10Explorer = $iniContent['Options']['Win10Explorer']
 
@@ -454,22 +454,27 @@ If ($CurBld -ge 22631) {
   }
 }
 
-# Apply/remove Windows 11 Legacy Dialog Fix (UAC)
+# Apply/remove Legacy Dialog Fix (UAC)
 
-If ($CurBld -ge 22631) {
+If ($CurBld -ge 18363) {
 
   $CurVal = & $RegExe Query $PolL /v Place1 2>$Null
   If ($CurVal.Length -eq 4) {$CurVal = '1'} Else {$CurVal = '0'}
 
   $LegacyDialogFix = $iniContent['Options']['LegacyDialogFix']
 
+  $DesktopPlace = 'shell:::{3936E9E4-D92C-4EEE-A85A-BC16D5EA0819}'
+  If (($CurBld -ge 22621) -And ($UBR -ge 3007)) {
+    $DesktopPlace = 'shell:::{F874310E-B6B7-47DC-BC84-B9E6B38F5903}'
+  }
+
   If ($CurVal -ne $LegacyDialogFix) {
     If ($LegacyDialogFix -eq '1') {
-      $A = "$RegExe Add $PolL /v Place0 /t REG_SZ /d 'shell:::{F874310E-B6B7-47DC-BC84-B9E6B38F5903}' /f"
+      $A = "$RegExe Add $PolL /v Place0 /t REG_SZ /d '$DesktopPlace' /f"
       $B = "$RegExe Add $PolL /v Place1 /t REG_SZ /d 'shell:ThisPCDesktopFolder' /f"
-      $C = "$RegExe Add $PolL /v Place2 /t REG_SZ /d 'shell:::{031E4825-7B94-4DC3-B131-E946B44C8DD5}' /f"
+      $C = "$RegExe Add $PolL /v Place2 /t REG_SZ /d 'shell:Libraries' /f"
       $D = "$RegExe Add $PolL /v Place3 /t REG_SZ /d 'shell:MyComputerFolder' /f"
-      $E = "$RegExe Add $PolL /v Place4 /t REG_SZ /d 'shell:::{F02C1A0D-BE21-4350-88B0-7367FC96EF3C}' /f"
+      $E = "$RegExe Add $PolL /v Place4 /t REG_SZ /d 'shell:NetworkPlacesFolder' /f"
       $C4 = "$A;$B;$C;$D;$E"
     }
     Else {
@@ -508,15 +513,19 @@ If ($Reset -eq 1) {
 
 # Set Explorer Start Folder
 
+& $RegExe Delete $ESTR /reg:64 /f 2>$Null
 $ExplorerStart = [Int]$iniContent['Options']['ExplorerStart']
-If ($ExplorerStart -eq '1') {
-  $ExplorerStartPath = 'explorer ' + $iniContent['Options']['ExplorerStartPath']
-  $ExplorerStartPath = $ExplorerStartPath -replace '\\$', '\\'
-  & $RegExe Add $ESTC /ve /t REG_SZ /d $ExplorerStartPath /reg:64 /f
-  & $RegExe Add $ESTC /v DelegateExecute /t REG_SZ /reg:64 /f
-}
-Else {
-  & $RegExe Delete $ESTR /reg:64 /f 2>$Null
+If ($ExplorerStart -eq 1) {
+  $ExplorerStartOption = [Int]$iniContent['Options']['ExplorerStartOption']
+  If ($ExplorerStartOption -eq 4) {
+    $ExplorerStartPath = 'explorer ' + $iniContent['Options']['ExplorerStartPath']
+    $ExplorerStartPath = $ExplorerStartPath -replace '\\$', '\\'
+    & $RegExe Add $ESTC /ve /t REG_SZ /d $ExplorerStartPath /reg:64 /f
+    & $RegExe Add $ESTC /v DelegateExecute /t REG_SZ /reg:64 /f
+  }
+  Else {
+    & $RegExe Add $Advn /v LaunchTo /t REG_DWORD /d ($ExplorerStartOption) /f
+  }
 }
 
 
