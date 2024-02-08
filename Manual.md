@@ -17,7 +17,7 @@ This is the complete user manual. See the link below for the quick start guide.
 Compatible with Windows 7, 8, 10, and 11.
 
 Les Ferch, lesferch@gmail.com\
-GitHub repository created 2021-03-26, last updated 2024-02-07
+GitHub repository created 2021-03-26, last updated 2024-02-08
 
 [Version 2.92](./VersionHistory.md)
 
@@ -80,7 +80,7 @@ Adjust whether a long line in WinSetView is wrapped or scrolled horizontally. Va
 
 ### Theme Menu
 
-Select a light or dark theme for the WinSetView display. Theme definitions are located in .\AppParts\Themes.ini. The provided themes can be edited and/or new themes can be added. Please note that pop-up dialogs have hard-coded light and dark themes.
+Select a light or dark theme for the WinSetView display. Theme definitions are located in .\AppParts\Themes.ini. The provided themes can be edited and/or new themes can be added.
 
 ### Reset Views to Windows Defaults
 
@@ -425,7 +425,7 @@ This option allows you to set the start folder for Explorer to "This PC", "Home 
 
 When this option is enabled, rows in List and Details views are closer together, icon spacing is slightly different, and file names in icon views only wrap on certain characters, such as spaces and hyphens.
 
-Also, when this option enabled, you can freely rearrange files and folders in Details and Icon views, but those arrangements will be forgotten when the folder is closed, unless you are running Windows 7, Windows 8.x, or a Windows 10 build that is lower than 1703.
+Also, when this option is enabled, you can freely rearrange files and folders in Details and Icon views, but those arrangements will be forgotten when the folder is closed, unless you are running Windows 7, Windows 8.x, or a Windows 10 build that is lower than 1703.
 
 
 #### Disable full row select
