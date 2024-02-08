@@ -1,3 +1,9 @@
+## 2.92
+
+Enhancement: Explorer start folder options expanded.
+
+Change: Option to disable feature 40729001 is now only shown on older builds where it still can be used.
+
 ## 2.91
 
 Bug fix: Legacy row and icon spacing is not compatible with dark mode. It is now disabled and hidden when the computer is in dark mode.
