@@ -628,6 +628,7 @@ This folder contains files that are used by *WinSetView.exe*.
 
 **Themes.ini** contains the WinSetView light and dark themes. This file can be edited to change the existing themes or add new themes.
 
+**ViVeTool.exe** and **Albacore.ViVe.dll** are used to enable or disable certain Windows features shown in the Options menu.
 
 ### Language Folder
 
@@ -654,6 +655,8 @@ This script captures Explorer view settings that can't be set in WinSetView, suc
 Rename CaptureCustom.reg to WinSetViewCustom.reg and place it in the AppData folder to have it applied by WinSetView. WinSetView.ps1 will import the file WinSetViewCustom.reg after all other settings are applied. This will override any settings applied by WinSetView!
 
 Please, if you don't know what you're doing, avoid this level of customization!
+
+**WinSetView.vbs** A simple launcher for WinSetView.ps1 that may come in handy for system administrators.
 
 ## Command Line Operation
 
