@@ -532,6 +532,7 @@ If ($ExplorerStart -eq 1) {
 # Function to help Set up views for This PC
 
 Function SetBagValues ($Key) {
+  & $RegExe Add $Key /v FFlags /d 0x41200001 /t REG_DWORD /f >$Null
   & $RegExe Add $Key /v LogicalViewMode /d $LVMode /t REG_DWORD /f >$Null
   & $RegExe Add $Key /v Mode /d $Mode /t REG_DWORD /f >$Null
   $Group = 1-$ThisPCNG
