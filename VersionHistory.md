@@ -1,3 +1,7 @@
+## 2.93
+
+Bug fix: Windows 10 Explorer on Windows 11 now remembers its window size and position.
+
 ## 2.92
 
 Enhancement: Explorer start folder options expanded.
