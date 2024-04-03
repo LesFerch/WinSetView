@@ -17,9 +17,9 @@ This is the complete user manual. See the link below for the quick start guide.
 Compatible with Windows 7, 8, 10, and 11.
 
 Les Ferch, lesferch@gmail.com\
-GitHub repository created 2021-03-26, last updated 2024-03-19
+GitHub repository created 2021-03-26, last updated 2024-04-02
 
-[Version 2.93](./VersionHistory.md)
+[Version 2.94](./VersionHistory.md)
 
 ## Summary
 
@@ -40,7 +40,7 @@ All changes made by WinSetView are per-user within the HKEY_CURRENT_USER hive in
 **Note**: For USB-connected phones and tablets, WinSetView provides an option to have them displayed in the same view as generic (General Items) folders (e.g. Details view), but it cannot control the Details view column headings for such devices.
 
 ## Interface
-![image](https://github.com/LesFerch/WinSetView/assets/79026235/45bff782-05a4-46da-8cb4-1197881b1e32)
+![image](https://github.com/LesFerch/WinSetView/assets/79026235/a2bec3ac-5742-493e-a958-3da2ff4c4c07)
 
 **Note**: For Windows 7 and 8, some of the icons used in the program will differ from Windows 10 and 11 due to issues with those older Windows versions being able to display all Unicode characters.
 
@@ -153,7 +153,7 @@ You can group by any property in ascending or descending order, or turn off grou
 
 The **⚙ (Options)** button allows you to select a _different_ view for File Open/Save dialogs. For example, if you have set **List** as your default view, but want **Details** in File Open/Save dialogs, this is where you would set that up.
 
-![image](https://github.com/LesFerch/WinSetView/assets/79026235/48fcc9a5-b650-4412-b350-9145740a7a5d)
+![image](https://github.com/LesFerch/WinSetView/assets/79026235/7f684ac7-2be2-4384-907a-0e4a77d15891)
 
 Separate File Dialog views can be set under Global as well as under any specific folder type. This is an improvement over previous versions of WinSetView that only had one global File Dialog view settings in the Options menu.
 
@@ -271,7 +271,7 @@ This folder type controls the view you see for the *Searches* item within your u
 
 ### Options Menu
 
-![image](https://github.com/LesFerch/WinSetView/assets/79026235/cb4f92c1-91fa-4763-aeeb-defc0a08a900)
+![image](https://github.com/LesFerch/WinSetView/assets/79026235/5b99d061-124d-4f10-a840-cdf55b208638)
 
 
 ![image](https://github.com/LesFerch/WinSetView/assets/79026235/31d5617f-6617-4e14-9b8e-0efb2c2b9896) **Note**: All options, except those with a shield icon, can be changed by a Standard user. The items with the shield icon require Administrator rights to change. A UAC prompt will appear after clicking **Submit** if one or more of those options are being changed.
@@ -414,7 +414,7 @@ This option allows you to set the start folder for Explorer to "This PC", "Home 
 
 **Note**: The options "This PC" and "Home / Quick Access" are exactly the same setting you see in Folder Options beside "Open File Explorer to". The "Downloads" option is a minor variation of that setting and will result in a blank beside "Open File Explorer to". Setting any other path using the "Other" option creates a totally different registry entry that uses the "DelegateExecute" feature. That setting is known to not work with the WindHawk "Classic navigation bar" mod.
 
-![image](https://github.com/LesFerch/WinSetView/assets/79026235/b65f725d-1569-4e05-998e-a855b415bba7)
+![image](https://github.com/LesFerch/WinSetView/assets/79026235/f2090713-8df1-45d1-a358-fb4a08af9a0b)
 
 
 #### Legacy row and icon spacing
@@ -486,14 +486,23 @@ Please note there is no separate setting for **Folder Type Discovery**. If you w
 
 #### Do not force standard grouping on Home / Quick Access
 
-When this option is unchecked (default), the Home / Quick Access folder will always be grouped by Group. That is, the folder will have headings for pinned items, recent files, and recent folders.
+When this option is unchecked (default), Home / Quick Access will be grouped by "Group". That is, the folder will have headings for pinned items, recent files, and recent folders.
 
-When this option is checked, the grouping (and sorting) options displayed for Home / Quick Access will be applied.
+When this option is checked, Home / Quick Access will be grouped by whatever you set, including (None).
+
+
+#### Do not force standard grouping on Libraries
+
+When this option is unchecked (default), Libraries will be grouped by "By Location". That is, you will get the default two-line header that shows the folder name and path.
+
+**Note**: This was always possible by setting "Group by" for each library to "By Location". That step is no longer required.
+
+When this option is checked, Libraries will be grouped by whatever you set, including (None).
 
 
 ### Columns
 
-![image](https://user-images.githubusercontent.com/79026235/212802264-437b3834-2d93-4899-871b-5ce038389450.png)
+![image](https://github.com/LesFerch/WinSetView/assets/79026235/7b07a0f8-c1e6-480d-8483-8e9c44e96887)
 
 Clicking the **Columns** button brings up the column (properties) selection page for the current folder type. Column headings, in Explorer Details view, correspond to file and folder *properties*.
 
@@ -505,11 +514,11 @@ Next, the currently selected column headings, that will display in File Explorer
 
 Clicking the column re-order button **⮀** will bring up a dialog that will allow you to rearrange the column headings by dragging them up or down in the presented list.:
 
-![image](https://github.com/LesFerch/WinSetView/assets/79026235/0a2e303b-a74b-4f95-b548-e181b24e0b31)
+![image](https://github.com/LesFerch/WinSetView/assets/79026235/1b6bdc7a-0e75-462b-8ee3-eaa28b0a8ba5)
 
 The column order can also be set by removing each column heading and then adding them back in the desired order, but it is easier to use the re-order dialog. Note that the re-order dialog will allow any order, but will display the following warning if the **Name** property is not the first column:
 
-![image](https://github.com/LesFerch/WinSetView/assets/79026235/01dd2ab9-b27b-4b17-8f85-7b6ef54ac442)
+![image](https://github.com/LesFerch/WinSetView/assets/79026235/b7257139-dd08-4e8d-859e-e08bba0018d3)
 
 The issue with software that uses the "legacy" type dialogs (such as IrfanView) is that those type of dialogs assume that **Name** is always the first column. So, for example, if **Size** is set as the first column, and you are in any view other than **Details**, you will just see a bunch of icons with sizes and no names.
 
@@ -551,7 +560,7 @@ Please note that you can set the width as small as 1em, but Explorer will expand
 
 If you wish to enter the column width in *pixels*, hold **Alt** and **click** the input width field you wish to adjust. A dialog will open showing the width in pixels:
 
-![image](https://github.com/LesFerch/WinSetView/assets/79026235/43adc8df-422b-4e46-8ed7-bbe9b6e8be06)
+![image](https://github.com/LesFerch/WinSetView/assets/79026235/ebf2f3bc-e3c8-423b-8bc0-180737217be3)
 
 The pixel value will vary depending on screen pixel density, whereas the value in ems will be constant across different display configurations. Please note that WinSetView sets the column *default* width which can only be set to whole (integer) em values. Windows File Explorer lets you set the width down to the pixel, but that is stored as a setting within the volatile *Bags* registry key *overriding* the default value. WinSetView deals with *default* settings only.
 

@@ -252,6 +252,7 @@ Else {
   $UnhideAppData = [Int]$iniContent['Options']['UnhideAppData']
   $ClassicSearch = [Int]$iniContent['Options']['ClassicSearch']
   $HomeGrouping = [Int]$iniContent['Options']['HomeGrouping']
+  $LibraryGrouping = [Int]$iniContent['Options']['LibraryGrouping']
   $SearchOnly = [Int]$iniContent['Options']['SearchOnly']
   $SetVirtualFolders = [Int]$iniContent['Options']['SetVirtualFolders']
   $ThisPCoption = [Int]$iniContent['Options']['ThisPCoption']
@@ -661,6 +662,10 @@ Get-ChildItem $FolderTypes | Get-ItemProperty | ForEach {
       $GroupByOrder = $iniContent[$FT]['GroupByOrder']
       If (($FT -eq 'HomeFolder') -And ($HomeGrouping -eq 0)) {
         $GroupBy = 'Home.Grouping'
+        $GroupByOrder = '+'
+      }
+      If (($FT.IndexOf('Library') -gt 0) -And ($LibraryGrouping -eq 0)) {
+        $GroupBy = 'ItemSearchLocation'
         $GroupByOrder = '+'
       }
       If ($GroupBy -ne '') {$GroupBy = "System.$GroupBy"}
