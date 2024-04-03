@@ -1,3 +1,7 @@
+## 2.94
+
+Enhancement: Libraries now automatically get the usual headers that show the path and drive. The Option menu provides an override for the automatic grouping.
+
 ## 2.93
 
 Bug fix: Windows 10 Explorer on Windows 11 now remembers its window size and position.
