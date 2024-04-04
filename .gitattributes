@@ -3,3 +3,4 @@ LICENSE export-ignore
 .git*   export-ignore
 Src     export-ignore
 assets  export-ignore
+*.scss linguist-vendored
