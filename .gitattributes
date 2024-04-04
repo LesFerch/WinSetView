@@ -2,3 +2,4 @@ LICENSE export-ignore
 *.md    export-ignore
 .git*   export-ignore
 Src     export-ignore
+assets  export-ignore
