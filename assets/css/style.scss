@@ -1,0 +1,26 @@
+---
+---
+
+@import "{{ site.theme }}";
+
+@media (prefers-color-scheme:dark) {
+  body {
+    background-color: #24292e;
+    color: #fff;
+  }
+  a {
+    color: #65aeff;
+  }
+  .text-gray {
+    color: #a5b3c1 !important;
+  }
+  .markdown-body h1, .markdown-body h2 {
+    border-bottom-color: #465059;
+  }
+  .border-top, .border-gray-light {
+    border-color: #465059 !important;
+  }
+  .highlight, .markdown-body pre, .markdown-body .highlight pre {
+    background-color: #000;
+  }
+}
