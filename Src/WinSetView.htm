@@ -38,7 +38,7 @@ catch(Err) {
 <script language="VBScript">
 Option Explicit
 
-Const Version = "2.94"
+Const Version = "2.95"
 
 SetLocale(1033)
 Const ForReading = 1
@@ -579,6 +579,19 @@ Sub UpdateLang(OnChange)
   
   ColFile = LangDir & Language & "\Columns-Win" & LWinVer & ".txt"
   ColData = oFSO.OpenTextFile(ColFile,ForReading,,Unicode).ReadAll
+
+  ' Add Icaros properties if they are activated
+  On Error Resume Next
+  oWSH.RegRead "HKLM\Software\Microsoft\Windows\CurrentVersion\Shell Extensions\Approved\{0C08E3BB-D10B-4CC9-B1B3-701F5BE9D6EC}"
+  Dim Icaros: Icaros = Err.Number=0
+  On Error Goto 0
+  If Icaros Then
+    Dim IcarosFile
+    IcarosFile = LangDir & Language & "\Columns-Icaros.txt"
+    ColData = ColData + Z + oFSO.OpenTextFile(IcarosFile,ForReading,,Unicode).ReadAll
+    ColData = Replace(ColData,Z & Z,Z)
+  End If
+
   ArrColData = Split(ColData,Z)
   ReDim ArrHTML2(UBound(ArrColData))
   

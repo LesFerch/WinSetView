@@ -1,3 +1,7 @@
+## 2.95
+
+Feature added: If [Icaros](https://github.com/Xanashi/Icaros) Properties are activated, those properties will be available to use from the WinSetView Columns page.
+
 ## 2.94
 
 Enhancement: Libraries now automatically get the usual headers that show the path and drive. The Option menu provides an override for the automatic grouping.
