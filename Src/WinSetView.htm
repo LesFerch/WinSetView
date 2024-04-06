@@ -38,7 +38,7 @@ catch(Err) {
 <script language="VBScript">
 Option Explicit
 
-Const Version = "2.93"
+Const Version = "2.94"
 
 SetLocale(1033)
 Const ForReading = 1
@@ -867,6 +867,7 @@ Sub Dict2Dom
   ua.checked = SetInitial("[Options]UnhideAppData",0)
   sc.checked = SetInitial("[Options]ClassicSearch",0)
   hg.checked = SetInitial("[Options]HomeGrouping",0)
+  lg.checked = SetInitial("[Options]LibraryGrouping",0)
   cm.checked = SetInitial("[Options]ClassicContextMenu",1)
   si.checked = SetInitial("[Options]NoSearchInternet",0)
   sh.checked = SetInitial("[Options]NoSearchHighlights",0)
@@ -972,6 +973,7 @@ Sub Var2Ini(INIFile)
   oFile.Write "UnhideAppData=" & Abs(Int(ua.Checked)) & Z
   oFile.Write "ClassicSearch=" & Abs(Int(sc.Checked)) & Z
   oFile.Write "HomeGrouping=" & Abs(Int(hg.Checked)) & Z
+  oFile.Write "LibraryGrouping=" & Abs(Int(lg.Checked)) & Z
   oFile.Write "ClassicContextMenu=" & Abs(Int(cm.Checked)) & Z
   oFile.Write "NoSearchInternet=" & Abs(Int(si.Checked)) & Z
   oFile.Write "NoSearchHighlights=" & Abs(Int(sh.Checked)) & Z
@@ -2349,6 +2351,7 @@ End Sub
         <input type=checkbox id=vf Checked># 29 #<br>
         <input type=checkbox id=gn Checked># 10 #<br>
         <input type=checkbox id=hg># 52 #<br>
+        <input type=checkbox id=lg># 66 #<br>
         <input type=checkbox id=tp onclick=OptionThisPC()># 13 #<br>
         <div id=otp><select id=tpv></select> <input type=checkbox id=tpg checked># 25 #</div>
       </div>
