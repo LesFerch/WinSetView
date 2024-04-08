@@ -506,7 +506,7 @@ When this option is checked, Libraries will be grouped by whatever you set, incl
 
 Clicking the **Columns** button brings up the column (properties) selection page for the current folder type. Column headings, in Explorer Details view, correspond to file and folder *properties*.
 
-The items displayed include all system properties. Also, as of version 2.95, the seven [Icaros](https://github.com/Xanashi/Icaros) media properties will be shown at the end of the list if the Icaros property handler is installed (which may come via a "codec pack"). Please note that the Icaros properties are only supplied with English labels, so that's what WinSetView displays.
+The items displayed include all system properties. Also, as of version 2.95, the seven [Icaros](https://github.com/Xanashi/Icaros) media properties will be shown at the end of the list if the Icaros property handler is installed (which may come via a "codec pack"). The Icaros properties will be shown in the current language if a translation exists, otherwise English will be shown.
 
 The top left of the page includes the same **Help** and **Re-center** buttons that are found on the main page. This is followed by the column re-order button **⮀** and then the name of the currently selected folder type (or *Global*). 
 
