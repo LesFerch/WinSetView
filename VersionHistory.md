@@ -1,3 +1,7 @@
+## 2.96
+
+Enhancement: Added all of the available [Icaros](https://github.com/Xanashi/Icaros) property translations.
+
 ## 2.95
 
 Feature added: If [Icaros](https://github.com/Xanashi/Icaros) Properties are activated, those properties will be available to use from the WinSetView Columns page.
