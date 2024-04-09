@@ -784,7 +784,7 @@ No (other than a few optional settings). WinSetView creates a copy of the Window
 
 Yes, as described under *Restore* above, WinSetView creates a backup every run that can be restored at any time. You can also revert the Explorer views to Windows defaults at any time. However, be sure to check the **Options** screen and set those options as desired, as they are not part of the backup.
 
-### How can I disable automatic folder type discovery and keep special folder types, such as Pictures?
+### Can I disable automatic folder type discovery and keep special folder types, such as Pictures?
 
 Yes, but it's not convenient and currently is only practical on Windows 10 ([or Windows 11 patched to use the Windows 10 Explorer](https://lesferch.github.io/OldExplorer/)) because the option **Also apply this template to all subfolders** is broken in the Windows 11 Explorer.
 
