@@ -6,7 +6,7 @@ You can also manually navigate your browser to: https://lesferch.github.io/WinSe
 
 This is the quick start guide. For more details, please see the [complete user manual](./Manual.md).
 
-[![image](https://user-images.githubusercontent.com/79026235/152910441-59ba653c-5607-4f59-90c0-bc2851bf2688.png)Download the zip file](https://github.com/LesFerch/WinSetView/archive/refs/heads/main.zip)
+[![image](https://github.com/LesFerch/WinSetView/assets/79026235/0188480f-ca53-45d5-b9ff-daafff32869e)Download the zip file](https://github.com/LesFerch/WinSetView/archive/refs/heads/main.zip)
 
 ### Globally Set Explorer Folder Views
 
