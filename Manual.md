@@ -6,7 +6,7 @@ You can also manually navigate your browser to: https://lesferch.github.io/WinSe
 
 This is the complete user manual. See the link below for the quick start guide.
 
-[![image](https://user-images.githubusercontent.com/79026235/152910441-59ba653c-5607-4f59-90c0-bc2851bf2688.png)Download the zip file](https://github.com/LesFerch/WinSetView/archive/refs/heads/main.zip)
+[![image](https://github.com/LesFerch/WinSetView/assets/79026235/0188480f-ca53-45d5-b9ff-daafff32869e)Download the zip file](https://github.com/LesFerch/WinSetView/archive/refs/heads/main.zip)
 
 ![image](https://user-images.githubusercontent.com/79026235/152913587-d294de81-c8ca-428d-b351-09a564854eff.png)
 [See the quick start guide](./README.md)
@@ -899,4 +899,4 @@ Thanks to my son **Brian** for HTML/CSS help. If you use Spotify on Android, ple
 Thanks to my cat **Puddles** (2009-2022) for keeping me company while I worked on this.
 
 \
-[![image](https://user-images.githubusercontent.com/79026235/153264696-8ec747dd-37ec-4fc1-89a1-3d6ea3259a95.png)](https://github.com/LesFerch/WinSetView)
+[![image](https://github.com/LesFerch/WinSetView/assets/79026235/63b7acbc-36ef-4578-b96a-d0b7ea0cba3a)](https://github.com/LesFerch/WinSetView)
