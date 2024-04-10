@@ -502,7 +502,7 @@ When this option is checked, Libraries will be grouped by whatever you set, incl
 
 ### Columns
 
-![image](https://github.com/LesFerch/WinSetView/assets/79026235/7b07a0f8-c1e6-480d-8483-8e9c44e96887)
+![image](https://github.com/LesFerch/WinSetView/assets/79026235/98a1452d-45ca-4d3d-a83d-5f73a4cb41db)
 
 Clicking the **Columns** button brings up the column (properties) selection page for the current folder type. Column headings, in Explorer Details view, correspond to file and folder *properties*.
 
