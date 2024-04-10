@@ -323,8 +323,7 @@ When checked, the following "suggestion" notifications (found in "Notifications 
 
 When checked, a registry setting will be applied that will cause Windows 11 to use the Windows 10 Explorer as its default file manager. That's the Explorer that has the ribbon interface and is normally only used in Windows 11 for the Control Panel. The feature "Also apply this template to all subfolders" works in this Explorer version.
 
-![image](https://github.com/LesFerch/WinSetView/assets/79026235/2aef729f-38ad-469c-b6d7-de796800992a#gh-light-mode-only)
-![image](https://github.com/LesFerch/WinSetView/assets/79026235/903c9773-25f5-4578-b62b-b10642d60455#gh-dark-mode-only)
+![image](https://github.com/LesFerch/WinSetView/assets/79026235/2aef729f-38ad-469c-b6d7-de796800992a)
 
 #### Disable numerical sort ![image](https://github.com/LesFerch/WinSetView/assets/79026235/31d5617f-6617-4e14-9b8e-0efb2c2b9896)
 
