@@ -107,8 +107,9 @@ You can always run WinSetView again to change any settings and you can revert ba
 
 **Note**: If you use the **Reset Views to Windows Defaults** feature, be sure to check the settings under **Options**.
 
-![image](https://github.com/LesFerch/WinSetView/assets/79026235/3f2e27e1-e276-4ba5-9606-20afecb1bd5d)
+![image](https://github.com/LesFerch/WinSetView/assets/79026235/50c53943-f673-49da-ad3f-419026deea96)
 [See the complete user manual](./Manual.md)
+\
 \
 \
 [![image](https://github.com/LesFerch/WinSetView/assets/79026235/63b7acbc-36ef-4578-b96a-d0b7ea0cba3a)](https://github.com/LesFerch/WinSetView)
