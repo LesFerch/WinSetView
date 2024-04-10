@@ -11,7 +11,7 @@ Follow the steps below to download, extract, and run WinSetView for the first ti
 
 ## Step 1: Click the WinSetView Download Link
 
-[![image](https://user-images.githubusercontent.com/79026235/152910441-59ba653c-5607-4f59-90c0-bc2851bf2688.png)Download the zip file](https://github.com/LesFerch/WinSetView/archive/refs/heads/main.zip)
+[![image](https://github.com/LesFerch/WinSetView/assets/79026235/0188480f-ca53-45d5-b9ff-daafff32869e)Download the zip file](https://github.com/LesFerch/WinSetView/archive/refs/heads/main.zip)
 
 ## Step 2: Open the Folder Containing the Zip File
 
@@ -85,5 +85,5 @@ If the above error is displayed and you are running **Windows 11**, please check
 
 To use WinSetView, please follow the steps in the quick start guide:
 
-![image](https://user-images.githubusercontent.com/79026235/152913587-d294de81-c8ca-428d-b351-09a564854eff.png)
+![image](https://github.com/LesFerch/WinSetView/assets/79026235/41afd0e5-72c9-40e3-a1a0-fbb4dc591de9)
 [See the quick start guide](./README.md)
