@@ -54,7 +54,7 @@ Click the **Help** button to bring up a short tutorial for non-technical users. 
 
 ### ⛶ (Re-center) Button
 
-WinSetView now remembers its window size and position. Click the re-center button to move and resize the WinSetView window back to its default of centered, full height on the primary display. Pressing any function key (i.e. **F1** - **F12**) will also re-center the window. This can be handy if WinSetView has loaded off-screen (e.g. due to a change of monitors or their position).
+WinSetView remembers its window size and position. Click the re-center button to move and resize the WinSetView window back to its default of centered, full height on the primary display. Pressing any function key (i.e. **F1** - **F12**) will also re-center the window. This can be handy if WinSetView has loaded off-screen (e.g. due to a change of monitors or their position).
 
 ### Language Menu
 
@@ -165,7 +165,7 @@ Below the *Global* section in WinSetView are settings for each Explorer folder t
 
 **Enable/Disable Check Box**
 
-To the left of each folder type is a checkbox that is normally checked. If the box is unchecked, no settings will be changed for that folder type. That is, it will retain it's Windows default settings. This will NOT retain any user set views. Any folders of this type will revert to whatever the Windows default view is for that folder type.
+To the left of each folder type is a checkbox that is normally checked. If the box is unchecked, no settings will be changed for that folder type. That is, it will retain its Windows default settings. This will NOT retain any user set views. Any folders of this type will revert to whatever the Windows default view is for that folder type.
 
 If the **Advanced** interface is enabled, there is also a checkbox beside **Global**. This checkbox can be used to enable or disable ALL folder types with one click. This may be useful if you wish to leave the majority of folder types at their Windows default views and just set a select few to new default views.
 
@@ -423,7 +423,7 @@ This option allows you to set the start folder for Explorer to "This PC", "Home 
 
 When this option is enabled, Explorer will use the Windows Vista style view modes. Rows in List and Details views are closer together, icon row spacing is not affected by long filenames, and file names in icon views only wrap on certain characters, such as spaces and hyphens.
 
-Tiles and Content view behave in odd ways when this option is enabled. You may see one view upon setting the view and then a different view after closing and re-opening the folder. Note that Content view did not exist in Windows Vista and it's Tile mode was different than the modern Tiles view, so the odd results are not too surprising.
+Tiles and Content view behave in odd ways when this option is enabled. You may see one view upon setting the view and then a different view after closing and re-opening the folder. Note that Content view did not exist in Windows Vista and its Tile mode was different than the modern Tiles view, so the odd results are not too surprising.
 
 Also, when this option is enabled, you can freely rearrange files and folders in Details and Icon views, but those arrangements will be forgotten when the folder is closed, unless you are running Windows 7, Windows 8.x, or a Windows 10 build that is lower than 1703.
 
@@ -558,7 +558,7 @@ Em size is relative to screen scaling. For example (at 96 dpi):\
 1 em at 150% = 12 pixels\
 Explorer uses ems internally for all its default column widths. This keeps the amount of text displayed in each column constant as screen scaling is changed.
 
-Please note that you can set the width as small as 1em, but Explorer will expand the column width to it's minimum allowed value when you drag the column width control in Explorer Details view. The minimum value cannot be overridden.
+Please note that you can set the width as small as 1em, but Explorer will expand the column width to its minimum allowed value when you drag the column width control in Explorer Details view. The minimum value cannot be overridden.
 
 If you wish to enter the column width in *pixels*, hold **Alt** and **click** the input width field you wish to adjust. A dialog will open showing the width in pixels:
 
@@ -752,7 +752,7 @@ If you want the folders *Pictures*, *Videos*, etc. to have the same view as *Gen
 
 Many users have been frustrated by the default setting of the *Downloads* folder type that groups files by *Date Modified*. After finding the *Group by* setting and changing it to *(None)* they are frustrated to see the grouping "come back". In most cases, the *Group by* setting did *not* come back, but the user is simply looking at a different view of the Downloads folder. That's where the confusion about Explorer's folder type design comes into play.
 
-It's logical to assume that if one sets the view for a folder it shouldn't matter how ones gets to that folder, but in Explorer it does. A different route to a folder will sometimes mean that you are actually opening a different "folder" (actually a namespace) that points to the same physical location. Since it's a different "folder", it has it's own view. However, all of these different "folders" are of the same *folder type* so, you can use Explorer's **Apply to Folders** button to apply the change to (almost) all of them. The big exception is that **Apply to Folders** does NOT update file open / save dialog views, which is why it's better to use WinSetView to set the Downloads folder view.  
+It's logical to assume that if one sets the view for a folder it shouldn't matter how ones gets to that folder, but in Explorer it does. A different route to a folder will sometimes mean that you are actually opening a different "folder" (actually a namespace) that points to the same physical location. Since it's a different "folder", it has its own view. However, all of these different "folders" are of the same *folder type* so, you can use Explorer's **Apply to Folders** button to apply the change to (almost) all of them. The big exception is that **Apply to Folders** does NOT update file open / save dialog views, which is why it's better to use WinSetView to set the Downloads folder view.  
 
 ### Apply to Folders "Bug"
 
