@@ -603,7 +603,7 @@ In addition to the path-related properties explained earlier, here are explanati
 **Date Created**: This is the date/time the file was initially written to storage.\
 **Date accessed**: Date file was last opened (rarely accurate due to deferred updates).
 
-**Size**: The file size in KB or MB\
+**Size**: The file size in KB or MB or GB\
 **Attributes**: File attributes such as Archive[A], Hidden[H], System[S], Read-only[R]\
 **File Version**: Applicable to files that have a version header, such as .exe files\
 **Owner**: File owner in computer\userid format
