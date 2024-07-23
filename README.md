@@ -38,7 +38,7 @@ Simple step by step instructions follow.
 
 **Note**: Nothing in Windows is changed, and no settings are saved, until the **Submit** button is pressed. Feel free to experiment with the WinSetView interface and just **X** out and restart the app to get back to where you started. Display options such as **font**, **font size**, and **theme** are also saved to the INI file and are therefore also only saved when you click **Submit**. Only the WinSetView window size and position are saved automatically when you click **X** to exit the app.
 
-**Note**: For best results, close all open applications before running WinSetView. Open applications can prevent open/save dialog views from being updated.
+**Note**: For best results, close all open applications before running WinSetView. Open applications can prevent open/save dialog views from being updated. Apps that minimize to the System Tray when "closed", such as Discord, Steam, and qBittorrent, must be fully closed (e.g. right-click the app's System Tray icon and select `Exit`).
 
 **Note**: Clicking **Submit** will apply the registry setting changes and restart Explorer. Do not click Submit when Explorer is busy copying/moving/deleting files.
 

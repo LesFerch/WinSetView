@@ -33,7 +33,7 @@ Clicking **Submit** passes your choices as an INI file to WinSetView.ps1 which w
 
 Each option, and related Explorer background information, is detailed below, but if you just want to get to it, the interface is pretty much self-explanatory.
 
-**IMPORTANT**: For best results, close all open applications before running WinSetView. Open applications can prevent open/save dialog views from being updated.
+**IMPORTANT**: For best results, close all open applications before running WinSetView. Open applications can prevent open/save dialog views from being updated. Please note that some apps, such as Discord, Steam, and qBittorrent, don't actually close when you click the close box. Instead, they minimize to the System Tray. They're still running and that can prevent the file open/save dialog view from being updated. Fully exit the app (usually by right-clicking the icon in the System Tray and selecting `Exit`) to ensure that the file open/save dialog view will get updated.
 
 All changes made by WinSetView are per-user within the HKEY_CURRENT_USER hive in the registry. No machine settings are touched and no elevated privileges are required (except as noted for a few optional settings). On each run, WinSetView makes a unique backup file of the affected folder view registry values. A restore option is provided allowing you to rollback to any of those backups. Please note that the backup does not include items shown on the **Options** page.
 
@@ -457,7 +457,9 @@ Connected devices, such as phones and tablets, normally open in **Tiles** view w
 
 Only the view mode (e.g. List, Details, etc.) applies to the connected device. There is a separate set of column headings for such devices and no documented method to change the defaults.
 
-Please note that this option actually causes all virtual folders, that share the General Items GUID, such as **This PC**, to be displayed with the same view as **General Items**. However, the separate view settings, available for *This PC*, can be used to override the General Items view.
+Please note that this option causes all virtual folders, that share the General Items GUID, such as **Devices and Printers** and **Fonts**, to be displayed with the same view as **General Items**. So, for example, if you enable this option and have your **General Items** view set to **Details**, those other special folders will also be displayed in Details view.
+
+WinSetView provides an option to set a specific view for **This PC** so that it's not affected by this setting. Unfortunately, it's not practical to provide options to set specific views for all special folders, that share the General Items GUID, as they cannot be set discreetly (i.e. it requires capturing many permutations of binary settings).
 
 
 #### Set view for "This PC"
