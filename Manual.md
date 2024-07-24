@@ -376,6 +376,8 @@ Why this option, which should be available to any user to toggle as needed, is l
 
 In late 2023, Microsoft pushed out an "update" that reverted Windows 10 back to the "classic" search of Windows 10 build 1903 and earlier. If you like the classic search, then you can leave this option alone. If you prefer the "new" search that Windows 10 had from 2019 to 2023, check this box to enable that feature.
 
+This option has no effect on Windows 11.
+
 
 #### Enable Classic Search in Windows 10
 
