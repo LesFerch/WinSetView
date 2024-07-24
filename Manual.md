@@ -386,13 +386,7 @@ This option is only available when feature 18755234 is enabled. Once feature 187
 
 #### Disable feature 40729001 (Windows 11 Explorer) ![image](https://github.com/LesFerch/WinSetView/assets/79026235/31d5617f-6617-4e14-9b8e-0efb2c2b9896)
 
-**Note**: As of Windows 11 build revision 3085 (KB5034204) this option no longer has any effect and will only be shown if you are running an older build.
-
-The new, App SDK based, version of Explorer in Windows 11 has many shortcomings. Among them, no support for drag and drop to folders via the address bar and no direct editing of metadata in the Details pane. It also has some annoying quirks like trimming trailing spaces in the search bar if you pause too long. You can get back the previous Explorer, that does not have those issues, by disabling feature 40729001.
-
-**Note**: Going back to the previous Explorer means giving up full tab support (i.e. no tear or join tabs). Also note that the option "Also apply this template to all subfolders" is broken in both old and new Explorers. You have to go back to the Windows 10 Explorer to get that functionality.
-
-**Note**: Explorer will change after the next RESTART.
+As of Windows 11 22H2 build revision 3085 (KB5034204) this option no longer has any effect and will only be shown if you are running an older build. If you are running an older build, this option disables the new App SDK Explorer.
 
 
 #### Fix Desktop place in legacy dialogs ![image](https://github.com/LesFerch/WinSetView/assets/79026235/31d5617f-6617-4e14-9b8e-0efb2c2b9896)
