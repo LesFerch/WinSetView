@@ -93,8 +93,7 @@ For any folder type (e.g. **Pictures**) that you wish to have a *different* defa
 
 Click The **Options** button.
 
-![image](https://github.com/user-attachments/assets/4496f2a3-1aea-4019-9c31-56644729d4eb)
-
+![image](https://github.com/user-attachments/assets/bacda1ed-300b-44c0-8e47-fa778cebf093)
 
 Review the settings on that page and adjust as desired. See the [manual](./Manual.md#options-menu) for full details. Options with a shield icon require Administrative access and will automatically pop up a UAC prompt if changed.
 
