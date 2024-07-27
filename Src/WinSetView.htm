@@ -371,6 +371,7 @@ Sub window_OnLoad
   TaggedHTML = Document.Body.innerHTML
   
   ' Set up pages in selected language and font
+  ClearBlock PartsDir
   UpdateLang False
 
   Pg1.Style.visibility = "visible"
