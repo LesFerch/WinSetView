@@ -271,7 +271,7 @@ This folder type controls the view you see for the *Searches* item within your u
 
 ### Options Menu
 
-![image](https://github.com/user-attachments/assets/4496f2a3-1aea-4019-9c31-56644729d4eb)
+![image](https://github.com/user-attachments/assets/bacda1ed-300b-44c0-8e47-fa778cebf093)
 
 
 ![image](https://github.com/LesFerch/WinSetView/assets/79026235/31d5617f-6617-4e14-9b8e-0efb2c2b9896) **Note**: All options, except those with a shield icon, can be changed by a Standard user. The items with the shield icon require Administrator rights to change. A UAC prompt will appear after clicking **Submit** if one or more of those options are being changed.
