@@ -38,7 +38,7 @@ catch(Err) {
 <script language="VBScript">
 Option Explicit
 
-Const Version = "2.96"
+Const Version = "2.97"
 
 SetLocale(1033)
 Const ForReading = 1
@@ -61,7 +61,7 @@ Dim Language,LangDir, LangFile, LangCount, LangData, LangIndex, UBFolderType, YS
 Dim ViewFile, ViewData, FolderTypeFile, Scale, FontsFile, Backup, F1, F2, FTHide, KeepAdvanced
 Dim ColFile, ColData, SelectedFont1, SelectedFont2, FontFile, LRArrow, aColor(3)
 Dim CmdLine, Line, Order, sOrder, SelectedSize1, SelectedSize2, GUID, Found, VirtualStore
-Dim C1, C2, LastColSel, FTindex, Data, Show, TempFile, File, PartsDir, ToolsDir
+Dim C1, C2, LastColSel, FTindex, Data, Show, TempFile, File, PartsDir, ToolsDir, PropFile
 Dim ColWid, ColShow, SortBy, BaseScale, UpArrow, DnArrow, MyPath, MyFolder, a, b, c
 Dim Gidx, Midx, Nidx, Pidx, Widx, S1idx, S2idx, S3idx, S4idx, Sort1, Sort2, Sort3, Sort4
 Dim ArrSort1, ArrSort2, ArrSort3, ArrSort4, ArrFonts
@@ -73,15 +73,14 @@ Dim ArrColumnLists, ArrGroupBy, ArrInheritFlag, ArrHTML1, ArrHTML2, ArrViewChoic
 Dim ArrSortBy, ArrIncludeFlag, ArrIconSize, ArrThemes
 Dim ColShowLabels, FTCopyIdx, ThemeFile, SectionList, sTheme, CurBld, LWinVer, UBR
 Dim TempArray, RetVal, DialogArgs, DialogOptions, id, GrpUpArrow, GrpDnArrow
-Dim Warning, OptIcon, DialogTop, HighContrast, Beta
+Dim Warning, OptIcon, DialogTop, HighContrast, SysRoot, WinWow, PSDir, PSExe, PSSubDir
 Dim Txt1Data, Txt2Data, WinSys, ExeErr, ArrExe, UseLight, DarkMode
-Dim WinSizePos, aWinSizePos, GotError, TaskbarTop, MSHTMLVer, eso
+Dim WinSizePos, aWinSizePos, GotError, TaskbarTop, MSHTMLVer, eso, CheckVer, MyVer
 
 Z = vbCRLF
 Q = Chr(34)
 Language = "en-US"
 KeepAdvanced = False
-Beta = Instr(LCase(Version),"beta")>0
 
 Set oFSO = CreateObject("Scripting.FileSystemObject")
 Set oWSH = CreateObject("Wscript.Shell")
@@ -150,8 +149,8 @@ On Error Resume Next
 MajVer = oWSH.RegRead("HKLM\Software\Microsoft\Windows NT\CurrentVersion\CurrentMajorVersionNumber")
 CurBld = oWSH.RegRead("HKLM\Software\Microsoft\Windows NT\CurrentVersion\CurrentBuild")
 UBR = oWSH.RegRead("HKLM\Software\Microsoft\Windows NT\CurrentVersion\UBR")
-
 On Error Goto 0
+
 If MajVer>=10 Then WinVer = "10"
 LWinVer = WinVer
 If CurBld>=21996 Then LWinVer = "11"
@@ -163,7 +162,14 @@ If WinVer<>"7" And WinVer<>"8" And WinVer<>"10" Then
   Exit Sub
 End If
 
-WinSys = oWSH.ExpandEnvironmentStrings("%SystemRoot%") & "\System32\"
+SysRoot = oWSH.ExpandEnvironmentStrings("%SystemRoot%")
+WinSys = SysRoot & "\System32\"
+WinWoW = SysRoot & "\SysWOW64\"
+PSSubDir = "WindowsPowerShell\v1.0\"
+PSDir = WinSys & PSSubDir
+If oFSO.FolderExists(WinWoW) Then PSDir = WinWow & PSSubDir
+PSExe = PSDir & "PowerShell.exe"
+
 Set oFile = oApp.Namespace(0).ParseName(WinSys & "MSHTML.dll")
 MSHTMLVer = CInt(Split(oFile.ExtendedProperty("System.Software.ProductVersion"),".")(0))
 
@@ -194,6 +200,7 @@ End If
   
 Temp = oWSH.ExpandEnvironmentStrings("%Temp%")
 TempFile = Temp & "\WinSetView.tmp"
+PropFile = Temp & "\Properties.tmp"
 
 LangDir = MyFolder & "\Language\"
 PartsDir = MyFolder & "\AppParts\"
@@ -244,13 +251,15 @@ End If
 If Not oFSO.FolderExists(AppData) Then oFSO.CreateFolder(AppData)
 If Not oFSO.FolderExists(Backup) Then oFSO.CreateFolder(Backup)
 
-' Copy INI files to redirected AppData folder
+' Copy Default INI files to AppData folder with overwrite off
 
-If AppData <> MyFolder & "\AppData" Then
-  On Error Resume Next
-  oFSO.CopyFile MyFolder & "\AppData\*.ini",AppData & "\", False
-  On Error Goto 0
-End If
+On Error Resume Next
+Set oFolder = oFSO.GetFolder(MyFolder & "\Defaults\")
+Set oFiles = oFolder.Files
+For Each oFile In oFiles
+  oFSO.CopyFile oFile,AppData & "\", False
+Next
+On Error Goto 0
 
 ' See if there are any backup reg files in the Backup folder
 
@@ -364,6 +373,8 @@ Sub window_OnLoad
   ' Set up pages in selected language and font
   UpdateLang False
 
+  Pg1.Style.visibility = "visible"
+
   ExeCheck
   
   ClearBlock ToolsDir
@@ -380,7 +391,7 @@ Sub ClearBlock(Folder)
 End Sub
 
 Sub ExeCheck
-  If Not oFSO.FileExists(WinSys & "WindowsPowerShell\v1.0\PowerShell.exe") Then ExeErr = ExeErr & "PowerShell.exe" & Z
+  If Not oFSO.FileExists(PSExe) Then ExeErr = ExeErr & "PowerShell.exe" & Z
   ArrExe = Split("TaskKill.exe,Icacls.exe,Reg.exe,Cmd.exe",",")
   For i = 0 To UBound(ArrExe)
     If Not oFSO.FileExists(WinSys & ArrExe(i)) Then ExeErr = ExeErr & ArrExe(i) & Z
@@ -394,22 +405,19 @@ Sub ExeCheck
 End Sub
 
 Sub UpdateCheck
-  Dim oReq, BetaVer, FullVer, CheckVer, MyVer
+  Dim oReq, FullVer
   Set oReq = CreateObject("Msxml2.XMLHttp")
   x = "https://raw.githubusercontent.com/LesFerch/WinSetView/main/VersionHistory.md"
-  If Beta Then x = "https://raw.githubusercontent.com/LesFerch/WinSetView/beta/VersionHistory.md"
   On Error Resume Next
   oReq.Open "GET", x, False
   oReq.Send
   x = oReq.ResponseText
   On Error Goto 0
   FullVer = Mid(x,4,9)
-  BetaVer = InStr(LCase(FullVer),"beta")>0
   CheckVer = Left(FullVer,4)
   MyVer = Left(Version,4)
   If Not IsNumeric(CheckVer) Then Exit Sub
-  If CheckVer>MyVer Or (Beta And (CheckVer=MyVer) and (Not BetaVer)) Then
-    If Not BetaVer Then Beta = False
+  If CheckVer>MyVer Then
     hb.Value = ArrLang(46)
     Vp1.innerHTML = Version & " (" & ArrLang(45) & " " & CheckVer & ")"
     UpdateRequiredWidth
@@ -590,6 +598,20 @@ Sub UpdateLang(OnChange)
     IcarosFile = LangDir & Language & "\Columns-Icaros.txt"
     ColData = ColData + Z + oFSO.OpenTextFile(IcarosFile,ForReading,,Unicode).ReadAll
     ColData = Replace(ColData,Z & Z,Z)
+  End If
+  
+  'Add other non-System properties
+  Dim ExePath
+  ExePath = PartsDir & "\GetMoreProperties.exe"
+  On Error Resume Next
+  oFSO.DeleteFile(PropFile)
+  On Error Goto 0
+  If oFSO.FileExists(ExePath) Then
+    oWSH.Run ExePath,0,True
+    If oFSO.FileExists(PropFile) Then
+      ColData = ColData + Z + oFSO.OpenTextFile(PropFile,ForReading,,Unicode).ReadAll
+      ColData = Replace(ColData,Z & Z,Z)
+    End If
   End If
 
   ArrColData = Split(ColData,Z)
@@ -863,9 +885,10 @@ Sub Dict2Dom
   wd.checked = SetInitial("[Options]Reset",0)
   se.Checked = SetInitial("[Options]ShowExt",1)
   cv.Checked = SetInitial("[Options]CompView",1)
+  hf.Checked = SetInitial("[Options]ShowHidden",0)
   gn.checked = SetInitial("[Options]Generic",0)
   so.Checked = SetInitial("[Options]SearchOnly",1)
-  vf.Checked = SetInitial("[Options]SetVirtualFolders",1)
+  vf.Checked = SetInitial("[Options]SetVirtualFolders",0)
   ns.checked = SetInitial("[Options]NoSuggestions",1)
   nn.checked = SetInitial("[Options]NoNumericalSort",0)
   ts.checked = SetInitial("[Options]Win10Search",0)
@@ -882,6 +905,7 @@ Sub Dict2Dom
   hg.checked = SetInitial("[Options]HomeGrouping",0)
   lg.checked = SetInitial("[Options]LibraryGrouping",0)
   cm.checked = SetInitial("[Options]ClassicContextMenu",1)
+  mc.checked = SetInitial("[Options]CopyMoveInMenu",0)
   si.checked = SetInitial("[Options]NoSearchInternet",0)
   sh.checked = SetInitial("[Options]NoSearchHighlights",0)
   tp.checked = SetInitial("[Options]ThisPCoption",1)
@@ -944,7 +968,7 @@ End Sub
 ' Restore button
 
 Sub Restore
-  File = FileDialog("Open",Backup,"*.reg|*.reg",False,False)
+  File = FileDialog("Open",Backup,"*.reg|*.reg",True,False)
   If File<>"" Then RunScript File
 End Sub
 
@@ -964,6 +988,7 @@ Sub Var2Ini(INIFile)
   oFile.Write "Reset=" & Abs(Int(wd.Checked)) & Z
   oFile.Write "ShowExt=" & Abs(Int(se.Checked)) & Z
   oFile.Write "CompView=" & Abs(Int(cv.Checked)) & Z
+  oFile.Write "ShowHidden=" & Abs(Int(hf.Checked)) & Z
   oFile.Write "Generic=" & Abs(Int(gn.Checked)) & Z
   oFile.Write "SearchOnly=" & Abs(Int(so.Checked)) & Z
   oFile.Write "SetVirtualFolders=" & Abs(Int(vf.Checked)) & Z
@@ -988,6 +1013,7 @@ Sub Var2Ini(INIFile)
   oFile.Write "HomeGrouping=" & Abs(Int(hg.Checked)) & Z
   oFile.Write "LibraryGrouping=" & Abs(Int(lg.Checked)) & Z
   oFile.Write "ClassicContextMenu=" & Abs(Int(cm.Checked)) & Z
+  oFile.Write "CopyMoveInMenu=" & Abs(Int(mc.Checked)) & Z
   oFile.Write "NoSearchInternet=" & Abs(Int(si.Checked)) & Z
   oFile.Write "NoSearchHighlights=" & Abs(Int(sh.Checked)) & Z
   oFile.Write "ThisPCoption=" & Abs(Int(tp.Checked)) & Z
@@ -1173,7 +1199,8 @@ Sub RunScript(Param)
   If Right(Param,3)="ini" Then
     If window.event.altKey Then x = "-NoExit"
   End If
-  CmdLine = "Powershell.exe " & x & " -NoLogo -NoProfile -ExecutionPolicy Bypass -File .\WinSetView.ps1 " & Chr(34) & Param & Chr(34)
+  CmdLine = PSExe & " " & x & " -NoLogo -NoProfile -ExecutionPolicy Bypass -File .\WinSetView.ps1 " & Chr(34) & Param & Chr(34)
+
   oWSH.Run CmdLine,1,False
   self.close
   window.close
@@ -2000,11 +2027,12 @@ Sub SetColShowColor
   Next
 End Sub
 
-Sub Help
-  x = "https://lesferch.github.io/WinSetView"
-  If Beta Then x = "https://github.com/LesFerch/WinSetView/blob/beta/README.md"
+Sub Help(URL)
+  If MyVer>=CheckVer And URL="https://lesferch.github.io/WinSetView/" Then
+    URL = "https://lesferch.github.io/WinSetView/#how-to-use"
+  End If
   On Error Resume Next
-  oWSH.Run x
+  oWSH.Run URL
   If Err.number<>0 Then MsgBox "An error occurred attempting to open" & Z & Z & x
   On Error GoTo 0
 End Sub
@@ -2126,6 +2154,7 @@ End Sub
   #Sec1 {margin-top:106pt}
   #fix2 {position:fixed; left:0; top:0; width:100%; background-color:#B8D8E9}
   #f2in {margin-top:5pt; margin-bottom:0pt}
+  #Pg1  {visibility:hidden}
   #Pg2  {display:none}
   #Pg3  {display:none}
   #fix4 {position:fixed; left:0; top:0; width:100%; background-color:#B8D8E9}
@@ -2194,7 +2223,7 @@ End Sub
     <div id=fix1>
     <div id=f1in>
       <div id=twid>
-        <div class=tip><input type=button id=hb value='# 31 #' onclick=Help()>
+        <div class=tip><input type=button id=hb value='# 31 #' onclick=Help("https://lesferch.github.io/WinSetView/")>
         <span id=Vp1 class=tiptext></span></div>
         <div class=tip><input id=bc1 type=button value='⛶' onclick=RecenterButton()>
         <span class=tiptext># 42 #</span></div>
@@ -2232,7 +2261,7 @@ End Sub
     <div id=fix2>
     <div id=f2in>
       <input type=button value='&#223;' id=BkP2 onclick=P2Exit()>
-      <div class='tip fl1'><input type=button value='# 31 #' onclick=Help()>
+      <div class='tip fl1'><input type=button value='# 31 #' onclick=Help("https://lesferch.github.io/WinSetView/Manual.html#columns")>
       <span id=Vp2 class=tiptext></span></div>
       <div class='tip fl2'><input id=bc2 type=button value='⛶' onclick=RecenterButton()>
       <span class=tiptext># 42 #</span></div>
@@ -2301,7 +2330,7 @@ End Sub
     <div id=fix4>
     <div id=f4in>
       <input type=button value='&#223;' ID=BkP4 OnClick=Back2Pg1()>
-      <div class='tip fl2'><input type=button value='# 31 #' onclick=Help()>
+      <div class='tip fl2'><input type=button value='# 31 #' onclick=Help("https://lesferch.github.io/WinSetView/Manual.html#options-menu")>
       <span id=Vp3 class=tiptext></span></div>
       <div class='tip fl3'><input id=bc3 type=button value='⛶' onclick=RecenterButton()>
       <span class=tiptext># 42 #</span></div>
@@ -2311,7 +2340,9 @@ End Sub
     <div class=opt id=Sec4>
       <input type=checkbox id=se Checked># 8 #<br>
       <input type=checkbox id=cv Checked># 27 #<br>
+      <input type=checkbox id=hf># 67 #<br>
       <input type=checkbox id=cm># 47 #<br>
+      <input type=checkbox id=mc># 68 #<br>
       <input type=checkbox id=si># 48 #<br>
       <input type=checkbox id=sh># 49 #<br>
       <input type=checkbox id=nf># 35 #<br>

@@ -87,9 +87,10 @@ $RegKeys = @(
 '"HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\ComDlg32"'
 '"HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Modules\NavPane"'
 '"HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Modules\GlobalSettings\Sizer"'
-'"HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Streams\Defaults"'
+'"HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Streams"'
 '"HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\FolderTypes"'
 '"HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\ControlPanel"'
+'"HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced"'
 )
 
 Function DeleteUserKeys {

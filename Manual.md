@@ -17,9 +17,9 @@ This is the complete user manual. See the link below for the quick start guide.
 Compatible with Windows 7, 8, 10, and 11.
 
 Les Ferch, lesferch@gmail.com\
-GitHub repository created 2021-03-26, last updated 2024-04-08
+GitHub repository created 2021-03-26, last updated 2024-07-27
 
-[Version 2.96](./VersionHistory.md)
+[Version 2.97](./VersionHistory.md)
 
 ## Summary
 
@@ -44,7 +44,7 @@ All changes made by WinSetView are per-user within the HKEY_CURRENT_USER hive in
 
 **Note**: For Windows 7 and 8, some of the icons used in the program will differ from Windows 10 and 11 due to issues with those older Windows versions being able to display all Unicode characters.
 
-**Note**: Nothing in Windows is changed, and no settings are saved, until the **Submit** button is pressed. Feel free to experiment with the WinSetView interface and just **X** out and restart the app to get back to where you started. Display options such as **font**, **font size**, and **theme** are also saved to the INI file and are therefore also only saved when you click **Submit**. Only the WinSetView window size and position are saved automatically when you click **X** to exit the app.
+**Note**: Nothing in Windows is changed, and no settings are saved, until the **Submit** button is pressed. Feel free to experiment with the WinSetView interface and just **X** out and restart the app to get back to where you started. Display options such as **font**, **font size**, and **theme** are saved to the INI file and are therefore only saved when you click **Submit**. Only the WinSetView window size and position are saved automatically when you click **X** to exit the app.
 
 ## Buttons and Controls in the Header
 
@@ -287,9 +287,19 @@ By default, Windows hides file extensions for known file types. This is generall
 By default, Windows 11 spreads out items in list, details, and small icons views. This makes it easier to select items using a touch interface, at the expense of less information in the same space. Enabling *compact view* sets the spacing back to the tighter spacing used in Windows 10.
 
 
+#### Show Hidden Files and Folders
+
+When checked, hidden files and folders will be displayed in Explorer. This option affects the Explorer "Hidden files and folders" setting. It has no effect on the "Hide protected operating system files" setting.
+
+
 #### Classic context menu in Windows 11
 
 When checked, the registry setting that restores the Windows 10 style context (right-click) menu will be applied.
+
+
+#### Enable Copy/Move To folder in the context menu
+
+When checked, the items "Copy To folder..." and "Move To folder..." are enabled in the classic context menu.
 
 
 #### No Internet in Windows search
@@ -457,6 +467,8 @@ Please note that this option causes all virtual folders, that share the General 
 
 WinSetView provides an option to set a specific view for **This PC** so that it's not affected by this setting. Unfortunately, it's not practical to provide options to set specific views for all special folders, that share the General Items GUID, as they cannot be set discreetly (i.e. it requires capturing many permutations of binary settings).
 
+As of version 2.97, this option is set to *unchecked* by default since the change in view for folders such as **Fonts** would catch some users by surprise.
+
 
 #### Set view for "This PC"
 
@@ -504,7 +516,13 @@ When this option is checked, Libraries will be grouped by whatever you set, incl
 
 Clicking the **Columns** button brings up the column (properties) selection page for the current folder type. Column headings, in Explorer Details view, correspond to file and folder *properties*.
 
-The items displayed include all system properties. Also, as of version 2.95, the seven [Icaros](https://github.com/Xanashi/Icaros) media properties will be shown at the end of the list if the Icaros property handler is installed (which may come via a "codec pack"). The Icaros properties will be shown in the current language if a translation exists, otherwise English will be shown.
+The items displayed include all system properties that exist on all Windows computers.
+
+As of version 2.95, the seven [Icaros](https://github.com/Xanashi/Icaros) media properties will be shown at the end of the list if the Icaros property handler is installed (which may come via a "codec pack"). The Icaros properties will be shown in the current language if a translation exists, otherwise English will be shown.
+
+These System and Icaros properties are read from files in the **Languages** folder.
+
+As of version 2.97, all remaining shell properties, provided by third-party apps, are imported to the **Columns** list when WinSetView starts. These properties are labelled using the current system language. Changing the language in WinSetView will not change the display language of these additional properties.
 
 The top left of the page includes the same **Help** and **Re-center** buttons that are found on the main page. This is followed by the column re-order button **⮀** and then the name of the currently selected folder type (or *Global*). 
 
@@ -620,6 +638,8 @@ Note: The **File extension** column heading is not available on Windows 7.
 In addition to the two main files: **WinSetView.exe** (HTML application), and **WinSetView.ps1** (PowerShell command line script) the following folders and files are included:
 
 ### AppData Folder
+
+As of version 2.97, the **AppData** folder is dynamically created from the **Defaults** folder. If an **AppData** folder already exists, only missing files are copied from **Defaults**. This allows a new version of the WinSetView folder to be copied over an old version without risk of overwriting existing user's WinSetView settings.
 
 This folder contains INI files which hold the options selected with the WinSetView interface. Due to the folder type and column heading (property) lists differing among Windows versions, there are separate INI files for Windows 7, 8, and 10. Windows 11 uses the same settings file as Windows 10.
 

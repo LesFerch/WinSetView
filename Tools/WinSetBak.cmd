@@ -29,9 +29,10 @@ Set R08="HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\CIDSave"
 Set R09="HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\ComDlg32"
 Set R10="HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Modules\NavPane"
 Set R11="HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Modules\GlobalSettings\Sizer"
-Set R12="HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Streams\Defaults"
+Set R12="HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Streams"
 Set R13="HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\FolderTypes"
 Set R14="HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\ControlPanel"
+Set R15="HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced"
 
 Title %MyName%
 
@@ -82,6 +83,7 @@ Del %TmpF% 2>Nul & Reg Export %R11% %TmpF% /y 2>Nul & More %TmpF%>>%BakF% 2>Nul
 Del %TmpF% 2>Nul & Reg Export %R12% %TmpF% /y 2>Nul & More %TmpF%>>%BakF% 2>Nul
 Del %TmpF% 2>Nul & Reg Export %R13% %TmpF% /y 2>Nul & More %TmpF%>>%BakF% 2>Nul
 Del %TmpF% 2>Nul & Reg Export %R14% %TmpF% /y 2>Nul & More %TmpF%>>%BakF% 2>Nul
+Del %TmpF% 2>Nul & Reg Export %R15% %TmpF% /y 2>Nul & More %TmpF%>>%BakF% 2>Nul
 Del %TmpF% 2>Nul
 Echo.
 Echo Backup complete.
@@ -125,6 +127,7 @@ Reg Delete %R11% /F 2>Nul
 Reg Delete %R12% /F 2>Nul
 Reg Delete %R13% /F 2>Nul
 Reg Delete %R14% /F 2>Nul
+Reg Delete %R15% /F 2>Nul
 Goto %Mode%B
 
 :2B

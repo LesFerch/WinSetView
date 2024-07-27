@@ -1,3 +1,19 @@
+## 2.97
+
+Feature added: All third-party shell properties are now dynamically added to the column selection list.
+
+Feature added: Option to set Show hidden files and folders.
+
+Feature added: Option to enable Copy/Move To folder context menu items.
+
+Enhancement: The AppData folder is now dynamically created to protect user's existing WinSetView settings when updating the app.
+
+Enhancement: Help button is now context sensitive.
+
+Change: PowerShell is now run via its absolute path instead of relying on the System path.
+
+Change: The default setting for "Use General Items view for connected devices" is now off.
+
 ## 2.96
 
 Enhancement: Added all of the available [Icaros](https://github.com/Xanashi/Icaros) property translations.

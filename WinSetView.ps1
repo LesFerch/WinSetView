@@ -123,6 +123,8 @@ $E10A = 'HKCU\Software\Classes\CLSID\{2aa9162e-c906-4dd9-ad0b-3d24a8eef5a0}'
 $E10B = 'HKCU\Software\Classes\CLSID\{6480100b-5a83-4d1e-9f69-8ae5a88e9a33}'
 $ESTR = 'HKCU\Software\Classes\CLSID\{52205fd8-5dfb-447d-801a-d0b52f2e83e1}'
 $ESTC = 'HKCU\Software\Classes\CLSID\{52205fd8-5dfb-447d-801a-d0b52f2e83e1}\shell\OpenNewWindow\command'
+$CCMH = 'HKCU\Software\Classes\AllFileSystemObjects\shellex\ContextMenuHandlers\{C2FBB630-2971-11D1-A18C-00C04FD75D13}'
+$MCMH = 'HKCU\Software\Classes\AllFileSystemObjects\shellex\ContextMenuHandlers\{C2FBB631-2971-11D1-A18C-00C04FD75D13}'
 
 #Keys for use with PowerShell
 $ShPS = 'HKCU:\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags\AllFolders\Shell'
@@ -172,12 +174,9 @@ $UseLight = (Get-ItemProperty -Path $Key -Name $Value  -ErrorAction SilentlyCont
 $DarkMode = $false
 If (($UseLight -is [int]) -And ($UseLight -eq 0)) { $DarkMode = $true }
 
-$CustomPropertyPrefixes = 'Icaros'
-
 Function AdjustPrefix($String) {
-  ForEach ($Prefix in $CustomPropertyPrefixes) {
-    $String = $String.Replace("System.$Prefix.","$Prefix.")
-  }
+  $String = $String.Replace("System.Icaros.","Icaros.")
+  $String = $String.Replace("System..","")
   Return $String
 }
 
@@ -356,12 +355,29 @@ If ($CurBld -ge 21996) {
   & $RegExe Add $Advn /v UseCompactMode /t REG_DWORD /d ($CompView) /f
 }
 
+# Enable/disable show hidden files and folders
+
+$ShowHidden = [Int]$iniContent['Options']['ShowHidden']
+& $RegExe Add $Advn /v Hidden /t REG_DWORD /d (2-$ShowHidden) /f
+
 # Enable/disable classic context menu in Windows 11
 
 If ($CurBld -ge 21996) {
   $ClassicContextMenu = [Int]$iniContent['Options']['ClassicContextMenu']
   If ($ClassicContextMenu -eq 1) {& $RegExe Add "$Clcm\InprocServer32" /reg:64 /f 2>$Null}
   Else {& $RegExe Delete $Clcm /reg:64 /f 2>$Null}
+}
+
+# Enable/disable Copy and Move items in context menu
+
+$CopyMoveInMenu = [Int]$iniContent['Options']['CopyMoveInMenu']
+If ($CopyMoveInMenu -eq 1) {
+  & $RegExe Add $CCMH /reg:64 /f 2>$Null
+  & $RegExe Add $MCMH /reg:64 /f 2>$Null
+}
+Else {
+  & $RegExe Delete $CCMH /reg:64 /f 2>$Null
+  & $RegExe Delete $MCMH /reg:64 /f 2>$Null
 }
 
 # Enable/disable Internet in Windows search
