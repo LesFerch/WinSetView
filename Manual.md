@@ -19,7 +19,7 @@ Compatible with Windows 7, 8, 10, and 11.
 Les Ferch, lesferch@gmail.com\
 GitHub repository created 2021-03-26, last updated 2024-07-28
 
-[Version 2.98](./VersionHistory.md)
+[Version 2.99](./VersionHistory.md)
 
 ## Summary
 
