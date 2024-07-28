@@ -1,6 +1,10 @@
+## 2.99
+
+Bug Fix: Fixed problem, introduced with 2.97, with header being blank after switching language.
+
 ## 2.98
 
-Bug Fix: Fixed issue, introduced with previous update, that caused error when running from a path containing a space.
+Bug Fix: Fixed issue, introduced with 2.97, that caused error when running from a path containing a space.
 
 ## 2.97
 
