@@ -38,7 +38,7 @@ catch(Err) {
 <script language="VBScript">
 Option Explicit
 
-Const Version = "2.97"
+Const Version = "2.98"
 
 SetLocale(1033)
 Const ForReading = 1
@@ -608,7 +608,7 @@ Sub UpdateLang(OnChange)
   oFSO.DeleteFile(PropFile)
   On Error Goto 0
   If oFSO.FileExists(ExePath) Then
-    oWSH.Run ExePath,0,True
+    oWSH.Run """" & ExePath & """",0,True
     If oFSO.FileExists(PropFile) Then
       ColData = ColData + Z + oFSO.OpenTextFile(PropFile,ForReading,,Unicode).ReadAll
       ColData = Replace(ColData,Z & Z,Z)

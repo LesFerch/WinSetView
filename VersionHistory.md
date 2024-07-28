@@ -1,3 +1,7 @@
+## 2.98
+
+Bug Fix: Fixed issue, introduced with previous update, that caused error when running from a path containing a space.
+
 ## 2.97
 
 Feature added: All third-party shell properties are now dynamically added to the column selection list.

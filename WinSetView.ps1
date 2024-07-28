@@ -153,6 +153,7 @@ $IcaclsExe = "$env:SystemRoot\System32\Icacls.exe"
 $KillExe   = "$env:SystemRoot\System32\TaskKill.exe"
 $UAppData  = "$env:UserProfile\AppData"
 $ViveExe  = "$PSScriptRoot\AppParts\ViVeTool.exe"
+$ViveExe = (New-Object -ComObject Scripting.FileSystemObject).GetFile($ViveExe).ShortPath
 
 # Use script folder if we have write access. Otherwise use AppData folder.
 
