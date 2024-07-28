@@ -374,8 +374,6 @@ Sub window_OnLoad
   ClearBlock PartsDir
   UpdateLang False
 
-  Pg1.Style.visibility = "visible"
-
   ExeCheck
   
   ClearBlock ToolsDir
@@ -621,6 +619,8 @@ Sub UpdateLang(OnChange)
   ' Dynamically generate HTML page data
   BuildPages
   
+  Pg1.Style.visibility = "visible"
+  
   window.external.SetWindowTitle("WinSetView (" & ArrLang(1) & ")")
   lang.SelectedIndex = LangIndex
   Size1.SelectedIndex = SelectedSize1 - 8
@@ -797,7 +797,7 @@ Sub UpdateLang(OnChange)
   SetTheme
 
   xschange
-
+  
 End Sub
 
 Sub ColShowColor(e)
