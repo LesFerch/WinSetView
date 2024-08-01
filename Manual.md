@@ -108,6 +108,8 @@ Select and restore a backup file to return Explorer views to a previous state.
 
 This button will appear after first run (i.e. after **Submit** has been clicked). Each time you click **Submit**, the PowerShell script makes a backup of the user's Explorer view registry keys to a date-time-named file. The **Restore** button will bring up a dialog to let you pick a backup file to restore. Since it's a standard file dialog, you can use the same interface to delete any unwanted backups by selecting them and right-clicking to get a *Delete* option.
 
+**IMPORTANT**: Many of the items shown in the **Options** page, are not affected by the Restore feature. Be sure to check the items in the Options page and set them to your desired settings. Specifically, the items up to and including "Set a start folder for Explorer" are not affected by Restore.
+
 ### Load Settings
 
 (Advanced interface)
