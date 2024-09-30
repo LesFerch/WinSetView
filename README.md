@@ -26,7 +26,7 @@ For more details, please see the [extended summary](./README-more.md).
 
 ### Portable Install Using Zip File (Recommended)
 
-WinSetView is a portable app, allowing it to be run from anywhere, such as flash drive, for easy configuration of new users/computers. The settings remain with the app itself, as long as it is placed in a location where you have full write access. If it is placed in a restricted folder, such as `Program Files (x86)`, the settings will automatically get written to your `%AppData%` folder, which is fine, but then it's not as portable.
+WinSetView is a portable app, allowing it to be run from anywhere, such as flash drive, for easy configuration of new users/computers. The settings remain with the app itself, as long as it's placed in a location where you have full write access. If it's placed in a restricted folder, such as `Program Files (x86)`, the settings will automatically get written to your `%AppData%` folder, which is fine, but then it's not as portable.
 
 1. Download the zip file using the link above.
 2. Extract the entire zip file.
