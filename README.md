@@ -36,7 +36,7 @@ WinSetView is a portable app, allowing it to be run from anywhere, such as flash
 
 **Note**: If your security software blocks the download or the app does not launch or you wish to read more about SmartScreen prompts, please see: [Download Help Guide](./DownloadHelp.md)
 
-### How to Update
+### Updating a Portable Install Using Zip File
 
 1. Follow the steps above to download and unzip the files.
 2. Ensure that WinSetView is not currently running.
