@@ -8,6 +8,8 @@ This is the quick start guide. For more details, please see the [complete user m
 
 [![image](https://github.com/LesFerch/WinSetView/assets/79026235/0188480f-ca53-45d5-b9ff-daafff32869e)Download the zip file](https://github.com/LesFerch/WinSetView/archive/refs/heads/main.zip)
 
+[Download the installer](https://github.com/LesFerch/WinSetView/releases/download/2.99/WinSetView-Setup.exe)
+
 ### Globally Set Explorer Folder Views
 
 Compatible with Windows 7, 8, 10, and 11.
@@ -22,7 +24,9 @@ For more details, please see the [extended summary](./README-more.md).
 
 ## How to Download and Run
 
-### Quick Instructions
+### Portable Install Using Zip File (Recommended)
+
+WinSetView is a portable app, allowing it to be run from anywhere, such as flash drive, for easy configuration of new users/computers. The settings remain with the app itself, as long as it is placed in a location where you have full write access. If it is placed in a restricted folder, such as `Program Files (x86)`, the settings will automatically get written to your `%AppData%` folder, which is fine, but then it's not as portable.
 
 1. Download the zip file using the link above.
 2. Extract the entire zip file.
@@ -31,6 +35,17 @@ For more details, please see the [extended summary](./README-more.md).
 5. If you skipped step 3, then, in the SmartScreen window, click **More info** and then **Run anyway**.
 
 **Note**: If your security software blocks the download or the app does not launch or you wish to read more about SmartScreen prompts, please see: [Download Help Guide](./DownloadHelp.md)
+
+### How to Update
+
+1. Follow the steps above to download and unzip the files.
+2. Ensure that WinSetView is not currently running.
+3. Drag the new files over the old files, allowing them to be replaced. Your settings will not be overwritten because the package does not contain an AppData folder.
+
+### Install Using Setup Program
+
+You may also install WinSetView, so that it appears in your list of installed apps, by using the installer, `WinSetView-Setup.exe`, found on the Releases page (and linked to above).
+
 
 ## How to Use
 
