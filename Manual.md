@@ -429,11 +429,15 @@ This option allows you to set the start folder for Explorer to "This PC", "Home 
 
 **Note**: This option will not appear if your computer is in dark mode, as it is not compatible (text will be black). If you previously enabled this option while in light mode, clicking Submit in WinSetView will automatically clear this setting so that you will be returned to light text on a dark background.
 
-When this option is enabled, Explorer will use the Windows Vista style view modes. Rows in List and Details views are closer together, icon row spacing is not affected by long filenames, and file names in icon views only wrap on certain characters, such as spaces and hyphens.
+When this option is enabled, Explorer will use the Windows XP/Vista style view modes. Rows in List and Details views are closer together, icon row spacing is not affected by long filenames, and file names in icon views only wrap on certain characters, such as spaces and hyphens.
 
 Tiles and Content view behave in odd ways when this option is enabled. You may see one view upon setting the view and then a different view after closing and re-opening the folder. Note that Content view did not exist in Windows Vista and its Tile mode was different than the modern Tiles view, so the odd results are not too surprising.
 
+When this feature is enabled, selected files in Explorer remain selected after changing the sort order, just as they did in Windows XP/Vista.
+
 Also, when this option is enabled, you can freely rearrange files and folders in Details and Icon views, but those arrangements will be forgotten when the folder is closed, unless you are running Windows 7, Windows 8.x, or a Windows 10 build that is lower than 1703.
+
+If you want this feature with dark mode, that can be done by using the program [QTTabBar](http://qttabbar.wikidot.com/). Select the "beta" download.
 
 
 #### Disable full row select
