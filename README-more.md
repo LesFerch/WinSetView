@@ -14,9 +14,9 @@ WinSetView...
 
 * Can set the default view for **phones** and **tablets** to open in the same view you choose for General items. No more tiles!
 
-* Sets folder views using the FolderTypes registry key which is not affected by **Windows updates**.
+* Sets folder views via a copy of the FolderTypes registry key which is not affected by **Windows updates**. A Windows repair install will remove the defaults, but then you can just run WinSetView and click Submit to re-apply your preferences.
 
-* Includes options to turn off Internet results in Windows search, revert the right-click menu to the classic layout, and disable thumbnails on folders.
+* Includes options to turn off Internet results in Windows search, revert the right-click menu to the classic layout, disable thumbnails on folders, and much more.
 
 * Can also be used to reset all folder views to **Windows defaults**.
 
