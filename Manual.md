@@ -747,9 +747,9 @@ The **Customize this folder...** menu item allows you to change the current fold
 
 To use this option, click in a folder's white space, select **Customize this folder...**, select the desired folder type, such as *Pictures*, from the menu, check **Also apply this template to all subfolders** (if you want the change to apply to subfolders), and then click **Apply**. This will change the folder's type and it will then be displayed using the view settings for that folder type.
 
-**Note**: Windows 11 currently has some bugs in regards to the **Customize this folder...** feature. There are issues with both "Local Disks" (such a C:) and "removable" drives, such as flash drives. On "Local Disks", Windows 11 File Explorer aggressively applies automatic folder type discovery making it impossible to override the automatically detected folder type. On removable drives (ones that are NOT "Local Disk") Windows 11 File Explorer will ignore attempts to set an entire folder tree to the folder type of your choice, leaving the folders set to type "General items". You can, usually, set the folder type by setting one folder at a time.
+**Note**: Windows 11 currently has some bugs in regards to the **Customize this folder...** feature. There are issues with both "Local Disks" (such a C:) and "removable" drives, such as flash drives. On "Local Disks", Windows 11 File Explorer aggressively applies automatic folder type discovery making it impossible to override the automatically detected folder type. On removable drives (ones that are NOT "Local Disk") Windows 11 File Explorer will ignore attempts to set an entire folder tree to the folder type of your choice, leaving the folders set to type "General items". This problem started with KB5008353 update (build 22000.469) on January 25, 2022. In some cases, you may be able to set the folder type by setting one folder at a time.
 
-If you need the capability to set the folder type reliably, you may want to consider enabling the option to use the Windows 10 Explorer on Windows 11.
+For drive C (or any NTFS formatted drive of type "Local Disk") you can force set the folder type for a whole tree using the [SetFolderType](https://lesferch.github.io/SetFolderType/) tool. If you need to set the folder type for folders on disks of type "USB Drive", you may want to consider enabling the option to use the Windows 10 Explorer on Windows 11.
 
 ### General Items (Generic) Folders
 
@@ -810,7 +810,7 @@ Yes, as described under *Restore* above, WinSetView creates a backup every run t
 
 ### Can I disable automatic folder type discovery and keep special folder types, such as Pictures?
 
-Yes, but it's not convenient and currently is only practical on Windows 10 ([or Windows 11 patched to use the Windows 10 Explorer](https://lesferch.github.io/OldExplorer/)) because the option **Also apply this template to all subfolders** is broken in the Windows 11 Explorer.
+Yes, but it's not convenient and currently is only practical on Windows 10 (or Windows 11 configured to use the Windows 10 Explorer) because the option **Also apply this template to all subfolders** is broken in the Windows 11 Explorer.
 
 Here are the steps:
 
