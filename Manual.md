@@ -562,7 +562,9 @@ There are three Sort columns to allow sorting Explorer file/folder views on up t
 
 With a Sort column enabled (ascending or descending), click a radio button beside the property you wish to sort by.
 
-**Note**: Sort 2 and Sort 3 are used to create a multi-level sort. If Sort 1 is set to something unique, such as Name, there is no point in setting a Sort 2 or Sort 3. However, if Sort 1 is set to something non-unique, such as Type, then Sort 2 could be set to something else, such as Date modified or Name to create a two-level sort. A three level sort could be set up for Music folders with something like Artist for Sort 1, Album for Sort 2, and Title for Sort 3.
+**Note**: Sort 2 and Sort 3 are used to create a multi-level sort. If Sort 1 is set to something unique, such as Name, there is no point in setting a Sort 2 or Sort 3 (with one exception noted below). If Sort 1 is set to something non-unique, such as Type, then Sort 2 could be set to something else, such as Date modified or Name to create a two-level sort. A three level sort could be set up for Music folders with something like Artist for Sort 1, Album for Sort 2, and Title for Sort 3.
+
+**Note**: In Explorer, you can force folders to always be a the top by setting the secondary sort to Type and then setting the primary sort to Name. You can do the same thing in WinSetview with Sort 1 and Sort 2. You can even get the same effect by setting both Sort 1 and Sort 2 to use Name. For Sort 2, it does not matter if you choose ascending or descending.
 
 **Note**: Prior to WinSetView 2.76 there were four Sort columns, but it has been determined that Windows only supports up to 3 sort levels via the FolderTypes registry key (that's used to set the default folder views) even though it's possible to set four sort levels via the File Explorer GUI by Shift-clicking column headings.
 
