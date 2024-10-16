@@ -11,7 +11,7 @@ Follow the steps below to download, extract, and run WinSetView for the first ti
 
 ## Step 1: Click the WinSetView Download Link
 
-[![image](https://github.com/LesFerch/WinSetView/assets/79026235/0188480f-ca53-45d5-b9ff-daafff32869e)Download the zip file](https://github.com/LesFerch/WinSetView/archive/refs/heads/main.zip)
+[![image](https://github.com/LesFerch/WinSetView/assets/79026235/0188480f-ca53-45d5-b9ff-daafff32869e)Download the zip file](https://github.com/LesFerch/WinSetView/releases/download/2.99/WinSetView.zip)
 
 ## Step 2: Open the Folder Containing the Zip File
 
@@ -33,13 +33,13 @@ Right-click the downloaded zip file and select **Extract All...**.
 
 ![02](https://user-images.githubusercontent.com/79026235/153107248-5f0ccc0b-ca21-4102-8492-1df02129f978.png)
 
-Edit the displayed folder path to remove the **WinSetView-main** part and then click **Extract**.
+Edit the displayed folder path to remove the **WinSetView** part and then click **Extract**.
 
 ![image](https://user-images.githubusercontent.com/79026235/153104464-b64a9efb-181a-468a-a457-63455f490f32.png)
 
-Once the extraction is complete, you should have a **WinSetView-main** folder. You can now delete the **WinSetView-main.zip** file.
+Once the extraction is complete, you should have a **WinSetView** folder. You can now delete the **WinSetView.zip** file.
 
-**Note**: If you leave the path as is, you will end up with nested **WinSetView-main** folders, but it will still work just fine.
+**Note**: If you leave the path as is, you will end up with nested **WinSetView** folders, but it will still work just fine.
 
 **Note**: If you downloaded using the GitHub release link, **main** will be replaced with a version number, but everything else is the same.
 
