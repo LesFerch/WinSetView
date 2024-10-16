@@ -6,7 +6,7 @@ You can also manually navigate your browser to: https://lesferch.github.io/WinSe
 
 This is the quick start guide. For more details, please see the [complete user manual](./Manual.md).
 
-[![image](https://github.com/LesFerch/WinSetView/assets/79026235/0188480f-ca53-45d5-b9ff-daafff32869e)Download the zip file](https://github.com/LesFerch/WinSetView/archive/refs/heads/main.zip)
+[![image](https://github.com/LesFerch/WinSetView/assets/79026235/0188480f-ca53-45d5-b9ff-daafff32869e)Download the zip file](https://github.com/LesFerch/WinSetView/releases/download/2.99/WinSetView.zip)
 
 [![image](https://github.com/user-attachments/assets/75e62417-c8ee-43b1-a8a8-a217ce130c91)Download the installer](https://github.com/LesFerch/WinSetView/releases/download/2.99/WinSetView-Setup.exe)
 
