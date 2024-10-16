@@ -76,21 +76,21 @@ Function SelectFile {
 }
 
 $RegKeys = @(
-'"HKCU\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\BagMRU"'
-'"HKCU\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags"'
-'"HKCU\Software\Microsoft\Windows\Shell\BagMRU"'
-'"HKCU\Software\Microsoft\Windows\Shell\Bags"'
-'"HKCU\Software\Microsoft\Windows\ShellNoRoam\BagMRU"'
-'"HKCU\Software\Microsoft\Windows\ShellNoRoam\Bags"'
-'"HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\CIDOpen"'
-'"HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\CIDSave"'
-'"HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\ComDlg32"'
-'"HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Modules\NavPane"'
-'"HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Modules\GlobalSettings\Sizer"'
-'"HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Streams"'
-'"HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\FolderTypes"'
-'"HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\ControlPanel"'
-'"HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced"'
+'HKCU\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\BagMRU'
+'HKCU\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags'
+'HKCU\Software\Microsoft\Windows\Shell\BagMRU'
+'HKCU\Software\Microsoft\Windows\Shell\Bags'
+'HKCU\Software\Microsoft\Windows\ShellNoRoam\BagMRU'
+'HKCU\Software\Microsoft\Windows\ShellNoRoam\Bags'
+'HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\CIDOpen'
+'HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\CIDSave'
+'HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\ComDlg32'
+'HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Modules\NavPane'
+'HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Modules\GlobalSettings\Sizer'
+'HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Streams'
+'HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\FolderTypes'
+'HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\ControlPanel'
+'HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced'
 )
 
 Function DeleteUserKeys {
