@@ -462,7 +462,7 @@ If (($CurBld -ge 22621) -And ($UBR -ge 3007) -And ($UBR -lt 3085)) {
 
 # Enable/disable Windows 10 Explorer on Windows 11
 
-If (($CurBld -ge 21996) -And ($UBR -ge 3007)) {
+If ($CurBld -ge 21996) {
 
   $Win10Explorer = $iniContent['Options']['Win10Explorer']
 
