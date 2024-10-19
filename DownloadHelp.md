@@ -28,13 +28,13 @@ Alternatively, you can open the folder (usually the **Downloads** folder) using 
 
 ## Step 3: Extract the Entire Zip File
 
-Right-click the downloaded zip file and select **Extract All...**.
+Right-click the downloaded zip file and select **Extract All...**:
 
 **Note**: If you have a third-party unzip tool installed (such as 7-Zip, Bandizip, WinZip, WinRAR, etc.) then you may see different unzip options when you right-click the zip file. Any option that unzips the file will do. Something like "smart unzip" is usually the best choice.
 
 ![image](https://github.com/user-attachments/assets/d2f87465-745a-4f69-a58e-1fdbb3f8aada)
 
-Click **Extract**.
+Then just click **Extract**:
 
 ![image](https://github.com/user-attachments/assets/5d3a4773-bfa6-4366-95fa-9a0581dd9858)
 
