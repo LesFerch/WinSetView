@@ -18,10 +18,11 @@ Follow the steps below to download, extract, and run WinSetView for the first ti
 This can be done directly from the browser, but will look different for every browser. For example...
 
 **Edge**:\
-![image](https://user-images.githubusercontent.com/79026235/153105994-4ae67c3f-bd51-48b7-88c3-f8adf81591c8.png)
+![image](https://github.com/user-attachments/assets/88d74121-81e4-439b-b989-7d49a4a7ce67)
 
 **Chrome**:\
-![image](https://user-images.githubusercontent.com/79026235/153104134-7494fbbb-c169-493d-b811-1cc5d7da5c00.png)
+![image](https://github.com/user-attachments/assets/f17d7b14-afce-4074-a9c6-ced059d7e68e)
+
 
 Alternatively, you can open the folder (usually the **Downloads** folder) using Windows File Explorer.
 
@@ -31,7 +32,8 @@ Right-click the downloaded zip file and select **Extract All...**.
 
 **Note**: If you have a third-party unzip tool installed (such as 7-Zip, Bandizip, WinZip, WinRAR, etc.) then you may see different unzip options when you right-click the zip file. Any option that unzips the file will do. If there is something like a "smart unzip" option, that is usually the best choice, and won't require editing the unzip path, as indicated below.
 
-![02](https://user-images.githubusercontent.com/79026235/153107248-5f0ccc0b-ca21-4102-8492-1df02129f978.png)
+![image](https://github.com/user-attachments/assets/d2f87465-745a-4f69-a58e-1fdbb3f8aada)
+
 
 Edit the displayed folder path to remove the **WinSetView** part and then click **Extract**.
 
