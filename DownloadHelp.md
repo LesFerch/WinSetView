@@ -28,7 +28,7 @@ Alternatively, you can open the folder (usually the **Downloads** folder) using 
 
 ## Step 3: Extract the Entire Zip File
 
-Right-click the downloaded zip file and select **Extract All...**:
+Right-click the downloaded zip file and select **Extract All...**
 
 **Note**: If you have a third-party unzip tool installed (such as 7-Zip, Bandizip, WinZip, WinRAR, etc.) then you may see different unzip options when you right-click the zip file. Any option that unzips the file will do. Something like "smart unzip" is usually the best choice.
 
