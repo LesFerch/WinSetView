@@ -42,9 +42,18 @@ Once the extraction is complete, you should have a **WinSetView** folder. You ca
 
 ## Step 3: Open the App
 
-Open the extracted folder and you should see **WinSetView.exe**. If you do not see the **exe** file extension, check **File name extensions** in the Windows File Explorer **View** menu.
+Open the extracted folder and you should see **WinSetView.exe**. If you do not see the **exe** file extension, please enable the option to show file extensions...
 
-![image](https://user-images.githubusercontent.com/79026235/229966497-b357c88d-45fa-4a5d-993e-661b8d18ead4.png)
+Windows 10:
+
+![image](https://github.com/user-attachments/assets/9d7674b1-8335-4eb4-8fe8-c40b50f1a815)
+
+Windows 11:
+
+![image](https://github.com/user-attachments/assets/06c6cffb-9b08-4e75-83da-92fc26e5a1dd)
+
+
+
 
 To avoid annoying "unrecognized app" notifications, right-click **WinSetView.exe** and select **Properties**:
 
