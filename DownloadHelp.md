@@ -30,20 +30,15 @@ Alternatively, you can open the folder (usually the **Downloads** folder) using 
 
 Right-click the downloaded zip file and select **Extract All...**.
 
-**Note**: If you have a third-party unzip tool installed (such as 7-Zip, Bandizip, WinZip, WinRAR, etc.) then you may see different unzip options when you right-click the zip file. Any option that unzips the file will do. If there is something like a "smart unzip" option, that is usually the best choice, and won't require editing the unzip path, as indicated below.
+**Note**: If you have a third-party unzip tool installed (such as 7-Zip, Bandizip, WinZip, WinRAR, etc.) then you may see different unzip options when you right-click the zip file. Any option that unzips the file will do. Something like "smart unzip" is usually the best choice.
 
 ![image](https://github.com/user-attachments/assets/d2f87465-745a-4f69-a58e-1fdbb3f8aada)
 
+Click **Extract**.
 
-Edit the displayed folder path to remove the **WinSetView** part and then click **Extract**.
-
-![image](https://user-images.githubusercontent.com/79026235/153104464-b64a9efb-181a-468a-a457-63455f490f32.png)
+![image](https://github.com/user-attachments/assets/5d3a4773-bfa6-4366-95fa-9a0581dd9858)
 
 Once the extraction is complete, you should have a **WinSetView** folder. You can now delete the **WinSetView.zip** file.
-
-**Note**: If you leave the path as is, you will end up with nested **WinSetView** folders, but it will still work just fine.
-
-**Note**: If you downloaded using the GitHub release link, **main** will be replaced with a version number, but everything else is the same.
 
 ## Step 3: Open the App
 
