@@ -58,6 +58,8 @@ Simple step by step instructions follow.
 
 **Note**: Clicking **Submit** will apply the registry setting changes and restart Explorer. Do not click Submit when Explorer is busy copying/moving/deleting files.
 
+**IMPORTANT**: Be sure to click the **Options** button and review the items on that page and adjust as necessary. The selections are read from the INI file for rapid re-application. Your current settings are NOT detected.
+
 For complete details, please see the [manual](./Manual.md).
 
 ### Step 1: Select Your Interface Language (Optional)
