@@ -665,6 +665,10 @@ This folder contains files that are used by *WinSetView.exe*.
 
 **ViVeTool.exe** and **Albacore.ViVe.dll** are used to enable or disable certain Windows features shown in the Options menu.
 
+**GetMoreProperties.exe** is used by WinSetView.exe to retrieve the custom properties installed by third-party apps.
+
+**CSReg.exe** replicates most of the functionality of Reg.exe. It's used by WinSetView.ps1 on systems that do not have Reg.exe or block Reg.exe with the DisableRegistryTools policy.
+
 ### Language Folder
 
 This folder must exist and contain the **en-US** folder and language files in order to run *WinSetView.exe*. All other language folders are optional. This folder is not needed for WinSetView.ps1.
