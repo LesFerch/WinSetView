@@ -11,7 +11,7 @@ Follow the steps below to download, extract, and run WinSetView for the first ti
 
 ## Step 1: Click the WinSetView Download Link
 
-[![image](https://github.com/LesFerch/WinSetView/assets/79026235/0188480f-ca53-45d5-b9ff-daafff32869e)Download the zip file](https://github.com/LesFerch/WinSetView/releases/download/2.99/WinSetView.zip)
+[![image](https://github.com/LesFerch/WinSetView/assets/79026235/0188480f-ca53-45d5-b9ff-daafff32869e)Download the zip file](https://github.com/LesFerch/WinSetView/releases/download/2.99.1/WinSetView.zip)
 
 ## Step 2: Open the Folder Containing the Zip File
 
