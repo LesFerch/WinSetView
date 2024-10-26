@@ -103,7 +103,7 @@ For any folder type (e.g. **Pictures**) that you wish to have a *different* defa
 
 **Note**: If you *uncheck* a folder type, then that folder type will display with its Windows default view settings (i.e. the view you would get for a new user account).
 
-### Step 5: Check and Set Your Desired Options
+### Step 5: Check and Set Your Desired Options (REQUIRED!)
 
 ![image](https://github.com/LesFerch/WinSetView/assets/79026235/75ebc931-6d65-41e2-94d3-7624773e6004)
 
