@@ -3,25 +3,35 @@
 #  For a GUI-less restore, simply go to Cmd line and run Reg Import YourSettings.reg
 #  where YourSettings.reg is the settings file captured with the backup option.
 
-$MyName = "Folder View Backup"
-$Host.UI.RawUI.WindowTitle = $MyName
-
 If ($PSVersionTable.PSVersion.Major -lt 3) {
   Write-Host `n'Powershell 3 or higher is required.'`n
   Read-Host -Prompt "Press any key to continue"
   Exit
 }
 
+Set-StrictMode -Off
+#$ExecutionContext.SessionState.LanguageMode = "ConstrainedLanguage"
+$Constrained = $false
+$MyName = "Folder View Backup"
+If ($ExecutionContext.SessionState.LanguageMode -eq "ConstrainedLanguage") {$Constrained = $true}
+If (-Not $Constrained) {$host.ui.RawUI.WindowTitle = $MyName}
+
 $BakDir   = "$env:APPDATA\WinViewBak"
 $TimeStr  = (get-date).ToString("yyyy-MM-dd-HHmm-ss")
 $TestFile = "$PSScriptRoot\$TimeStr.txt"
 $TempDir  = "$env:TEMP"
 
-$Key = 'HKLM:\Software\Microsoft\Windows NT\CurrentVersion'
-$Value = 'ProductName'
-$WinVer = (Get-ItemProperty -Path $Key -Name $Value).$Value.SubString(8,2)
-$WinVer = '   .' + $WinVer + '. '
-$WinVer = ($WinVer -Replace '\.',' ').Trim()
+$RegExe    = "$env:SystemRoot\System32\Reg.exe"
+
+$regCheck = & $RegExe query HKU 2>$Null
+if ($regCheck -eq $Null) {
+  $RegExe = "..\AppParts\CSReg.exe"
+  If (-Not(Test-Path -Path $RegExe)) {
+    Write-Host `n"File not found: $RegExe"`n
+    Read-Host -Prompt 'Press Enter to continue'
+    Exit
+  }
+}
 
 Try {[io.file]::OpenWrite($TestFile).close()}
 Catch {}
@@ -29,6 +39,20 @@ If (Test-Path -Path $TestFile) {
   Remove-Item $TestFile
   $BakDir = "$PSScriptRoot\WinViewBak"
 }
+
+Function SetDPIAwareness {
+    Add-Type @"
+        using System;
+        using System.Runtime.InteropServices;
+        public class DpiAwareness {
+            [DllImport("user32.dll")]
+            public static extern bool SetProcessDPIAware();
+        }
+"@
+    [DpiAwareness]::SetProcessDPIAware()
+}
+
+SetDPIAwareness
 
 Function SelectFolder {       
 
@@ -39,11 +63,8 @@ Function SelectFolder {
   $FolderBrowser.ShowNewFolderButton = $True
   $FolderBrowser.SelectedPath = $BakDir
 
-  $Handle = $Null
-  If ($WinVer -eq '10') {
-    $Handle = [System.Windows.Forms.NativeWindow]::New()
-    $Handle.AssignHandle([System.Diagnostics.Process]::GetCurrentProcess().MainWindowHandle)
-  }
+  $Handle = [System.Windows.Forms.NativeWindow]::New()
+  $Handle.AssignHandle([System.Diagnostics.Process]::GetCurrentProcess().MainWindowHandle)
 
   $Button = $FolderBrowser.ShowDialog($Handle)
   If ($Button -eq "OK") {$BakDir = $FolderBrowser.SelectedPath}
@@ -62,11 +83,8 @@ Function SelectFile {
     Title = 'Select registry file to restore...'
   }
 
-  $Handle = $Null
-  If ($WinVer -eq '10') {
-    $Handle = [System.Windows.Forms.NativeWindow]::New()
-    $Handle.AssignHandle([System.Diagnostics.Process]::GetCurrentProcess().MainWindowHandle)
-  }
+  $Handle = [System.Windows.Forms.NativeWindow]::New()
+  $Handle.AssignHandle([System.Diagnostics.Process]::GetCurrentProcess().MainWindowHandle)
 
   $File = ''
   $Button = $FileBrowser.ShowDialog($Handle)
@@ -95,7 +113,7 @@ $RegKeys = @(
 
 Function DeleteUserKeys {
   ForEach ($Key in $RegKeys) {
-    Reg Delete $Key /F 2>$Null
+    & $RegExe Delete $Key /F 2>$Null
   }
 }
 
@@ -148,7 +166,7 @@ While($True){
 
       For ($i = 0; $i -lt $RegKeys.Length; $i++) {
         $File = "$TempDir\WinViewBak$i.tmp"
-        Reg Export $RegKeys[$i] $File /y 2>$Null
+        & $RegExe Export $RegKeys[$i] $File /y 2>$Null
         If (Test-Path -Path $File) {$FileList = $FileList + "+$TempDir\WinViewBak$i.tmp"}
       }
 
@@ -172,7 +190,7 @@ While($True){
 
       Write-Host ''
       DeleteUserKeys
-      Reg Import $File
+      & $RegExe Import $File
       Write-Host `n'Restore complete.'`n
       RestartExplorer
     }

@@ -1,5 +1,5 @@
 # WinSetView (Globally Set Explorer Folder Views)
-# Les Ferch, lesferch@gmail.com, GitHub repository created 2021-03-26
+# Les Ferch, lesferch@gmail.com, 2021 - 2024
 # WinSetView.ps1 (Powershell script to set selected views)
 
 # One command line paramater is supported
@@ -10,7 +10,8 @@ Param (
   $File = ''
 )
 
-#Set-PSDebug -Trace 1
+Set-StrictMode -Off
+
 #$ExecutionContext.SessionState.LanguageMode = "ConstrainedLanguage"
 
 $Constrained = $false
@@ -154,6 +155,17 @@ $KillExe   = "$env:SystemRoot\System32\TaskKill.exe"
 $UAppData  = "$env:UserProfile\AppData"
 $ViveExe  = "$PSScriptRoot\AppParts\ViVeTool.exe"
 $ViveExe = (New-Object -ComObject Scripting.FileSystemObject).GetFile($ViveExe).ShortPath
+$C1=''; $C2=''; $C3=''; $C4=''
+
+$regCheck = & $RegExe query HKU 2>$Null
+if ($regCheck -eq $Null) {
+  $RegExe = "$PSScriptRoot\AppParts\CSReg.exe"
+  If (-Not(Test-Path -Path $RegExe)) {
+    Write-Host `n"File not found: $RegExe"`n
+    Read-Host -Prompt 'Press Enter to continue'
+    Exit
+  }
+}
 
 # Use script folder if we have write access. Otherwise use AppData folder.
 
@@ -242,8 +254,8 @@ Function RestartExplorer {
 Function DeleteUserKeys {
   & $RegExe Delete $BwgM /f 2>$Null
   & $RegExe Delete $Bwgs /f 2>$Null
-  & $RegExe Delete """$BagM""" /f 2>$Null
-  & $RegExe Delete """$Bags""" /f 2>$Null
+  & $RegExe Delete $BagM /f 2>$Null
+  & $RegExe Delete $Bags /f 2>$Null
   & $RegExe Delete $CUFT /f 2>$Null
   & $RegExe Delete $Defs /f 2>$Null
 }
@@ -295,8 +307,8 @@ Function RemoveTempFiles {
 RemoveTempFiles
 
 & $RegExe Delete $Desk /f 2>$Null
-& $RegExe Export """$BagM""" $T1 /y 2>$Null
-& $RegExe Export """$Bags""" $T2 /y 2>$Null
+& $RegExe Export $BagM $T1 /y 2>$Null
+& $RegExe Export $Bags $T2 /y 2>$Null
 & $RegExe Export $Strm $T3 /y 2>$Null
 & $RegExe Export $CUFT $T4 /y 2>$Null
 & $RegExe Export $BwgM $T5 /y 2>$Null
@@ -307,14 +319,14 @@ RemoveTempFiles
 RemoveTempFiles
 
 $LogoExists = $false
-$LogoExists = (Get-ItemProperty -Path $ShPS -ErrorAction SilentlyContinue).logo -eq 'none'
+Try { $LogoExists = (Get-ItemProperty -Path $ShPS -ErrorAction SilentlyContinue).logo -eq 'none' } Catch {}
 
 Remove-Item $ShellBak 2>$Null
 Remove-Item -Path "$ShPS\*" -Recurse 2>$Null
 Remove-ItemProperty -Path "$ShPS" -Name  Logo 2>$Null
 Remove-ItemProperty -Path "$ShPS" -Name  FolderType 2>$Null
 Remove-ItemProperty -Path "$ShPS" -Name  SniffedFolderType 2>$Null
-& $RegExe Export """$Shel""" $ShellBak /y 2>$Null
+& $RegExe Export $Shel $ShellBak /y 2>$Null
 
 # Clear current Explorer view registry values
 
@@ -395,7 +407,7 @@ $NoSearchHighlights = 1-$NoSearchHighlights
 
 If ($NoFolderThumbs -eq 1) {
   $ResetThumbs = !$LogoExists
-  & $RegExe Add """$Shel""" /v Logo /d none /t REG_SZ /f
+  & $RegExe Add $Shel /v Logo /d none /t REG_SZ /f
 }
 Else {
   $ResetThumbs = $LogoExists
@@ -446,7 +458,7 @@ If (($CurBld -ge 19045) -And ($CurBld -lt 21996) -And ($UBR -ge 3754)) {
 
 # Enable/disable Windows 11 App SDK Explorer (UAC)
 
-If (($CurBld -ge 22621) -And ($UBR -ge 3007) -And ($UBR -lt 3085)) {
+If (($CurBld -eq 22621) -And ($UBR -ge 3007) -And ($UBR -lt 3085)) {
 
   $Win11Explorer = $iniContent['Options']['Win11Explorer']
 
@@ -487,8 +499,13 @@ If ($CurBld -ge 21996) {
 
 If ($CurBld -ge 18363) {
 
-  $CurVal = & $RegExe Query $PolL /v Place1 2>$Null
-  If ($CurVal.Length -eq 4) {$CurVal = '1'} Else {$CurVal = '0'}
+  Try {
+    $CurVal = & $RegExe Query $PolL /v Place1 2>$Null
+    If ($CurVal.Length -eq 4) {$CurVal = '1'} Else {$CurVal = '0'}
+  }
+  Catch {
+    $CurVal = '0'
+  }
 
   $LegacyDialogFix = $iniContent['Options']['LegacyDialogFix']
 
@@ -600,19 +617,19 @@ Function BuildRegData($Key) {
 # This PC does not have a unique GUID so we'll set it's view via a Bags entry:
 
 If ($ThisPCoption -ne 0) {
-  & $RegExe Add """$BagM""" /v NodeSlots /d '02' /t REG_BINARY /f
-  & $RegExe Add """$BagM""" /v MRUListEx /d '00000000ffffffff' /t REG_BINARY /f >$Null
-  & $RegExe Add """$BagM""" /v '0' /d '14001F50E04FD020EA3A6910A2D808002B30309D0000' /t REG_BINARY /f >$Null
-  & $RegExe Add """$BagM\0""" /v NodeSlot /d 1 /t REG_DWORD /f >$Null
+  & $RegExe Add $BagM /v NodeSlots /d '02' /t REG_BINARY /f
+  & $RegExe Add $BagM /v MRUListEx /d '00000000ffffffff' /t REG_BINARY /f >$Null
+  & $RegExe Add $BagM /v '0' /d '14001F50E04FD020EA3A6910A2D808002B30309D0000' /t REG_BINARY /f >$Null
+  & $RegExe Add "$BagM\0" /v NodeSlot /d 1 /t REG_DWORD /f >$Null
   $CustomIconSize = $iniContent['Generic']['IconSize']
   SetViewValues($ThisPCView)
   If ($CustomIconSize -ne '') {$IconSize = $CustomIconSize}
   $GUID = '{5C4F28B5-F869-4E84-8E60-F11DB97C5CC7}'
-  SetBagValues("""$Bags\1\ComDlg\$GUID""")
-  SetBagValues("""$Bags\1\Shell\$GUID""")
+  SetBagValues("$Bags\1\ComDlg\$GUID")
+  SetBagValues("$Bags\1\Shell\$GUID")
 }
 
-If ($Generic -eq 1) {& $RegExe Add """$Shel""" /v FolderType /d Generic /t REG_SZ /f}
+If ($Generic -eq 1) {& $RegExe Add $Shel /v FolderType /d Generic /t REG_SZ /f}
 
 If ($SetVirtualFolders -eq 1) {
   $GUID = $iniContent['Generic']['GUID']
@@ -620,11 +637,11 @@ If ($SetVirtualFolders -eq 1) {
   $CustomIconSize = $iniContent['Generic']['IconSize']
   SetViewValues([Int]$iniContent['Generic']['View'])
   If ($CustomIconSize -ne '') {$IconSize = $CustomIconSize}
-  & $RegExe Add """$Bags\AllFolders\Shell\$GUID""" /v FFlags /d '0x41200001' /t REG_DWORD /f
-  & $RegExe Add """$Bags\AllFolders\Shell\$GUID""" /v Mode /d "$Mode" /t REG_DWORD /f
-  & $RegExe Add """$Bags\AllFolders\Shell\$GUID""" /v LogicalViewMode /d "$LVMode" /t REG_DWORD /f
-  If ($LVMode -eq 3) {& $RegExe Add """$Bags\AllFolders\Shell\$GUID""" /v IconSize /d "$IconSize" /t REG_DWORD /f}
-  If ($GroupBy -eq '') {& $RegExe Add """$Bags\AllFolders\Shell\$GUID""" /v GroupView /d 0 /t REG_DWORD /f}
+  & $RegExe Add "$Bags\AllFolders\Shell\$GUID" /v FFlags /d '0x41200001' /t REG_DWORD /f
+  & $RegExe Add "$Bags\AllFolders\Shell\$GUID" /v Mode /d "$Mode" /t REG_DWORD /f
+  & $RegExe Add "$Bags\AllFolders\Shell\$GUID" /v LogicalViewMode /d "$LVMode" /t REG_DWORD /f
+  If ($LVMode -eq 3) {& $RegExe Add "$Bags\AllFolders\Shell\$GUID" /v IconSize /d "$IconSize" /t REG_DWORD /f}
+  If ($GroupBy -eq '') {& $RegExe Add "$Bags\AllFolders\Shell\$GUID" /v GroupView /d 0 /t REG_DWORD /f}
 }
 
 # Set Explorer folder view defaults:
