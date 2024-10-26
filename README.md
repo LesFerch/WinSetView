@@ -15,7 +15,7 @@ This is the quick start guide. For more details, please see the [complete user m
 
 Compatible with Windows 7, 8, 10, and 11.
 
-[Version 2.99](./VersionHistory.md)
+[Version 2.99.1](./VersionHistory.md)
 
 ## Summary
 
