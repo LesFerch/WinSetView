@@ -639,6 +639,13 @@ In addition to the path-related properties explained earlier, here are explanati
 
 Note: The **File extension** column heading is not available on Windows 7.
 
+### Search
+
+Press **Ctrl-F** to search for text within any page. This is most useful for finding properties in the **Columns** page. Please note that this function is provided by the MSHTML engine. There is no specific code in WinSetView for the search function, so it is what it is.
+
+![image](https://github.com/user-attachments/assets/e50b17b2-404f-4b96-b5ee-67ac3902904e)
+
+
 ## Files
 
 In addition to the two main files: **WinSetView.exe** (HTML application), and **WinSetView.ps1** (PowerShell command line script) the following folders and files are included:
@@ -657,7 +664,7 @@ Please note, for system administrators setting up *new* user profiles, it may be
 
 ### AppParts Folder
 
-This folder contains files that are used by *WinSetView.exe*.
+This folder contains files that are used by *WinSetView.exe* or *WinSetView.ps1*.
 
 **Fonts.txt** contains a list of fonts to display in the WinSetView font selection menu.
 
