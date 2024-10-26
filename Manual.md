@@ -641,7 +641,7 @@ Note: The **File extension** column heading is not available on Windows 7.
 
 ### Search
 
-Press **Ctrl-F** to search for text within any page. This is most useful for finding properties in the **Columns** page. Please note that this function is provided by the MSHTML engine. There is no specific code in WinSetView for the search function, so it is what it is.
+Press **Ctrl-F** to search for text within any page. This is most useful for finding properties in the **Columns** page. Please note that this function is provided by the MSHTML engine. There is no specific code in WinSetView for the search function, so it cannot be modified or enhanced in any way.
 
 ![image](https://github.com/user-attachments/assets/e50b17b2-404f-4b96-b5ee-67ac3902904e)
 
