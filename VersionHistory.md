@@ -1,3 +1,13 @@
+## 2.99.1
+
+Enhancement: Now works on systems that have the DisableRegistryTools policy enabled.
+
+Enhancement: PowerShell scripts updated to work with PowerShell Core.
+
+Enhancement: Corrections to French language file (Thank you k3lteris).
+
+Bug Fix: Fixed error in build version check that prevented Windows 10 Explorer from being enabled on Windows 11 24H2.
+
 ## 2.99
 
 Bug Fix: Fixed problem, introduced with 2.97, with header being blank after switching language.
