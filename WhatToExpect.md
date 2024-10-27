@@ -1,6 +1,6 @@
 ## What to Expect
 
-WinSetView is designed to set your preferred folder view defaults, and many Explorer features, in one click. This makes it very effective to get Explorer, and your folder views, set up the way you like for new computers/users or get back to your preferred settings after a major update or even after you have just been messing about.
+WinSetView is designed to set your preferred folder view defaults, and many Explorer features, with one click. This makes it very effective to get Explorer, and your folder views, set up the way you like for new computers/users or get back to your preferred settings after a major update or even after you have just been messing about.
 
 It's ideal for anyone who wants consistent views everywhere, whether that's one view for all folder types or specific views for specific folder types.
 
