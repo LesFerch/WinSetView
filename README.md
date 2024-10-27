@@ -52,6 +52,8 @@ You may also install WinSetView, so that it appears in your list of installed ap
 
 Simple step by step instructions follow.
 
+**STOP**: If you are trying to change one thing, and leave everything else as is, please click [here](./WhatToExpect.md) to learn more.
+
 **Note**: Nothing in Windows is changed, and no settings are saved, until the **Submit** button is pressed. Feel free to experiment with the WinSetView interface and just **X** out and restart the app to get back to where you started. Display options such as **font**, **font size**, and **theme** are saved to the INI file and are therefore only saved when you click **Submit**. Only the WinSetView window size and position are saved automatically when you click **X** to exit the app.
 
 **Note**: For best results, close all open applications before running WinSetView. Open applications can prevent open/save dialog views from being updated. Apps that minimize to the System Tray when "closed", such as Discord, Steam, and qBittorrent, must be fully closed (e.g. right-click the app's System Tray icon and select `Exit`).
