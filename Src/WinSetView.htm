@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--
 WinSetView (Globally Set Explorer Folder Views)
-Les Ferch, lesferch@gmail.com, GitHub repository created 2021-03-26
+Les Ferch, lesferch@gmail.com, 2021 - 2024
 WinSetView.htm (GUI tool to select desired views)
 -->
 <html>
@@ -38,7 +38,7 @@ catch(Err) {
 <script language="VBScript">
 Option Explicit
 
-Const Version = "2.99"
+Const Version = "2.99.1"
 
 SetLocale(1033)
 Const ForReading = 1
@@ -1166,7 +1166,7 @@ Sub Options
   OptionES
   OptionThisPC
   Sec4.Style.MarginTop = fix4.ScrollHeight - (Scale*20)
-  If CurBld>=22621 And UBR>="3007" And UBR<"3085" Then ees.Style.Display = "inline"
+  If CurBld=22621 And UBR>="3007" And UBR<"3085" Then ees.Style.Display = "inline"
 End Sub
 
 Sub Arrange
