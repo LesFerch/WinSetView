@@ -378,8 +378,7 @@ As you can see from the examples above, which setting is best depends on how you
 
 Why this option, which should be available to any user to toggle as needed, is locked down as a policy that requires Administrator rights to change, is one of the many mysteries of Windows design.
 
-**Note**: This option works in Windows 10 and Windows 11. In theory, it should also work in Windows 7, but it did not work in my tests on Windows 7.
-
+**Note**: If you've set a secondary sort property, name sorting will use the numeric ordering. Clear the secondary sort to allow non-numeric sorting. You can clear the secondary sort for the current folder simply by clicking the column header of another property such as Date modified. In WinSetView be sure to only set **Sort 1** to ensure you can use non-numeric sorting.
 
 #### Enable feature 18755234 (Windows 10 Search) ![image](https://github.com/LesFerch/WinSetView/assets/79026235/31d5617f-6617-4e14-9b8e-0efb2c2b9896)
 
@@ -563,7 +562,7 @@ With a Sort column enabled (ascending or descending), click a radio button besid
 
 **Note**: Sort 2 and Sort 3 are used to create a multi-level sort. If Sort 1 is set to something unique, such as Name, there is no point in setting a Sort 2 or Sort 3 (with one exception noted below). If Sort 1 is set to something non-unique, such as Type, then Sort 2 could be set to something else, such as Date modified or Name to create a two-level sort. A three level sort could be set up for Music folders with something like Artist for Sort 1, Album for Sort 2, and Title for Sort 3.
 
-**Note**: In Explorer, you can force folders to always be a the top by setting the secondary sort to Type and then setting the primary sort to Name. You can do the same thing in WinSetview with Sort 1 and Sort 2. You can even get the same effect by setting both Sort 1 and Sort 2 to use Name. For Sort 2, it does not matter if you choose ascending or descending.
+**Note**: In Explorer, you can force folders to always be a the top by setting the secondary sort to Type and then setting the primary sort to Name. You can do the same thing in WinSetview with Sort 1 and Sort 2. You can even get the same effect by setting both Sort 1 and Sort 2 to use Name. For Sort 2, it does not matter if you choose ascending or descending. But also note that setting a secondary sort will make sorting by name always use the numeric sort order. If you have checked **Disable numerical sort**, be sure that you only set **Sort 1** (Sort 2 and 3 should not be enabled).
 
 **Note**: Prior to WinSetView 2.76 there were four Sort columns, but it has been determined that Windows only supports up to 3 sort levels via the FolderTypes registry key (that's used to set the default folder views) even though it's possible to set four sort levels via the File Explorer GUI by Shift-clicking column headings.
 
