@@ -52,7 +52,7 @@ You may also install WinSetView, so that it appears in your list of installed ap
 
 Simple step by step instructions follow.
 
-**STOP**: If you are trying to change one thing, and leave everything else as is, please click [here](./WhatToExpect.md) to learn more.
+**Caution**: If you are trying to change one thing, and leave everything else as is, please click [here](./WhatToExpect.md) to learn more.
 
 **Note**: Nothing in Windows is changed, and no settings are saved, until the **Submit** button is pressed. Feel free to experiment with the WinSetView interface and just **X** out and restart the app to get back to where you started. Display options such as **font**, **font size**, and **theme** are saved to the INI file and are therefore only saved when you click **Submit**. Only the WinSetView window size and position are saved automatically when you click **X** to exit the app.
 
@@ -60,19 +60,17 @@ Simple step by step instructions follow.
 
 **Note**: Clicking **Submit** will apply the registry setting changes and restart Explorer. Do not click Submit when Explorer is busy copying/moving/deleting files.
 
-**IMPORTANT**: Be sure to click the **Options** button and review the items on that page and adjust as necessary. The selections are read from the INI file for rapid re-application. Your current settings are NOT detected.
-
 For complete details, please see the [manual](./Manual.md).
 
 ### Step 1: Select Your Interface Language (Optional)
 
-![image](https://github.com/LesFerch/WinSetView/assets/79026235/ec65e196-e96b-486b-9557-da2f0b29a207)
+![image](https://github.com/user-attachments/assets/29ddaeb4-a8b3-46b0-aa9b-5708a3ce5220)
 
 WinSetView should open in the same language to which you have Windows set. If not, select the correct language from the drop down menu.
 
 ### Step 2: Select Your Preferred Default View
 
-![image](https://github.com/LesFerch/WinSetView/assets/79026235/28e14cd3-9a3e-4a01-8a33-d12ee3a2e416)
+![image](https://github.com/user-attachments/assets/fa6dbb8f-543b-447d-95a5-ae2530279459)
 
 
 Select the default view you want applied to most (or all) folders from the drop down menu under the **Global** heading. Most users go with **Details**, but pick what *you* like as your default.
@@ -81,23 +79,23 @@ Select the default view you want applied to most (or all) folders from the drop 
 
 ### Step 3: Select Your Preferred Default Column Headings (Optional)
 
-![image](https://github.com/LesFerch/WinSetView/assets/79026235/b7766339-7f07-4df4-acb6-88c8c48b2466)
+![image](https://github.com/user-attachments/assets/46e466b5-6b28-428d-ac51-bcecf688c7e8)
 
 If you are happy with the default Details-view column headings (as shown on screen) then skip this step.
 
 **Note**: Column headings shown in blue are only displayed in *search results* (by default). It is, therefore, recommended to keep the **Folder path** (**File location** in Windows 11) column heading.
 
-![image](https://github.com/LesFerch/WinSetView/assets/79026235/a51ed69a-6373-4a0d-9056-cdce67e104c9)
+![image](https://github.com/user-attachments/assets/4c964424-23df-4a05-9c1b-af6ef0a5ce79)
 
 Otherwise, click the **Columns** button to bring up the column headings selection page.
 
-![image](https://github.com/LesFerch/WinSetView/assets/79026235/4d682192-9447-42aa-8c5b-ecb973669acd)
+![image](https://github.com/user-attachments/assets/04892e95-6790-41a6-a12a-e2d3199655f4)
 
 The column headings selection page allows you to select your desired column headings (and their order), group-by options, sort options, and column widths. The [manual](./Manual.md#columns) provides full details, but you can also hover over or click on elements to see how the interface works.
 
 ### Step 4: Set Views for Specific Folder Types (Optional)
 
-![image](https://github.com/LesFerch/WinSetView/assets/79026235/acc2f0d2-63ce-4475-b0a0-325abb7c75e1)
+![image](https://github.com/user-attachments/assets/55fdf6be-b638-4273-892a-6be10f65f66e)
 
 Please note that WinSetView allows you to set the default view for every folder type in Windows, but, by *default*, they will all get the same settings as your **Global** settings, as long as the **Inherit** box is checked.
 
@@ -109,23 +107,33 @@ For any folder type (e.g. **Pictures**) that you wish to have a *different* defa
 
 ### Step 5: Check and Set Your Desired Options (REQUIRED!)
 
-![image](https://github.com/LesFerch/WinSetView/assets/79026235/75ebc931-6d65-41e2-94d3-7624773e6004)
+![image](https://github.com/user-attachments/assets/7c67c247-eaa7-4bf0-9b8b-73853cc417c2)
 
-Click The **Options** button.
+Click The **Folder View Options** button.
 
-![image](https://github.com/user-attachments/assets/bacda1ed-300b-44c0-8e47-fa778cebf093)
+![image](https://github.com/user-attachments/assets/41191e79-b484-4443-8ba0-6cd31a037c84)
 
-Review the settings on that page and adjust as desired. See the [manual](./Manual.md#options-menu) for full details. Options with a shield icon require Administrative access and will automatically pop up a UAC prompt if changed.
+The folder view options are applied together with the folder views on the main page. The default settings match Windows defaults. See the [manual](./Manual.md#options-menu) for full details.
 
-### Step 6: Apply the Selections to Windows File Explorer
+Click The **Explorer Options** button.
 
-![image](https://github.com/LesFerch/WinSetView/assets/79026235/158ae5ca-3b21-4774-9da9-7529de86f181)
+![image](https://github.com/user-attachments/assets/21ce83f8-f34f-4ab6-9eeb-263edec9b86f)
 
-Once you're happy with your selections, make those settings apply to Windows File Explorer by clicking the **Submit** button.
+The Explorer options are optional. You can choose to apply or exclude them when **Submit** is clicked. Click the 🔍 button to detect your current settings. See the [manual](./Manual.md#options-menu) for full details.
+
+**Note**: Options with a shield icon require Administrative access. A UAC prompt will not appear at this point, but will appear for such options later when the changes are applied.
+
+### Step 7: Apply the Selections to Windows File Explorer
+
+![image](https://github.com/user-attachments/assets/d5c86db6-d72e-4fb1-b8ad-751f26227c64)
+
+Once you're happy with your selections, click the **Submit** button. This will pop up a dalog where you can choose to **Clear folder views and set new defaults** and/or **Reset Explorer options**. Note that a backup of your current folder views will be made if **Backup** is checked. 
+
+![image](https://github.com/user-attachments/assets/f0d91756-57a3-4741-ba45-80d068b03e85)
 
 You can always run WinSetView again to change any settings and you can revert back to a previous state using the **Restore** button. You also have the option of setting File Explorer back to Windows defaults by checking **Reset Views to Windows Defaults** and then clicking **Submit**.
 
-**IMPORTANT**: Using **Restore** or **Reset Views to Windows Defaults** only resets folder views. Many of the settings under **Options** are separate from the folder view settings. Please ensure those options are set to what you want.
+**IMPORTANT**: **Reset Views to Windows Defaults** only resets folder views. It does not revert the options listed in **Explorer options**. The **Restore** function will revert your folder views to what they were in the slected backup file and it will revert most of the **Explorer options**. Either way, it's recommended to carefully review the settings in **Explorer options** if you choose to apply them.
 
 ![image](https://github.com/LesFerch/WinSetView/assets/79026235/50c53943-f673-49da-ad3f-419026deea96)
 [See the complete user manual](./Manual.md)
