@@ -37,7 +37,7 @@ All changes made by WinSetView are per-user within the HKEY_CURRENT_USER hive in
 **Note**: For USB-connected phones and tablets, WinSetView provides an option to have them displayed in the same view as generic (General Items) folders (e.g. Details view), but it cannot control the Details view column headings for such devices.
 
 ## Interface
-![image](https://github.com/LesFerch/WinSetView/assets/79026235/a2bec3ac-5742-493e-a958-3da2ff4c4c07)
+![image](https://github.com/user-attachments/assets/7fb20483-f582-4403-98b4-0778645f1553)
 
 **Note**: For Windows 7 and 8, some of the icons used in the program will differ from Windows 10 and 11 due to issues with those older Windows versions being able to display all Unicode characters.
 
@@ -83,21 +83,31 @@ Select a light or dark theme for the WinSetView display. Theme definitions are l
 
 When checked, and applied via **Submit**, this option clears the registry keys that hold Explorer views and restarts Explorer, causing all folder views to revert to Windows defaults. To use this option, check the box and then click **Submit**.
 
-**Note**: Any items in the **Options** screen are still applied when resetting to defaults. Be sure to check and set those options as desired.
+**Note**: This feature does NOT reset the **Explorer Options** items to Windows defaults. Those settings will be applied, as currently selected, if **Reset Explorer options** is checked in the **Submit** dialog.
+
+### Backup
+
+If this box is checked, a REG file backup will be made of your current folder views plus any Explorer options that are listed in Explorer's Folder Options View tab.
 
 ### Submit
 
-Execute the PowerShell script to apply the selected options to the registry and restart Explorer. Do not click Submit when Explorer is busy copying/moving/deleting files.
+This will open a dalog where you can choose to **Clear folder views and set new defaults** and/or **Reset Explorer options**. 
 
-When **Submit** is clicked, the current selections in WinSetView are saved to an INI file (Win10.ini on Windows 10 and 11) and that INI file name is passed to WinSetView.ps1.
+When **OK** is clicked, the current selections in WinSetView are saved to an INI file (Win10.ini on Windows 10 and 11) which is then passed to the **WinSetView.ps1** PowerShell script. That script will apply the selected options and restart Explorer.
 
-Hold down the **Alt** key when clicking **Submit** to keep the PowerShell console open after completion of the script. This is useful for debugging if any errors appear in the PowerShell console window.
+**Important**: Do not click OK when Explorer is busy copying/moving/deleting files.
+
+Hold down the **Alt** key when clicking **OK** to keep the PowerShell console open after completion of the script. This is useful for debugging if any errors appear in the PowerShell console window.
 
 See the **Background** section for details on how Explorer view settings work and how this script sets Explorer view default values.
 
-### Options
+### Folder View Options
 
-Open the **Options** menu. See the *Options* section for details.
+Open the **Folder View Options** menu. See the *Folder view Options* section for details.
+
+### Explorer Options
+
+Open the **Explorer Options** menu. See the *Explorer Options* section for details.
 
 ### Restore
 
