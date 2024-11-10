@@ -103,19 +103,19 @@ See the **Background** section for details on how Explorer view settings work an
 
 ### Folder View Options
 
-Open the **Folder View Options** menu. See the *Folder view Options* section for details.
+Open the **Folder View Options** page. See the *Folder view Options* section for details.
 
 ### Explorer Options
 
-Open the **Explorer Options** menu. See the *Explorer Options* section for details.
+Open the **Explorer Options** page. See the *Explorer Options* section for details.
 
 ### Restore
 
 Select and restore a backup file to return Explorer views to a previous state.
 
-This button will appear after first run (i.e. after **Submit** has been clicked). Each time you click **Submit**, the PowerShell script makes a backup of the user's Explorer view registry keys to a date-time-named file. The **Restore** button will bring up a dialog to let you pick a backup file to restore. Since it's a standard file dialog, you can use the same interface to delete any unwanted backups by selecting them and right-clicking to get a *Delete* option.
+This button will appear after the first run (i.e. after **Submit** and **OK** has been clicked) with the **Backup** option checked. The **Restore** button will bring up a dialog to let you pick a backup file to restore. Since it's a standard file dialog, you can use the same interface to delete any unwanted backups by selecting them and right-clicking to get a *Delete* option.
 
-**IMPORTANT**: Many of the items shown in the **Options** page, are not affected by the Restore feature. Be sure to check the items in the Options page and set them to your desired settings. Specifically, the items up to and including "Set a start folder for Explorer" are not affected by Restore.
+**IMPORTANT**: The primary purpose of the WinSetView backup and restore is to allow reverting back to a previous state of Explorer folder views. Restore can only revert items shown in WinSetView's **Explorer Options** page that correspond to Explorer's Folder Options **View** tab.
 
 ### Load Settings
 
