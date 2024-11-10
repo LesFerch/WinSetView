@@ -111,13 +111,13 @@ Open the **Explorer Options** page. See the *Explorer Options* section for detai
 
 ### Restore
 
-Select and restore a backup file to return Explorer views to a previous state.
+Select a backup file to return Explorer views to a previous state.
 
 This button will appear after the first run (i.e. after **Submit** and **OK** has been clicked) with the **Backup** option checked. The **Restore** button will bring up a dialog to let you pick a backup file to restore. Since it's a standard file dialog, you can use the same interface to delete any unwanted backups by selecting them and right-clicking to get a *Delete* option.
 
 **IMPORTANT**: The primary purpose of the WinSetView backup and restore is to allow reverting back to a previous state of Explorer folder views. Restore can only revert items shown in WinSetView's **Explorer Options** page that correspond to Explorer's Folder Options **View** tab.
 
-### Load Settings
+### Load Settings (📄)
 
 (Advanced interface)
 
@@ -125,7 +125,7 @@ For *technical users*, who wish to maintain multiple configurations, the **Load 
 
 This button does NOT load your current Windows settings. It's of no interest to most users!
 
-### Save Settings
+### Save Settings (📝)
 
 (Advanced interface)
 
