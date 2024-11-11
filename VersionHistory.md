@@ -1,3 +1,15 @@
+## 3.0.0
+
+Feature added: Options have been split into Folder View Options and Explorer Options.
+
+Feature added: Added button to detect current Explorer Options.
+
+Feature added: Submit now opens a dialog to choose Folder views and/or Explorer options.
+
+Feature added: New option to Unhide the Public Desktop folder.
+
+Feature added: Added a button to enable/disable backup.
+
 ## 2.99.1
 
 Enhancement: Now works on systems that have the DisableRegistryTools policy enabled.

@@ -4,7 +4,7 @@ WinSetView is a tool that will let you easily set **File Explorer default folder
 
 Please follow the [quick start guide](./README.md) to download the app and set your initial folder view preferences. Running the app for the first time without following the guide may lead to confusion, as there are a lot of options on the screen.
 
-![image](https://github.com/LesFerch/WinSetView/assets/79026235/a2bec3ac-5742-493e-a958-3da2ff4c4c07)
+![image](https://github.com/user-attachments/assets/7fb20483-f582-4403-98b4-0778645f1553)
 
 WinSetView...
 
@@ -12,11 +12,9 @@ WinSetView...
 
 * Sets default folder views for ALL folder types, not just the basic five. That is, in addition to setting the default views for **General items**, **Documents**, **Pictures**, **Music**, and **Videos**, it also sets the default views for **Downloads**, **Libraries**, **OneDrive**, **Search results**, **Contacts**, **Quick Access**, **User files**, **File Open/Save dialogs**, etc.
 
-* Can set the default view for **phones** and **tablets** to open in the same view you choose for General items. No more tiles!
-
 * Sets folder views via a copy of the FolderTypes registry key which is not affected by **Windows updates**. A Windows repair install will remove the defaults, but then you can just run WinSetView and click Submit to re-apply your preferences.
 
-* Includes options to turn off Internet results in Windows search, revert the right-click menu to the classic layout, disable thumbnails on folders, and much more.
+* Includes options to turn off Internet results in Windows search, revert the Windows 11 right-click menu to the classic layout, set a custom start folder for Explorer, disable thumbnails on folders, set the default view for phones to open in the same view you choose for General items, and much more.
 
 * Can also be used to reset all folder views to **Windows defaults**.
 
