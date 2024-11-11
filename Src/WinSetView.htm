@@ -432,7 +432,7 @@ Sub UpdateCheck
   aVersion = Split(Version,".")
   For i = 0 To 2
     j = i
-    If aLatest(i) <> aVersion(i) Then Exit For
+    If CInt(aLatest(i)) <> CInt(aVersion(i)) Then Exit For
   Next
   NewerAvailable = False
   If aLatest(j) > aVersion(j) Then
@@ -2463,7 +2463,7 @@ End Sub
     <div id=fix4>
     <div id=f4in>
       <input type=button value='&#223;' ID=BkP4 OnClick=Back2Pg1()>
-      <div class='tip fl2'><input type=button value='# 31 #' onclick=Help("https://lesferch.github.io/WinSetView/Manual.html#folder-options-menu")>
+      <div class='tip fl2'><input type=button value='# 31 #' onclick=Help("https://lesferch.github.io/WinSetView/Manual.html#folder-view-options-1")>
       <span id=Vp3 class=tiptext></span></div>
       <div class='tip fl3'><input id=bc3 type=button value='⛶' onclick=RecenterButton()>
       <span class=tiptext># 42 #</span></div>
@@ -2491,7 +2491,7 @@ End Sub
     <div id=fix5>
     <div id=f5in>
       <input type=button value='&#223;' ID=BkP5 OnClick=Back2Pg1()>
-      <div class='tip fl2'><input type=button value='# 31 #' onclick=Help("https://lesferch.github.io/WinSetView/Manual.html#explorer-options-menu")>
+      <div class='tip fl2'><input type=button value='# 31 #' onclick=Help("https://lesferch.github.io/WinSetView/Manual.html#explorer-options-1")>
       <span id=Vp4 class=tiptext></span></div>
       <div class='tip fl3'><input id=bc4 type=button value='⛶' onclick=RecenterButton()>
       <span class=tiptext># 42 #</span></div>
