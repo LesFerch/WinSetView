@@ -278,7 +278,7 @@ This folder type controls the view of results you see when you *search* your use
 
 This folder type controls the view you see for the *Searches* item within your user folder.
 
-### Options
+### Options ^options-menu
 
 As of version 3, the options are divided into **Folder View Options** and **Explorer Options**.
 
