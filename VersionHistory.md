@@ -1,4 +1,4 @@
-## 3.0.0
+## 3.00.0
 
 Feature added: Options have been split into Folder View Options and Explorer Options.
 
