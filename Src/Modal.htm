@@ -5,17 +5,23 @@
 <script language="VBScript">
 SetLocale(1033)
 Dim RetVal, ReturnArray
-Dim WidthIcon, PixInputIcon, NameWarnIcon, optIcon, DetailsIcon, RightClickIcon
+Dim WidthIcon, PixInputIcon, NameWarnIcon, optIcon, DetailsIcon, RightClickIcon, SubmitIcon, dialogKey
 Dim Item2Move: Item2Move = ""
 Dim param
-Set param = window.external.Argument
+Set param = window.external.argument
 
 aArgs = Split(param.param1,";")
 param.param1 = ""
-document.title = aArgs(0)
+
+dialogKey = aArgs(0)
+SubmitIcon = "🚀"
+document.title = dialogKey
+If dialogKey=SubmitIcon Then document.title = aArgs(12)
 
 aColor = param.param2
+OKtext = param.param3
 param.param2 = ""
+param.param3 = ""
 
 Font = aArgs(1)
 FontSize = aArgs(2)
@@ -45,35 +51,35 @@ If CurBld<10000 Then
   DetailsIcon = "⋮⋮"
 End If
 
-Sub window_onLoad
+Sub window_onload
 
-  Document.body.style.color = aColor(0)
-  Document.body.Style.backgroundColor = aColor(1)
+  document.body.style.color = aColor(0)
+  document.body.style.backgroundColor = aColor(1)
 
-  Document.Body.Style.FontFamily = Font
-  Document.Body.Style.FontSize = FontSize & "pt"
+  document.body.style.fontFamily = Font
+  document.body.style.fontSize = FontSize & "pt"
 
-  Set oElements = Document.GetElementsByTagName("input")
+  Set oElements = document.getElementsByTagName("input")
   For Each oElement in oElements
     If oElement.Type="button" Or oElement.Type="text" Then
-      oElement.Style.FontFamily = Font
-      oElement.Style.FontSize = FontSize & "pt"
-      oElement.Style.color = aColor(0)
-      oElement.Style.backgroundColor = aColor(2)
-      oElement.Style.borderColor = aColor(2)
-      If oElement.Type="button" And CurBld<10000 Then oElement.Value = "√"
+      oElement.style.fontFamily = Font
+      oElement.style.fontSize = FontSize & "pt"
+      oElement.style.color = aColor(0)
+      oElement.style.backgroundColor = aColor(2)
+      oElement.style.borderColor = aColor(2)
+      If oElement.Type="button" And CurBld<10000 Then oElement.value = "√"
     End If
     If oElement.Type="checkbox" Or oElement.Type="radio" Then
-      oElement.Style.Zoom = Scale
+      oElement.style.zoom = Scale
     End If
   Next
-  Set oElements = Document.GetElementsByTagName("select")
+  Set oElements = document.getElementsByTagName("select")
   For Each oElement in oElements
-    oElement.Style.FontFamily = Font
-    oElement.Style.FontSize = FontSize & "pt"
-    oElement.Style.color = aColor(0)
-    oElement.Style.backgroundColor = aColor(2)
-    oElement.Style.borderColor = aColor(2)
+    oElement.style.fontFamily = Font
+    oElement.style.fontSize = FontSize & "pt"
+    oElement.style.color = aColor(0)
+    oElement.style.backgroundColor = aColor(2)
+    oElement.style.borderColor = aColor(2)
   Next
 
 
@@ -81,38 +87,47 @@ Sub window_onLoad
   If Theme="1" Then MvClass = "mvdark"
   If Theme="2" Then MvClass = "mvhc"
 
-  Select Case document.title
+  Select Case dialogKey
     Case DetailsIcon
-      DetailsDiv.Style.Display = "inline"
+      DetailsDiv.style.display = "inline"
       DetailsMsg.innerHTML = aArgs(8)
     Case RightClickIcon
-      RightClickDiv.Style.Display = "inline"
+      RightClickDiv.style.display = "inline"
       RightClickMsg.innerHTML = aArgs(8)
     Case WidthIcon
-      WidthDiv.Style.Display = "inline"
+      WidthDiv.style.display = "inline"
       WidthMsg.innerHTML = aArgs(8)
     Case NameWarnIcon
-      NameWarnDiv.Style.Display = "inline"
+      NameWarnDiv.style.display = "inline"
       NameWarnMsg.innerHTML = aArgs(8)
     Case PixInputIcon
-      PixDiv.Style.Display = "inline"
+      PixDiv.style.display = "inline"
       PixMsg.innerHTML = aArgs(8)
-      InputPix.Value = aArgs(9)
+      InputPix.value = aArgs(9)
       InputPix.Select
     Case OptIcon
-      DialogViewDiv.Style.Display = "inline"
+      DialogViewDiv.style.display = "inline"
       fl1.innerHTML = aArgs(8)
       fl2.innerHTML = aArgs(9)
       ArrView = Split(aArgs(10),"|")
       For i = 0 To 8
-        Set oOption = Document.createElement("Option")
-        oOption.Text =  ArrView(i) 
-        oOption.Value = i
-        If i=0 Then oOption.Disabled = True
-        fs1.Add(oOption)
+        Set oOption = document.createElement("Option")
+        oOption.text =  ArrView(i) 
+        oOption.value = i
+        If i=0 Then oOption.disabled = True
+        fs1.add(oOption)
       Next
+    Case SubmitIcon
+      SubmitDiv.style.display = "inline"
+      sl1.innerHTML = aArgs(8)
+      sl2.innerHTML = aArgs(9)
+      sub1.checked = aArgs(10) = "1"
+      sub2.checked = aArgs(11) = "1"
+      If aArgs(13) = "1" Then
+        subItem1.style.display = "none"
+      End If
     Case Else
-      ArrangeDiv.Style.Display = "inline"
+      ArrangeDiv.style.display = "inline"
       InputArray = Split(aArgs(8),"|")
       ReDim ReturnArray(UBound(InputArray))
       For i = 0 To UBound(InputArray)
@@ -122,31 +137,47 @@ Sub window_onLoad
       list.innerHTML = html
   End Select
 
+  Set oElements = document.getElementsByTagName("input")
+  For Each oElement in oElements
+    If oElement.Type="button" Then
+      oElement.value = OKtext
+      oElement.style.fontSize = FontSize - 1 & "pt"
+    End If
+  Next
+
   y = document.body.scrollHeight
   window.moveTo aArgs(6), aArgs(7)
   window.resizeTo aArgs(5),y + (56 * BaseScale)
   
-  If document.title=OptIcon Then
-    fc1.Checked = False
-    fc2.Checked = True
-    If aArgs(11)="1" Then fc1.Checked = True
-    If aArgs(12)="0" Then fc2.Checked = False
+  If dialogKey=OptIcon Then
+    fc1.checked = False
+    fc2.checked = True
+    If aArgs(11)="1" Then fc1.checked = True
+    If aArgs(12)="0" Then fc2.checked = False
     If aArgs(13)="" Then aArgs(13)="1"
-    fs1.SelectedIndex = Int(aArgs(13))
+    fs1.selectedIndex = Int(aArgs(13))
     fc1Clicked
   End If
 End Sub
 
 Sub fc1Clicked
-  If fc1.Checked Then
-    FDOptions.Style.Visibility = "visible"
+  If fc1.checked Then
+    FDOptions.style.visibility = "visible"
   Else
-    FDOptions.Style.Visibility = "hidden"
+    FDOptions.style.visibility = "hidden"
   End If
 End Sub
 
+Sub sub1Clicked
+  If sub1.checked = False Then sub2.checked = True
+End Sub
+
+Sub sub2Clicked
+  If sub2.checked = False Then sub1.checked = True
+End Sub
+
 Sub DoneFD
-  param.param1 = Abs(Int(fc1.Checked)) & "|" & fs1.SelectedIndex & "|" & Abs(Int(fc2.Checked))
+  param.param1 = Abs(Int(fc1.checked)) & "|" & fs1.selectedIndex & "|" & Abs(Int(fc2.checked))
   window.external.close
 End Sub
 
@@ -171,7 +202,16 @@ Sub DoneWidth
 End Sub
 
 Sub DonePix
-  param.param1 = InputPix.Value
+  param.param1 = InputPix.value
+  window.external.close
+End Sub
+
+Sub DoneSubmit
+  Dim s1,s2,s3: s1 = "0": s2 = "0": s3 = "0"
+  If sub1.checked Then s1 = "1"
+  If sub2.checked Then s2 = "1"
+  If window.event.altKey Then S3 = "1"
+  param.param1 = s1 & "|" & s2 & "|" & s3
   window.external.close
 End Sub
 
@@ -181,7 +221,7 @@ End Sub
 
 Sub document_onkeydown
   If window.event.keyCode=13 Then 'Enter key pressed
-    Select Case document.title
+    Select Case dialogKey
       Case DetailsIcon
         DoneDetails
       Case RightClickIcon
@@ -194,6 +234,8 @@ Sub document_onkeydown
         DonePix
       Case OptIcon
         DoneFD
+      Case SubmitIcon
+        DoneSubmit
       Case Else
         DoneArrange
     End Select
@@ -231,6 +273,8 @@ body {background-color:#B8D8E9; font-family:Segoe UI; font-size:11pt; margin-top
 .NoShow {display:none}
 .TM3 {margin-top:3pt}
 .W100 {width:100%}
+.Left {text-align:left}
+.OK {display:block; margin:0 auto; padding: 0.1em 2em; margin-top:9pt}
 </style>
 
 </head>
@@ -238,19 +282,19 @@ body {background-color:#B8D8E9; font-family:Segoe UI; font-size:11pt; margin-top
 <body>
 <div id=ArrangeDiv class=NoShow>
   <div id=list></div>
-  <input type=button class='TM3 W100' id=OKarrange value=✔ onclick=DoneArrange>
+  <input type=button class=OK onclick=DoneArrange()>
 </div>
 <div id=DetailsDiv class=NoShow>
   <div id=DetailsMsg></div>
-  <input type=button class='TM3 W100' id=OKDetails value=✔ onclick=DoneDetails>
+  <input type=button class=OK onclick=DoneDetails()>
 </div>
 <div id=RightClickDiv class=NoShow>
   <div id=RightClickMsg></div>
-  <input type=button class='TM3 W100' id=OKRightClick value=✔ onclick=DoneRightClick>
+  <input type=button class=OK onclick=DoneRightClick()>
 </div>
 <div id=WidthDiv class=NoShow>
   <div id=WidthMsg></div>
-  <input type=button class='TM3 W100' id=OKWidth value=✔ onclick=DoneWidth>
+  <input type=button class=OK onclick=DoneWidth()>
 </div>
 <div id=NameWarnDiv class=NoShow>
   <div id=NameWarnMsg></div>
@@ -258,15 +302,26 @@ body {background-color:#B8D8E9; font-family:Segoe UI; font-size:11pt; margin-top
 <div id=PixDiv class=NoShow>
   <div id=PixMsg></div>
   <input class=TM3 type=text id=InputPix>
-  <input type=button class='TM3 W100' id=OKpix value=✔ onclick=DonePix>
+  <input type=button class=OK onclick=DonePix()>
 </div>
 <div id=DialogViewDiv class=NoShow>
-  <input type=checkbox id=fc1 onclick=fc1Clicked><span id=fl1></span>
+  <input type=checkbox id=fc1 onclick=fc1Clicked()><span id=fl1></span>
   <div id=FDOptions class=TM3>
     <select id=fs1></select><br>
     <input class=TM3 type=checkbox id=fc2 checked><span id=fl2></span><br>
   </div>
-  <input type=button class='TM3 W100' id=OKFD value=✔ onclick=DoneFD>
+  <input type=button class=OK onclick=DoneFD()>
 </div>
+
+<div id=SubmitDiv class=NoShow>
+  <div id=SubDiv class=Left>
+    <div id=subItem1>
+      <br><input type=checkbox id=sub1 onclick=sub1Clicked()><span id=sl1></span><br>
+    </div>
+    <br><input type=checkbox id=sub2 onclick=sub2Clicked()><span id=sl2></span><br><br>
+    <input type=button class=OK onclick=DoneSubmit()>
+  </div>
+</div>
+
 </body>
 </html>

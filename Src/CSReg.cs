@@ -98,8 +98,8 @@ namespace CSReg
         static void AddRegistryKeyOrValue(string[] args)
         {
             string keyPath = null;
-            string valueName = null;
-            string valueData = string.Empty;
+            string valueName = "";
+            string valueData = "";
             RegistryValueKind valueType = RegistryValueKind.String; // Default to REG_SZ
             bool force = false;
 
@@ -124,8 +124,7 @@ namespace CSReg
                         force = true; // Force flag
                         break;
                     default:
-                        if (keyPath == null)
-                            keyPath = args[i]; // First positional argument is the keyPath
+                        if (keyPath == null) keyPath = args[i]; // First positional argument is the keyPath
                         break;
                 }
             }
@@ -178,7 +177,7 @@ namespace CSReg
             {
                 if (!File.Exists(filePath))
                 {
-                    Console.WriteLine($"File not found: {filePath}");
+                    Console.Error.WriteLine($"File not found: {filePath}");
                     return;
                 }
 
@@ -195,8 +194,8 @@ namespace CSReg
                     {
                         line = line.Trim();
 
-                        // Skip empty or comment lines
-                        if (string.IsNullOrWhiteSpace(line) || line.StartsWith(";"))
+                        // Skip empty, comment, and header lines
+                        if (string.IsNullOrWhiteSpace(line) || line.StartsWith(";") || line.StartsWith("Windows") || line.StartsWith("REGEDIT"))
                             continue;
 
                         // Handle line continuation (backslash at the end)
@@ -476,23 +475,69 @@ namespace CSReg
                         throw new ArgumentException($"Could not open the root hive: {root}");
                     }
 
-                    if (deleteAllValues)
+                    if (!string.IsNullOrEmpty(subKey))
                     {
-                        foreach (var name in baseKey.GetValueNames())
+                        // Open subKey as writable to delete values within it
+                        using (RegistryKey targetKey = baseKey.OpenSubKey(subKey, writable: true))
                         {
-                            baseKey.DeleteValue(name);
+                            if (targetKey == null)
+                            {
+                                Console.Error.WriteLine($"ERROR: The system was unable to find the specified registry key or value.");
+                                return;
+                            }
+
+                            if (!force)
+                            {
+                                // Determine prompt based on whether deleting a key or a value
+                                if (deleteAllValues)
+                                {
+                                    Console.Write($"Delete all values under the registry key {keyPath} (Yes/No)? ");
+                                }
+                                else if (valueName != null)
+                                {
+                                    Console.Write($"Delete the registry value {valueName} (Yes/No)? ");
+                                }
+                                else
+                                {
+                                    // Prompt for key deletion
+                                    Console.Write($"Permanently delete the registry key {keyPath} (Yes/No)? ");
+                                }
+
+                                string response = Console.ReadLine();
+                                if (string.IsNullOrEmpty(response) || !response.StartsWith("y", StringComparison.OrdinalIgnoreCase))
+                                {
+                                    Console.WriteLine("Operation cancelled.");
+                                    return;
+                                }
+                            }
+
+                            if (deleteAllValues)
+                            {
+                                foreach (var name in targetKey.GetValueNames())
+                                {
+                                    targetKey.DeleteValue(name, throwOnMissingValue: false);
+                                }
+                                DisplaySuccessMessage($"All values deleted under key: {keyPath}");
+                            }
+                            else if (valueName != null)
+                            {
+                                if (targetKey.GetValue(valueName) != null)
+                                {
+                                    targetKey.DeleteValue(valueName);
+                                    DisplaySuccessMessage($"Deleted value '{valueName}' under key: {keyPath}");
+                                }
+                                else
+                                {
+                                    Console.Error.WriteLine($"ERROR: The system was unable to find the specified registry key or value.");
+                                }
+                            }
+                            else
+                            {
+                                // Delete the entire subKey tree
+                                baseKey.DeleteSubKeyTree(subKey, throwOnMissingSubKey: false);
+                                DisplaySuccessMessage($"Deleted key: {keyPath}");
+                            }
                         }
-                        DisplaySuccessMessage($"All values deleted under key: {keyPath}");
-                    }
-                    else if (valueName != null)
-                    {
-                        baseKey.DeleteValue(valueName);
-                        DisplaySuccessMessage($"Deleted value '{valueName}' under key: {keyPath}");
-                    }
-                    else if (!string.IsNullOrEmpty(subKey))
-                    {
-                        baseKey.DeleteSubKeyTree(subKey, throwOnMissingSubKey: false);
-                        DisplaySuccessMessage($"Deleted key: {keyPath}");
                     }
                     else
                     {
@@ -515,6 +560,8 @@ namespace CSReg
             bool queryDefaultValue = args.Contains("/ve");
             bool isRecursive = args.Contains("/s"); // Check if /s is passed for recursive query
             bool hasValues = false;
+            string myKey = @"HKEY_CURRENT_USER\Software\CSReg";
+            try { Registry.CurrentUser.OpenSubKey(@"Software\CSReg", true)?.DeleteValue("RetVal", false); } catch { }
 
             try
             {
@@ -541,6 +588,7 @@ namespace CSReg
                             Console.WriteLine(keyPath); // Print the full registry key path
                             Console.WriteLine($"    {valueName}    {FormatRegistryValueType(valueKind)}    {FormatRegistryValueData(value, valueKind)}");
                             Console.WriteLine(); // print blank line
+                            Registry.SetValue(myKey, "RetVal", $"{value}", RegistryValueKind.String);
                         }
                     }
                     else if (queryDefaultValue) // Query the default value
@@ -552,6 +600,7 @@ namespace CSReg
                             Console.WriteLine(keyPath); // Print the full registry key path
                             Console.WriteLine($"    (Default)    {FormatRegistryValueType(defaultValueKind)}    {FormatRegistryValueData(defaultValue, defaultValueKind)}");
                             Console.WriteLine(); // print blank line
+                            Registry.SetValue(myKey, "RetVal", $"{defaultValue}", RegistryValueKind.String);
                         }
                         else
                         {
