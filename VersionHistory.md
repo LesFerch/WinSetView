@@ -8,7 +8,7 @@ Feature added: Submit now opens a dialog to choose Folder views and/or Explorer 
 
 Feature added: New option to Unhide the Public Desktop folder.
 
-Feature added: Added a button to enable/disable backup.
+Feature added: Added a checkbox to enable/disable backup.
 
 ## 2.99.1
 
