@@ -58,7 +58,7 @@ Simple step by step instructions follow.
 
 **Note**: For best results, close all open applications before running WinSetView. Open applications can prevent open/save dialog views from being updated. Apps that minimize to the System Tray when "closed", such as Discord, Steam, and qBittorrent, must be fully closed (e.g. right-click the app's System Tray icon and select `Exit`).
 
-**Note**: Clicking **Submit** will apply the registry setting changes and restart Explorer. Do not click Submit when Explorer is busy copying/moving/deleting files.
+**Note**: Clicking **OK**, in the **Submit** dialog, will apply the registry setting changes and restart Explorer. Do not click OK when Explorer is busy copying/moving/deleting files.
 
 For complete details, please see the [manual](./Manual.md).
 
