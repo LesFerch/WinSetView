@@ -362,22 +362,6 @@ If ($ApplyViews -Or $Restore) {
 
 If ($ApplyOptions) {
 
-  # Enable/Disable full row select (requires legacy spacing)
-
-  If ($DarkMode) {
-    $LegacySpacing = 0
-    $NoFullRowSelect = 0
-  }
-  Else {
-    $LegacySpacing = [Int]$iniContent['Options']['LegacySpacing']
-    $NoFullRowSelect = 0
-    If ($LegacySpacing -eq 1) {
-      $NoFullRowSelect = [Int]$iniContent['Options']['NoFullRowSelect']
-    }
-  }
-
-  & $RegExe Add $Advn /v FullRowSelect /t REG_DWORD /d (1-$NoFullRowSelect) /f
-
   # Enable/disable show of file extensions
 
   $ShowExt = [Int]$iniContent['Options']['ShowExt']
@@ -658,6 +642,19 @@ Function BuildRegData($Key) {
 }
 
 If ($ApplyViews) {
+
+  # Enable/Disable full row select (requires legacy spacing)
+
+  $LegacySpacing = [Int]$iniContent['Options']['LegacySpacing']
+  $NoFullRowSelect = 0
+  If ($LegacySpacing -eq 1) {
+    $NoFullRowSelect = [Int]$iniContent['Options']['NoFullRowSelect']
+    If ($DarkMode) {
+      # set text color here
+    }
+  }
+
+  & $RegExe Add $Advn /v FullRowSelect /t REG_DWORD /d (1-$NoFullRowSelect) /f
 
   # The FolderTypes key does not include entries for This PC
   # This PC does not have a unique GUID so we'll set it's view via a Bags entry:
