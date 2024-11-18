@@ -289,7 +289,7 @@ As of version 3, the options are divided into **Folder View Options** and **Expl
 
 #### Show paths in search results only
 
-When this option is checked, path and folder name column headings in Details view are only shown in search results. Such headings are shown in *blue*. The following column headings are affected by this setting:
+When this option is checked, path and folder name column headings in Details view are only shown in search results. Such headings are shown in *blue* within WinSetView. The following column headings are affected by this setting:
 
 **Folder path** or **File location** (ItemFolderPathDisplay): Full path to the folder. Example: C:\Movies\Ghibli\
 **Folder** (ItemFolderPathDisplayNarrow): Folder name followed by preceding path. Example: Ghibli (C:\Movies)\
