@@ -39,7 +39,7 @@ catch(Err) {
 <script language="VBScript">
 Option Explicit
 
-Const Version = "3.0.0"
+Const Version = "3.0.1"
 
 SetLocale(1033)
 Const ForReading = 1
@@ -58,7 +58,7 @@ Dim o, oWSH, oFSO, oApp, oFolder, oFile, oFiles, oOption, oElement, oElements
 Dim oFolderTypes, oSettings, oSearchOnly, oOption1, oOption2, oThemes
 Dim i, j, Q, V, X, Y, Z, Temp, TestFile, Section, CheckCount, Value, Key, ArrKeys, Result, SubKey
 Dim AvailHeight, HeadHeight, RequiredWidth, CurrentWidth, Maximized, Fonts, TestFileName
-Dim AppData, NTVer, WinVer, MajVer, Folder, INIFile, rbShow, BodyHTML, TaggedHTML, Tag, item, Win11, Win10
+Dim AppData, NTVer, WinVer, MajVer, Folder, INIFile, rbShow, BodyHTML, TaggedHTML, Tag, Item, Win11, Win10
 Dim Language,LangDir, LangFile, LangCount, LangData, LangIndex, UBFolderType, YScrollPos
 Dim ViewFile, ViewData, FolderTypeFile, Scale, FontsFile, Backup, F1, F2, FTHide, KeepAdvanced
 Dim ColFile, ColData, SelectedFont1, SelectedFont2, FontFile, LRArrow, aColor(3)
@@ -142,154 +142,154 @@ Main
 
 Sub Main
 
-' Determine Windows version (also works for Windows Server)
-' Treat Windows 11 same as Windows 10 because they have same folder types and properties
+  ' Determine Windows version (also works for Windows Server)
+  ' Treat Windows 11 same as Windows 10 because they have same folder types and properties
 
-NTVer = oWSH.RegRead("HKLM\Software\Microsoft\Windows NT\CurrentVersion\CurrentVersion")
-If NTVer="6.1" Then WinVer = "7"
-If NTVer="6.2" Or NTVer="6.3" Then WinVer = "8"
-On Error Resume Next
-MajVer = oWSH.RegRead("HKLM\Software\Microsoft\Windows NT\CurrentVersion\CurrentMajorVersionNumber")
-CurBld = oWSH.RegRead("HKLM\Software\Microsoft\Windows NT\CurrentVersion\CurrentBuild")
-UBR = oWSH.RegRead("HKLM\Software\Microsoft\Windows NT\CurrentVersion\UBR")
-On Error Goto 0
+  NTVer = oWSH.RegRead("HKLM\Software\Microsoft\Windows NT\CurrentVersion\CurrentVersion")
+  If NTVer="6.1" Then WinVer = "7"
+  If NTVer="6.2" Or NTVer="6.3" Then WinVer = "8"
+  On Error Resume Next
+  MajVer = oWSH.RegRead("HKLM\Software\Microsoft\Windows NT\CurrentVersion\CurrentMajorVersionNumber")
+  CurBld = oWSH.RegRead("HKLM\Software\Microsoft\Windows NT\CurrentVersion\CurrentBuild")
+  UBR = oWSH.RegRead("HKLM\Software\Microsoft\Windows NT\CurrentVersion\UBR")
+  On Error Goto 0
 
-If MajVer>=10 Then WinVer = "10"
-LWinVer = WinVer
+  If MajVer>=10 Then WinVer = "10"
+  LWinVer = WinVer
 
-Win10 = False
-Win11 = False
-If CurBld>18363 And CurBld<21996 Then Win10 = True
-If CurBld>=21996 Then Win11 = True
+  Win10 = False
+  Win11 = False
+  If CurBld>18363 And CurBld<21996 Then Win10 = True
+  If CurBld>=21996 Then Win11 = True
 
-If Win11 Then LWinVer = "11"
+  If Win11 Then LWinVer = "11"
 
-If WinVer<>"7" And WinVer<>"8" And WinVer<>"10" Then
-  MsgBox "Windows 7, 8, 10, or higher is required.",vbCritical,"Error"
-  self.Close
-  window.Close
-  Exit Sub
-End If
+  If WinVer<>"7" And WinVer<>"8" And WinVer<>"10" Then
+    MsgBox "Windows 7, 8, 10, or higher is required.",vbCritical,"Error"
+    self.Close
+    window.Close
+    Exit Sub
+  End If
 
-SysRoot = oWSH.ExpandEnvironmentStrings("%SystemRoot%")
-WinSys = SysRoot & "\System32\"
-WinWoW = SysRoot & "\SysWOW64\"
-PSSubDir = "WindowsPowerShell\v1.0\"
-PSDir = WinSys & PSSubDir
-If oFSO.FolderExists(WinWoW) Then PSDir = WinWoW & PSSubDir
-PSExe = PSDir & "PowerShell.exe"
+  SysRoot = oWSH.ExpandEnvironmentStrings("%SystemRoot%")
+  WinSys = SysRoot & "\System32\"
+  WinWoW = SysRoot & "\SysWOW64\"
+  PSSubDir = "WindowsPowerShell\v1.0\"
+  PSDir = WinSys & PSSubDir
+  If oFSO.FolderExists(WinWoW) Then PSDir = WinWoW & PSSubDir
+  PSExe = PSDir & "PowerShell.exe"
 
-Set oFile = oApp.Namespace(0).ParseName(WinSys & "MSHTML.dll")
-MSHTMLVer = CInt(Split(oFile.ExtendedProperty("System.Software.ProductVersion"),".")(0))
+  Set oFile = oApp.Namespace(0).ParseName(WinSys & "MSHTML.dll")
+  MSHTMLVer = CInt(Split(oFile.ExtendedProperty("System.Software.ProductVersion"),".")(0))
 
-If MSHTMLVer<11 Then
-  MsgBox "MSHTML 11 is required. Update IE to get the latest MSHTML.",vbCritical,"Error"
-  self.Close
-  window.Close
-  Exit Sub
-End If
+  If MSHTMLVer<11 Then
+    MsgBox "MSHTML 11 is required. Update IE to get the latest MSHTML.",vbCritical,"Error"
+    self.Close
+    window.Close
+    Exit Sub
+  End If
 
-HighContrast = oWSH.RegRead("HKCU\Control Panel\Accessibility\HighContrast\Flags")="127"
+  HighContrast = oWSH.RegRead("HKCU\Control Panel\Accessibility\HighContrast\Flags")="127"
 
-' This code allows the script to run from a UNC or mapped drive
-' whether it's double-clicked or found with Windows Search
+  ' This code allows the script to run from a UNC or mapped drive
+  ' whether it's double-clicked or found with Windows Search
 
-If Not oFSO.FolderExists("Language") Then oWSH.CurrentDirectory = window.external.ExecutableDir
-MyFolder = oWSH.CurrentDirectory
+  If Not oFSO.FolderExists("Language") Then oWSH.CurrentDirectory = window.external.ExecutableDir
+  MyFolder = oWSH.CurrentDirectory
 
-If InStr(MyFolder,"[") Or InStr(MyFolder,"]") Then
-  a = "Current directory: " & MyFolder & Z & Z
-  b = "Due to a PowerShell issue, this script cannot run from a directory containing '[' or ']'"
-  c = Z & Z & "Please rename the current directory."
-  MsgBox a & b & c,vbCritical,"Error"
-  self.Close
-  window.Close
-  Exit Sub
-End If
-  
-Temp = oWSH.ExpandEnvironmentStrings("%Temp%")
-TempFile = Temp & "\WinSetView.tmp"
-PropFile = Temp & "\Properties.tmp"
+  If InStr(MyFolder,"[") Or InStr(MyFolder,"]") Then
+    a = "Current directory: " & MyFolder & Z & Z
+    b = "Due to a PowerShell issue, this script cannot run from a directory containing '[' or ']'"
+    c = Z & Z & "Please rename the current directory."
+    MsgBox a & b & c,vbCritical,"Error"
+    self.Close
+    window.Close
+    Exit Sub
+  End If
+    
+  Temp = oWSH.ExpandEnvironmentStrings("%Temp%")
+  TempFile = Temp & "\WinSetView.tmp"
+  PropFile = Temp & "\Properties.tmp"
 
-LangDir = MyFolder & "\Language\"
-PartsDir = MyFolder & "\AppParts\"
-ToolsDir = MyFolder & "\Tools\"
-AppData = MyFolder & "\AppData"
-Backup = MyFolder & "\AppData\Backup"
-FontsFile = PartsDir & "Fonts.txt"
-ThemeFile = PartsDir & "Themes.ini"
+  LangDir = MyFolder & "\Language\"
+  PartsDir = MyFolder & "\AppParts\"
+  ToolsDir = MyFolder & "\Tools\"
+  AppData = MyFolder & "\AppData"
+  Backup = MyFolder & "\AppData\Backup"
+  FontsFile = PartsDir & "Fonts.txt"
+  ThemeFile = PartsDir & "Themes.ini"
 
-If WinVer="7" Or WinVer="8" Then
-  UpArrow = "↑"
-  DnArrow = "↓"
-  GrpUpArrow = "(↑)"
-  GrpDnArrow = "(↓)"
-  LRArrow = "←→"
-  OptIcon = "☼"
-  Warning = "!"
-  DetailsIcon = "⋮⋮"
-  RightClickIcon = "⋮"
-Else
-  UpArrow = "⮬"
-  DnArrow = "⮯"
-  GrpUpArrow = "(⮬)"
-  GrpDnArrow = "(⮯)"
-  LRArrow = "⟷"
-  OptIcon = "⚙"
-  Warning = "⚠"
-  DetailsIcon = "⋮⋮⋮"
-  RightClickIcon = "⋮"
-End If
+  If WinVer="7" Or WinVer="8" Then
+    UpArrow = "↑"
+    DnArrow = "↓"
+    GrpUpArrow = "(↑)"
+    GrpDnArrow = "(↓)"
+    LRArrow = "←→"
+    OptIcon = "☼"
+    Warning = "!"
+    DetailsIcon = "⋮⋮"
+    RightClickIcon = "⋮"
+  Else
+    UpArrow = "⮬"
+    DnArrow = "⮯"
+    GrpUpArrow = "(⮬)"
+    GrpDnArrow = "(⮯)"
+    LRArrow = "⟷"
+    OptIcon = "⚙"
+    Warning = "⚠"
+    DetailsIcon = "⋮⋮⋮"
+    RightClickIcon = "⋮"
+  End If
 
-' Set AppData to current folder if we have write access
-' Otherwise set AppData to user profile AppData
+  ' Set AppData to current folder if we have write access
+  ' Otherwise set AppData to user profile AppData
 
-TestFileName = Replace(Replace(Replace(Now(),"/",""),":","")," ","") & ".txt"
-TestFile = ".\" & TestFileName
-On Error Resume Next
-oFSO.OpenTextFile(TestFile,ForWriting,True,Ansi).Write("")
-On Error Goto 0
-If oFSO.FileExists(TestFile) Then
-  VirtualStore = oWSH.ExpandEnvironmentStrings("%LOCALAPPDATA%") & "\VirtualStore" & Mid(MyFolder,3) & "\"
-  If oFSO.FileExists(VirtualStore & TestFileName) Then AppData = VirtualStore & "AppData"
-  oFSO.DeleteFile(TestFile)
-Else
-  AppData = oWSH.ExpandEnvironmentStrings("%APPDATA%") & "\WinSetView"
-  Backup = AppData & "\Backup"
-End If
-If Not oFSO.FolderExists(AppData) Then oFSO.CreateFolder(AppData)
-If Not oFSO.FolderExists(Backup) Then oFSO.CreateFolder(Backup)
+  TestFileName = Replace(Replace(Replace(Now(),"/",""),":","")," ","") & ".txt"
+  TestFile = ".\" & TestFileName
+  On Error Resume Next
+  oFSO.OpenTextFile(TestFile,ForWriting,True,Ansi).Write("")
+  On Error Goto 0
+  If oFSO.FileExists(TestFile) Then
+    VirtualStore = oWSH.ExpandEnvironmentStrings("%LOCALAPPDATA%") & "\VirtualStore" & Mid(MyFolder,3) & "\"
+    If oFSO.FileExists(VirtualStore & TestFileName) Then AppData = VirtualStore & "AppData"
+    oFSO.DeleteFile(TestFile)
+  Else
+    AppData = oWSH.ExpandEnvironmentStrings("%APPDATA%") & "\WinSetView"
+    Backup = AppData & "\Backup"
+  End If
+  If Not oFSO.FolderExists(AppData) Then oFSO.CreateFolder(AppData)
+  If Not oFSO.FolderExists(Backup) Then oFSO.CreateFolder(Backup)
 
-' Copy Default INI files to AppData folder with overwrite off
+  ' Copy Default INI files to AppData folder with overwrite off
 
-On Error Resume Next
-Set oFolder = oFSO.GetFolder(MyFolder & "\Defaults\")
-Set oFiles = oFolder.Files
-For Each oFile In oFiles
-  oFSO.CopyFile oFile,AppData & "\", False
-Next
-On Error Goto 0
+  On Error Resume Next
+  Set oFolder = oFSO.GetFolder(MyFolder & "\Defaults\")
+  Set oFiles = oFolder.Files
+  For Each oFile In oFiles
+    oFSO.CopyFile oFile,AppData & "\", False
+  Next
+  On Error Goto 0
 
-' See if there are any backup reg files in the Backup folder
+  ' See if there are any backup reg files in the Backup folder
 
-Set oFolder = oFSO.GetFolder(Backup)
-Set oFiles = oFolder.Files
-rbShow = False
-For Each oFile In oFiles
-  If LCase(oFSO.GetExtensionName(oFile.Name)) = "reg" Then rbShow = True
-Next
+  Set oFolder = oFSO.GetFolder(Backup)
+  Set oFiles = oFolder.Files
+  rbShow = False
+  For Each oFile In oFiles
+    If LCase(oFSO.GetExtensionName(oFile.Name)) = "reg" Then rbShow = True
+  Next
 
-' Get data from INI file
+  ' Get data from INI file
 
-INIFile = AppData & "\Win" & WinVer & ".ini"
-Set oSettings = CreateObject("Scripting.Dictionary")
-Set oThemes = CreateObject("Scripting.Dictionary")
-If oFSO.FileExists(INIFile) Then Set oSettings = Ini2Dict(INIFile)
-If oFSO.FileExists(ThemeFile) Then Set oThemes = Ini2Dict(ThemeFile)
-ArrThemes = Split(SectionList,"|")
+  INIFile = AppData & "\Win" & WinVer & ".ini"
+  Set oSettings = CreateObject("Scripting.Dictionary")
+  Set oThemes = CreateObject("Scripting.Dictionary")
+  If oFSO.FileExists(INIFile) Then Set oSettings = Ini2Dict(INIFile)
+  If oFSO.FileExists(ThemeFile) Then Set oThemes = Ini2Dict(ThemeFile)
+  ArrThemes = Split(SectionList,"|")
 
-' Set language choice from INI or Windows
-SetLang
+  ' Set language choice from INI or Windows
+  SetLang
 
 End Sub
 
@@ -449,11 +449,11 @@ Sub UpdateRequiredWidth
 End Sub
 
 ' The following code is needed for scaling the checkboxes and radio buttons
+' If user changes scale, they must logout/login for this registry value to change
 
 Function GetScale()
   GetScale = 1.0
   On Error Resume Next
-  'If user changes scale, they must logout/login for this registry value to change
   GetScale = oWSH.RegRead("HKCU\Control Panel\Desktop\WindowMetrics\AppliedDPI") / 96
   On Error Goto 0
 End Function
@@ -1249,7 +1249,7 @@ Sub DetectExpOptions
   ts.checked = False
   ts.checked = oWSH.RegRead("HKLM\System\CurrentControlSet\Control\FeatureManagement\Overrides\8\1144177291\EnabledState") = 2
   If ts.checked Then
-    oWSH.Run csregQuery & "HKCU\Software\Classes\CLSID\{1d64637d-31e9-4b06-9124-e83fb178ac6e} /ve",0,True
+    oWSH.Run csregQuery & "HKCU\Software\Classes\CLSID\{1d64637d-31e9-4b06-9124-e83fb178ac6e}\TreatAs /ve",0,True
     Err.Clear: oWSH.RegRead csregReg
     sc.checked = Err.Number = 0
   End If
@@ -1268,7 +1268,7 @@ Sub DetectExpOptions
       esi.value = Replace(Mid(ePath, InStr(ePath," ")+1),Chr(34),"")
     Else
       If oWSH.RegRead(AdvKey & "LaunchTo") = 4 Then
-        rbes2.checked = 2
+        rbes2.checked = True
       Else
         rbes1.checked = oWSH.RegRead(AdvKey & "LaunchTo") = 1
         rbes2.checked = oWSH.RegRead(AdvKey & "LaunchTo") = 2
