@@ -16,7 +16,7 @@ Compatible with Windows 7, 8, 10, and 11.
 
 Les Ferch, lesferch@gmail.com, 2021 - 2024
 
-[Version 3.0.0](./VersionHistory.md)
+[Version 3.0.1](./VersionHistory.md)
 
 ## Summary
 
