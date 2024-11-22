@@ -1,3 +1,7 @@
+## 3.00.1
+
+Bug Fix: Detect current settings now detects if Windows 10 classic search is enabled or disabled.
+
 ## 3.00.0
 
 Feature added: Options have been split into Folder View Options and Explorer Options.
