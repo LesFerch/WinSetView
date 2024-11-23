@@ -714,17 +714,17 @@ PowerShell script for backing up and restoring all Explorer view related setting
 
 For those who prefer to go old school. This does the same thing as WinSetBack.ps1 except that it saves the backup to the desktop instead of the script's directory.
 
-**CaptureCustom.vbs**
+**CaptureCustom.js**
 
-Whereas WinSetBack.ps1 captures ALL Explorer view-related keys, *CaptureCustom.vbs* captures only the *BagMRU*, *Bags*, and *Control Panel* keys to provide a supplemental file for use with WinSetView.
+Whereas WinSetBack.ps1 captures ALL Explorer view-related keys, *CaptureCustom.js* captures only the *BagMRU*, *Bags*, and *Control Panel* keys to provide a supplemental file for use with WinSetView.
 
-This script captures Explorer view settings that can't be set in WinSetView, such as *Recycle Bin* and *Control Panel* views. First run WinSetView to set your desired Explorer default view settings. Next, set Recycle Bin, Control Panel, etc. to your desired views and close those windows. Then run CaptureCustom.vbs. It will export the ControlPanel, BagMRU, and Bags keys to a file named CaptureCustom.reg.
+This script captures Explorer view settings that can't be set in WinSetView, such as *Recycle Bin* and *Control Panel* views. First run WinSetView to set your desired Explorer default view settings. Next, set Recycle Bin, Control Panel, etc. to your desired views and close those windows. Then run CaptureCustom.js. It will export the ControlPanel, BagMRU, and Bags keys to a file named WinSetViewCustom.reg.
 
-Rename CaptureCustom.reg to WinSetViewCustom.reg and place it in the AppData folder to have it applied by WinSetView. WinSetView.ps1 will import the file WinSetViewCustom.reg after all other settings are applied. This will override any settings applied by WinSetView!
+Place WinSetViewCustom.reg in your active WinSetView AppData folder to have it applied by WinSetView. WinSetView.ps1 will import the file WinSetViewCustom.reg after all other settings are applied. This will override any settings applied by WinSetView!
 
 Please, if you don't know what you're doing, avoid this level of customization!
 
-**WinSetView.vbs** A simple launcher for WinSetView.ps1 that may come in handy for system administrators.
+**WinSetView.js** A simple launcher for WinSetView.ps1 that may come in handy for system administrators.
 
 ## Command Line Operation
 
