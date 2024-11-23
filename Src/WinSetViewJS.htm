@@ -990,21 +990,18 @@ function FileDialog(Action, Path, Filter, EnableMulti, ReturnMulti) {
   switch (LCase(Action)) {
     case "open":
       ret = window.external.OpenFileDialog(Path, Filter, EnableMulti);
+      o = JSON.parse(ret);
+      if(o.status!=1) return "";
+      if (ReturnMulti) return o.files.join("|");
+      return o.files[0];
       break;
     case "save":
       ret = window.external.SaveFileDialog(Path, Filter, EnableMulti);
+      o = JSON.parse(ret);
+      if(o.status!=1) return "";
+      return o.path;
       break;
   }
-  if (ret.indexOf(":0") > 0) return "";
-  ret = Replace(ret, "}", "");
-  ret = Replace(ret, "]", "");
-  ret = Replace(ret, "[", "");
-  ret = ret.split("\":\"")[1];
-  ret = Replace(ret, "\\\\", "\\");
-  ret = Replace(ret, "\",\"", "|");
-  ret = Replace(ret, "\"", "");
-  if (ReturnMulti) return ret;
-  return ret.split("|")[0];
 }
 
 // Load Settings button
