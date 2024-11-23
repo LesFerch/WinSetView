@@ -724,7 +724,9 @@ Place WinSetViewCustom.reg in your active WinSetView AppData folder to have it a
 
 Please, if you don't know what you're doing, avoid this level of customization!
 
-**WinSetView.js** A simple launcher for WinSetView.ps1 that may come in handy for system administrators.
+**WinSetView.js**
+
+A simple launcher for WinSetView.ps1 that may come in handy for system administrators.
 
 ## Command Line Operation
 
