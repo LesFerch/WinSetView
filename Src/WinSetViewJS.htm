@@ -85,7 +85,8 @@ function Replace(str, search, replacement) {
 }
 
 function MsgBox(prompt, buttons, title) {
-  oWSH.Popup(prompt, 0, title, buttons);
+  var result = oWSH.Popup(prompt, 0, title, buttons);
+  return(result);
 }
 
 function LCase(str) {
@@ -203,6 +204,18 @@ function Main() {
 
   if (!oFSO.FolderExists("Language")) oWSH.CurrentDirectory = window.external.ExecutableDir;
   MyFolder = oWSH.CurrentDirectory;
+  if (!oFSO.FolderExists("Language")) {
+    MsgBox("Language folder missing", vbCritical, "Error");
+    self.close();
+    window.close();
+    return;
+  }
+  if (!oFSO.FolderExists("AppParts")) {
+    MsgBox("AppParts folder missing", vbCritical, "Error");
+    self.close();
+    window.close();
+    return;
+  }
 
   if (MyFolder.indexOf("[") != -1 || MyFolder.indexOf("]") != -1) {
     a = "Current directory: " + MyFolder + Z + Z;
@@ -271,10 +284,14 @@ function Main() {
 
   // Copy Default INI files to AppData folder with overwrite off
 
-  oFolder = oFSO.GetFolder(MyFolder + "\\Defaults\\");
-  oFiles = new Enumerator(oFolder.Files);
-  for (; !oFiles.atEnd(); oFiles.moveNext()) {
-    try { oFSO.CopyFile(oFiles.item(), AppData + "\\", false); } catch (e) {}
+  if (oFSO.FolderExists(MyFolder + "\\Defaults\\")) {
+    oFolder = oFSO.GetFolder(MyFolder + "\\Defaults\\");
+    oFiles = new Enumerator(oFolder.Files);
+    if (oFiles) {
+      for (; !oFiles.atEnd(); oFiles.moveNext()) {
+        try { oFSO.CopyFile(oFiles.item(), AppData + "\\", false); } catch (e) {}
+      }
+    }
   }
 
   // See if there are any backup reg files in the Backup folder
