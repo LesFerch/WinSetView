@@ -10,7 +10,8 @@ oWSH.CurrentDirectory = MyPath;
 Z = "\r\n"; ZZ = Z + Z;
 
 function MsgBox(prompt, buttons, title) {
-  oWSH.Popup(prompt, 0, title, buttons);
+  var result = oWSH.Popup(prompt, 0, title, buttons);
+  return(result);
 }
 
 if (!oFSO.FileExists(INIFile)) {

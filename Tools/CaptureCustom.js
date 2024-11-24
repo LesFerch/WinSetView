@@ -16,7 +16,8 @@ oWSH = WScript.CreateObject("Wscript.Shell");
 oFSO = WScript.CreateObject("Scripting.FileSystemObject");
 
 function MsgBox(prompt, buttons, title) {
-  oWSH.Popup(prompt, 0, title, buttons);
+  var result = oWSH.Popup(prompt, 0, title, buttons);
+  return(result);
 }
 
 Temp = oWSH.ExpandEnvironmentStrings("%Temp%");
