@@ -83,9 +83,13 @@ The following error will be displayed if VBScript has been disabled or uninstall
 
 ![image](https://github.com/LesFerch/WinSetView/assets/79026235/a11c3e97-670f-4f09-8b4a-7b656cb3849b)
 
-If the above error is displayed, you will need to undo whatever change was made to disable VBScript on your computer. If your computer is managed by an IT department, it's possible that VBScript has been intentionally disabled, in which case, please see the [Command Line Operation](https://lesferch.github.io/WinSetView/Manual.html#command-line-operation) section in the manual.
+If the above error is displayed and you're running **Windows 11**, please check **Settings**, **System**, **Optional features**, **View features**, and then scroll down and see if there is a **VBScript** item. If so, check it and click **Next** and then **Install**.
 
-If the above error is displayed and you are running **Windows 11**, please check **Settings**, **System**, **Optional features**, **View features**, and then scroll down and see if there is a **VBScript** item. If so, check it and click **Next** and then **Install**.
+If your computer is managed by an IT department, it's possible that VBScript has been intentionally disabled. Or you may have intentionally disabled VBScript yourself. In either case, you can use the new JScript version of WinSetView instead.
+
+The next release of WinSetView will use JScript code instead of VBScript code. That new version is available now as a beta. Please see the [Releases](https://github.com/LesFerch/WinSetView/releases) page to download it.
+
+
 
 ## How to Use
 
