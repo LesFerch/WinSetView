@@ -10,6 +10,9 @@ This is the quick start guide. For more details, please see the [complete user m
 
 [![image](https://github.com/user-attachments/assets/75e62417-c8ee-43b1-a8a8-a217ce130c91)Download the installer](https://github.com/LesFerch/WinSetView/releases/download/3.0.1/WinSetView-Setup.exe)
 
+\
+**WinGet**: `winget install winsetview`
+
 
 ### Globally Set Explorer Folder Views
 
