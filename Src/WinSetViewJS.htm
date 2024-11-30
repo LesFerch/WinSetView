@@ -68,6 +68,101 @@ oFSO = new ActiveXObject("Scripting.FileSystemObject");
 oWSH = new ActiveXObject("WScript.Shell");
 oApp = new ActiveXObject("Shell.Application");
 
+function MsgBox(prompt, buttons, title) {
+  var result = oWSH.Popup(prompt, 0, title, buttons);
+  return(result);
+}
+
+SysRoot = oWSH.ExpandEnvironmentStrings("%SystemRoot%");
+WinSys = SysRoot + "\\System32\\";
+WinWoW = SysRoot + "\\SysWOW64\\";
+
+
+// Verify prerequisites
+
+oFile = oApp.Namespace(0).ParseName(WinSys + "MSHTML.dll");
+MSHTMLVer = Number(oFile.ExtendedProperty("System.Software.ProductVersion").split(".")[0]);
+
+if (MSHTMLVer < 11) {
+  MsgBox("MSHTML 11 is required. Update IE to get the latest MSHTML.", vbCritical, "Error");
+  self.close();
+  window.close();
+}
+
+// Determine Windows version (also works for Windows Server)
+// Treat Windows 11 same as Windows 10 because they have same folder types and properties
+
+NTVer = oWSH.RegRead("HKLM\\Software\\Microsoft\\Windows NT\\CurrentVersion\\CurrentVersion");
+WinVer = "";
+if (NTVer == "6.1") WinVer = "7";
+if (NTVer == "6.2" || NTVer == "6.3") WinVer = "8";
+try { MajVer = oWSH.RegRead("HKLM\\Software\\Microsoft\\Windows NT\\CurrentVersion\\CurrentMajorVersionNumber"); } catch (e) {}
+try { CurBld = oWSH.RegRead("HKLM\\Software\\Microsoft\\Windows NT\\CurrentVersion\\CurrentBuild"); } catch (e) {}
+try { UBR = oWSH.RegRead("HKLM\\Software\\Microsoft\\Windows NT\\CurrentVersion\\UBR"); } catch (e) {}
+
+if (MajVer >= 10) WinVer = "10";
+LWinVer = WinVer;
+
+Win10 = false;
+Win11 = false;
+if (CurBld > 18363 && CurBld < 21996) Win10 = true;
+if (CurBld >= 21996) Win11 = true;
+
+if (Win11) LWinVer = "11";
+
+if (WinVer != "7" && WinVer != "8" && WinVer != "10") {
+  MsgBox("Windows 7, 8, 10, or higher is required.", vbCritical, "Error");
+  self.close();
+  window.close();
+}
+
+if (!oFSO.FolderExists("Language")) {
+  MsgBox("Language folder missing", vbCritical, "Error");
+  self.close();
+  window.close();
+}
+
+if (!oFSO.FolderExists("AppParts")) {
+  MsgBox("AppParts folder missing", vbCritical, "Error");
+  self.close();
+  window.close();
+}
+
+// This code allows the script to run from a UNC or mapped drive
+// whether it's double-clicked or found with Windows Search
+
+if (!oFSO.FolderExists("Language")) oWSH.CurrentDirectory = window.external.ExecutableDir;
+MyFolder = oWSH.CurrentDirectory;
+
+if (MyFolder.indexOf("[") != -1 || MyFolder.indexOf("]") != -1) {
+  a = "Current directory: " + MyFolder + Z + Z;
+  b = "Due to a PowerShell issue, this script cannot run from a directory containing '[' or ']'";
+  c = Z + Z + "Please rename the current directory.";
+  MsgBox(a + b + c, vbCritical, "Error");
+  self.close();
+  window.close();
+}
+
+PSSubDir = "WindowsPowerShell\\v1.0\\";
+PSDir = WinSys + PSSubDir;
+if (oFSO.FolderExists(WinWoW)) PSDir = WinWoW + PSSubDir;
+PSExe = PSDir + "PowerShell.exe";
+
+ExeErr = "";
+if (!oFSO.FileExists(PSExe)) ExeErr += "PowerShell.exe" + Z;
+ArrExe = "TaskKill.exe,Icacls.exe,Reg.exe,Cmd.exe".split(",");
+for (i = 0; i < ArrExe.length; i++) {
+  if (!oFSO.FileExists(WinSys + ArrExe[i])) ExeErr += ArrExe[i] + Z;
+}
+if (ExeErr != "") {
+  MsgBox("The following required system files were not found:" + Z + Z + ExeErr, vbCritical, "Error");
+  self.close();
+  window.close();
+}
+
+// End verify prerequisites
+
+
 function getSetting(dict, key) {
   var result = dict.Item(key);
   if (!result) result = "";
@@ -84,11 +179,6 @@ function Replace(str, search, replacement) {
   return str.replace(regex, replacement);
 }
 
-function MsgBox(prompt, buttons, title) {
-  var result = oWSH.Popup(prompt, 0, title, buttons);
-  return(result);
-}
-
 function LCase(str) {
   return str.toLowerCase()
 }
@@ -96,6 +186,8 @@ function LCase(str) {
 function IsNumeric(value) {
     return value !== null && value !== "" && !isNaN(value);
 }
+
+HighContrast = oWSH.RegRead("HKCU\\Control Panel\\Accessibility\\HighContrast\\Flags") == "127";
 
 WinSizePos = "";
 TaskbarTop = false;
@@ -147,174 +239,95 @@ oSearchOnly.Add("ItemFolderNameDisplay", "");
 BaseScale = GetScale();
 Scale = BaseScale;
 
-Main();
+Temp = oWSH.ExpandEnvironmentStrings("%Temp%");
+TempFile = Temp + "\\WinSetView.tmp";
+PropFile = Temp + "\\Properties.tmp";
 
-function Main() {
+LangDir = MyFolder + "\\Language\\";
+PartsDir = MyFolder + "\\AppParts\\";
+ToolsDir = MyFolder + "\\Tools\\";
+AppData = MyFolder + "\\AppData";
+Backup = MyFolder + "\\AppData\\Backup";
+FontsFile = PartsDir + "Fonts.txt";
+ThemeFile = PartsDir + "Themes.ini";
 
-  // Determine Windows version (also works for Windows Server)
-  // Treat Windows 11 same as Windows 10 because they have same folder types and properties
+if (WinVer == "7" || WinVer == "8") {
+  UpArrow = "↑";
+  DnArrow = "↓";
+  GrpUpArrow = "(↑)";
+  GrpDnArrow = "(↓)";
+  LRArrow = "←→";
+  OptIcon = "☼";
+  Warning = "!";
+  DetailsIcon = "⋮⋮";
+  RightClickIcon = "⋮";
+} else {
+  UpArrow = "⮬";
+  DnArrow = "⮯";
+  GrpUpArrow = "(⮬)";
+  GrpDnArrow = "(⮯)";
+  LRArrow = "⟷";
+  OptIcon = "⚙";
+  Warning = "⚠";
+  DetailsIcon = "⋮⋮⋮";
+  RightClickIcon = "⋮";
+}
 
-  NTVer = oWSH.RegRead("HKLM\\Software\\Microsoft\\Windows NT\\CurrentVersion\\CurrentVersion");
-  WinVer = "";
-  if (NTVer == "6.1") WinVer = "7";
-  if (NTVer == "6.2" || NTVer == "6.3") WinVer = "8";
-  try { MajVer = oWSH.RegRead("HKLM\\Software\\Microsoft\\Windows NT\\CurrentVersion\\CurrentMajorVersionNumber"); } catch (e) {}
-  try { CurBld = oWSH.RegRead("HKLM\\Software\\Microsoft\\Windows NT\\CurrentVersion\\CurrentBuild"); } catch (e) {}
-  try { UBR = oWSH.RegRead("HKLM\\Software\\Microsoft\\Windows NT\\CurrentVersion\\UBR"); } catch (e) {}
+// Set AppData to current folder if we have write access
+// Otherwise set AppData to user profile AppData
 
-  if (MajVer >= 10) WinVer = "10";
-  LWinVer = WinVer;
+TestFileName = Replace(Replace(Replace(new Date().toString(), "/", ""), ":", ""), " ", "") + ".txt";
+TestFile = ".\\" + TestFileName;
+try {
+  f = oFSO.OpenTextFile(TestFile, ForWriting, true, Ansi);
+  f.Write("");
+  f.Close();
+} catch (e) {}
+if (oFSO.FileExists(TestFile)) {
+  VirtualStore = oWSH.ExpandEnvironmentStrings("%LOCALAPPDATA%") + "\\VirtualStore" + MyFolder.substr(2) + "\\";
+  if (oFSO.FileExists(VirtualStore + TestFileName)) AppData = VirtualStore + "AppData";
+  oFSO.DeleteFile(TestFile);
+} else {
+  AppData = oWSH.ExpandEnvironmentStrings("%APPDATA%") + "\\WinSetView";
+  Backup = AppData + "\\Backup";
+}
+if (!oFSO.FolderExists(AppData)) oFSO.CreateFolder(AppData);
+if (!oFSO.FolderExists(Backup)) oFSO.CreateFolder(Backup);
 
-  Win10 = false;
-  Win11 = false;
-  if (CurBld > 18363 && CurBld < 21996) Win10 = true;
-  if (CurBld >= 21996) Win11 = true;
+// Copy Default INI files to AppData folder with overwrite off
 
-  if (Win11) LWinVer = "11";
-
-  if (WinVer != "7" && WinVer != "8" && WinVer != "10") {
-    MsgBox("Windows 7, 8, 10, or higher is required.", vbCritical, "Error");
-    self.close();
-    window.close();
-    return;
-  }
-
-  SysRoot = oWSH.ExpandEnvironmentStrings("%SystemRoot%");
-  WinSys = SysRoot + "\\System32\\";
-  WinWoW = SysRoot + "\\SysWOW64\\";
-  PSSubDir = "WindowsPowerShell\\v1.0\\";
-  PSDir = WinSys + PSSubDir;
-  if (oFSO.FolderExists(WinWoW)) PSDir = WinWoW + PSSubDir;
-  PSExe = PSDir + "PowerShell.exe";
-
-  oFile = oApp.Namespace(0).ParseName(WinSys + "MSHTML.dll");
-  MSHTMLVer = Number(oFile.ExtendedProperty("System.Software.ProductVersion").split(".")[0]);
-
-  if (MSHTMLVer < 11) {
-    MsgBox("MSHTML 11 is required. Update IE to get the latest MSHTML.", vbCritical, "Error");
-    self.close();
-    window.close();
-    return;
-  }
-
-  HighContrast = oWSH.RegRead("HKCU\\Control Panel\\Accessibility\\HighContrast\\Flags") == "127";
-
-  // This code allows the script to run from a UNC or mapped drive
-  // whether it's double-clicked or found with Windows Search
-
-  if (!oFSO.FolderExists("Language")) oWSH.CurrentDirectory = window.external.ExecutableDir;
-  MyFolder = oWSH.CurrentDirectory;
-  if (!oFSO.FolderExists("Language")) {
-    MsgBox("Language folder missing", vbCritical, "Error");
-    self.close();
-    window.close();
-    return;
-  }
-  if (!oFSO.FolderExists("AppParts")) {
-    MsgBox("AppParts folder missing", vbCritical, "Error");
-    self.close();
-    window.close();
-    return;
-  }
-
-  if (MyFolder.indexOf("[") != -1 || MyFolder.indexOf("]") != -1) {
-    a = "Current directory: " + MyFolder + Z + Z;
-    b = "Due to a PowerShell issue, this script cannot run from a directory containing '[' or ']'";
-    c = Z + Z + "Please rename the current directory.";
-    MsgBox(a + b + c, vbCritical, "Error");
-    self.close();
-    window.close();
-    return;
-  }
-
-  Temp = oWSH.ExpandEnvironmentStrings("%Temp%");
-  TempFile = Temp + "\\WinSetView.tmp";
-  PropFile = Temp + "\\Properties.tmp";
-
-  LangDir = MyFolder + "\\Language\\";
-  PartsDir = MyFolder + "\\AppParts\\";
-  ToolsDir = MyFolder + "\\Tools\\";
-  AppData = MyFolder + "\\AppData";
-  Backup = MyFolder + "\\AppData\\Backup";
-  FontsFile = PartsDir + "Fonts.txt";
-  ThemeFile = PartsDir + "Themes.ini";
-
-  if (WinVer == "7" || WinVer == "8") {
-    UpArrow = "↑";
-    DnArrow = "↓";
-    GrpUpArrow = "(↑)";
-    GrpDnArrow = "(↓)";
-    LRArrow = "←→";
-    OptIcon = "☼";
-    Warning = "!";
-    DetailsIcon = "⋮⋮";
-    RightClickIcon = "⋮";
-  } else {
-    UpArrow = "⮬";
-    DnArrow = "⮯";
-    GrpUpArrow = "(⮬)";
-    GrpDnArrow = "(⮯)";
-    LRArrow = "⟷";
-    OptIcon = "⚙";
-    Warning = "⚠";
-    DetailsIcon = "⋮⋮⋮";
-    RightClickIcon = "⋮";
-  }
-
-  // Set AppData to current folder if we have write access
-  // Otherwise set AppData to user profile AppData
-
-  TestFileName = Replace(Replace(Replace(new Date().toString(), "/", ""), ":", ""), " ", "") + ".txt";
-  TestFile = ".\\" + TestFileName;
-  try {
-    f = oFSO.OpenTextFile(TestFile, ForWriting, true, Ansi);
-    f.Write("");
-    f.Close();
-  } catch (e) {}
-  if (oFSO.FileExists(TestFile)) {
-    VirtualStore = oWSH.ExpandEnvironmentStrings("%LOCALAPPDATA%") + "\\VirtualStore" + MyFolder.substr(2) + "\\";
-    if (oFSO.FileExists(VirtualStore + TestFileName)) AppData = VirtualStore + "AppData";
-    oFSO.DeleteFile(TestFile);
-  } else {
-    AppData = oWSH.ExpandEnvironmentStrings("%APPDATA%") + "\\WinSetView";
-    Backup = AppData + "\\Backup";
-  }
-  if (!oFSO.FolderExists(AppData)) oFSO.CreateFolder(AppData);
-  if (!oFSO.FolderExists(Backup)) oFSO.CreateFolder(Backup);
-
-  // Copy Default INI files to AppData folder with overwrite off
-
-  if (oFSO.FolderExists(MyFolder + "\\Defaults\\")) {
-    oFolder = oFSO.GetFolder(MyFolder + "\\Defaults\\");
-    oFiles = new Enumerator(oFolder.Files);
-    if (oFiles) {
-      for (; !oFiles.atEnd(); oFiles.moveNext()) {
-        try { oFSO.CopyFile(oFiles.item(), AppData + "\\", false); } catch (e) {}
-      }
+if (oFSO.FolderExists(MyFolder + "\\Defaults\\")) {
+  oFolder = oFSO.GetFolder(MyFolder + "\\Defaults\\");
+  oFiles = new Enumerator(oFolder.Files);
+  if (oFiles) {
+    for (; !oFiles.atEnd(); oFiles.moveNext()) {
+      try { oFSO.CopyFile(oFiles.item(), AppData + "\\", false); } catch (e) {}
     }
   }
-
-  // See if there are any backup reg files in the Backup folder
-
-  oFolder = oFSO.GetFolder(Backup);
-  oFiles = new Enumerator(oFolder.Files);
-  rbShow = false;
-  for (; !oFiles.atEnd(); oFiles.moveNext()) {
-    if (LCase(oFSO.GetExtensionName(oFiles.item().Name)) == "reg") rbShow = true;
-  }
-
-  // Get data from INI file
-
-  INIFile = AppData + "\\Win" + WinVer + ".ini";
-  oSettings = new ActiveXObject("Scripting.Dictionary");
-  oThemes = new ActiveXObject("Scripting.Dictionary");
-  if (oFSO.FileExists(INIFile)) oSettings = Ini2Dict(INIFile);
-  if (oFSO.FileExists(ThemeFile)) oThemes = Ini2Dict(ThemeFile);
-  ArrThemes = SectionList.split("|");
-
-  // Set language choice from INI or Windows
-  SetLang();
 }
+
+// See if there are any backup reg files in the Backup folder
+
+oFolder = oFSO.GetFolder(Backup);
+oFiles = new Enumerator(oFolder.Files);
+rbShow = false;
+for (; !oFiles.atEnd(); oFiles.moveNext()) {
+  if (LCase(oFSO.GetExtensionName(oFiles.item().Name)) == "reg") rbShow = true;
+}
+
+// Get data from INI file
+
+INIFile = AppData + "\\Win" + WinVer + ".ini";
+oSettings = new ActiveXObject("Scripting.Dictionary");
+oThemes = new ActiveXObject("Scripting.Dictionary");
+if (oFSO.FileExists(INIFile)) oSettings = Ini2Dict(INIFile);
+if (oFSO.FileExists(ThemeFile)) oThemes = Ini2Dict(ThemeFile);
+ArrThemes = SectionList.split("|");
+
+// Set language choice from INI or Windows
+
+SetLang();
+
 
 // Calculate current window size and position and save to registry
 
@@ -411,8 +424,6 @@ window.onload = function () {
   ClearBlock(PartsDir);
   UpdateLang(false);
 
-  ExeCheck();
-
   ClearBlock(ToolsDir);
 }
 
@@ -426,21 +437,6 @@ function ClearBlock(Folder) {
       f.Close();
       } catch (e) {}
     }
-}
-
-function ExeCheck() {
-  ExeErr = "";
-  if (!oFSO.FileExists(PSExe)) ExeErr += "PowerShell.exe" + Z;
-  ArrExe = "TaskKill.exe,Icacls.exe,Reg.exe,Cmd.exe".split(",");
-  for (i = 0; i < ArrExe.length; i++) {
-    if (!oFSO.FileExists(WinSys + ArrExe[i])) ExeErr += ArrExe[i] + Z;
-  }
-  if (ExeErr != "") {
-    MsgBox("The following required system files were not found:" + Z + Z + ExeErr, vbCritical, "Error");
-    self.close();
-    window.close();
-    return;
-  }
 }
 
 function UpdateCheck() {
