@@ -7,7 +7,7 @@
 
 MSHTML 11 dates back to 2013, so it's expected to be installed on all computers. .Net 4.8, dates back to 2019 and is a common requirement, so it's probably already installed.
 
-If you're using Windows 10 or 11, please ignore the rest of this document.
+If you're using Windows 10 or higher, please ignore the rest of this document.
 
 ### Windows 7 Notes
 
