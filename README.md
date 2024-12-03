@@ -16,7 +16,7 @@ This is the quick start guide. For more details, please see the [complete user m
 
 ### Globally Set Explorer Folder Views
 
-Compatible with Windows 7, 8, 10, and 11.
+Compatible with Windows 7, 8, 10, and 11.  Click [here](./System-Requirements.md) for system requirements.
 
 [Version 3.0.1](./VersionHistory.md)
 
