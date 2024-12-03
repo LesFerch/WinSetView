@@ -2,12 +2,18 @@
 
 - Windows 7 or higher
 - PowerShell 2 or higher
-- .Net 4.8
 - MSHTML 11
+- .Net 4.8
 
-**Note**: MSHTML 11 came out in 2013, so it's expected to be installed on all computers. However, if you do a fresh install of Windows 7, it will typically include MSHTML 8 (and Internet Explorer 8). To get MSHTML 11, you will need to update to Internet Explorer 11. You can then remove IE because WinSetView only needs the updated browser engine and not the browser itself. WinSetView also requires .Net 4.8 which is likely already installed.
+MSHTML 11 dates back to 2013, so it's expected to be installed on all computers. .Net 4.8, dates back to 2019 and is a common requirement, so it's probably already installed.
 
-**Note**: If you just built a Windows 7 machine and can't open most websites, use [Legacy Update](https://legacyupdate.net/) to get crucial updates.
+If you're using Windows 10 or 11, please ignore the rest of this document.
+
+### Windows 7 Notes
+
+If you do a fresh install of Windows 7, it will typically include MSHTML 8 (and Internet Explorer 8). To get MSHTML 11, you will need to update to Internet Explorer 11. You can then remove IE because WinSetView only needs the updated browser engine and not the browser itself.
+
+If you just built a Windows 7 machine and can't open most websites, use [Legacy Update](https://legacyupdate.net/) to get crucial updates.
 
 Here are the steps to update **Windows 7 (64 bit)**:
 
@@ -18,6 +24,3 @@ Here are the steps to update **Windows 7 (64 bit)**:
 
 
 3. **Optional**: Open Control Panel > Programs and Features > Turn Windows features on or off > Uncheck Internet Explorer 11. That will remove the Internet Explorer executable, but will leave MSHTML 11 in place.
-
-
-4. **Optional** (with potential unintended consequences): Open a **Cmd** prompt as **TrustedInstaller** using [PowerRun](https://www.sordum.org/9416/powerrun-v1-7-run-with-highest-privileges/), [AdvancedRun](https://www.nirsoft.net/utils/advanced_run.html), or [Right-Click Tools](https://lesferch.github.io/RightClickTools/) and then run this command `rd /s /q "C:\Program Files\Internet Explorer"`. That will remove all of the IE folder except for `ieproxy.dll` and possibly `sqmapi.dll`.
