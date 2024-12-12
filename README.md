@@ -48,7 +48,7 @@ WinSetView is a portable app, allowing it to be run from anywhere, such as flash
 
 ### Install Using Setup Program
 
-You may also install WinSetView, so that it appears in your list of installed apps, by using the installer, `WinSetView-Setup.exe`, found on the Releases page (and linked to above).
+You may also install WinSetView, so that it appears in your list of installed apps, by using the installer, `WinSetView-Setup.exe`, found on the Releases page (and linked to above). This option requires **administrator** access. The portable install can be done by any user.
 
 
 ## How to Use
