@@ -839,7 +839,7 @@ No (other than a few optional settings). WinSetView creates a copy of the Window
 
 ### Is there an Undo?
 
-Yes, as described under *Restore* above, WinSetView creates a backup every run that can be restored at any time. You can also revert the Explorer views to Windows defaults at any time. However, be sure to check the **Options** screen and set those options as desired, as they are not part of the backup.
+Yes, as described under *Restore* above, if **Backup** is checked, WinSetView creates a backup every run that can be restored at any time. You can also revert the Explorer views to Windows defaults at any time. However, be sure to check the **Explorer Options** screen and set those options as desired, as only some of those settings are captured in the backup.
 
 ### Can I disable automatic folder type discovery and keep special folder types, such as Pictures?
 
