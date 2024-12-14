@@ -596,7 +596,7 @@ With a Sort column enabled (ascending or descending), click a radio button besid
 This column allows you to set the default width for each property (column heading). For example, you can use this setting to make the Name column wider than the default of 34 ems.
 
 The value is specified in ems. 1 em ≈ 1 char\
-Em size is relative to screen scaling. For example (at 96 dpi):\
+The equivalent number of pixels for 1 Em depends on the screen scaling. For example:\
 1 em at 100% = 8 pixels\
 1 em at 125% = 10 pixels\
 1 em at 150% = 12 pixels\
