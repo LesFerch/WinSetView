@@ -10,7 +10,7 @@ MSHTML 11 dates back to 2013, so it's expected to be installed on all computers.
 
 .Net 4.8, dates back to 2019 and is a common requirement, so it's probably already installed.
 
-VBScript comes with all Windows versions, but Microsoft plans to uninstall it starting in 2027. Some users and IT departments have already started to remove it.  The next release of WinSetView will use JScript instead of VBScript. That version is currently available [here](https://github.com/LesFerch/WinSetView/releases) as a beta.
+VBScript and JScript come with all Windows versions, but Microsoft plans to uninstall VBScript starting in 2027. Some users and IT departments have already started to remove VBScript.  The next release of WinSetView will use [JScript](https://en.wikipedia.org/wiki/JScript) instead of VBScript. That version is currently available [here](https://github.com/LesFerch/WinSetView/releases) as a beta.
 
 If you're using Windows 10 or higher, please ignore the rest of this document.
 
