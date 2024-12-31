@@ -704,7 +704,7 @@ This folder must exist and contain the **en-US** folder and language files in or
 
 ### Tools Folder
 
-WinSetView does NOT need the Tools folder to run. It contains supplemental tools for system administrators and power users.
+This folder contains supplemental tools for system administrators and power users.
 
 **WinSetBack.ps1**
 
