@@ -122,7 +122,7 @@ Click The **Explorer Options** button.
 
 ![image](https://github.com/user-attachments/assets/21ce83f8-f34f-4ab6-9eeb-263edec9b86f)
 
-The Explorer options are optional. You can choose to apply or exclude them when **Submit** is clicked. Click the 🔍 button to detect your current settings. See the [manual](./Manual.md#options-menu) for full details.
+The Explorer options actually are optional. You can choose to apply or exclude them when **Submit** is clicked. Click the 🔍 button to detect your current settings. See the [manual](./Manual.md#options-menu) for full details.
 
 **Note**: Options with a shield icon require Administrative access. A UAC prompt will not appear at this point, but will appear for such options later when the changes are applied.
 
