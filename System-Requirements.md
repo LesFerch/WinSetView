@@ -1,6 +1,6 @@
 ## System Requirements
 
-- Windows 7 or higher
+- Windows 7 SP1 or higher
 - PowerShell 2 or higher
 - MSHTML 11
 - .Net 4.8
