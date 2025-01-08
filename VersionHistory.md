@@ -1,3 +1,9 @@
+## 3.00.2
+
+Bug Fix: Fixed error that caused file dialog views to not always be set for specific folder types.
+
+Bug Fix: General items view for connected devices (such as phones) now also applies to dialog views.
+
 ## 3.00.1
 
 Bug Fix: Detect current settings now detects if Windows 10 classic search is enabled or disabled.
