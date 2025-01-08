@@ -1,5 +1,5 @@
 # WinSetView (Globally Set Explorer Folder Views)
-# Les Ferch, lesferch@gmail.com, 2021 - 2024
+# Les Ferch, lesferch@gmail.com, 2021 - 2025
 # WinSetView.ps1 (Powershell script to set selected views)
 
 # One command line paramater is supported
@@ -173,7 +173,12 @@ If ($PSVersionTable.PSVersion.Major -lt 5) {
   $userSID = (Get-WmiObject -Class Win32_UserAccount -Filter "Name='$env:UserName'").SID
 }
 Else {
-  $userSID = (Get-CimInstance -ClassName Win32_UserAccount -Filter "Name='$env:UserName'").SID
+  try { $userSID = (Get-CimInstance -ErrorAction Stop -ClassName Win32_UserAccount -Filter "Name='$env:UserName'").SID }
+  catch {
+    $key = [Microsoft.Win32.RegistryKey]::OpenBaseKey([Microsoft.Win32.RegistryHive]::LocalMachine, [Microsoft.Win32.RegistryView]::Registry64)
+    $subKey =  $key.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI")
+    $userSID = $subKey.GetValue("LastLoggedOnUserSID")
+  }
 }
 
 $PolE = "HKU\$userSID\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer"
@@ -586,7 +591,7 @@ If ($ApplyOptions) {
     $ExplorerStartOption = [Int]$iniContent['Options']['ExplorerStartOption']
     If ($ExplorerStartOption -eq 4) {
       $ExplorerStartPath = 'explorer ' + $iniContent['Options']['ExplorerStartPath']
-      $ExplorerStartPath = $ExplorerStartPath -replace '\\$', '\\'
+      $ExplorerStartPath = $ExplorerStartPath -Replace '\\$', '\\'
       & $RegExe Add $ESTC /ve /t REG_SZ /d $ExplorerStartPath /reg:64 /f
       & $RegExe Add $ESTC /v DelegateExecute /t REG_SZ /reg:64 /f
     }
@@ -714,7 +719,7 @@ If ($ApplyViews) {
     'ItemFolderNameDisplay' = ''
   }
 
-  $RegData = "Windows Registry Editor Version 5.00`r`n`r`n"
+  $RegData = ''
 
   Get-ChildItem $FolderTypes | Get-ItemProperty | ForEach {
 
@@ -730,13 +735,15 @@ If ($ApplyViews) {
 
         $GUID = $iniContent[$FT]['GUID']
    
-        If (($FileDialogOption -eq 1) -And ($FT -ne 'Global')) {
+        $View = $iniContent[$FT]['View']
+        If ($FileDialogOption -ne 1) {$FileDialogView = $View}
+
+        If (($FileDialogOption -eq 1 -And $FT -ne 'Global') -Or ($SetVirtualFolders -eq 1 -And $GUID -eq '{5C4F28B5-F869-4E84-8E60-F11DB97C5CC7}')) {
           SetViewValues($FileDialogView)
           BuildRegData('ComDlg')
           BuildRegData('ComDlgLegacy')
         }
 
-        $View = $iniContent[$FT]['View']
         SetViewValues($View)
 
         If ($LegacySpacing -eq 1) {
@@ -810,7 +817,8 @@ If ($ApplyViews) {
   # Import Reg data to force dialog views
   # This is MUCH faster than creating the keys using PowerShell
 
-  If (($FileDialogOption -eq 1) -Or ($LegacySpacing -eq 1)) {
+  If ($RegData -ne '') {
+    $RegData = "Windows Registry Editor Version 5.00`r`n`r`n" + $RegData
     Out-File -InputObject $RegData -filepath $T1
     & $RegExe Import $T1
   }
