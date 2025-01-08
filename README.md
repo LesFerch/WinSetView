@@ -18,7 +18,7 @@ This is the quick start guide. For more details, please see the [complete user m
 
 Compatible with Windows 7, 8, 10, and 11.  Click [here](./System-Requirements.md) for system requirements.
 
-[Version 3.021](./VersionHistory.md)
+[Version 3.02](./VersionHistory.md)
 
 ## Summary
 
