@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--
 WinSetView (Globally Set Explorer Folder Views)
-Les Ferch, lesferch@gmail.com, 2021 - 2024
+Les Ferch, lesferch@gmail.com, 2021 - 2025
 WinSetView.htm (GUI tool to select desired views)
 -->
 <html>
@@ -39,7 +39,7 @@ catch(Err) {
 <script language="VBScript">
 Option Explicit
 
-Const Version = "3.0.1"
+Const Version = "3.0.2"
 
 SetLocale(1033)
 Const ForReading = 1
@@ -88,6 +88,20 @@ KeepAdvanced = False
 Set oFSO = CreateObject("Scripting.FileSystemObject")
 Set oWSH = CreateObject("Wscript.Shell")
 Set oApp = CreateObject("Shell.Application")
+
+SysRoot = oWSH.ExpandEnvironmentStrings("%SystemRoot%")
+WinSys = SysRoot & "\System32\"
+WinWoW = SysRoot & "\SysWOW64\"
+
+Set oFile = oApp.Namespace(0).ParseName(WinSys & "MSHTML.dll")
+MSHTMLVer = CInt(Split(oFile.ExtendedProperty("System.Software.ProductVersion"),".")(0))
+
+If MSHTMLVer<11 Then
+  MsgBox "MSHTML 11 required. Update IE to get the latest MSHTML.",vbCritical,"Error"
+  self.Close
+  window.Close
+  window.external.Close
+End If
 
 WinSizePos = ""
 TaskbarTop = False
@@ -171,23 +185,10 @@ Sub Main
     Exit Sub
   End If
 
-  SysRoot = oWSH.ExpandEnvironmentStrings("%SystemRoot%")
-  WinSys = SysRoot & "\System32\"
-  WinWoW = SysRoot & "\SysWOW64\"
   PSSubDir = "WindowsPowerShell\v1.0\"
   PSDir = WinSys & PSSubDir
   If oFSO.FolderExists(WinWoW) Then PSDir = WinWoW & PSSubDir
   PSExe = PSDir & "PowerShell.exe"
-
-  Set oFile = oApp.Namespace(0).ParseName(WinSys & "MSHTML.dll")
-  MSHTMLVer = CInt(Split(oFile.ExtendedProperty("System.Software.ProductVersion"),".")(0))
-
-  If MSHTMLVer<11 Then
-    MsgBox "MSHTML 11 is required. Update IE to get the latest MSHTML.",vbCritical,"Error"
-    self.Close
-    window.Close
-    Exit Sub
-  End If
 
   HighContrast = oWSH.RegRead("HKCU\Control Panel\Accessibility\HighContrast\Flags")="127"
 
