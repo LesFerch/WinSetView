@@ -6,9 +6,9 @@ You can also manually navigate your browser to: https://lesferch.github.io/WinSe
 
 This is the quick start guide. For more details, please see the [complete user manual](./Manual.md).
 
-[![image](https://github.com/LesFerch/WinSetView/assets/79026235/0188480f-ca53-45d5-b9ff-daafff32869e)Download the zip file](https://github.com/LesFerch/WinSetView/releases/download/3.0.1/WinSetView.zip)
+[![image](https://github.com/LesFerch/WinSetView/assets/79026235/0188480f-ca53-45d5-b9ff-daafff32869e)Download the zip file](https://github.com/LesFerch/WinSetView/releases/download/3.0.2/WinSetView.zip)
 
-[![image](https://github.com/user-attachments/assets/75e62417-c8ee-43b1-a8a8-a217ce130c91)Download the installer](https://github.com/LesFerch/WinSetView/releases/download/3.0.1/WinSetView-Setup.exe)
+[![image](https://github.com/user-attachments/assets/75e62417-c8ee-43b1-a8a8-a217ce130c91)Download the installer](https://github.com/LesFerch/WinSetView/releases/download/3.0.2/WinSetView-Setup.exe)
 
 \
 **WinGet**: `winget install winsetview`
@@ -18,7 +18,7 @@ This is the quick start guide. For more details, please see the [complete user m
 
 Compatible with Windows 7, 8, 10, and 11.  Click [here](./System-Requirements.md) for system requirements.
 
-[Version 3.0.1](./VersionHistory.md)
+[Version 3.021](./VersionHistory.md)
 
 ## Summary
 
