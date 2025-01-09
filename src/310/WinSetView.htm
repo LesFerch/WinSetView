@@ -58,7 +58,7 @@ var ColShowLabels, FTCopyIdx, ThemeFile, SectionList, sTheme, CurBld, LWinVer, U
 var TempArray, RetVal, DialogArgs, DialogOptions, id, GrpUpArrow, GrpDnArrow;
 var Warning, OptIcon, DialogTop, HighContrast, SysRoot, WinWoW, PSDir, PSExe, PSSubDir;
 var Txt1Data, Txt2Data, WinSys, ExeErr, ArrExe, UseLight, DarkMode;
-var WinSizePos, aWinSizePos, GotError, TaskbarTop, MSHTMLVer, eso, NewerAvailable;
+var WinSizePos, aWinSizePos, GotError, TaskbarTop, MSHTMLVer, eso;
 var ApplyViews, ApplyOptions, altKey;
 
 Z = "\r\n";
@@ -374,11 +374,6 @@ function SetLangIndex(){
 window.onload = function () {
   if (DarkMode) document.body.style.backgroundColor = "#202020";
 
-  Vp1.innerHTML = Version;
-  Vp2.innerHTML = Version;
-  Vp3.innerHTML = Version;
-  Vp4.innerHTML = Version;
-
   // Populate language dropdown menu
 
   LangCount = 0;
@@ -448,7 +443,7 @@ window.onload = function () {
 function UpdateCheck() {
   var oReq, Latest, aLatest, aVersion;
   oReq = new ActiveXObject("Msxml2.XMLHttp");
-  x = "https://raw.githubusercontent.com/LesFerch/WinSetView/main/VersionHistory.md";
+  x = "https://raw.githubusercontent.com/LesFerch/WinSetView/main/doc/v3/VersionHistory.md";
   try {
     oReq.Open("GET", x, false);
     oReq.Send();
@@ -463,12 +458,11 @@ function UpdateCheck() {
     j = i;
     if (Number(aLatest[i]) != Number(aVersion[i])) break;
   }
-  NewerAvailable = false;
   if (Number(aLatest[j]) > Number(aVersion[j])) {
-    NewerAvailable = true;
-    hb.value = ArrLang[46];
-    Vp1.innerHTML = Version + " (" + ArrLang[45] + " " + Latest + ")";
-    UpdateRequiredWidth();
+    oWSH.Run("https://lesferch.github.io/WinSetView");
+  }
+  else {
+    ubl.innerHTML = ArrLang[46];
   }
 }
 
@@ -685,7 +679,7 @@ function UpdateLang(OnChange) {
 
   Pg1.style.visibility = "visible";
 
-  window.external.SetWindowTitle("WinSetView (" + ArrLang[1] + ")");
+  window.external.SetWindowTitle("WinSetView " + Version);
   Lang.selectedIndex = LangIndex;
   Size1.selectedIndex = SelectedSize1 - 8;
   Size2.selectedIndex = SelectedSize2 - 8;
@@ -1604,15 +1598,15 @@ function OptionReset() {
     FTHide = true;
     Sec1.style.visibility = "hidden";
     ob.style.display = "none";
-    lb.style.visibility = "hidden";
-    sb.style.visibility = "hidden";
+    lb.style.display = "none";
+    sb.style.display = "none";
   } else {
     FTHide = false;
     Sec1.style.visibility = "visible";
     ob.style.display = "inline";
     if (IFace.selectedIndex == 2) {
-      lb.style.visibility = "visible";
-      sb.style.visibility = "visible";
+      lb.style.display = "inline";
+      sb.style.display = "inline";
     }
   }
   for (i = 1; i <= UBFolderType; i++) {
@@ -2068,8 +2062,6 @@ function UpdateFont1() {
 
   UpdateRequiredWidth();
 
-  UpdateCheck();
-
   Recenter();
 
   Sec1.style.marginTop = fix1.scrollHeight;
@@ -2156,16 +2148,16 @@ function PixelInput(id) {
 
 function SetInterface() {
   if (IFace.selectedIndex == 1) {
-    lb.style.visibility = "hidden";
-    sb.style.visibility = "hidden";
+    lb.style.display = "none";
+    sb.style.display = "none";
     ica.style.display = "none";
     for (i = 1; i <= UBFolderType; i++) {
       document.getElementById(i + "Inspect").style.display = "none";
     }
   } else {
     if (!wd.checked) {
-      lb.style.visibility = "visible";
-      sb.style.visibility = "visible";
+      lb.style.display = "inline";
+      sb.style.display = "inline";
       ica.style.display = "inline";
       for (i = 1; i <= UBFolderType; i++) {
         if (ArrIncludeFlag[i] == "1") document.getElementById(i + "Inspect").style.display = "inline";
@@ -2235,9 +2227,6 @@ function SetColShowColor() {
 }
 
 function Help(URL) {
-  if (NewerAvailable && URL == "https://lesferch.github.io/WinSetView/#how-to-use") {
-    URL = "https://lesferch.github.io/WinSetView/";
-  }
   try {
     oWSH.Run(URL);
   } catch (e) {
@@ -2437,8 +2426,12 @@ function OptionESB() {
     <div id=fix1>
     <div id=f1in>
       <div id=twid>
-        <div class=tip><input type=button id=hb value='# 31 #' onclick=Help("https://lesferch.github.io/WinSetView/#how-to-use")>
-        <span id=Vp1 class=tiptext></span></div>
+
+        <input type=button id=hb value='# 31 #' onclick=Help("https://lesferch.github.io/WinSetView/doc/v3/#how-to-use")>
+
+        <div class=tip><input type=button id=ub class=icon value='🚀' onclick=UpdateCheck()>
+        <span id=ubl class=tiptext># 45 #</span></div>
+
         <div class=tip><input id=bc1 type=button value='⛶' onclick=RecenterButton()>
         <span class=tiptext># 42 #</span></div>
         <select id=Lang onchange='UpdateLang(1)'></select>
@@ -2454,8 +2447,8 @@ function OptionESB() {
         </select>
       </div>
       <br><br>
-      <input type=checkbox id=wd onclick=OptionReset()><label for=wd># 7 #</label> &nbsp &nbsp
-      <input type=checkbox id=bu ><label for=bu># 72 #</label> &nbsp &nbsp
+      <input type=checkbox id=wd onclick=OptionReset()><label for=wd># 7 # &nbsp &nbsp</label>
+      <input type=checkbox id=bu ><label for=bu># 72 # &nbsp &nbsp</label>
       <div class=tip><input type=button id=lb class=icon value='📄' onclick=LoadSettings()><span class=tiptext># 4 #</span></div>
       <div class=tip><input type=button id=sb class=icon value='📝' onclick=SaveSettings()><span class=tiptext># 5 #</span></div>
       <br><br>
@@ -2478,8 +2471,7 @@ function OptionESB() {
     <div id=fix2>
     <div id=f2in>
       <input type=button value='&#223;' id=BkP2 onclick=P2Exit()>
-      <div class='tip fl1'><input type=button value='# 31 #' onclick=Help("https://lesferch.github.io/WinSetView/Manual.html#columns")>
-      <span id=Vp2 class=tiptext></span></div>
+      <div class=fl1><input type=button value='# 31 #' onclick=Help("https://lesferch.github.io/WinSetView/doc/v3/Manual.html#columns")></div>
       <div class='tip fl2'><input id=bc2 type=button value='⛶' onclick=RecenterButton()>
       <span class=tiptext># 42 #</span></div>
       <div class='tip fl3'><input id=ba type=button value='⮀' onclick=Arrange()>
@@ -2547,8 +2539,7 @@ function OptionESB() {
     <div id=fix4>
     <div id=f4in>
       <input type=button value='&#223;' ID=BkP4 OnClick=Back2Pg1()>
-      <div class='tip fl2'><input type=button value='# 31 #' onclick=Help("https://lesferch.github.io/WinSetView/Manual.html#folder-view-options-1")>
-      <span id=Vp3 class=tiptext></span></div>
+      <div class=fl2><input type=button value='# 31 #' onclick=Help("https://lesferch.github.io/WinSetView/doc/v3/Manual.html#folder-view-options-1")></div>
       <div class='tip fl3'><input id=bc3 type=button value='⛶' onclick=RecenterButton()>
       <span class=tiptext># 42 #</span></div>
       <h2># 69 #</h2>
@@ -2578,8 +2569,7 @@ function OptionESB() {
     <div id=fix5>
     <div id=f5in>
       <input type=button value='&#223;' ID=BkP5 OnClick=Back2Pg1()>
-      <div class='tip fl2'><input type=button value='# 31 #' onclick=Help("https://lesferch.github.io/WinSetView/Manual.html#explorer-options-1")>
-      <span id=Vp4 class=tiptext></span></div>
+      <div class=fl2><input type=button value='# 31 #' onclick=Help("https://lesferch.github.io/WinSetView/doc/v3/Manual.html#explorer-options-1")></div>
       <div class='tip fl3'><input id=bc4 type=button value='⛶' onclick=RecenterButton()>
       <span class=tiptext># 42 #</span></div>
        <div class='tip fl3'><input type=button class=icon value='🔍' onclick=DetectExpOptions()>
@@ -2599,22 +2589,22 @@ function OptionESB() {
       <input type=checkbox id=ua><label for=ua># 50 #</label><br>
       <input type=checkbox id=ns><label for=ns># 11 #</label><br>
       <input type=checkbox id=ex><label for=ex># 57 #</label><br>
-      <input type=checkbox id=nn><label for=nn># 53 # <img class=shield src='uac.png'><br>
-      <input type=checkbox id=ts onclick=OptionTS()><label for=ts># 54 # <img class=shield src='uac.png'><br>
+      <input type=checkbox id=nn><label for=nn># 53 # </label><img class=shield src='uac.png'><br>
+      <input type=checkbox id=ts onclick=OptionTS()><label for=ts># 54 # </label><img class=shield src='uac.png'><br>
       <div id=tss style='display:none'>
         <input type=checkbox id=sc><label for=sc># 51 #</label><br>
       </div>
       <div id=ees style='display:none'>
-        <input type=checkbox id=ee><label for=ee># 55 # <img class=shield src='uac.png'><br>
+        <input type=checkbox id=ee><label for=ee># 55 # </label><img class=shield src='uac.png'><br>
       </div>
-      <input type=checkbox id=ld><label for=ld># 56 # <img class=shield src='uac.png'><br>
-      <input type=checkbox id=pd><label for=pd># 76 # <img class=shield src='uac.png'><br>
+      <input type=checkbox id=ld><label for=ld># 56 # </label><img class=shield src='uac.png'><br>
+      <input type=checkbox id=pd><label for=pd># 76 # </label><img class=shield src='uac.png'><br>
       <input type=checkbox id=es onclick=OptionES()><label for=es># 58 #</label><br>
       <div id=esd>
-        <input type=radio name=eso id=rbes1 value=1 onclick=OptionES()><label for=rbes1># 62 # &nbsp
-        <input type=radio name=eso id=rbes2 value=2 onclick=OptionES()><label for=rbes2># 63 # &nbsp
-        <input type=radio name=eso id=rbes3 value=3 onclick=OptionES()><label for=rbes3># 64 # &nbsp
-        <input type=radio name=eso id=rbes4 value=4 onclick=OptionES()><label for=rbes4># 65 #
+        <input type=radio name=eso id=rbes1 value=1 onclick=OptionES()><label for=rbes1># 62 # &nbsp</label>
+        <input type=radio name=eso id=rbes2 value=2 onclick=OptionES()><label for=rbes2># 63 # &nbsp</label>
+        <input type=radio name=eso id=rbes3 value=3 onclick=OptionES()><label for=rbes3># 64 # &nbsp</label>
+        <input type=radio name=eso id=rbes4 value=4 onclick=OptionES()><label for=rbes4># 65 #</label>
       </div>
       <div id=esd2>
         <input id=esi type="text" value="C:\" style=width:99% onclick=OptionESI()><br>

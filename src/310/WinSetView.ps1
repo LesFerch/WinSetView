@@ -157,8 +157,16 @@ $KillExe   = "$env:SystemRoot\System32\TaskKill.exe"
 $UAppData  = "$env:UserProfile\AppData"
 $CSRegExe  = "$PSScriptRoot\AppParts\CSReg.exe"
 $ViveExe   = "$PSScriptRoot\AppParts\ViVeTool.exe"
-$CSRegExe  = (New-Object -ComObject Scripting.FileSystemObject).GetFile($CSRegExe).ShortPath
-$ViveExe   = (New-Object -ComObject Scripting.FileSystemObject).GetFile($ViveExe).ShortPath
+$CloseExpW = "$PSScriptRoot\AppParts\CloseExplorerWindows.exe"
+
+function Get-ShortPath($Path) {
+  return (-join (& $CmdExe /c "for %p in ("""$Path""") do @echo:%~sp")).Trim()
+}
+
+$CSRegExe  = Get-ShortPath($CSRegExe)
+$ViveExe   = Get-ShortPath($ViveExe)
+$CloseExpW = Get-ShortPath($CloseExpW)
+
 $C1=''; $C2=''; $C3=''; $C4=''; $C5=''
 
 $regCheck = & $RegExe query HKU 2>$Null
@@ -171,14 +179,7 @@ if ($regCheck -eq $Null) {
   }
 }
 
-Function CloseExplorerWindows {
-  $shell = New-Object -ComObject Shell.Application
-  foreach ($window in $shell.Windows()) {
-    if ($window.FullName -like "*explorer.exe") { $window.Quit() }
-  }
-}
-
-CloseExplorerWindows
+& $CloseExpW
 
 If ($PSVersionTable.PSVersion.Major -lt 5) {
   $userSID = (Get-WmiObject -Class Win32_UserAccount -Filter "Name='$env:UserName'").SID
@@ -271,7 +272,7 @@ Function SetVirtualFolderColumns {
   If ($SetVirtualFolders -eq 1 -And $SetVirtualFolderColumns -eq 1) {
     Explorer 'C:\'
     Start-Sleep 1
-    CloseExplorerWindows
+    & $CloseExpW
     Start-Sleep 1
     Remove-Item $T1 2>$Null
     & $RegExe Export $Bag2 $T1 /y
