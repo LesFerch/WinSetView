@@ -1,14 +1,20 @@
-## 3.00.2
+## 3.1.0
+
+Feature added: General items column settings can now be applied to MTP devices such as phones
+
+Change: VBScript code replaced with JScript code
+
+## 3.0.2
 
 Bug Fix: Fixed error that caused file dialog views to not always be set for specific folder types.
 
 Bug Fix: General items view for connected devices (such as phones) now also applies to dialog views.
 
-## 3.00.1
+## 3.0.1
 
 Bug Fix: Detect current settings now detects if Windows 10 classic search is enabled or disabled.
 
-## 3.00.0
+## 3.0.0
 
 Feature added: Options have been split into Folder View Options and Explorer Options.
 
