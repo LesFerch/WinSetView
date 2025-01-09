@@ -1,7 +1,3 @@
-## 3.1.1
-
-Just a version check test
-
 ## 3.1.0
 
 Feature added: General items column settings can now be applied to MTP devices such as phones
