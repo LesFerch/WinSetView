@@ -2,8 +2,6 @@ LICENSE export-ignore
 *.md    export-ignore
 .git*   export-ignore
 src     export-ignore
-Src     export-ignore
 doc     export-ignore
-Doc     export-ignore
 assets  export-ignore
 *.scss linguist-vendored
