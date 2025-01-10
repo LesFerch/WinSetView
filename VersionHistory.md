@@ -1,3 +1,7 @@
+## 3.00.3
+
+Bug Fix: Fixed error that occurs only when PowerShell is in constrained mode.
+
 ## 3.00.2
 
 Bug Fix: Fixed error that caused file dialog views to not always be set for specific folder types.
