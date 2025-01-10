@@ -65,6 +65,8 @@ Simple step by step instructions follow.
 
 For complete details, please see the [manual](./Manual.md).
 
+**IMPORTANT**: To understand what WinSetView is doing, think in terms of folder TYPES. The items listed in WinSetView, such as "Pictures" represent folder types, not individual folders.
+
 ### Step 1: Select Your Interface Language (Optional)
 
 ![image](https://github.com/user-attachments/assets/29ddaeb4-a8b3-46b0-aa9b-5708a3ce5220)
