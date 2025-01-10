@@ -343,7 +343,7 @@ When this option is checked, the column settings for the **General Items** folde
 
 **Note**: Only the columns that are both common to **General Items** folders and the special folder will be displayed. For example, columns such as **Size**, **Modified date**, and **Type** will be shown in the phone or tablet view, but a column such as **Tags** (which is not typically available for a phone or tablet) will not be shown.
 
-**Note**: When this option is enabled, you will briefly see an Explorer window to C:\ open and close when WinSetView is applying your preferences. This is necessary for WinSetView to capture the General Items view settings in the binary format required for this option.
+**Note**: When this option is enabled, you will briefly see an Explorer window open and close when WinSetView is applying your preferences. This is necessary for WinSetView to capture the General Items view settings in the binary format required for this option.
 
 
 #### Make All Folders Generic
