@@ -627,6 +627,8 @@ This column provides checkboxes to allow you to select which column headings are
 
 If you *uncheck* an item in this column, it does not uncheck the item in the *Add to Right-Click Menu* column because an item can be available for quick-pick without being an active column heading.
 
+**Note**: Explorer does not allow you to remove the **Name** column, so the same is true in WinSetView by _default_. However, you can hold down the **Ctrl** key while clicking either the **⋮⋮⋮** or **⋮** button to enable the ability to uncheck the Name column. This would only make sense to do in scenarios where the folder type (e.g. "Music") contains files that have another unique identifier, such as "Title", and that identifier is set as the first column instead of Name.
+
 \
 **Column Order**: The *order* in which the selected columns are displayed in File Explorer is shown at the top of the screen. Click the **⮀** re-order button to change the order. The order can also be changed by unchecking each item and then rechecking them in the desired order.
 
