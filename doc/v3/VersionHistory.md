@@ -4,6 +4,10 @@ Feature added: General items column settings can now be applied to MTP devices s
 
 Change: VBScript code replaced with JScript code
 
+## 3.0.3
+
+Bug Fix: Fixed error that occurs only when PowerShell is in constrained mode.
+
 ## 3.0.2
 
 Bug Fix: Fixed error that caused file dialog views to not always be set for specific folder types.
