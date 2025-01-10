@@ -16,7 +16,7 @@ Compatible with Windows 7, 8, 10, and 11.
 
 Les Ferch, lesferch@gmail.com, 2021 - 2025
 
-[Version 3.0.2](./VersionHistory.md)
+[Version 3.1.0](./VersionHistory.md)
 
 ## Summary
 
@@ -34,7 +34,6 @@ Each option, and related Explorer background information, is detailed below, but
 
 All changes made by WinSetView are per-user within the HKEY_CURRENT_USER hive in the registry. No machine settings are touched and no elevated privileges are required (except as noted for a few optional settings). On each run, if **Backup** is checked, WinSetView makes a unique backup file of the affected folder view registry values. A restore option is provided allowing you to rollback to any of those backups. Please note that the backup does not include all items shown on the **Explorer Options** page.
 
-**Note**: For USB-connected phones and tablets, WinSetView provides an option to have them displayed in the same view as generic (General Items) folders (e.g. Details view), but it cannot control the Details view column headings for such devices.
 
 ## Interface
 ![image](https://github.com/user-attachments/assets/7fb20483-f582-4403-98b4-0778645f1553)
@@ -329,13 +328,22 @@ This option only appears when **Legacy row and icon spacing** is checked because
 
 Connected devices, such as phones and tablets, normally open in **Tiles** view with no option to easily change the view. The **Apply to folders** option is grayed out (or available but does nothing) for such devices, requiring view changes to be done folder by folder. Enabling the **Use General Items view for connected devices** option causes such devices to open in the same view that has been set for **General Items**.
 
-Only the view mode (e.g. List, Details, etc.) applies to the connected device. There is a separate set of column headings for such devices and no documented method to change the defaults.
-
 Please note that this option causes all virtual folders, that share the General Items GUID, such as **Devices and Printers** and **Fonts**, to be displayed with the same view as **General Items**. So, for example, if you enable this option and have your **General Items** view set to **Details**, those other special folders will also be displayed in Details view.
 
 WinSetView provides an option to set a specific view for **This PC** so that it's not affected by this setting. Unfortunately, it's not practical to provide options to set specific views for all special folders, that share the General Items GUID, as they cannot be set discreetly (i.e. it requires capturing many permutations of binary settings).
 
-As of version 2.97, this option is set to *unchecked* by default since the change in view for folders such as **Fonts** would catch some users by surprise.
+This option is set to *unchecked* by default since the change in view for folders such as **Fonts** would catch some users by surprise.
+
+
+#### Use General Items column settings for connected devices
+
+This option appears when **Use General Items view for connected devices** is checked.
+
+When this option is checked, the column settings for the **General Items** folder type are propagated to special folder views, such as phones and tablets. This includes the selected columns, their arrangement, column widths, and sort and group by settings.
+
+**Note**: Only the columns that are both common to **General Items** folders and the special folder will be displayed. For example, columns such as **Size**, **Modified date**, and **Type** will be shown in the phone or tablet view, but a column such as **Tags** (which is not typically available for a phone or tablet) will not be shown.
+
+**Note**: When this option is enabled, you will briefly see an Explorer window to C:\ open and close when WinSetView is applying your preferences. This is necessary for WinSetView to capture the General Items view settings in the binary format required for this option.
 
 
 #### Make All Folders Generic
