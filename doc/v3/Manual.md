@@ -552,11 +552,11 @@ Clicking the **Columns** button brings up the column (properties) selection page
 
 The items displayed include all system properties that exist on all Windows computers.
 
-As of version 2.95, the seven [Icaros](https://github.com/Xanashi/Icaros) media properties will be shown at the end of the list if the Icaros property handler is installed (which may come via a "codec pack"). The Icaros properties will be shown in the current language if a translation exists, otherwise English will be shown.
+The seven [Icaros](https://github.com/Xanashi/Icaros) media properties will be shown at the end of the list if the Icaros property handler is installed (which may come via a "codec pack"). The Icaros properties will be shown in the current language if a translation exists, otherwise English will be shown.
 
 These System and Icaros properties are read from files in the **Languages** folder.
 
-As of version 2.97, all remaining shell properties, provided by third-party apps, are imported to the **Columns** list when WinSetView starts. These properties are labelled using the current system language. Changing the language in WinSetView will not change the display language of these additional properties.
+All remaining shell properties, provided by third-party apps, are imported to the **Columns** list when WinSetView starts. These properties are labelled using the current system language. Changing the language in WinSetView will not change the display language of these additional properties.
 
 The top left of the page includes the same **Help** and **Re-center** buttons that are found on the main page. This is followed by the column re-order button **⮀** and then the name of the currently selected folder type (or *Global*). 
 
@@ -682,7 +682,7 @@ In addition to the two main files: **WinSetView.exe** (HTML application), and **
 
 ### AppData Folder
 
-As of version 2.97, the **AppData** folder is dynamically created from the **Defaults** folder. If an **AppData** folder already exists, only missing files are copied from **Defaults**. This allows a new version of the WinSetView folder to be copied over an old version without risk of overwriting existing user's WinSetView settings.
+The **AppData** folder is dynamically created from the **Defaults** folder. If an **AppData** folder already exists, only missing files are copied from **Defaults**. This allows a new version of the WinSetView folder to be copied over an old version without risk of overwriting existing user's WinSetView settings.
 
 This folder contains INI files which hold the options selected with the WinSetView interface. Due to the folder type and column heading (property) lists differing among Windows versions, there are separate INI files for Windows 7, 8, and 10. Windows 11 uses the same settings file as Windows 10.
 
