@@ -2,15 +2,15 @@
 
 - Windows 7 SP1 or higher
 - PowerShell 2 or higher
-- MSHTML 11
+- MSHTML 8 or higher
 - .Net 4.8
-- VBScript or JScript
-
-MSHTML 11 dates back to 2013, so it's expected to be installed on all computers.
+- JScript
 
 .Net 4.8, dates back to 2019 and is a common requirement, so it's probably already installed.
 
-VBScript and JScript come with all Windows versions, but Microsoft plans to uninstall VBScript starting in 2027. Some users and IT departments have already started to remove VBScript.  The next release of WinSetView will use [JScript](https://en.wikipedia.org/wiki/JScript) instead of VBScript. That version is currently available [here](https://github.com/LesFerch/WinSetView/releases) as a beta.
+JScript is built in and Windows does not provide a user option to disable or remove it, so it should be present. Previous versions of WinSetView used VBScript. As of version 3.1.0, all VBScript code has been replaced with JScript code in WinSetView in anticipation of VBScript becoming an optional install starting in 2027.
+
+WinSetView does NOT use MSHTA.exe or WSH (WScript.exe).
 
 If you're using Windows 10 or higher, please ignore the rest of this document.
 
@@ -18,7 +18,9 @@ If you're using Windows 10 or higher, please ignore the rest of this document.
 
 If you do a fresh install of Windows 7, it will typically have MSHTML 8 (and Internet Explorer 8). Windows 8 comes with MSHTML 10 and Windows 8.1 should already have MSHTML 11.
 
-To get MSHTML 11, you will need to update to Internet Explorer 11. You can then remove IE because WinSetView only needs the updated browser engine and not the browser itself.
+WinSetView will run with MSHTML 8 but there will be some minor cosmetic issues, such as dropdown boxes not resizing properly when you change font size until the program is closed and reopened. Functionally, it should be fine. You will see a message, on start up, stating that MSHTML 11 is recommended. This message is actually needed to workaround an MSHTML 8 security bug that will cause an "Access is denied" error, when the WinSetView window is positioned to where you last had it opened, unless there is first at least one user input.
+
+If you would like to update to MSHTML 11, you will need to update to Internet Explorer 11. You can then remove IE because WinSetView only needs the updated browser engine and not the browser itself.
 
 If you just built a Windows 7 or 8 machine, first use [Legacy Update](https://legacyupdate.net/) to get crucial updates.
 
