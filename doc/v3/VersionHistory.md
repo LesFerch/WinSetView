@@ -6,6 +6,9 @@ Change: VBScript code replaced with JScript code.
 
 Change: Removed check for new version on startup. This was causing startup delays with some network security software. There is now a button to check for a new version.
 
+Enhancement: Checkbox labels in the main and options pages are now clickable.
+
+
 ## 3.0.3
 
 Bug Fix: Fixed error that occurs only when PowerShell is in constrained mode.
