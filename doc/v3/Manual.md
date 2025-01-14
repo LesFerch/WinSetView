@@ -304,24 +304,47 @@ Note: The *Relevance* column heading (*Search.Rank* property) is *only* shown in
 
 #### Legacy row and icon spacing
 
-**Note**: This option will not appear if your computer is in dark mode, as it is not compatible (text will be black). If you previously enabled this option while in light mode, clicking Submit in WinSetView will automatically clear this setting so that you will be returned to light text on a dark background.
+When this option is enabled, Explorer will use the **Windows XP/Vista** style view mode. Rows in List and Details views are closer together, icon row spacing is not affected by long filenames, and file names in icon views only wrap on certain characters, such as spaces and hyphens.
 
-When this option is enabled, Explorer will use the Windows XP/Vista style view modes. Rows in List and Details views are closer together, icon row spacing is not affected by long filenames, and file names in icon views only wrap on certain characters, such as spaces and hyphens.
-
-Tiles and Content view behave in odd ways when this option is enabled. You may see one view upon setting the view and then a different view after closing and re-opening the folder. Note that Content view did not exist in Windows Vista and its Tile mode was different than the modern Tiles view, so the odd results are not too surprising.
+Tiles and Content view behave in odd ways when this option is enabled. You may see one view upon setting the view and then a different view after closing and re-opening the folder. Note that Content view did not exist in Windows Vista and its Tile mode was different than the modern Tiles view, so the odd results are expected.
 
 When this feature is enabled, selected files in Explorer remain selected after changing the sort order, just as they did in Windows XP/Vista.
 
 Also, when this option is enabled, you can freely rearrange files and folders in Details and Icon views, but those arrangements will be forgotten when the folder is closed, unless you are running Windows 7, Windows 8.x, or a Windows 10 build that is lower than 1703.
 
-If you want this feature with dark mode, that can be done by using the program [QTTabBar](http://qttabbar.wikidot.com/). Select the "beta" download.
+**Note**: When Explorer is set to use this mode, it uses the system setting for the text color. That's not a problem if you are using light colors in Windows. However, if you switch to dark mode with this option enabled, you will get black text on a dark background. You can change the system text color, but be warned that change will be system-wide. There is no registry setting to change the text color exclusively for Explorer. Setting a system text color that can be seen on both light and dark backgrounds is one workaround. Another option is to install the program [QTTabBar](http://qttabbar.wikidot.com/) (select the "beta" download). QTTabBar will automatically change Explorer's text to white when dark mode is enabled.
 
 
 #### Disable full row select
 
+This option is available only when **Legacy row and icon spacing** is checked.
+
 When this option is checked, only the file name is highlighted in Details view, instead of the whole row.
 
-This option only appears when **Legacy row and icon spacing** is checked because the folder flags that enable the legacy spacing are required to disable full row select.
+
+#### Auto arrange
+
+This option is available only when **Legacy row and icon spacing** is checked.
+
+Check or uncheck to set the default state for Auto arrange.
+
+
+#### Align to grid
+
+This option is available only when **Legacy row and icon spacing** is checked.
+
+Check or uncheck to set the default state for Align to grid.
+
+
+#### System text color
+
+This option is available only when **Legacy row and icon spacing** is checked.
+
+Click this button to change the system text color. There is no need to change the color if you are using the default light mode. If you are using dark mode, with Legacy row and icon spacing enabled, you may need to change the text color to something lighter so it's readable. Don't change the text to white because there are places in the system, such as the "Programs and Features" control panel item, where you will end up with white text on a white background. Do not use this option if you are using the app QTTabBar as it will take care of the text color for you.
+
+Sample text showing the current text color on both light and dark backgrounds is shown beside the button. The sample text is the current RGB values for the current system text color.
+
+The change to the system text color takes effect on next logout/login (or next restart).
 
 
 #### Use General Items view for connected devices
