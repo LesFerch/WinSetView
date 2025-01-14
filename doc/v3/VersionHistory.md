@@ -2,6 +2,8 @@
 
 Feature added: General items column settings can now be applied to MTP devices such as phones.
 
+Feature added: Additional sub-options added under "Legacy row and icon spacing".
+
 Change: VBScript code replaced with JScript code.
 
 Change: Removed check for new version on startup. This was causing startup delays with some network security software. There is now a button to check for a new version.
