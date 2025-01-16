@@ -4,7 +4,8 @@ WinSetView is a tool that will let you easily set **File Explorer default folder
 
 Please follow the [quick start guide](./README.md) to download the app and set your initial folder view preferences. Running the app for the first time without following the guide may lead to confusion, as there are a lot of options on the screen.
 
-![image](https://github.com/user-attachments/assets/7fb20483-f582-4403-98b4-0778645f1553)
+![image](https://github.com/user-attachments/assets/3e679e19-7444-4d3c-aa54-b5e350818ec7)
+
 
 WinSetView...
 
