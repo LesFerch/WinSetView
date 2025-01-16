@@ -126,7 +126,7 @@ The Explorer options actually are optional. You can choose to apply or exclude t
 
 **Note**: Options with a shield icon require Administrative access. A UAC prompt will not appear at this point, but will appear for such options later when the changes are applied.
 
-### Step 7: Apply the Selections to Windows File Explorer
+### Step 6: Apply the Selections to Windows File Explorer
 
 ![image](https://github.com/user-attachments/assets/d5c86db6-d72e-4fb1-b8ad-751f26227c64)
 
