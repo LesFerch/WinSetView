@@ -36,7 +36,9 @@ All changes made by WinSetView are per-user within the HKEY_CURRENT_USER hive in
 
 
 ## Interface
-![image](https://github.com/user-attachments/assets/7fb20483-f582-4403-98b4-0778645f1553)
+
+![image](https://github.com/user-attachments/assets/56f2461c-93d0-45fa-b15b-8c8c16d0ff51)
+
 
 **Note**: For Windows 7 and 8, some of the icons used in the program will differ from Windows 10 and 11 due to issues with those older Windows versions being able to display all Unicode characters.
 
@@ -284,7 +286,8 @@ As of version 3, the options are divided into **Folder View Options** and **Expl
 
 ### Folder View Options
 
-![image](https://github.com/user-attachments/assets/41191e79-b484-4443-8ba0-6cd31a037c84)
+![image](https://github.com/user-attachments/assets/6fd67c34-b51a-4458-a06d-158d6c251326)
+
 
 #### Show paths in search results only
 
@@ -400,6 +403,11 @@ When this option is unchecked (default), Libraries will be grouped by "By Locati
 When this option is checked, Libraries will be grouped by whatever you set, including (None).
 
 
+#### Disable folder thumbnails
+
+This option sets a registry value that tells Explorer to NOT create a thumbnail icon for *folders*. It has no effect on thumbnails for *files*.
+
+
 #### Set view for "This PC"
 
 If this option is checked, *This PC* will be set to the view selected.
@@ -411,7 +419,7 @@ If this option is unchecked, this virtual folder will retain its Windows default
 
 ### Explorer Options
 
-![image](https://github.com/user-attachments/assets/21ce83f8-f34f-4ab6-9eeb-263edec9b86f)
+![image](https://github.com/user-attachments/assets/c309154d-6273-403d-923e-c4eca05f75f9)
 
 
 ![image](https://github.com/LesFerch/WinSetView/assets/79026235/31d5617f-6617-4e14-9b8e-0efb2c2b9896) **Note**: All options, except those with a shield icon, can be changed by a Standard user. The items with the shield icon require Administrator rights to change. A UAC prompt will appear after clicking **Submit** and **OK** if one or more of those options are being changed.
@@ -452,11 +460,6 @@ When checked, the registry setting that makes Windows search local only (i.e. no
 When checked, the registry settings that turns off search highlights will be applied.
 
 
-#### Disable folder thumbnails
-
-This option sets a registry value that tells Explorer to NOT create a thumbnail icon for *folders*. It has no effect on thumbnails for *files*.
-
-
 #### Unhide the AppData folder
 
 When checked, the hidden attribute is removed from the current user's AppData folder. Unchecking the option re-applies the hidden attribute.
@@ -469,11 +472,19 @@ When checked, the following "suggestion" notifications (found in "Notifications 
 ![image](https://github.com/LesFerch/WinSetView/assets/79026235/4c147f26-d570-470d-bc29-61d5972a1779)
 
 
-### Use Windows 10 Explorer on Windows 11
+#### Use Windows 10 Explorer on Windows 11
 
 When checked, a registry setting will be applied that will cause Windows 11 to use the Windows 10 Explorer as its default file manager. That's the Explorer that has the ribbon interface and is normally only used in Windows 11 for the Control Panel. The feature "Also apply this template to all subfolders" works in this Explorer version.
 
 ![image](https://github.com/LesFerch/WinSetView/assets/79026235/2aef729f-38ad-469c-b6d7-de796800992a)
+
+#### Remove Home in Windows 11
+
+When checked, `Home` will be removed from the Navigation pane. When unchecked, `Home` is restored.
+
+#### Remove Gallery in Windows 11
+
+When checked, `Gallery` will be removed from the Navigation pane. When unchecked, `Gallery` is restored.
 
 #### Disable numerical sort ![image](https://github.com/LesFerch/WinSetView/assets/79026235/31d5617f-6617-4e14-9b8e-0efb2c2b9896)
 
