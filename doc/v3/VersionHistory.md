@@ -1,14 +1,22 @@
 ## 3.1.0
 
+Change: VBScript code replaced with JScript code.
+
 Feature added: General items column settings can now be applied to MTP devices such as phones.
 
-Feature added: Additional sub-options added under "Legacy row and icon spacing".
+Change: Renamed option "Legacy row and icon spacing" to "Windows XP/Vista view mode"
 
-Change: VBScript code replaced with JScript code.
+Feature added: Additional sub-options added under "Windows XP/Vista view mode".
 
 Change: Removed check for new version on startup. This was causing startup delays with some network security software. There is now a button to check for a new version.
 
 Enhancement: Checkbox labels in the main and options pages are now clickable.
+
+Change: "Disable folder thumbnails" moved from "Explorer Options" to "Folder View Options"
+
+Feature added: "Remove Home in Windows 11" option added.
+
+Feature added: "Remove Gallery in Windows 11" option added.
 
 
 ## 3.0.3
