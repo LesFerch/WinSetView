@@ -17,7 +17,7 @@ WinSetView is a VbsEdit HTML application. Follow the steps below to debug and cr
 7. In the dialog, set the options as shown below (increment version number).
 8. For the icon, use the **WinSetView.ico** file.
 
-![image](https://github.com/user-attachments/assets/093befed-9017-41b0-b484-7e5fe55fdf22)
+![image](https://github.com/user-attachments/assets/0ed6606a-1f6c-4f06-8613-b1e589a4b596)
 
 9. Click OK to  generate WinSetView.exe.
 10. Move WinSetView.exe to the WinSetView root folder.
