@@ -69,14 +69,13 @@ For complete details, please see the [manual](./Manual.md).
 
 ### Step 1: Select Your Interface Language (Optional)
 
-![image](https://github.com/user-attachments/assets/29ddaeb4-a8b3-46b0-aa9b-5708a3ce5220)
+![image](https://github.com/user-attachments/assets/512be01d-ea23-4e43-a5a3-80fa4fd5f8e8)
 
 WinSetView should open in the same language to which you have Windows set. If not, select the correct language from the drop down menu.
 
 ### Step 2: Select Your Preferred Default View
 
-![image](https://github.com/user-attachments/assets/fa6dbb8f-543b-447d-95a5-ae2530279459)
-
+![image](https://github.com/user-attachments/assets/d48d600e-3208-4ec1-9141-55c560ec1cd0)
 
 Select the default view you want applied to most (or all) folders from the drop down menu under the **Global** heading. Most users go with **Details**, but pick what *you* like as your default.
 
@@ -84,23 +83,23 @@ Select the default view you want applied to most (or all) folders from the drop 
 
 ### Step 3: Select Your Preferred Default Column Headings (Optional)
 
-![image](https://github.com/user-attachments/assets/46e466b5-6b28-428d-ac51-bcecf688c7e8)
+![image](https://github.com/user-attachments/assets/41b6ea5a-9647-4dff-96cf-3be2740d55c5)
 
 If you are happy with the default Details-view column headings (as shown on screen) then skip this step.
 
 **Note**: Column headings shown in blue are only displayed in *search results* (by default). It is, therefore, recommended to keep the **Folder path** (**File location** in Windows 11) column heading.
 
-![image](https://github.com/user-attachments/assets/4c964424-23df-4a05-9c1b-af6ef0a5ce79)
+![image](https://github.com/user-attachments/assets/e1c8ed4b-35e8-45a7-a75d-6d15ac8ffc53)
 
 Otherwise, click the **Columns** button to bring up the column headings selection page.
 
-![image](https://github.com/user-attachments/assets/04892e95-6790-41a6-a12a-e2d3199655f4)
+![image](https://github.com/user-attachments/assets/c73b618c-1fb7-4907-966c-18cb564e012f)
 
 The column headings selection page allows you to select your desired column headings (and their order), group-by options, sort options, and column widths. The [manual](./Manual.md#columns) provides full details, but you can also hover over or click on elements to see how the interface works.
 
 ### Step 4: Set Views for Specific Folder Types (Optional)
 
-![image](https://github.com/user-attachments/assets/55fdf6be-b638-4273-892a-6be10f65f66e)
+![image](https://github.com/user-attachments/assets/2ef4f9a3-f40a-417d-9ba0-5df65809487d)
 
 Please note that WinSetView allows you to set the default view for every folder type in Windows, but, by *default*, they will all get the same settings as your **Global** settings, as long as the **Inherit** box is checked.
 
@@ -110,29 +109,33 @@ For any folder type (e.g. **Pictures**) that you wish to have a *different* defa
 
 **Note**: If you *uncheck* a folder type, then that folder type will display with its Windows default view settings (i.e. the view you would get for a new user account).
 
-### Step 5: Check and Set Your Desired Options (REQUIRED!)
+### Step 5: Check and Set Your Desired Folder View Options (Required)
 
-![image](https://github.com/user-attachments/assets/7c67c247-eaa7-4bf0-9b8b-73853cc417c2)
+![image](https://github.com/user-attachments/assets/bb81b23b-2be5-49bd-9c1f-8e1ef76ef63b)
 
 Click The **Folder View Options** button.
 
-![image](https://github.com/user-attachments/assets/41191e79-b484-4443-8ba0-6cd31a037c84)
+![image](https://github.com/user-attachments/assets/2a65b9ba-8b8e-4390-a857-4a6d8291b5b5)
 
 The folder view options are applied together with the folder views on the main page. The default settings match Windows defaults. See the [manual](./Manual.md#options-menu) for full details.
 
+### Step 6: Check and Set Your Desired Explorer Options (Optional)
+
+![image](https://github.com/user-attachments/assets/bc29e64c-e051-480b-8281-b64bdd6f2bdf)
+
 Click The **Explorer Options** button.
 
-![image](https://github.com/user-attachments/assets/21ce83f8-f34f-4ab6-9eeb-263edec9b86f)
+![image](https://github.com/user-attachments/assets/798a3d6f-ec22-412c-a7f6-0c7c4d10d24e)
 
-The Explorer options actually are optional. You can choose to apply or exclude them when **Submit** is clicked. Click the 🔍 button to detect your current settings. See the [manual](./Manual.md#options-menu) for full details.
+You can choose to apply or exclude these options when **Submit** is clicked. Click the 🔍 button to detect your current settings. See the [manual](./Manual.md#options-menu) for full details.
 
-**Note**: Options with a shield icon require Administrative access. A UAC prompt will not appear at this point, but will appear for such options later when the changes are applied.
+**Note**: Options with a shield icon require Administrative access. A UAC prompt will appear when **Submit** and **Ok** are clicked, if there are any changes to be made.
 
 ### Step 7: Apply the Selections to Windows File Explorer
 
-![image](https://github.com/user-attachments/assets/d5c86db6-d72e-4fb1-b8ad-751f26227c64)
+![image](https://github.com/user-attachments/assets/962c55ad-717d-4d9b-871e-f00fa556fe75)
 
-Once you're happy with your selections, click the **Submit** button. This will pop up a dalog where you can choose to **Clear folder views and set new defaults** and/or **Reset Explorer options**. Note that a backup of your current folder views will be made if **Backup** is checked. 
+Once you're happy with your selections, click the **Submit** button. This will pop up a dalog where you can choose to **Clear folder views and set new defaults** and/or **Reset Explorer options**. Note that a backup of your current folder views will be made if **Backup** is checked. Please uncheck **Reset Explorer options** if you haven't reviewed the **Explorer Options** page, otherwise you may receive undesired changes.
 
 ![image](https://github.com/user-attachments/assets/f0d91756-57a3-4741-ba45-80d068b03e85)
 
