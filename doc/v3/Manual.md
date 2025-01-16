@@ -37,8 +37,7 @@ All changes made by WinSetView are per-user within the HKEY_CURRENT_USER hive in
 
 ## Interface
 
-![image](https://github.com/user-attachments/assets/56f2461c-93d0-45fa-b15b-8c8c16d0ff51)
-
+![image](https://github.com/user-attachments/assets/3e679e19-7444-4d3c-aa54-b5e350818ec7)
 
 **Note**: For Windows 7 and 8, some of the icons used in the program will differ from Windows 10 and 11 due to issues with those older Windows versions being able to display all Unicode characters.
 
