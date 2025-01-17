@@ -115,7 +115,7 @@ For any folder type (e.g. **Pictures**) that you wish to have a *different* defa
 
 Click The **Folder View Options** button.
 
-![image](https://github.com/user-attachments/assets/2a65b9ba-8b8e-4390-a857-4a6d8291b5b5)
+![image](https://github.com/user-attachments/assets/7352431f-0dcc-43a3-9dc3-9ae1deb60503)
 
 The folder view options are applied together with the folder views on the main page. The default settings match Windows defaults. See the [manual](./Manual.md#options-menu) for full details.
 
