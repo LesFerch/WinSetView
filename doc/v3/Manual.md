@@ -162,7 +162,7 @@ You can group by any property in ascending or descending order, or turn off grou
 
 The **⚙ (Options)** button allows you to select a _different_ view for File Open/Save dialogs. For example, if you have set **List** as your default view, but want **Details** in File Open/Save dialogs, this is where you would set that up.
 
-![image](https://github.com/user-attachments/assets/8deb1bba-8bc5-4a2b-88ad-4be758b8c04d)
+![image](https://github.com/user-attachments/assets/897e702b-fec1-4c8f-86f6-bca3ae1a347e)
 
 Separate File Dialog views can be set under Global as well as under any specific folder type.
 
@@ -704,8 +704,7 @@ Note: The **File extension** column heading is not available on Windows 7.
 
 Press **Ctrl-F** to search for text within any page. This is most useful for finding properties in the **Columns** page. Please note that this function is provided by the MSHTML engine. There is no specific code in WinSetView for the search function, so it cannot be modified or enhanced in any way.
 
-![image](https://github.com/user-attachments/assets/46c81ec1-de69-4f44-b1da-73b23e93d911)
-
+![image](https://github.com/user-attachments/assets/a16ebb3a-5228-4e64-9b02-a397155d2006)
 
 ## Files
 
