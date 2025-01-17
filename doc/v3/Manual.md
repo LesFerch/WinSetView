@@ -278,14 +278,12 @@ This folder type controls the view of results you see when you *search* your use
 
 This folder type controls the view you see for the *Searches* item within your user folder.
 
-### Options menu
-
-As of version 3, the options are divided into **Folder View Options** and **Explorer Options**.
-
 
 ### Folder View Options
 
 ![image](https://github.com/user-attachments/assets/7352431f-0dcc-43a3-9dc3-9ae1deb60503)
+
+Clicking the 🔍 button detects your current system settings. Otherwise, this page shows the settings that will be applied when you click **Submit**.
 
 #### Show paths in search results only
 
@@ -421,6 +419,7 @@ If this option is unchecked, this virtual folder will retain its Windows default
 
 ![image](https://github.com/LesFerch/WinSetView/assets/79026235/31d5617f-6617-4e14-9b8e-0efb2c2b9896) **Note**: All options, except those with a shield icon, can be changed by a Standard user. The items with the shield icon require Administrator rights to change. A UAC prompt will appear after clicking **Submit** and **OK** if one or more of those options are being changed.
 
+Clicking the 🔍 button detects your current system settings. Otherwise, this page shows the settings that will be applied when you click **Submit**.
 
 #### Show File Extensions
 
