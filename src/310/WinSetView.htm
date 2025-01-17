@@ -41,7 +41,7 @@ var AvailHeight, HeadHeight, RequiredWidth, CurrentWidth, Maximized, Fonts, Test
 var AppData, NTVer, WinVer, MajVer, Folder, INIFile, rbShow, BodyHTML, TaggedHTML, Tag, Item, Win11, Win10;
 var Language, LangDir, LangFile, LangCount, LangData, LangIndex, UBFolderType, YScrollPos;
 var ViewFile, ViewData, FolderTypeFile, Scale, FontsFile, Backup, F1, F2, FTHide, KeepAdvanced;
-var ColFile, ColData, SelectedFont1, SelectedFont2, FontFile, LRArrow, aColor = new Array(4);
+var ColFile, ColData, SelectedFont1, SelectedFont2, FontFile, LRArrow, aColor = new Array(6);
 var CmdLine, Line, Order, sOrder, SelectedSize1, SelectedSize2, GUID, Found, VirtualStore;
 var C1, C2, LastColSel, FTindex, Data, Show, TempFile, File, f, PartsDir, ToolsDir, PropFile;
 var ColWid, ColShow, SortBy, BaseScale, UpArrow, DnArrow, MyPath, MyFolder, a, b, c;
@@ -59,7 +59,7 @@ var TempArray, RetVal, DialogArgs, DialogOptions, id, GrpUpArrow, GrpDnArrow;
 var Warning, OptIcon, DialogTop, HighContrast, SysRoot, WinWoW, PSDir, PSExe, PSSubDir;
 var Txt1Data, Txt2Data, WinSys, ExeErr, ArrExe, UseLight, DarkMode;
 var WinSizePos, aWinSizePos, GotError, TaskbarTop, MSHTMLVer, eso;
-var ApplyViews, ApplyOptions, altKey;
+var ApplyViews, ApplyOptions, altKey, SystemTextColorHex;
 
 Z = "\r\n";
 Q = String.fromCharCode(34);
@@ -124,12 +124,14 @@ MyFolder = oWSH.CurrentDirectory;
 if (!oFSO.FolderExists("Language")) {
   oWSH.CurrentDirectory = window.external.ExecutableDir;
   MyFolder = oWSH.CurrentDirectory;
-  if (MyFolder.indexOf(Temp) != -1) {
-    MsgBox("Cannot run directly from zip file." + Z + Z + "Please EXTRACT entire zip file and then run.", vbCritical, "Error");
-  } else {
-    MsgBox("Language folder missing", vbCritical, "Error");
+  if (!oFSO.FolderExists("Language")) {
+    if (MyFolder.indexOf(Temp) != -1) {
+      MsgBox("Cannot run directly from zip file." + Z + Z + "Please EXTRACT entire zip file and then run.", vbCritical, "Error");
+    } else {
+      MsgBox("Language folder missing", vbCritical, "Error");
+    }
+    Quit();
   }
-  Quit();
 }
 
 if (!oFSO.FolderExists("AppParts")) {
@@ -160,6 +162,8 @@ if (ExeErr != "") {
   MsgBox("The following required system files were not found:" + Z + Z + ExeErr, vbCritical, "Error");
   Quit();
 }
+
+if (oFSO.FileExists(MyFolder + '\\0.ini')) {Version = '';}
 
 function getSetting(dict, key) {
   var result = dict.Item(key);
@@ -957,10 +961,19 @@ function Dict2Dom() {
   ee.checked = SetInitial("[Options]Win11Explorer", 0);
   ls.checked = SetInitial("[Options]LegacySpacing", 0);
   fr.checked = SetInitial("[Options]NoFullRowSelect", 0);
+  ar.checked = SetInitial("[Options]AutoArrange", 0);
+  ag.checked = SetInitial("[Options]AlignToGrid", 0);
+  cl.innerText = SetInitial("[Options]SystemTextColor", "0 0 0");
+  cd.innerText = SetInitial("[Options]SystemTextColor", "0 0 0");
+  SystemTextColorHex = SetInitial("[Options]SystemTextColorHex", "#000000");
+  cl.style.color = SystemTextColorHex;
+  cd.style.color = SystemTextColorHex;
   ld.checked = SetInitial("[Options]LegacyDialogFix", 0);
   es.checked = SetInitial("[Options]ExplorerStart", 0);
   esi.value = SetInitial("[Options]ExplorerStartPath", "C:\\");
   ex.checked = SetInitial("[Options]Win10Explorer", 0);
+  rh.checked = SetInitial("[Options]RemoveHome", 0);
+  rg.checked = SetInitial("[Options]RemoveGallery", 0);
   nf.checked = SetInitial("[Options]NoFolderThumbs", 0);
   ua.checked = SetInitial("[Options]UnhideAppData", 0);
   pd.checked = SetInitial("[Options]UnhidePublicDesktop", 0);
@@ -1068,6 +1081,10 @@ function Var2Ini(INIFile) {
   oFile.WriteLine("Win11Explorer=" + Number(ee.checked));
   oFile.WriteLine("LegacySpacing=" + Number(ls.checked));
   oFile.WriteLine("NoFullRowSelect=" + Number(fr.checked));
+  oFile.WriteLine("AutoArrange=" + Number(ar.checked));
+  oFile.WriteLine("AlignToGrid=" + Number(ag.checked));
+  oFile.WriteLine("SystemTextColor=" + cl.innerText);
+  oFile.WriteLine("SystemTextColorHex=" + SystemTextColorHex);
   oFile.WriteLine("LegacyDialogFix=" + Number(ld.checked));
   oFile.WriteLine("ExplorerStart=" + Number(es.checked));
   if (rbes1.checked) eso = 1;
@@ -1077,6 +1094,8 @@ function Var2Ini(INIFile) {
   oFile.WriteLine("ExplorerStartOption=" + eso);
   oFile.WriteLine("ExplorerStartPath=" + esi.value);
   oFile.WriteLine("Win10Explorer=" + Number(ex.checked));
+  oFile.WriteLine("RemoveHome=" + Number(rh.checked));
+  oFile.WriteLine("RemoveGallery=" + Number(rg.checked));
   oFile.WriteLine("NoFolderThumbs=" + Number(nf.checked));
   oFile.WriteLine("UnhideAppData=" + Number(ua.checked));
   oFile.WriteLine("UnhidePublicDesktop=" + Number(pd.checked));
@@ -1235,7 +1254,6 @@ function FVOptions() {
   Pg1.style.display = "none";
   Pg4.style.display = "inline";
   OptionLS();
-  OptionLSDiv();
   OptionVF();
   OptionThisPC();
   Sec4.style.marginTop = fix4.scrollHeight - (Scale * 20);
@@ -1637,13 +1655,6 @@ function OptionLS() {
   lss.style.display = ls.checked ? "inline" : "none";
 }
 
-function OptionLSDiv() {
-  if (DarkMode) {
-    LSDiv.style.display = "none";
-    lss.style.display = "none";
-  }
-}
-
 function OptionVF() {
   vff.style.display = vf.checked ? "inline" : "none";
 }
@@ -1945,7 +1956,7 @@ function WidthClick() {
 }
 
 function View1Click() {
-  if (window.event.altKey) {
+  if (window.event.ctrlKey) {
     document.getElementById("M~ItemNameDisplay").disabled = false;
     document.getElementById("P~ItemNameDisplay").disabled = false;
     return;
@@ -1970,7 +1981,7 @@ function View1Click() {
 }
 
 function View2Click() {
-  if (window.event.altKey) {
+  if (window.event.ctrlKey) {
     document.getElementById("M~ItemNameDisplay").disabled = false;
     document.getElementById("P~ItemNameDisplay").disabled = false;
     return;
@@ -2171,10 +2182,13 @@ function SetTheme() {
   if (ArrThemes.length == 0) return;
   sTheme = "[" + ArrThemes[Theme.selectedIndex - 1] + "]";
 
-  // Colors also used in modal dialogs
+  // Colors for modal dialogs
   aColor[0] = getSetting(oThemes, sTheme + "MainText");
   aColor[1] = getSetting(oThemes, sTheme + "MainBackground");
   aColor[2] = getSetting(oThemes, sTheme + "ButtonBackground");
+  aColor[3] = getSetting(oThemes, sTheme + "ButtonBorder");
+  aColor[4] = getSetting(oThemes, sTheme + "SelectBackground");
+  aColor[5] = getSetting(oThemes, sTheme + "SelectBorder");
 
   document.body.style.color = getSetting(oThemes, sTheme + "MainText");
   document.body.style.backgroundColor = getSetting(oThemes, sTheme + "MainBackground");
@@ -2334,6 +2348,44 @@ function OptionESB() {
   esi.value = oFolder.self.path;
   ess.selectedIndex = 0;
 }
+
+function TextColor() {
+  var retval = window.external.ColorDialog();
+  var obj = JSON.parse(retval);
+  if(obj.status==1)
+  {
+    SystemTextColorHex = obj.color;
+    var d1 = parseInt(SystemTextColorHex.substr(1,2), 16);
+    var d2 = parseInt(SystemTextColorHex.substr(3,2), 16);
+    var d3 = parseInt(SystemTextColorHex.substr(5,2), 16);
+    var rgb = d1 + ' ' + d2 + ' ' + d3;
+    SetColors(rgb)
+  }
+}
+
+function SetColors(rgb) {
+  cl.innerText = rgb;
+  cd.innerText = rgb;
+  cl.style.color = SystemTextColorHex;
+  cd.style.color = SystemTextColorHex;
+}
+
+function DetectColors() {
+  var rgb = oWSH.RegRead('HKCU\\Control Panel\\Colors\\WindowText');
+  SystemTextColorHex = rgbToHex(rgb)
+  SetColors(rgb)
+}
+
+function rgbToHex(rgb) {
+  var aRGB = rgb.split(" ");
+  var hex = "#";
+  for (var i = 0; i < aRGB.length; i++) {
+    var d = parseInt(aRGB[i], 10);
+    hex += ("0" + d.toString(16).toUpperCase()).slice(-2);
+  }
+  return hex;
+}
+
 </script>
 
 <style>
@@ -2393,6 +2445,10 @@ function OptionESB() {
   .noshow {display:none}
   .opt  {line-height:250%}
   .shield {height:1em; vertical-align:middle}
+  .cbi  {margin-left:1em}
+  .lx1  {background-color:white; color:black; padding:0.1em 0.3em 0.1em 0.3em}
+  .dx1  {background-color:#323232; color:black; padding:0.1em 0.3em 0.1em 0.3em}
+  .lh1  {line-height:150%}
 
   #tab1 tbody td {text-align:center}
   #tab2 tbody td {text-align:center}
@@ -2547,19 +2603,27 @@ function OptionESB() {
     </div>
     <div class=opt id=Sec4>
       <input type=checkbox id=so Checked onclick=OptionSearchOnly()><label for=so># 9 #</label><br>
-      <div id=LSDiv>
-        <input type=checkbox id=ls onclick=OptionLS()><label for=ls># 60 #</label><br>
-        <div id=lss style='display:none'>
-          <input type=checkbox id=fr><label for=fr># 61 #</label><br>
-        </div>
+
+      <input type=checkbox id=ls onclick=OptionLS()><label for=ls># 60 #</label><br>
+      <div id=lss style='display:none'>
+        <span class=cbi></span><input type=checkbox id=fr><label for=fr># 61 #</label><br>
+        <span class=cbi></span><input type=checkbox id=ar><label for=ar># 78 #</label><br>
+        <span class=cbi></span><input type=checkbox id=ag><label for=ag># 79 #</label><br>
+        <span class=cbi></span><input type=button id=wt value='# 80 #' onclick=TextColor()>
+        <span class=tip><input type=button class=icon value='🔍' onclick=DetectColors()>
+        <span class='tiptext lh1'># 71 #</span></span>
+        <span class=lx1 id=cl> 0 0 0 </span>&nbsp<span class=dx1 id=cd> 0 0 0 </span>
+        <br>
       </div>
+
       <input type=checkbox id=vf onclick=OptionVF()><label for=vf># 29 #</label><br>
       <div id=vff style='display:none'>
-        <input type=checkbox id=vc><label for=vc># 77 #</label><br>
+        <span class=cbi></span><input type=checkbox id=vc><label for=vc># 77 #</label><br>
       </div>
       <input type=checkbox id=gn Checked><label for=gn># 10 #</label><br>
       <input type=checkbox id=hg><label for=hg># 52 #</label><br>
       <input type=checkbox id=lg><label for=lg># 66 #</label><br>
+      <input type=checkbox id=nf><label for=nf># 35 #</label><br>
       <input type=checkbox id=tp onclick=OptionThisPC()><label for=tp># 13 #</label><br>
       <div id=otp><select id=tpv></select> <input type=checkbox id=tpg checked><label for=tpg># 25 #</label></div>
     </div>
@@ -2572,7 +2636,7 @@ function OptionESB() {
       <div class=fl2><input type=button value='# 31 #' onclick=Help("https://lesferch.github.io/WinSetView/doc/v3/Manual.html#explorer-options-1")></div>
       <div class='tip fl3'><input id=bc4 type=button value='⛶' onclick=RecenterButton()>
       <span class=tiptext># 42 #</span></div>
-       <div class='tip fl3'><input type=button class=icon value='🔍' onclick=DetectExpOptions()>
+      <div class='tip fl3'><input type=button class=icon value='🔍' onclick=DetectExpOptions()>
       <span class=tiptext># 71 #</span></div>
       <h2># 70 #</h2>
     </div>
@@ -2585,14 +2649,15 @@ function OptionESB() {
       <input type=checkbox id=mc><label for=mc># 68 #</label><br>
       <input type=checkbox id=si><label for=si># 48 #</label><br>
       <input type=checkbox id=sh><label for=sh># 49 #</label><br>
-      <input type=checkbox id=nf><label for=nf># 35 #</label><br>
       <input type=checkbox id=ua><label for=ua># 50 #</label><br>
       <input type=checkbox id=ns><label for=ns># 11 #</label><br>
       <input type=checkbox id=ex><label for=ex># 57 #</label><br>
+      <input type=checkbox id=rh><label for=ex># 81 #</label><br>
+      <input type=checkbox id=rg><label for=ex># 82 #</label><br>
       <input type=checkbox id=nn><label for=nn># 53 # </label><img class=shield src='uac.png'><br>
       <input type=checkbox id=ts onclick=OptionTS()><label for=ts># 54 # </label><img class=shield src='uac.png'><br>
       <div id=tss style='display:none'>
-        <input type=checkbox id=sc><label for=sc># 51 #</label><br>
+        <span class=cbi></span><input type=checkbox id=sc><label for=sc># 51 #</label><br>
       </div>
       <div id=ees style='display:none'>
         <input type=checkbox id=ee><label for=ee># 55 # </label><img class=shield src='uac.png'><br>
@@ -2601,13 +2666,16 @@ function OptionESB() {
       <input type=checkbox id=pd><label for=pd># 76 # </label><img class=shield src='uac.png'><br>
       <input type=checkbox id=es onclick=OptionES()><label for=es># 58 #</label><br>
       <div id=esd>
+        <span class=cbi></span>
         <input type=radio name=eso id=rbes1 value=1 onclick=OptionES()><label for=rbes1># 62 # &nbsp</label>
         <input type=radio name=eso id=rbes2 value=2 onclick=OptionES()><label for=rbes2># 63 # &nbsp</label>
         <input type=radio name=eso id=rbes3 value=3 onclick=OptionES()><label for=rbes3># 64 # &nbsp</label>
         <input type=radio name=eso id=rbes4 value=4 onclick=OptionES()><label for=rbes4># 65 #</label>
       </div>
       <div id=esd2>
-        <input id=esi type="text" value="C:\" style=width:99% onclick=OptionESI()><br>
+        <span class=cbi></span>
+        <input id=esi type="text" value="C:\" style=width:96% onclick=OptionESI()><br>
+        <span class=cbi></span>
         <select id=ess  onchange=UpdateESI()>
           <option selected disabled># 59 #</option>
           <option>shell:Profile</option>

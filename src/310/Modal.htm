@@ -69,7 +69,7 @@ window.onload = function () {
       oElement.style.fontSize = FontSize + "pt";
       oElement.style.color = aColor[0];
       oElement.style.backgroundColor = aColor[2];
-      oElement.style.borderColor = aColor[2];
+      oElement.style.borderColor = aColor[3];
       if (oElement.type == "button" && CurBld < 10000) oElement.value = "√";
     }
     if (oElement.type == "checkbox" || oElement.type == "radio") {
@@ -89,8 +89,8 @@ window.onload = function () {
     oElement.style.fontFamily = Font;
     oElement.style.fontSize = FontSize + "pt";
     oElement.style.color = aColor[0];
-    oElement.style.backgroundColor = aColor[2];
-    oElement.style.borderColor = aColor[2];
+    oElement.style.backgroundColor = aColor[4];
+    oElement.style.borderColor = aColor[5];
   }
 
   if (Theme == "0") MvClass = "mv";

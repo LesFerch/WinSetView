@@ -209,14 +209,6 @@ If (Test-Path -Path $TestFile) {
 $BakFile  = "$AppData\Backup\$TimeStr.reg"
 $Custom   = "$AppData\WinSetViewCustom.reg"
 
-# Check for dark mode
-
-$Value = 'AppsUseLightTheme'
-$Key = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize'
-$UseLight = (Get-ItemProperty -Path $Key -Name $Value  -ErrorAction SilentlyContinue).$Value
-$DarkMode = $false
-If (($UseLight -is [int]) -And ($UseLight -eq 0)) { $DarkMode = $true }
-
 Function AdjustPrefix($String) {
   $String = $String.Replace("System.Icaros.","Icaros.")
   $String = $String.Replace("System..","")
@@ -232,6 +224,7 @@ Function ResetThumbCache {
 Function ResetStoreAppViews {
   $Exclude = 'WindowsTerminal','WebViewHost','MSTeams','Win32Bridge.Server','PhoneExperienceHost','ClipChamp','ClipChamp.CLI'
   $Pkgs = "$env:LocalAppData\Packages"
+  if (-Not(Test-Path -Path $Pkgs)) {return}
   If ($Constrained) {KillStoreAppsConstrained} Else {KillStoreApps}
   Get-ChildItem $Pkgs -Directory | ForEach-Object {
     Remove-Item -Force -ErrorAction SilentlyContinue "$Pkgs\$_\SystemAppData\Helium\UserClasses.dat"
@@ -240,6 +233,7 @@ Function ResetStoreAppViews {
 
 Function KillStoreApps {
   $Stor = 'HKCU:\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Compatibility Assistant\Store'
+  if (-Not(Test-Path -Path $Stor)) {return}
   $Key = Get-Item -Path $Stor
   ForEach ($ValueName in $($Key.GetValueNames())) {
     If ($ValueName -match 'c:\\program files\\windowsapps\\') {
@@ -275,7 +269,7 @@ Function SetVirtualFolderColumns {
     & $CloseExpW
     Start-Sleep 1
     Remove-Item $T1 2>$Null
-    & $RegExe Export $Bag2 $T1 /y
+    & $RegExe Export $Bag2 $T1 /y 2>$Null
 
     If (-Not(Test-Path -Path $T1)) { 
       & $RegExe Export $Bag1 $T1 /y
@@ -393,7 +387,7 @@ If ($ApplyViews -Or $Restore) {
   & $RegExe Delete $Desk /f 2>$Null
   Remove-Item $ShellBak 2>$Null
   Remove-Item -Path "$ShPS\*" -Recurse 2>$Null
-  If ($ApplyOptions) {Remove-ItemProperty -Path "$ShPS" -Name  Logo 2>$Null}
+  Remove-ItemProperty -Path "$ShPS" -Name  Logo 2>$Null
   Remove-ItemProperty -Path "$ShPS" -Name  FolderType 2>$Null
   Remove-ItemProperty -Path "$ShPS" -Name  SniffedFolderType 2>$Null
   & $RegExe Export $Shel $ShellBak /y 2>$Null
@@ -461,17 +455,6 @@ If ($ApplyOptions) {
   & $RegExe Add $Srch /v BingSearchEnabled /t REG_DWORD /d ($NoSearchInternet) /f
   & $RegExe Add $Srhl /v IsDynamicSearchBoxEnabled /t REG_DWORD /d ($NoSearchHighlights) /f
   & $RegExe Add $Srdc /v ShowDynamicContent /t REG_DWORD /d ($NoSearchHighlights) /f
-
-  # Enable/disable folder thumbnails
-
-  If ($NoFolderThumbs -eq 1) {
-    $ResetThumbs = !$LogoExists
-    & $RegExe Add $Shel /v Logo /d none /t REG_SZ /f
-  }
-  Else {
-    & $RegExe Delete $Shel /v Logo /f 2>$Null
-    $ResetThumbs = $LogoExists
-  }
 
   # Unhide/hide AppData folder
 
@@ -563,6 +546,18 @@ If ($ApplyOptions) {
       & $RegExe Delete $E10B /reg:64 /f 2>$Null
     }
   }
+  
+  # Remove/Restore Home in Navigation pane (Windows 11)
+  
+  $RemoveHome = [Int]$iniContent['Options']['RemoveHome']
+  $Key = 'HKCU\Software\Classes\CLSID\{f874310e-b6b7-47dc-bc84-b9e6b38f5903}'
+  & $RegExe Add $Key /v System.IsPinnedToNameSpaceTree /d (1-$RemoveHome) /t REG_DWORD /reg:64 /f
+
+  # Remove/Restore Gallery in Navigation pane (Windows 11)
+
+  $RemoveGallery = [Int]$iniContent['Options']['RemoveGallery']
+  $Key = 'HKCU\Software\Classes\CLSID\{e88865ea-0e1c-4e20-9aa6-edcd0212c87c}'
+  & $RegExe Add $Key /v System.IsPinnedToNameSpaceTree /d (1-$RemoveGallery) /t REG_DWORD /reg:64 /f
 
   # Apply/remove Legacy Dialog Fix (UAC)
 
@@ -661,7 +656,9 @@ Function SetBagValues ($Key) {
   & $RegExe Add $Key /v Mode /d $Mode /t REG_DWORD /f >$Null
   $Group = 1-$ThisPCNG
   & $RegExe Add $Key /v GroupView /d $Group /t REG_DWORD /f >$Null
-  If ($LVMode -eq 3) {& $RegExe Add $Key /v IconSize /d $IconSize /t REG_DWORD /f >$Null}
+  & $RegExe Add $Key /v IconSize /d $IconSize /t REG_DWORD /f >$Null
+  & $RegExe Add $Key /v 'GroupByKey:FMTID' /d '{B725F130-47EF-101A-A5F1-02608C9EEBAC}' /t REG_SZ /f >$Null
+  & $RegExe Add $Key /v 'GroupByKey:PID' /d 4 /t REG_DWORD /f >$Null
 }
 
 # Set view values based on selection index
@@ -682,7 +679,10 @@ Function BuildRegData($Key) {
   $Script:RegData += '@="' + $Script:FT + '"' + "`r`n"
   $Script:RegData += '"Mode"=dword:' + $Script:Mode + "`r`n"
   If ($Key -eq 'Shell') {
-    $Script:RegData += '"FFlags"=dword:43000001' + "`r`n"
+    $AutoArrange = [Int]$iniContent['Options']['AutoArrange'] * 1
+    $AlignToGrid = [Int]$iniContent['Options']['AlignToGrid'] * 4
+    $LastDigit = $AutoArrange + $AlignToGrid
+    $Script:RegData += '"FFlags"=dword:4300000' + $LastDigit + "`r`n"
     Return
   }
   $Script:RegData += '"LogicalViewMode"=dword:' + $Script:LVMode + "`r`n"
@@ -693,18 +693,27 @@ Function BuildRegData($Key) {
 
 If ($ApplyViews) {
 
+  # Enable/disable folder thumbnails
+
+  If ($NoFolderThumbs -eq 1) {
+    $ResetThumbs = !$LogoExists
+    & $RegExe Add $Shel /v Logo /d none /t REG_SZ /f
+  }
+  Else {
+    & $RegExe Delete $Shel /v Logo /f 2>$Null
+    $ResetThumbs = $LogoExists
+  }
+
   # Enable/Disable full row select (requires legacy spacing)
 
   $LegacySpacing = [Int]$iniContent['Options']['LegacySpacing']
   $NoFullRowSelect = 0
   If ($LegacySpacing -eq 1) {
     $NoFullRowSelect = [Int]$iniContent['Options']['NoFullRowSelect']
-    If ($DarkMode) {
-      # set text color here
-    }
+    & $RegExe Add $Advn /v FullRowSelect /t REG_DWORD /d (1-$NoFullRowSelect) /f
   }
-
-  & $RegExe Add $Advn /v FullRowSelect /t REG_DWORD /d (1-$NoFullRowSelect) /f
+  $SystemTextColor = $iniContent['Options']['SystemTextColor']
+  & $RegExe Add 'HKCU\Control Panel\Colors' /v WindowText /t REG_SZ /d $SystemTextColor /f
 
   # The FolderTypes key does not include entries for This PC
   # This PC does not have a unique GUID so we'll set it's view via a Bags entry:
@@ -859,9 +868,6 @@ If ($ApplyViews) {
 
   & $RegExe Export $CUFT $RegFile2 /y
   
-  # Replicate General Item view to AllFolders reg key
-  SetVirtualFolderColumns
-
   # Import Reg data to force dialog views
   # This is MUCH faster than creating the keys using PowerShell
 
@@ -871,6 +877,9 @@ If ($ApplyViews) {
     & $RegExe Import $T1
   }
 }
+
+# Replicate General Item view to AllFolders reg key
+SetVirtualFolderColumns
 
 # Import Reg data for any custom settings
 
