@@ -285,7 +285,7 @@ As of version 3, the options are divided into **Folder View Options** and **Expl
 
 ### Folder View Options
 
-![image](https://github.com/user-attachments/assets/2a65b9ba-8b8e-4390-a857-4a6d8291b5b5)
+![image](https://github.com/user-attachments/assets/7352431f-0dcc-43a3-9dc3-9ae1deb60503)
 
 #### Show paths in search results only
 
