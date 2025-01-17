@@ -311,6 +311,8 @@ Also, when this option is enabled, you can freely rearrange files and folders in
 
 Tiles and Content view behave in odd ways when this option is enabled. You may see one view upon setting the view and then a different view after closing and re-opening the folder. Content view did not exist in XP/Vista and the Tile mode was different than the modern Tiles view, so the odd results are expected.
 
+**Note**: The Windows XP/Vista view mode does not apply to file open/save dialogs. If "Use General Items view for connected devices" is checked, you may see the XP/Vista view upon first touch of a folder in a file dialog, but the next visit to that folder, via a file dialog, will use the modern view.
+
 **Note**: When Explorer is set to use this mode, it uses the system setting for the text color. That's not a problem if you are using light colors in Windows. However, if you switch to dark mode with this option enabled, you will get black text on a dark background. You can change the system text color, but be warned that change will be system-wide. There is no registry setting to change the text color exclusively for Explorer. Setting a system text color that can be seen on both light and dark backgrounds is one workaround. Another option is to install the program [QTTabBar](http://qttabbar.wikidot.com/) (select the "beta" download). QTTabBar will automatically change Explorer's text to white when dark mode is enabled.
 
 
