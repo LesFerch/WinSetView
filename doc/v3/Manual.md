@@ -162,7 +162,7 @@ You can group by any property in ascending or descending order, or turn off grou
 
 The **⚙ (Options)** button allows you to select a _different_ view for File Open/Save dialogs. For example, if you have set **List** as your default view, but want **Details** in File Open/Save dialogs, this is where you would set that up.
 
-![image](https://github.com/user-attachments/assets/3cb61fc7-790d-4cd1-92c8-b6bd07369aec)
+![image](https://github.com/user-attachments/assets/8deb1bba-8bc5-4a2b-88ad-4be758b8c04d)
 
 Separate File Dialog views can be set under Global as well as under any specific folder type.
 
@@ -285,8 +285,7 @@ As of version 3, the options are divided into **Folder View Options** and **Expl
 
 ### Folder View Options
 
-![image](https://github.com/user-attachments/assets/6fd67c34-b51a-4458-a06d-158d6c251326)
-
+![image](https://github.com/user-attachments/assets/2a65b9ba-8b8e-4390-a857-4a6d8291b5b5)
 
 #### Show paths in search results only
 
@@ -304,47 +303,45 @@ Note: The path column will not appear when you search the Downloads folder becau
 Note: The *Relevance* column heading (*Search.Rank* property) is *only* shown in search results and is therefore always blue in WinSetView, regardless of this setting.
 
 
-#### Legacy row and icon spacing
+#### Windows XP/Vista view mode
 
-When this option is enabled, Explorer will use the **Windows XP/Vista** style view mode. Rows in List and Details views are closer together, icon row spacing is not affected by long filenames, and file names in icon views only wrap on certain characters, such as spaces and hyphens.
-
-Tiles and Content view behave in odd ways when this option is enabled. You may see one view upon setting the view and then a different view after closing and re-opening the folder. Note that Content view did not exist in Windows Vista and its Tile mode was different than the modern Tiles view, so the odd results are expected.
-
-When this feature is enabled, selected files in Explorer remain selected after changing the sort order, just as they did in Windows XP/Vista.
+This option was labeled "Legacy row and icon spacing" in previous WinSetView versions. When this option is enabled, Explorer will use the Windows XP/Vista style view mode. In this mode, rows in List and Details views are closer together, icon row spacing is not affected by long filenames, file names in icon views only wrap on certain characters (such as spaces and hyphens), and selected files in Explorer remain selected after changing the sort order.
 
 Also, when this option is enabled, you can freely rearrange files and folders in Details and Icon views, but those arrangements will be forgotten when the folder is closed, unless you are running Windows 7, Windows 8.x, or a Windows 10 build that is lower than 1703.
+
+Tiles and Content view behave in odd ways when this option is enabled. You may see one view upon setting the view and then a different view after closing and re-opening the folder. Content view did not exist in XP/Vista and the Tile mode was different than the modern Tiles view, so the odd results are expected.
 
 **Note**: When Explorer is set to use this mode, it uses the system setting for the text color. That's not a problem if you are using light colors in Windows. However, if you switch to dark mode with this option enabled, you will get black text on a dark background. You can change the system text color, but be warned that change will be system-wide. There is no registry setting to change the text color exclusively for Explorer. Setting a system text color that can be seen on both light and dark backgrounds is one workaround. Another option is to install the program [QTTabBar](http://qttabbar.wikidot.com/) (select the "beta" download). QTTabBar will automatically change Explorer's text to white when dark mode is enabled.
 
 
 #### Disable full row select
 
-This option is available only when **Legacy row and icon spacing** is checked.
+This option is available only when **Windows XP/Vista view mode** is checked.
 
 When this option is checked, only the file name is highlighted in Details view, instead of the whole row.
 
 
 #### Auto arrange
 
-This option is available only when **Legacy row and icon spacing** is checked.
+This option is available only when **Windows XP/Vista view mode** is checked.
 
 Check or uncheck to set the default state for Auto arrange.
 
 
 #### Align to grid
 
-This option is available only when **Legacy row and icon spacing** is checked.
+This option is available only when **Windows XP/Vista view mode** is checked.
 
 Check or uncheck to set the default state for Align to grid.
 
 
 #### System text color
 
-This option is available only when **Legacy row and icon spacing** is checked.
+This option is available only when **Windows XP/Vista view mode** is checked.
 
-Click this button to change the system text color. There is no need to change the color if you are using the default light mode. If you are using dark mode, with Legacy row and icon spacing enabled, you may need to change the text color to something lighter so it's readable. Don't change the text to white because there are places in the system, such as the "Programs and Features" control panel item, where you will end up with white text on a white background. Do not use this option if you are using the app QTTabBar as it will take care of the text color for you.
+Click this button to change the system text color. There is no need to change the color if you are using the default light mode. If you are using dark mode, with Windows XP/Vista view mode, you may need to change the text color to something lighter so it's readable. Don't change the text to white because there are places in the system, such as the "Programs and Features" control panel item, where you will end up with white text on a white background. Do not use this option if you are using the app QTTabBar as it will take care of the text color for you.
 
-Sample text showing the current text color on both light and dark backgrounds is shown beside the button. The sample text is the current RGB values for the current system text color.
+Sample text, showing the current text color on both light and dark backgrounds, is shown beside the button. The sample text is actually the currently selected RGB color values (e.g. 0 0 0 = black).
 
 The change to the system text color takes effect on next logout/login (or next restart).
 
@@ -418,8 +415,7 @@ If this option is unchecked, this virtual folder will retain its Windows default
 
 ### Explorer Options
 
-![image](https://github.com/user-attachments/assets/c309154d-6273-403d-923e-c4eca05f75f9)
-
+![image](https://github.com/user-attachments/assets/798a3d6f-ec22-412c-a7f6-0c7c4d10d24e)
 
 ![image](https://github.com/LesFerch/WinSetView/assets/79026235/31d5617f-6617-4e14-9b8e-0efb2c2b9896) **Note**: All options, except those with a shield icon, can be changed by a Standard user. The items with the shield icon require Administrator rights to change. A UAC prompt will appear after clicking **Submit** and **OK** if one or more of those options are being changed.
 
@@ -579,7 +575,7 @@ This option allows you to set the start folder for Explorer to "This PC", "Home 
 
 ### Columns
 
-![image](https://github.com/LesFerch/WinSetView/assets/79026235/98a1452d-45ca-4d3d-a83d-5f73a4cb41db)
+![image](https://github.com/user-attachments/assets/c73b618c-1fb7-4907-966c-18cb564e012f)
 
 Clicking the **Columns** button brings up the column (properties) selection page for the current folder type. Column headings, in Explorer Details view, correspond to file and folder *properties*.
 
@@ -597,13 +593,13 @@ The top right of the page has a back button (🡨) that will take you back to th
 
 Next, the currently selected column headings, that will display in File Explorer's Details view, are shown on a single, scrollable line in the same *order* as they will appear in File Explorer.
 
-Clicking the column re-order button **⮀** will bring up a dialog that will allow you to rearrange the column headings by dragging them up or down in the presented list.:
+Clicking the column re-order button **⮀** will bring up a dialog that will allow you to rearrange the column headings by dragging them up or down in the presented list:
 
-![image](https://github.com/user-attachments/assets/b49f13e1-171f-41ef-8697-613845f0bf15)
+![image](https://github.com/user-attachments/assets/a1909c09-0985-4da2-99b0-9870e93b22ad)
 
 The column order can also be set by removing each column heading and then adding them back in the desired order, but it is easier to use the re-order dialog. Note that the re-order dialog will allow any order, but will display the following warning if the **Name** property is not the first column:
 
-![image](https://github.com/LesFerch/WinSetView/assets/79026235/b7257139-dd08-4e8d-859e-e08bba0018d3)
+![image](https://github.com/user-attachments/assets/7bf07a48-a1c0-48fc-8dc4-e234afead769)
 
 The issue with software that uses the "legacy" type dialogs (such as IrfanView) is that those type of dialogs assume that **Name** is always the first column. So, for example, if **Size** is set as the first column, and you are in any view other than **Details**, you will just see a bunch of icons with sizes and no names.
 
@@ -647,7 +643,7 @@ Please note that you can set the width as small as 1em, but Explorer will expand
 
 If you wish to enter the column width in *pixels*, hold **Alt** and **click** the input width field you wish to adjust. A dialog will open showing the width in pixels:
 
-![image](https://github.com/user-attachments/assets/61d77d8d-a81f-4ad7-9a0e-8af0b29338fd)
+![image](https://github.com/user-attachments/assets/e38cbdd5-cd64-4361-a446-30fdd15fee59)
 
 The pixel value will vary depending on screen pixel density, whereas the value in ems will be constant across different display configurations. Please note that WinSetView sets the column *default* width which can only be set to whole (integer) em values. Windows File Explorer lets you set the width down to the pixel, but that is stored as a setting within the volatile *Bags* registry key *overriding* the default value. WinSetView deals with *default* settings only.
 
@@ -937,11 +933,11 @@ Here's an overview of the steps the PowerShell script performs to set Explorer v
 
 3) Set any direct registry entries, such as *Show File Extensions* and *Make All Folders Generic*, for the current user.
 
-4) If a custom view for *This PC* has been selected, create registry entries for that view.
+4) Copy FolderTypes key from HKEY_LOCAL_MACHINE (HKLM) to HKEY_CURRENT_USER (HKCU).
 
-5) Copy FolderTypes key from HKEY_LOCAL_MACHINE (HKLM) to HKEY_CURRENT_USER (HKCU).
+5) Edit FolderTypes key in HKCU per user's selections.
 
-6) Edit FolderTypes key in HKCU per user's selections.
+6) Depending on selected options, also create direct registry view entries for "This PC", "General Items", and "XP/Vista view mode".
 
 7) Restart Explorer.
 
@@ -974,7 +970,7 @@ If you wish to create a new translation, please contact me and I will create all
 
 ### Language Contributions 
 
-Wherever possible, translated text is pulled directly from Windows (e.g. column headings). Some languages have had the benefit of human translation, but many have been done using online translation software and could use improvement from a native speaker. If you can help with a translation, please contact me!
+Wherever possible, translated text is pulled directly from Windows (e.g. column headings). Some languages have had the benefit of human translation, but most have been done using online translation software and could use improvement from a native speaker. If you can help with a translation, please contact me!
 
 Please see the Acknowledgment section for any language files that have been hand-corrected.
 
