@@ -283,7 +283,7 @@ This folder type controls the view you see for the *Searches* item within your u
 
 ![image](https://github.com/user-attachments/assets/7352431f-0dcc-43a3-9dc3-9ae1deb60503)
 
-Clicking the 🔍 button detects your current system settings. Otherwise, this page shows the settings that will be applied when you click **Submit**.
+Clicking the 🔍 button detects your current system settings (except for the "This PC" view). Otherwise, this page shows the settings that will be applied when you click **Submit**.
 
 #### Show paths in search results only
 
