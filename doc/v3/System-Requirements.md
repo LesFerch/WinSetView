@@ -18,7 +18,7 @@ If you're using Windows 10 or higher, please ignore the rest of this document.
 
 If you do a fresh install of Windows 7, it will typically have MSHTML 8 (and Internet Explorer 8). Windows 8 comes with MSHTML 10 and Windows 8.1 should already have MSHTML 11.
 
-WinSetView will run with MSHTML 8 but there will be some minor cosmetic issues, such as dropdown boxes not resizing properly when you change font size until the program is closed and reopened. Functionally, it should be fine. You will see a message, on start up, stating that MSHTML 11 is recommended. This message is actually needed to workaround an MSHTML 8 security bug that will cause an "Access is denied" error, when the WinSetView window is positioned to where you last had it opened, unless there is first at least one user input.
+WinSetView will run with MSHTML 8, but there will be some minor cosmetic issues, such as dropdown boxes not resizing properly when you change font size (until the program is closed and reopened). Functionally, it should be fine.
 
 If you would like to update to MSHTML 11, you will need to update to Internet Explorer 11. You can then remove IE because WinSetView only needs the updated browser engine and not the browser itself.
 
