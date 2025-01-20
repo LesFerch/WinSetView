@@ -1,3 +1,23 @@
+## 3.01.1
+
+Feature added: General items column settings can now be applied to MTP devices such as phones.
+
+Feature added: "Remove Home in Windows 11" and "Remove Gallery in Windows 11" options added.
+
+Feature added: "Auto arrange" and "Align to grid" defaults added for "Windows XP/Vista view mode".
+
+Enhancement: Checkbox labels in the main and options pages are now clickable.
+
+Enhancement: Now runs on MSHTML 8 through 11. This allows it to run on a basic Windows 7 SP1 build without having to install IE 11.
+
+Change: VBScript code replaced with [JScript](https://en.wikipedia.org/wiki/JScript) code.
+
+Change: Removed check for new version on startup. This could cause startup delays depending on network settings. There is now a button to check for a new version.
+
+Change: Renamed option "Legacy row and icon spacing" to "Windows XP/Vista view mode"
+
+Change: "Disable folder thumbnails" moved from "Explorer Options" to "Folder View Options"
+
 ## 3.00.3
 
 Bug Fix: Fixed error that occurs only when PowerShell is in constrained mode.
