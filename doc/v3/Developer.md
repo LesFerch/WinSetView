@@ -8,7 +8,7 @@ WinSetView is a VbsEdit HTML application. Follow the steps below to debug and cr
 
 ## Exe Creation Steps
 
-1. Install **VbsEdit 24.9** or newer.
+1. Install **VbsEdit 25.1** or newer.
 2. Install **Visual Studio Community 2022** or newer with the options **Desktop development with C++** and **C++ MFC for latest v1nn build tools (x86 & x64)**.
 3. Ensure the files **WinSetView.htm**, **Modal.htm**, **seguiemj.eot**, **UAC.png**, and **WinSetView.ico** are in the WinSetView root folder.
 4. Open  **WinSetView.htm** with VbsEdit.
