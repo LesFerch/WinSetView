@@ -6,6 +6,8 @@ Feature added: "Remove Home in Windows 11" and "Remove Gallery in Windows 11" op
 
 Feature added: "Auto arrange" and "Align to grid" defaults added for "Windows XP/Vista view mode".
 
+Feature added: Added "Detect current settings" button to Folder View Options page.
+
 Enhancement: Checkbox labels in the main and options pages are now clickable.
 
 Enhancement: Now runs on MSHTML 8 through 11. This allows it to run on a basic Windows 7 SP1 build without having to install IE 11.
