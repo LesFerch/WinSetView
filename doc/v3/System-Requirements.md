@@ -8,7 +8,7 @@
 
 .Net 4.8, dates back to 2019 and is a common requirement, so it's probably already installed.
 
-JScript is built in and Windows does not provide a user option to disable or remove it, so it should be present. Previous versions of WinSetView used VBScript. As of version 3.1.0, all VBScript code has been replaced with JScript code in WinSetView in anticipation of VBScript becoming an optional install starting in 2027.
+JScript is built in and Windows does not provide a user option to disable or remove it, so it should be present. Previous versions of WinSetView used VBScript. As of version 3.1, all VBScript code has been replaced with JScript code in WinSetView in anticipation of VBScript becoming an optional install starting in 2027.
 
 WinSetView does NOT use MSHTA.exe or WSH (WScript.exe).
 
