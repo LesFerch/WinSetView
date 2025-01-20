@@ -21,4 +21,4 @@ WinSetView is a VbsEdit HTML application. Follow the steps below to debug and cr
 
 9. Click OK to  generate WinSetView.exe.
 10. Move WinSetView.exe to the WinSetView root folder.
-11. Sign the exe: `signtool sign /n "Open Source Developer, Leslie Ferch" /t http://time.certum.pl/ /fd sha1 /v WinSetView.exe`
+11. Sign the exe: `signtool sign /a /n "Open Source Developer, Leslie Ferch" /t http://time.certum.pl/ /fd sha1 /v WinSetView.exe`
