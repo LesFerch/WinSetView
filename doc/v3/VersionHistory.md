@@ -1,4 +1,4 @@
-## 3.1.0
+## 3.1.1
 
 Change: VBScript code replaced with JScript code.
 
@@ -8,7 +8,7 @@ Change: Renamed option "Legacy row and icon spacing" to "Windows XP/Vista view m
 
 Feature added: Additional sub-options added under "Windows XP/Vista view mode".
 
-Change: Removed check for new version on startup. This was causing startup delays with some network security software. There is now a button to check for a new version.
+Change: Removed check for new version on startup. This could cause startup delays depending on network settings. There is now a button to check for a new version.
 
 Enhancement: Checkbox labels in the main and options pages are now clickable.
 
@@ -18,6 +18,7 @@ Feature added: "Remove Home in Windows 11" option added.
 
 Feature added: "Remove Gallery in Windows 11" option added.
 
+Enhancement: Now runs on MSHTML 8 through 11. This allows it to run on a basic Windows 7 SP1 build without having to install IE 11.
 
 ## 3.0.3
 
