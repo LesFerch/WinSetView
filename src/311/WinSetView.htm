@@ -19,7 +19,7 @@ WinSetView.htm (GUI tool to select desired views)
 >
 
 <script language="JScript">
-var Version = "3.1.0";
+var Version = "3.1.1";
 var ForReading = 1;
 var ForWriting = 2;
 var Unicode = -1;
@@ -88,8 +88,14 @@ WinWoW = SysRoot + "\\SysWOW64\\";
 oFile = oApp.Namespace(0).ParseName(WinSys + "MSHTML.dll");
 MSHTMLVer = Number(oFile.ExtendedProperty("System.Software.ProductVersion").split(".")[0]);
 
-if (MSHTMLVer < 11) {
-  MsgBox("MSHTML 11 recommended.\nVersion detected: " + MSHTMLVer, vbInformation, "Notice");
+function pressEnter() {
+  oWSH.SendKeys("{ENTER}");
+}
+
+// Workaround for weird security bug in MSHTML versions less than 10
+if (MSHTMLVer < 10) {
+  setTimeout(pressEnter, 100);
+  MsgBox("", 0, "");
 }
 
 // Determine Windows version (also works for Windows Server)
@@ -1269,10 +1275,66 @@ function ExpOptions() {
   if (CurBld == 22621 && UBR >= "3007" && UBR < "3085") ees.style.display = "inline";
 }
 
+// WinSetView is compiled 32 bit so that it runs on all systems without having to make separate 32 and 64 bit exes.
+// We use CSReg.exe (.Net app set to prefer 64 bit) to read CLSID entries without being redirected to the 32 bit key.
+// Reg.exe with the /reg:64 argument would also work, but not when the RegistryToolsDisabled policy is enabled.
+
+function DetectFVOptions() {
+  nf.checked = false;
+  try {nf.checked = LCase(oWSH.RegRead("HKCU\\Software\\Classes\\Local Settings\\Software\\Microsoft\\Windows\\Shell\\Bags\\AllFolders\\Shell\\Logo")) == "none";} catch (e) {}
+
+  DetectColors();
+
+  so.checked = true;
+  try {
+    var p = "";
+    p = LCase(oWSH.RegRead("HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\FolderTypes\\{5c4f28b5-f869-4e84-8e60-f11db97c5cc7}\\TopViews\\{00000000-0000-0000-0000-000000000000}\\ColumnList"));
+    if (p.indexOf("itemfolderpathdisplay") != -1) {so.checked = false;}
+    if (p.indexOf("itemfolderpathdisplaynarrow") != -1) {so.checked = false;}
+    if (p.indexOf("itempathdisplay") != -1) {so.checked = false;}
+    if (p.indexOf("itemfoldernamedisplay") != -1) {so.checked = false;}
+  } catch (e) {}
+
+  ls.checked = false;
+  ar.checked = false;
+  ag.checked = false;
+  try {
+    var f = 0;
+    f = oWSH.RegRead("HKCU\\Software\\Classes\\Local Settings\\Software\\Microsoft\\Windows\\Shell\\Bags\\AllFolders\\Shell\\{5C4F28B5-F869-4E84-8E60-F11DB97C5CC7}\\FFlags");
+    ls.checked = (f > 1107296255);
+    var LastHexDigit = (f.toString(16).toUpperCase()).slice(-1);
+    ar.checked = LastHexDigit == "1" || LastHexDigit == "5";
+    ag.checked = LastHexDigit == "4" || LastHexDigit == "5";
+  } catch (e) {}
+  fr.checked = false;
+  try {fr.checked = oWSH.RegRead("HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\FullRowSelect") == 0;} catch (e) {}
+  OptionLS()
+
+  vf.checked = false;
+  vc.checked = false;
+  try {
+    oWSH.RegRead("HKCU\\Software\\Classes\\Local Settings\\Software\\Microsoft\\Windows\\Shell\\Bags\\AllFolders\\Shell\\{5C4F28B5-F869-4E84-8E60-F11DB97C5CC7}\\LogicalViewMode");
+    vf.checked = true;
+    oWSH.RegRead("HKCU\\Software\\Classes\\Local Settings\\Software\\Microsoft\\Windows\\Shell\\Bags\\AllFolders\\Shell\\{5C4F28B5-F869-4E84-8E60-F11DB97C5CC7}\\ColInfo");
+    vc.checked = true;
+  } catch (e) {}
+  OptionVF()
+  
+  gn.checked = false;
+  try {
+    oWSH.RegRead("HKCU\\Software\\Classes\\Local Settings\\Software\\Microsoft\\Windows\\Shell\\Bags\\AllFolders\\Shell\\FolderType");
+    gn.checked = true;
+  } catch (e) {}
+  
+  hg.checked = false;
+  try {hg.checked = oWSH.RegRead("HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\FolderTypes\\{24ccb8a6-c45a-477d-b940-3382b9225668}\\TopViews\\{00000000-0000-0000-0000-000000000000}\\GroupBy") == "";} catch (e) {}
+
+  lg.checked = false;
+  try {lg.checked = oWSH.RegRead("HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\FolderTypes\\{0b2baaeb-0042-4dca-aa4d-3ee8648d03e5}\\TopViews\\{82ba0782-5b7a-4569-b5d7-ec83085f08cc}\\GroupBy") == "";} catch (e) {}
+
+}
+
 function DetectExpOptions() {
-  // WinSetView is compiled 32 bit so that it runs on all systems without having to make separate 32 and 64 bit exes.
-  // We use CSReg.exe (.Net app set to prefer 64 bit) to read CLSID entries without being redirected to the 32 bit key.
-  // Reg.exe with the /reg:64 argument would also work, but not when the RegistryToolsDisabled policy is enabled.
   var csregQuery, csregReg, AdvKey;
   csregQuery = '"' + PartsDir + 'CSReg.exe" query ';
   csregReg = "HKCU\\Software\\CSReg\\RetVal";
@@ -1295,8 +1357,6 @@ function DetectExpOptions() {
   sh.checked = false;
   try {sh.checked = oWSH.RegRead("HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\SearchSettings\\IsDynamicSearchBoxEnabled") == 0;} catch (e) {}
   try {sh.checked = oWSH.RegRead("HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Feeds\\DSB\\ShowDynamicContent") == 0;} catch (e) {}
-  nf.checked = false;
-  try {nf.checked = LCase(oWSH.RegRead("HKCU\\Software\\Classes\\Local Settings\\Software\\Microsoft\\Windows\\Shell\\Bags\\AllFolders\\Shell\\Logo")) == "none";} catch (e) {}
   try {oFolder = oFSO.GetFolder(oWSH.ExpandEnvironmentStrings("%UserProfile%") + "\\AppData");} catch (e) {}
   try {ua.checked = (oFolder.Attributes & 2) == 0;} catch (e) {}
   try {oFolder = oFSO.GetFolder("C:\\Users\\Public\\Desktop");} catch (e) {}
@@ -2422,6 +2482,7 @@ function rgbToHex(rgb) {
   .fl1  {float:left; margin-left:5pt}
   .fl2  {float:left; margin-left:3pt}
   .fl3  {float:left; margin-left:3pt; margin-right:3pt}
+  .fl4  {float:left; margin-left:0pt; margin-right:3pt}
   .ft   {font-size:1.2em; font-weight:bold; margin-top:1pt; margin-bottom:1pt; display:inline}
   .ftl  {font-size:1.2em; font-weight:light; margin-top:1pt; margin-bottom:1pt; display:inline}
   .ft2  {font-weight:bold; margin-top:1pt; margin-bottom:1pt; margin-left:5pt}
@@ -2598,6 +2659,8 @@ function rgbToHex(rgb) {
       <div class=fl2><input type=button value='# 31 #' onclick=Help("https://lesferch.github.io/WinSetView/doc/v3/Manual.html#folder-view-options-1")></div>
       <div class='tip fl3'><input id=bc3 type=button value='⛶' onclick=RecenterButton()>
       <span class=tiptext># 42 #</span></div>
+      <div class='tip fl4'><input type=button class=icon value='🔍' onclick=DetectFVOptions()>
+      <span class=tiptext># 71 #</span></div>
       <h2># 69 #</h2>
     </div>
     </div>
@@ -2610,8 +2673,6 @@ function rgbToHex(rgb) {
         <span class=cbi></span><input type=checkbox id=ar><label for=ar># 78 #</label><br>
         <span class=cbi></span><input type=checkbox id=ag><label for=ag># 79 #</label><br>
         <span class=cbi></span><input type=button id=wt value='# 80 #' onclick=TextColor()>
-        <span class=tip><input type=button class=icon value='🔍' onclick=DetectColors()>
-        <span class='tiptext lh1'># 71 #</span></span>
         <span class=lx1 id=cl> 0 0 0 </span>&nbsp<span class=dx1 id=cd> 0 0 0 </span>
         <br>
       </div>
@@ -2636,7 +2697,7 @@ function rgbToHex(rgb) {
       <div class=fl2><input type=button value='# 31 #' onclick=Help("https://lesferch.github.io/WinSetView/doc/v3/Manual.html#explorer-options-1")></div>
       <div class='tip fl3'><input id=bc4 type=button value='⛶' onclick=RecenterButton()>
       <span class=tiptext># 42 #</span></div>
-      <div class='tip fl3'><input type=button class=icon value='🔍' onclick=DetectExpOptions()>
+      <div class='tip fl4'><input type=button class=icon value='🔍' onclick=DetectExpOptions()>
       <span class=tiptext># 71 #</span></div>
       <h2># 70 #</h2>
     </div>
