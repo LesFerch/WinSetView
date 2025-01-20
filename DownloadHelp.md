@@ -77,20 +77,6 @@ Click **Run anyway** to run the app.
 
 **Note**: Even though WinSetView.exe is code-signed, with a certificate issued by Certum, the SmartScreen block will still come up because non-incorporated individual developers cannot purchase (and typically cannot afford) an extended verification (EV) certificate required to get full trust. The fact that WinSetView is provided as an open-source app via GitHub, with my personal contact information available for all to see, is much more reassurance of safety than any certificate provides. The bad actors out there can find ways to code-sign their malware. Knowing where you got the app is much more important. Although there are many trustworthy download sites, the best practice is to download from the author's web page. If you got this app from my [web page](https://lesferch.github.io/WinSetView/), that's your best protection.
 
-## Possible Launch Error
-
-The following error will be displayed if VBScript has been disabled or uninstalled:
-
-![image](https://github.com/LesFerch/WinSetView/assets/79026235/a11c3e97-670f-4f09-8b4a-7b656cb3849b)
-
-If the above error is displayed and you're running **Windows 11**, please check **Settings**, **System**, **Optional features**, **View features**, and then scroll down and see if there is a **VBScript** item. If so, check it and click **Next** and then **Install**.
-
-If your computer is managed by an IT department, it's possible that VBScript has been intentionally disabled. Or you may have intentionally disabled VBScript yourself. In either case, you can use the new JScript version of WinSetView instead.
-
-The next release of WinSetView will use JScript code instead of VBScript code. That new version is available now as a beta. Please see the [Releases](https://github.com/LesFerch/WinSetView/releases) page to download it.
-
-
-
 ## How to Use
 
 To use WinSetView, please follow the steps in the quick start guide:
