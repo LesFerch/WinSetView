@@ -1,3 +1,7 @@
+## 3.01.2
+
+Bug Fix: Fixed label click for "Remove Home in Windows 11" and "Remove Gallery in Windows 11"
+
 ## 3.01.1
 
 Feature added: General items column settings can now be applied to MTP devices such as phones.
