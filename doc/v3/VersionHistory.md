@@ -1,3 +1,7 @@
+## 3.1.2
+
+Bug Fix: Fixed label click for "Remove Home in Windows 11" and "Remove Gallery in Windows 11"
+
 ## 3.1.1
 
 Feature added: General items column settings can now be applied to MTP devices such as phones.
@@ -5,8 +9,6 @@ Feature added: General items column settings can now be applied to MTP devices s
 Feature added: "Remove Home in Windows 11" and "Remove Gallery in Windows 11" options added.
 
 Feature added: "Auto arrange" and "Align to grid" defaults added for "Windows XP/Vista view mode".
-
-Feature added: Added "Detect current settings" button to Folder View Options page.
 
 Enhancement: Checkbox labels in the main and options pages are now clickable.
 
