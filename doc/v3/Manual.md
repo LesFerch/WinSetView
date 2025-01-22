@@ -367,6 +367,8 @@ When this option is checked, the column settings for the **General Items** folde
 
 **Note**: When this option is enabled, you will briefly see an Explorer window open and close when WinSetView is applying your preferences. This is necessary for WinSetView to capture the General Items view settings in the binary format required for this option.
 
+**WARNING**: This setting also applies to all special folders that share the General items GUID, such as the **Fonts** folder. Folders that have their own GUID, such as **Recycle Bin** and **Programs and Features**, will not be affected unless **Make All Folders Generic** is also checked. Therefore, it is NOT recommended to enable both this feature and **Make All Folders Generic**.
+
 
 #### Make All Folders Generic
 
@@ -381,6 +383,8 @@ Checking this option also causes **Folder Type Discovery** to be disabled. That'
 Please note there is no separate setting for **Folder Type Discovery**. If you want Folder Type Discovery *off*, you must make all folders generic. However, as noted above, you can change any folder (or tree of folders) back to a specific folder type at any time.
 
 **Note**: Enabling this option will make the Home / Quick access view the same as "General items" if you're running the Windows 10 Explorer or the pre-App SDK Explorer in Windows 11. For the App SDK Explorer in Windows 11 (i.e. the latest Explorer), it will cause the Home view to lose its headings (i.e. it will not be grouped). Therefore, the WinSetVow option "Do not force standard grouping on Home / Quick Access" has no effect when "Make All Folders Generic" is enabled.
+
+**WARNING**: It is NOT recommended to enable both this feature and **Use General Items column settings for connected devices**. See warning under that feature for details.
 
 
 #### Do not force standard grouping on Home / Quick Access
