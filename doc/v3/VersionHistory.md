@@ -1,3 +1,7 @@
+## 3.1.3
+
+Enhancement: Improved/added warning and error messages
+
 ## 3.1.2
 
 Bug Fix: Fixed label click for "Remove Home in Windows 11" and "Remove Gallery in Windows 11"

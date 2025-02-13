@@ -16,7 +16,7 @@ Compatible with Windows 7, 8, 10, and 11.  Click [here](./System-Requirements.md
 
 Les Ferch, lesferch@gmail.com, 2021 - 2025
 
-[Version 3.1.2](./VersionHistory.md)
+[Version 3.1.3](./VersionHistory.md)
 
 ## Summary
 
@@ -661,7 +661,7 @@ This column provides checkboxes to allow you to select which column headings are
 
 If you *uncheck* an item in this column, it does not uncheck the item in the *Add to Right-Click Menu* column because an item can be available for quick-pick without being an active column heading.
 
-**Note**: Explorer does not allow you to remove the **Name** column, so the same is true in WinSetView by _default_. However, you can hold down the **Ctrl** key while clicking either the **⋮⋮⋮** or **⋮** button to enable the ability to uncheck the Name column. This would only make sense to do in scenarios where the folder type (e.g. "Music") contains files that have another unique identifier, such as "Title", and that identifier is set as the first column instead of Name.
+**Note**: Explorer does not allow you to remove the **Name** column, so the same is true in WinSetView by _default_. However, you can hold down the **Alt** or **Ctrl** key while clicking either the **⋮⋮⋮** or **⋮** button to enable the ability to uncheck the Name column. This would only make sense to do in scenarios where the folder type (e.g. "Music") contains files that have another unique identifier, such as "Title", and that identifier is set as the first column instead of Name.
 
 \
 **Column Order**: The *order* in which the selected columns are displayed in File Explorer is shown at the top of the screen. Click the **⮀** re-order button to change the order. The order can also be changed by unchecking each item and then rechecking them in the desired order.
@@ -675,11 +675,11 @@ This column provides checkboxes to allow you to select which column headings are
 
 The Explorer limit for the quick-pick menu is 21 items, so WinSetView will not allow you to select more than 21 items in this column. If you hit this limit, you will see this message:
 
-![image](https://user-images.githubusercontent.com/79026235/124494511-eb6ad200-dd84-11eb-8198-adea1bb7e176.png)
+![image](https://github.com/user-attachments/assets/6e6477ca-81a2-4e37-9cb6-3bbad60cfeb5)
 
-Just click OK to close the message. Adjust your selections as necessary. You can't pick more than 21.
+Close the message and adjust your selections as necessary. You can't pick more than 21.
 
-If you click the **⋮** column heading button, it will prompt with an option to clear all selections in the column. This will clear all selections that are NOT also selected in the *Display in Details View* column. Hold down the **Alt** key while clicking the button to completely clear both columns (except for the **Name** property).
+If you click the **⋮** column heading button, it will prompt with an option to clear all selections in the column. This will clear all selections that are NOT also selected in the *Display in Details View* column. Hold down the **Alt**, key when clicking **OK**, to completely clear both columns (except for the **Name** property).
 
 ### Column Headings (Properties)
 
