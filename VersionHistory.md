@@ -1,18 +1,20 @@
-## 3.1.3
+## 3.01.3
 
 Enhancement: Improved/added warning and error messages
 
-## 3.1.2
+## 3.01.2
 
 Bug Fix: Fixed label click for "Remove Home in Windows 11" and "Remove Gallery in Windows 11"
 
-## 3.1.1
+## 3.01.1
 
 Feature added: General items column settings can now be applied to MTP devices such as phones.
 
 Feature added: "Remove Home in Windows 11" and "Remove Gallery in Windows 11" options added.
 
 Feature added: "Auto arrange" and "Align to grid" defaults added for "Windows XP/Vista view mode".
+
+Feature added: Added "Detect current settings" button to Folder View Options page.
 
 Enhancement: Checkbox labels in the main and options pages are now clickable.
 
@@ -26,21 +28,21 @@ Change: Renamed option "Legacy row and icon spacing" to "Windows XP/Vista view m
 
 Change: "Disable folder thumbnails" moved from "Explorer Options" to "Folder View Options"
 
-## 3.0.3
+## 3.00.3
 
 Bug Fix: Fixed error that occurs only when PowerShell is in constrained mode.
 
-## 3.0.2
+## 3.00.2
 
 Bug Fix: Fixed error that caused file dialog views to not always be set for specific folder types.
 
 Bug Fix: General items view for connected devices (such as phones) now also applies to dialog views.
 
-## 3.0.1
+## 3.00.1
 
 Bug Fix: Detect current settings now detects if Windows 10 classic search is enabled or disabled.
 
-## 3.0.0
+## 3.00.0
 
 Feature added: Options have been split into Folder View Options and Explorer Options.
 
