@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" http-equiv="X-UA-Compatible" content="IE=8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script language="JScript">
+var RetVal, ReturnArray;
+var WidthIcon, PixInputIcon, NameWarnIcon, optIcon, DetailsIcon, RightClickIcon, SubmitIcon, dialogKey;
+var Item2Move = "";
+param = window.external.argument;
+
+aArgs = param.param1.split(";");
+param.param1 = "";
+
+dialogKey = aArgs[0];
+SubmitIcon = "🚀";
+document.title = dialogKey;
+if (dialogKey == SubmitIcon) document.title = aArgs[12];
+
+aColor = param.param2;
+OKtext = param.param3;
+param.param2 = "";
+param.param3 = "";
+
+Font = aArgs[1];
+FontSize = aArgs[2];
+Scale = parseFloat(aArgs[3]);
+Theme = aArgs[4]; // 0:Light 1:Dark 2:High Contrast
+
+oWSH = new ActiveXObject("Wscript.Shell");
+CurBld = oWSH.RegRead("HKLM\\Software\\Microsoft\\Windows NT\\CurrentVersion\\CurrentBuild");
+
+BaseScale = 1.0;
+try {BaseScale = oWSH.RegRead("HKCU\\Control Panel\\Desktop\\WindowMetrics\\AppliedDPI") / 96;} catch (e) {}
+
+WidthIcon = "⟷";
+PixInputIcon = "⟷.";
+NameWarnIcon = "⚠";
+optIcon = "⚙";
+DetailsIcon = "⋮⋮⋮";
+RightClickIcon = "⋮";
+
+if (CurBld < 10000) {
+  WidthIcon = "←→";
+  PixInputIcon = "←→.";
+  NameWarnIcon = "!";
+  optIcon = "☼";
+  DetailsIcon = "⋮⋮";
+}
+
+var SysRoot = oWSH.ExpandEnvironmentStrings("%SystemRoot%");
+var WinSys = SysRoot + "\\System32\\";
+var oApp = new ActiveXObject("Shell.Application");
+var oFile = oApp.Namespace(0).ParseName(WinSys + "MSHTML.dll");
+var MSHTMLVer = Number(oFile.ExtendedProperty("System.Software.ProductVersion").split(".")[0]);
+
+window.onload = function () {
+  document.body.style.color = aColor[0];
+  document.body.style.backgroundColor = aColor[1];
+
+  document.body.style.fontFamily = Font;
+  document.body.style.fontSize = FontSize + "pt";
+
+  oElements = document.getElementsByTagName("input");
+  for (var i = 0; i < oElements.length; i++) {
+    oElement = oElements[i];
+    if (oElement.type == "button" || oElement.type == "text") {
+      oElement.style.fontFamily = Font;
+      oElement.style.fontSize = FontSize + "pt";
+      oElement.style.color = aColor[0];
+      oElement.style.backgroundColor = aColor[2];
+      oElement.style.borderColor = aColor[3];
+      if (oElement.type == "button" && CurBld < 10000) oElement.value = "√";
+    }
+    if (oElement.type == "checkbox" || oElement.type == "radio") {
+      if (MSHTMLVer == 11) {
+        oElement.style.zoom = Scale;
+      }
+      else {
+        var pxSize = (Scale * 13).toString() + "px";
+        oElement.style.width = pxSize;
+        oElement.style.height = pxSize;
+      }
+    }
+  }
+  oElements = document.getElementsByTagName("select");
+  for (var i = 0; i < oElements.length; i++) {
+    oElement = oElements[i];
+    oElement.style.fontFamily = Font;
+    oElement.style.fontSize = FontSize + "pt";
+    oElement.style.color = aColor[0];
+    oElement.style.backgroundColor = aColor[4];
+    oElement.style.borderColor = aColor[5];
+  }
+
+  if (Theme == "0") MvClass = "mv";
+  if (Theme == "1") MvClass = "mvdark";
+  if (Theme == "2") MvClass = "mvhc";
+
+  switch (dialogKey) {
+    case DetailsIcon:
+      DetailsDiv.style.display = "inline";
+      DetailsMsg.innerHTML = aArgs[8];
+      break;
+    case RightClickIcon:
+      RightClickDiv.style.display = "inline";
+      RightClickMsg.innerHTML = aArgs[8];
+      break;
+    case WidthIcon:
+      WidthDiv.style.display = "inline";
+      WidthMsg.innerHTML = aArgs[8];
+      break;
+    case NameWarnIcon:
+      NameWarnDiv.style.display = "inline";
+      NameWarnMsg.innerHTML = aArgs[8];
+      break;
+    case PixInputIcon:
+      PixDiv.style.display = "inline";
+      PixMsg.innerHTML = aArgs[8];
+      InputPix.value = aArgs[9];
+      InputPix.select();
+      break;
+    case optIcon:
+      DialogViewDiv.style.display = "inline";
+      fl1.innerHTML = aArgs[8];
+      fl2.innerHTML = aArgs[9];
+      ArrView = aArgs[10].split("|");
+      for (var i = 0; i <= 8; i++) {
+        oOption = document.createElement("Option");
+        oOption.text = ArrView[i];
+        oOption.value = i;
+        if (i == 0) oOption.disabled = true;
+        fs1.add(oOption);
+      }
+      break;
+    case SubmitIcon:
+      SubmitDiv.style.display = "inline";
+      sl1.innerHTML = aArgs[8];
+      sl2.innerHTML = aArgs[9];
+      sub1.checked = aArgs[10] == "1";
+      sub2.checked = aArgs[11] == "1";
+      if (aArgs[13] == "1") {
+        subItem1.style.display = "none";
+      }
+      break;
+    default:
+      ArrangeDiv.style.display = "inline";
+      InputArray = aArgs[8].split("|");
+      ReturnArray = new Array(InputArray.length);
+      html = "";
+      for (var i = 0; i < InputArray.length; i++) {
+        html += "<div id=" + i + " class=" + MvClass + " unselectable=on onmousedown=DragMoveStart(" + i + ") onmouseover=DragMoveSwap(" + i + ")>" + InputArray[i] + "</div>\r\n";
+        ReturnArray[i] = i;
+      }
+      list.innerHTML = html;
+      break;
+  }
+
+  oElements = document.getElementsByTagName("input");
+  for (var i = 0; i < oElements.length; i++) {
+    oElement = oElements[i];
+    if (oElement.type == "button") {
+      oElement.value = OKtext;
+      oElement.style.fontSize = (FontSize - 1) + "pt";
+    }
+  }
+
+  y = document.body.scrollHeight;
+  window.moveTo(aArgs[6], aArgs[7]);
+  window.resizeTo(aArgs[5], y + (56 * BaseScale));
+
+  if (dialogKey == optIcon) {
+    fc1.checked = false;
+    fc2.checked = true;
+    if (aArgs[11] == "1") fc1.checked = true;
+    if (aArgs[12] == "0") fc2.checked = false;
+    if (aArgs[13] == "") aArgs[13] = "1";
+    fs1.selectedIndex = parseInt(aArgs[13]);
+    fc1Clicked();
+  }
+}
+
+function fc1Clicked() {
+  if (fc1.checked) {
+    FDOptions.style.visibility = "visible";
+  } else {
+    FDOptions.style.visibility = "hidden";
+  }
+}
+
+function sub1Clicked() {
+  if (!sub1.checked) {
+    sub2.checked = true;
+  }
+}
+
+function sub2Clicked() {
+  if (!sub2.checked) {
+    sub1.checked = true;
+  }
+}
+
+function DoneFD() {
+  param.param1 = Number(fc1.checked) + "|" + fs1.selectedIndex + "|" + Number(fc2.checked);
+  window.external.close();
+}
+
+function DoneArrange() {
+  param.param1 = ReturnArray.join("|");
+  window.external.close();
+}
+
+function DoneDetails() {
+  param.param1 = "1";
+  window.external.close();
+}
+
+function DoneRightClick() {
+  param.param1 = "1";
+  if (window.event.altKey) param.param1 = "2";
+  window.external.close();
+}
+
+function DoneWidth() {
+  param.param1 = "1";
+  window.external.close();
+}
+
+function DonePix() {
+  param.param1 = InputPix.value;
+  window.external.close();
+}
+
+function DoneSubmit() {
+  var s1 = "0", s2 = "0", s3 = "0";
+  if (sub1.checked) s1 = "1";
+  if (sub2.checked) s2 = "1";
+  if (window.event.altKey) s3 = "1";
+  param.param1 = s1 + "|" + s2 + "|" + s3;
+  window.external.close();
+}
+
+document.onmouseup = function () {
+  Item2Move = "";
+}
+
+document.onkeydown = function () {
+  if (window.event.keyCode == 13) { // Enter key pressed
+    switch (dialogKey) {
+      case DetailsIcon:
+        DoneDetails();
+        break;
+      case RightClickIcon:
+        DoneRightClick();
+        break;
+      case WidthIcon:
+        DoneWidth();
+        break;
+      case NameWarnIcon:
+        window.external.close();
+        break;
+      case PixInputIcon:
+        DonePix();
+        break;
+      case optIcon:
+        DoneFD();
+        break;
+      case SubmitIcon:
+        DoneSubmit();
+        break;
+      default:
+        DoneArrange();
+        break;
+    }
+  }
+}
+
+function DragMoveStart(i) {
+  Item2Move = i;
+}
+
+function DragMoveSwap(i) {
+  if (Item2Move === "") return;
+  if (Item2Move == i) return;
+
+  var a = document.getElementById(i).innerHTML;
+  var b = document.getElementById(Item2Move).innerHTML;
+  document.getElementById(i).innerHTML = b;
+  document.getElementById(Item2Move).innerHTML = a;
+
+  a = ReturnArray[i];
+  b = ReturnArray[Item2Move];
+  ReturnArray[i] = b;
+  ReturnArray[Item2Move] = a;
+
+  Item2Move = i;
+}
+</script>
+
+<style>
+body {background-color:#B8D8E9; font-family:Segoe UI; font-size:11pt; margin-top:3pt; margin-left:3pt; margin-right:3pt; text-align:center}
+.mv {margin-top:-1px; border:1px solid black; padding:2pt; background-color:White; cursor:ns-resize}
+.mv:hover {background-color:Cyan}
+.mvdark {margin-top:-1px; border:1px solid black; padding:2pt; background-color:DimGrey; cursor:ns-resize}
+.mvdark:hover {background-color:MidnightBlue}
+.mvhc {margin-top:-1px; border:1px solid black; padding:2pt; font-weight:normal; cursor:ns-resize}
+.mvhc:hover {font-weight:bold}
+.NoShow {display:none}
+.TM3 {margin-top:3pt}
+.W100 {width:100%}
+.Left {text-align:left}
+.OK {display:block; margin:0 auto; margin-top:9pt; width:5em}
+</style>
+
+</head>
+
+<body>
+<div id=ArrangeDiv class=NoShow>
+  <div id=list></div>
+  <input type=button class=OK onclick=DoneArrange()>
+</div>
+<div id=DetailsDiv class=NoShow>
+  <div id=DetailsMsg></div>
+  <input type=button class=OK onclick=DoneDetails()>
+</div>
+<div id=RightClickDiv class=NoShow>
+  <div id=RightClickMsg></div>
+  <input type=button class=OK onclick=DoneRightClick()>
+</div>
+<div id=WidthDiv class=NoShow>
+  <div id=WidthMsg></div>
+  <input type=button class=OK onclick=DoneWidth()>
+</div>
+<div id=NameWarnDiv class=NoShow>
+  <div id=NameWarnMsg></div>
+</div>
+<div id=PixDiv class=NoShow>
+  <div id=PixMsg></div>
+  <input class=TM3 type=text id=InputPix>
+  <input type=button class=OK onclick=DonePix()>
+</div>
+<div id=DialogViewDiv class=NoShow>
+  <input type=checkbox id=fc1 onclick=fc1Clicked()><label for=fc1 id=fl1></label>
+  <div id=FDOptions class=TM3>
+    <select id=fs1></select><br>
+    <input class=TM3 type=checkbox id=fc2 checked><label for=fc2 id=fl2></label><br>
+  </div>
+  <input type=button class=OK onclick=DoneFD()>
+</div>
+
+<div id=SubmitDiv class=NoShow>
+  <div id=SubDiv class=Left>
+    <div id=subItem1>
+      <br><input type=checkbox id=sub1 onclick=sub1Clicked()><label for=sub1 id=sl1></label><br>
+    </div>
+    <br><input type=checkbox id=sub2 onclick=sub2Clicked()><label for=sub2 id=sl2></label><br><br>
+    <input type=button class=OK onclick=DoneSubmit()>
+  </div>
+</div>
+
+</body>
+</html>
