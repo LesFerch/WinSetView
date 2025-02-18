@@ -143,8 +143,7 @@ You can always run WinSetView again to change any settings and you can revert ba
 
 **IMPORTANT**: **Reset Views to Windows Defaults** only resets folder views. It does not revert the options listed in **Explorer options**. The **Restore** function will revert your folder views to what they were in the slected backup file and it will revert most of the **Explorer options**. Either way, it's recommended to carefully review the settings in **Explorer options** if you choose to apply them.
 
-[![alt text](https://github.com/LesFerch/WinSetView/assets/79026235/50c53943-f673-49da-ad3f-419026deea96)<!--[-->See the complete user manual](./Manual.md)
-
+[![image](https://github.com/LesFerch/WinSetView/assets/79026235/50c53943-f673-49da-ad3f-419026deea96)<!--[-->See the complete user manual](./Manual.md)
 \
 \
 \
