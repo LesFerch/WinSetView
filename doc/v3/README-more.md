@@ -29,5 +29,4 @@ WinSetView will **correct** the following conditions (when the cause is registry
 
 **Note**: **Windows 11** currently has some folder view bugs in regards to setting folder type for entire folder trees on removable drives and overriding the automatically detected folder type on "Local disks". WinSetView provides an option to use the Windows 10 Explorer on Windows 11 to avoid those bugs.
 
-![image](https://github.com/LesFerch/WinSetView/assets/79026235/41afd0e5-72c9-40e3-a1a0-fbb4dc591de9)
-[See the quick start guide](./README.md)
+[![image](https://github.com/LesFerch/WinSetView/assets/79026235/41afd0e5-72c9-40e3-a1a0-fbb4dc591de9)<!--[-->See the quick start guide](./README.md)
