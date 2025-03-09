@@ -220,7 +220,7 @@ As of Windows 10 1903, the **Downloads** folder is its own folder type that has 
 
 You can leave *Inherit* checked and just let *Downloads* use your Global settings, or uncheck Inherit and select specific settings for this folder type. Be assured, either way, if you set *Group by* to *(None)* you will never see grouping in this folder again.
 
-**Note**: In Windows 10, only the Downloads root is type "Downloads". In Windows 11, all subfolders of Downloads are also type "Downloads".
+**Note**: In Windows 10, only the Downloads root is type "Downloads". In Windows 11, all subfolders of Downloads are also type "Downloads". If you are using the Windows 10 Explorer on Windows 11, the Downloads subfolders will be folder type "General items".
 
 **General Items**
 
