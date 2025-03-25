@@ -81,5 +81,4 @@ Click **Run anyway** to run the app.
 
 To use WinSetView, please follow the steps in the quick start guide:
 
-![image](https://github.com/LesFerch/WinSetView/assets/79026235/41afd0e5-72c9-40e3-a1a0-fbb4dc591de9)
-[See the quick start guide](./README.md)
+[![image](https://github.com/LesFerch/WinSetView/assets/79026235/41afd0e5-72c9-40e3-a1a0-fbb4dc591de9)<!--[-->See the quick start guide](./README.md)
