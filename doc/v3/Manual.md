@@ -775,7 +775,7 @@ A simple launcher for WinSetView.ps1 that may come in handy for system administr
 
 ### Typical Usage
 
-If you cannot run **WinSetView.exe** on your computer, for whatever reason (e.g. VBScript is disabled), but you can run **PowerShell** scripts, then you can run WinSetView on another computer (obviously one where WinSetView does run), select your view preferences, and save those preferences to an INI file (**Win10.ini** for Windows 10 and 11). The preferences are saved automatically when you click **Submit**, but can also be saved manually using the **Save Settings** button available with the **Advanced** interface.
+If you cannot run **WinSetView.exe** on your computer, for whatever reason (e.g. MSHTML has been removed), but you can run **PowerShell** scripts, then you can run WinSetView on another computer (obviously one where WinSetView does run), select your view preferences, and save those preferences to an INI file (**Win10.ini** for Windows 10 and 11). The preferences are saved automatically when you click **Submit**, but can also be saved manually using the **Save Settings** button available with the **Advanced** interface.
 
 Once you have an INI file (e.g. Win10.ini) with your preferred defaults, it can be deployed to any user via PowerShell. For example:
 
