@@ -14,7 +14,7 @@ Compatible with Windows 7, 8, 10, and 11.  Click [here](./System-Requirements.md
 
 Les Ferch, lesferch@gmail.com, 2021 - 2025
 
-[Version 3.1.3](./VersionHistory.md)
+[Version 3.1.4](./VersionHistory.md)
 
 ## Summary
 
