@@ -1,3 +1,13 @@
+## 3.01.4
+
+Enhancement: Added "ResetWindowMetrics.cmd" script.
+
+Enhancement: New human-translated Italian language files (thanks to GitHub user topoldo).
+
+Enhancement: Many other language files improved via contextual AI translation.
+
+Bug Fix: Fixed error that occurred when using "Detect current settings" in "Explorer Options" when a default starting folder for Explorer has never been set.
+
 ## 3.01.3
 
 Enhancement: Improved/added warning and error messages
