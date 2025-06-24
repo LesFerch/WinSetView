@@ -1,3 +1,13 @@
+## 3.1.4
+
+Enhancement: Added "ResetWindowMetrics.cmd" script.
+
+Enhancement: New human-translated Italian language files (thanks to GitHub user topoldo).
+
+Enhancement: Many other language files improved via contextual AI translation.
+
+Bug Fix: Fixed error that occurred when using "Detect current settings" in "Explorer Options" when a default starting folder for Explorer has never been set.
+
 ## 3.1.3
 
 Enhancement: Improved/added warning and error messages
@@ -13,6 +23,8 @@ Feature added: General items column settings can now be applied to MTP devices s
 Feature added: "Remove Home in Windows 11" and "Remove Gallery in Windows 11" options added.
 
 Feature added: "Auto arrange" and "Align to grid" defaults added for "Windows XP/Vista view mode".
+
+Feature added: Added "Detect current settings" button to Folder View Options page.
 
 Enhancement: Checkbox labels in the main and options pages are now clickable.
 
