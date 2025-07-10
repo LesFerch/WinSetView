@@ -994,7 +994,7 @@ Thanks to **Ringo Xue** for the initial Simplified Chinese (zh-CN) translation.
 
 Thanks to my daughter **Dana** for the Japanese (ja-JP) translation.
 
-Thanks to my son **Brian** for HTML/CSS help. If you use Spotify on Android, please check out his  [**Trimify**](https://play.google.com/store/apps/details?id=app.web.trimifymusic) app on the Google Play store.
+Thanks to my son **Brian** for HTML/CSS help.
 
 Thanks to my cat **Puddles** (2009-2022) for keeping me company while I worked on this.
 
