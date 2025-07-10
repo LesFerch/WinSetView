@@ -988,6 +988,8 @@ Thanks to **Jean-Hervé Lescop** of Adersoft for updates to VbsEdit to accommoda
 
 Thanks to **Keith Miller** at TenForums.com for documenting the FolderTypes approach to setting default views.
 
+Thanks to GitHub user **Topoldo** for the current Italian (it-IT) translation.
+
 Thanks to **Patrick Hannemann** for the initial German (de-DE) translation.
 
 Thanks to **Ringo Xue** for the initial Simplified Chinese (zh-CN) translation.
