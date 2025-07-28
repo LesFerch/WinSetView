@@ -19,7 +19,7 @@ WinSetView.htm (GUI tool to select desired views)
 >
 
 <script language="JScript">
-var Version = "3.1.4";
+var Version = "3.1.5";
 var ForReading = 1;
 var ForWriting = 2;
 var Unicode = -1;
@@ -259,6 +259,10 @@ AppData = MyFolder + "\\AppData";
 Backup = MyFolder + "\\AppData\\Backup";
 FontsFile = PartsDir + "Fonts.txt";
 ThemeFile = PartsDir + "Themes.ini";
+
+var csregQuery, csregReg;
+csregQuery = '"' + PartsDir + 'CSReg.exe" query ';
+csregReg = "HKCU\\Software\\CSReg\\RetVal";
 
 if (WinVer == "7" || WinVer == "8") {
   UpArrow = "↑";
@@ -654,11 +658,11 @@ function UpdateLang(OnChange) {
   f.Close();
 
   // Add Icaros properties if they are activated
-  var Icaros = false;
-  try {
-    oWSH.RegRead("HKLM\\Software\\Microsoft\\Windows\\CurrentVersion\\Shell Extensions\\Approved\\{0C08E3BB-D10B-4CC9-B1B3-701F5BE9D6EC}");
-    Icaros = true;
-  } catch (e) {}
+  var Icaros;
+  try {oWSH.Run(csregQuery + "\"HKLM\\Software\\Microsoft\\Windows\\CurrentVersion\\Shell Extensions\\Approved\" /v {0C08E3BB-D10B-4CC9-B1B3-701F5BE9D6EC}", 0, true);} catch (e) {}
+  RetVal = "";
+  try {RetVal = oWSH.RegRead(csregReg);} catch (e) {}
+  Icaros = RetVal == "Icaros Property Handler";
   if (Icaros) {
     var IcarosFile = LangDir + Language + "\\Columns-Icaros.txt";
     f = oFSO.OpenTextFile(IcarosFile, ForReading, false, Unicode);
@@ -1335,9 +1339,7 @@ function DetectFVOptions() {
 }
 
 function DetectExpOptions() {
-  var csregQuery, csregReg, AdvKey;
-  csregQuery = '"' + PartsDir + 'CSReg.exe" query ';
-  csregReg = "HKCU\\Software\\CSReg\\RetVal";
+  var AdvKey;
   AdvKey = "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\";
   
   if (Win11) {
