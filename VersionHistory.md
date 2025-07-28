@@ -1,3 +1,9 @@
+## 3.01.5
+
+Enhancement: German translation correction ("Licht" to "Hell"). Thanks to Jannik Fah.
+
+Bug Fix: Icaros extensions now properly detected when installed 64 bit only.
+
 ## 3.01.4
 
 Enhancement: Added "ResetWindowMetrics.cmd" script.
