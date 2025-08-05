@@ -575,6 +575,7 @@ This option allows you to set the start folder for Explorer to "This PC", "Home 
 
 ![image](https://github.com/LesFerch/WinSetView/assets/79026235/f2090713-8df1-45d1-a358-fb4a08af9a0b)
 
+**Note**: Starting with build 26100.4202, the "Other" option no longer works in Windows 11.
 
 ### Columns
 
@@ -1002,3 +1003,4 @@ Thanks to my cat **Puddles** (2009-2022) for keeping me company while I worked o
 
 \
 [![image](https://github.com/LesFerch/WinSetView/assets/79026235/63b7acbc-36ef-4578-b96a-d0b7ea0cba3a)](https://github.com/LesFerch/WinSetView)
+
