@@ -575,7 +575,7 @@ This option allows you to set the start folder for Explorer to "This PC", "Home 
 
 ![image](https://github.com/LesFerch/WinSetView/assets/79026235/f2090713-8df1-45d1-a358-fb4a08af9a0b)
 
-**Note**: Starting with build 26100.4202, the "Other" option no longer works in Windows 11.
+**Note**: Starting with build 26100.4202, the "Other" option no longer works in Windows 11 for the default Explorer taskbar icon. It does continue to work when Explorer is launched via a command line or via a shortcut. The default Explorer taskbar icon can be replaced with a shortcut link, but then you will see a second Explorer taskbar icon whenever an Explorer window is open.
 
 ### Columns
 
@@ -1003,4 +1003,5 @@ Thanks to my cat **Puddles** (2009-2022) for keeping me company while I worked o
 
 \
 [![image](https://github.com/LesFerch/WinSetView/assets/79026235/63b7acbc-36ef-4578-b96a-d0b7ea0cba3a)](https://github.com/LesFerch/WinSetView)
+
 
