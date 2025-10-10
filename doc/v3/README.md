@@ -135,7 +135,9 @@ You can choose to apply or exclude these options when **Submit** is clicked. Cli
 
 ![image](https://github.com/user-attachments/assets/962c55ad-717d-4d9b-871e-f00fa556fe75)
 
-Once you're happy with your selections, click the **Submit** button. This will pop up a dalog where you can choose to **Clear folder views and set new defaults** and/or **Reset Explorer options**. Note that a backup of your current folder views will be made if **Backup** is checked. Please uncheck **Reset Explorer options** if you haven't reviewed the **Explorer Options** page, otherwise you may receive undesired changes.
+Once you're happy with your selections, click the **Submit** button. This will pop up a dalog where you can choose to **Clear folder views and set new defaults** and/or **Reset Explorer options**. Note that a backup of your current folder views will be made if **Backup** is checked.
+
+**IMPORTANT**: Please uncheck **Reset Explorer options** if you haven't reviewed the **Explorer Options** page, otherwise you may receive undesired changes.
 
 ![image](https://github.com/user-attachments/assets/f0d91756-57a3-4741-ba45-80d068b03e85)
 
@@ -148,3 +150,4 @@ You can always run WinSetView again to change any settings and you can revert ba
 \
 \
 [![image](https://github.com/LesFerch/WinSetView/assets/79026235/63b7acbc-36ef-4578-b96a-d0b7ea0cba3a)](https://github.com/LesFerch/WinSetView)
+
