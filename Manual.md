@@ -480,9 +480,13 @@ When checked, a registry setting will be applied that will cause Windows 11 to u
 
 When checked, `Home` will be removed from the Navigation pane. When unchecked, `Home` is restored.
 
+**Note**: This option has no effect when Explorer's "Show all folders" option is checked.
+
 #### Remove Gallery in Windows 11
 
 When checked, `Gallery` will be removed from the Navigation pane. When unchecked, `Gallery` is restored.
+
+**Note**: This option has no effect when Explorer's "Show all folders" option is checked.
 
 #### Disable numerical sort ![image](https://github.com/LesFerch/WinSetView/assets/79026235/31d5617f-6617-4e14-9b8e-0efb2c2b9896)
 
@@ -1003,5 +1007,6 @@ Thanks to my cat **Puddles** (2009-2022) for keeping me company while I worked o
 
 \
 [![image](https://github.com/LesFerch/WinSetView/assets/79026235/63b7acbc-36ef-4578-b96a-d0b7ea0cba3a)](https://github.com/LesFerch/WinSetView)
+
 
 
