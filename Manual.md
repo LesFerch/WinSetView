@@ -871,7 +871,7 @@ No. It shows the view settings that have been configured in the currently loaded
 
 ### Can you add a feature to read my current folder view settings?
 
-No. Although this is "possible" in theory, it's impractical to implement as the data to be extracted is stored in a binary format that Microsoft has not publicly documented.
+No. Although this is "possible" in theory, it's impractical to implement as the data to be extracted is stored in a binary format that Microsoft has not publicly documented. Note that the `Folder View Options` and `Explorer Options` can be detected and those pages include a button to do that. 
 
 ### Is there a way to load up Microsoft's default folder view settings (for Windows 10 and 11) into WinSetView?
 
@@ -1007,6 +1007,7 @@ Thanks to my cat **Puddles** (2009-2022) for keeping me company while I worked o
 
 \
 [![image](https://github.com/LesFerch/WinSetView/assets/79026235/63b7acbc-36ef-4578-b96a-d0b7ea0cba3a)](https://github.com/LesFerch/WinSetView)
+
 
 
 
