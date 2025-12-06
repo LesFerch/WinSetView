@@ -19,7 +19,7 @@ WinSetView.htm (GUI tool to select desired views)
 >
 
 <script language="JScript">
-var Version = "3.1.5";
+var Version = "3.1.6";
 var ForReading = 1;
 var ForWriting = 2;
 var Unicode = -1;
@@ -1299,17 +1299,19 @@ function DetectFVOptions() {
     if (p.indexOf("itemfoldernamedisplay") != -1) {so.checked = false;}
   } catch (e) {}
 
-  ls.checked = false;
-  ar.checked = false;
-  ag.checked = false;
+  ls.checked = false; // XP/Vista view mode
+  ar.checked = false; // Auto-arrange
+  ag.checked = false; // Align to grid
+
   try {
     var f = 0;
     f = oWSH.RegRead("HKCU\\Software\\Classes\\Local Settings\\Software\\Microsoft\\Windows\\Shell\\Bags\\AllFolders\\Shell\\{5C4F28B5-F869-4E84-8E60-F11DB97C5CC7}\\FFlags");
-    ls.checked = (f > 1107296255);
-    var LastHexDigit = (f.toString(16).toUpperCase()).slice(-1);
-    ar.checked = LastHexDigit == "1" || LastHexDigit == "5";
-    ag.checked = LastHexDigit == "4" || LastHexDigit == "5";
+    ls.checked = (f & 0x02000000) !== 0;
+    var lowNibble = f & 0xF;
+    ar.checked = (lowNibble === 0x1 || lowNibble === 0x5);
+    ag.checked = (lowNibble === 0x4 || lowNibble === 0x5);
   } catch (e) {}
+
   fr.checked = false;
   try {fr.checked = oWSH.RegRead("HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\FullRowSelect") == 0;} catch (e) {}
   OptionLS()
