@@ -14,7 +14,7 @@ Compatible with Windows 7, 8, 10, and 11.  Click [here](./System-Requirements.md
 
 Les Ferch, lesferch@gmail.com, 2021 - 2025
 
-[Version 3.1.5](./VersionHistory.md)
+[Version 3.1.6](./VersionHistory.md)
 
 ## Summary
 
@@ -1007,6 +1007,7 @@ Thanks to my cat **Puddles** (2009-2022) for keeping me company while I worked o
 
 \
 [![image](https://github.com/LesFerch/WinSetView/assets/79026235/63b7acbc-36ef-4578-b96a-d0b7ea0cba3a)](https://github.com/LesFerch/WinSetView)
+
 
 
 
