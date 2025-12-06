@@ -1,3 +1,7 @@
+## 3.1.6
+
+Bug Fix: Fixed minor bug in Folder View Options Detect current settings.
+
 ## 3.1.5
 
 Enhancement: German translation correction ("Licht" to "Hell"). Thanks to Jannik Fah.
