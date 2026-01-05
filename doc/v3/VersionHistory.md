@@ -1,6 +1,6 @@
 ## 3.1.7
 
-Enhancement: Path properties added to right-click pick list for Downloads folder. See manual for details.
+Enhancement: Path properties added to right-click pick list for Downloads folder. See "Show paths in search results only" section in manual for details
 
 Bug Fix: Explorer Options > Detect Current Settings now correctly detects all Windows 11 options.
 
