@@ -365,7 +365,7 @@ When this option is checked, the column settings for the **General Items** folde
 
 **Note**: When this option is enabled, you will briefly see an Explorer window open and close when WinSetView is applying your preferences. This is necessary for WinSetView to capture the General Items view settings in the binary format required for this option.
 
-**WARNING**: This setting also applies to all special folders that share the General items GUID, such as the **Fonts** folder. Folders that have their own GUID, such as **Recycle Bin** and **Programs and Features**, will not be affected unless **Make All Folders Generic** is also checked. Therefore, it is NOT recommended to enable both this feature and **Make All Folders Generic**.
+**WARNING**: This setting also applies to all special folders that share the General items GUID, such as the **Fonts** folder. Folders that have their own GUID, such as **Recycle Bin**, **Devices and Printers**, and **Programs and Features**, will not be affected unless **Make All Folders Generic** is also checked. Therefore, it is NOT recommended to enable both this feature and **Make All Folders Generic**.
 
 
 #### Make All Folders Generic
@@ -1007,6 +1007,7 @@ Thanks to my cat **Puddles** (2009-2022) for keeping me company while I worked o
 
 \
 [![image](https://github.com/LesFerch/WinSetView/assets/79026235/63b7acbc-36ef-4578-b96a-d0b7ea0cba3a)](https://github.com/LesFerch/WinSetView)
+
 
 
 
