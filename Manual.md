@@ -12,9 +12,9 @@ This is the complete user manual. See the link below for the quick start guide.
 
 Compatible with Windows 7, 8, 10, and 11.  Click [here](./System-Requirements.md) for system requirements.
 
-Les Ferch, lesferch@gmail.com, 2021 - 2025
+Les Ferch, lesferch@gmail.com, 2021 - 2026
 
-[Version 3.1.6](./VersionHistory.md)
+[Version 3.1.7](./VersionHistory.md)
 
 ## Summary
 
@@ -206,7 +206,7 @@ Pictures\
 Music\
 Videos**
 
-Any folder (or tree of folders) can be set to one of these folder types using Explorer's **Customize this folder...** menu (does not work in Windows 11) and the view settings for a particular folder type can be updated from the currently viewed folder by using Explorer's **Apply to Folders** button. More information on these options is in the *Background* section later in this document.
+Any folder can be set to one of these folder types using Explorer's **Customize this folder...** menu. But note that "Also apply this template to all subfolders" does not work in Windows 11. The view settings for a particular folder type can be updated from the currently viewed folder by using Explorer's **Apply to Folders** button. More information on these options is in the *Background* section later in this document.
 
 In the Windows 10 *FolderTypes* registry key, there are actually **56** different folder types, of which **38** have view and column heading settings that can be edited by WinSetView. Ten of these folder types do not appear to affect anything useful or visible in Explorer, leaving **28** folder types that are shown in WinSetView.
 
@@ -294,7 +294,7 @@ When this option is checked, path and folder name column headings in Details vie
 
 Tip: Select your preferred search result path column first and then select other headings, such as Date modified and Size. That way, when you do a search, the path of all matches will be visible without having to make the window larger.
 
-Note: The path column will not appear when you search the Downloads folder because the Downloads folder type does not have an associated search results folder type.
+Note: The path column will not appear (by default) when you search the Downloads folder because the Downloads folder type does not have an associated search results folder type. However, Explorer does create a Downloads Search Results view on the fly which remembers your settings for that view. Therefore (starting with WinSetView 3.1.7) whatever path column (i.e. item shown in blue) you have in your Downlaods view will appear in the right-click column property quick pick list. That allows you to easily add the path column after your first search of the Downloads folder and it will be remembered for future searches.
 
 Note: The *Relevance* column heading (*Search.Rank* property) is *only* shown in search results and is therefore always blue in WinSetView, regardless of this setting.
 
@@ -871,7 +871,7 @@ No. It shows the view settings that have been configured in the currently loaded
 
 ### Can you add a feature to read my current folder view settings?
 
-No. Although this is "possible" in theory, it's impractical to implement as the data to be extracted is stored in a binary format that Microsoft has not publicly documented. Note that the `Folder View Options` and `Explorer Options` can be detected and those pages include a button to do that. 
+No. Although this is "possible" in theory, it's impractical to implement as the data to be extracted is stored in a binary format that Microsoft has not publicly documented. Note that the `Folder View Options` and `Explorer Options` can be detected and those pages include a button to do that.
 
 ### Is there a way to load up Microsoft's default folder view settings (for Windows 10 and 11) into WinSetView?
 
@@ -1007,9 +1007,6 @@ Thanks to my cat **Puddles** (2009-2022) for keeping me company while I worked o
 
 \
 [![image](https://github.com/LesFerch/WinSetView/assets/79026235/63b7acbc-36ef-4578-b96a-d0b7ea0cba3a)](https://github.com/LesFerch/WinSetView)
-
-
-
 
 
 
