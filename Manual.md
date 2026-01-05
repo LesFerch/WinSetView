@@ -32,6 +32,7 @@ Each option, and related Explorer background information, is detailed below, but
 
 All changes made by WinSetView are per-user within the HKEY_CURRENT_USER hive in the registry. No machine settings are touched and no elevated privileges are required (except as noted for a few optional settings). On each run, if **Backup** is checked, WinSetView makes a unique backup file of the affected folder view registry values. A restore option is provided allowing you to rollback to any of those backups. Please note that the backup does not include all items shown on the **Explorer Options** page.
 
+**Note**: A major Windows update or a full repair via Windows Update (e.g. running Setup.exe from the Windows ISO) will remove the `FolderTypes` registry key from HKEY_CURRENT_USER (i.e. it will undo the default folder views set by WinSetView). In such cases, simply run WinSetView again and click **Submit** to reapply your view preferences.
 
 ## Interface
 
@@ -1007,6 +1008,7 @@ Thanks to my cat **Puddles** (2009-2022) for keeping me company while I worked o
 
 \
 [![image](https://github.com/LesFerch/WinSetView/assets/79026235/63b7acbc-36ef-4578-b96a-d0b7ea0cba3a)](https://github.com/LesFerch/WinSetView)
+
 
 
 
