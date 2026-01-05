@@ -19,7 +19,7 @@ WinSetView.htm (GUI tool to select desired views)
 >
 
 <script language="JScript">
-var Version = "3.1.6";
+var Version = "3.1.7";
 var ForReading = 1;
 var ForWriting = 2;
 var Unicode = -1;
@@ -864,6 +864,8 @@ function UpdateLang(OnChange) {
   SetTheme();
 
   xschange();
+  
+  if (!so.checked) OptionSearchOnly();
 }
 
 function ColShowColor(e) {
@@ -1347,9 +1349,13 @@ function DetectExpOptions() {
   if (Win11) {
     try {cv.checked = oWSH.RegRead(AdvKey + "UseCompactMode") == 1;} catch (e) {}
     try {oWSH.Run(csregQuery + "HKCU\\Software\\Classes\\CLSID\\{86CA1AA0-34AA-4E8B-A509-50C905BAE2A2}\\InprocServer32 /ve", 0, true);} catch (e) {}
-    try {cm.checked = !oWSH.RegRead(csregReg);} catch (e) {}
-    try {oWSH.Run(csregQuery + "HKCU\\Software\\Classes\\CLSID\\{2aa9162e-c906-4dd9-ad0b-3d24a8eef5a0} /ve", 0, true);} catch (e) {}
-    try {ex.checked = !oWSH.RegRead(csregReg);} catch (e) {}
+    try {cm.checked = !oWSH.RegRead(csregReg);} catch (e) {cm.checked = false}
+    try {oWSH.Run(csregQuery + "HKCU\\Software\\Classes\\CLSID\\{2aa9162e-c906-4dd9-ad0b-3d24a8eef5a0}\\InprocServer32 /ve", 0, true);} catch (e) {}
+    try {ex.checked = !oWSH.RegRead(csregReg);} catch (e) {ex.checked = false}
+    try {oWSH.Run(csregQuery + "HKCU\\Software\\Classes\\CLSID\\{f874310e-b6b7-47dc-bc84-b9e6b38f5903} /v System.IsPinnedToNameSpaceTree", 0, true);} catch (e) {}
+    try {rh.checked = oWSH.RegRead(csregReg) == 0;} catch (e) {rh.checked = false}
+    try {oWSH.Run(csregQuery + "HKCU\\Software\\Classes\\CLSID\\{e88865ea-0e1c-4e20-9aa6-edcd0212c87c} /v System.IsPinnedToNameSpaceTree", 0, true);} catch (e) {}
+    try {rg.checked = oWSH.RegRead(csregReg) == 0;} catch (e) {rg.checked = false}
   }
   try {se.checked = oWSH.RegRead(AdvKey + "HideFileExt") == 0;} catch (e) {}
   try {hf.checked = oWSH.RegRead(AdvKey + "Hidden") == 1;} catch (e) {}

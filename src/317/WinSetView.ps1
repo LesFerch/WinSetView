@@ -833,12 +833,18 @@ If ($ApplyViews) {
         For($i=0; $i -lt $ArrColumnList.Count; $i++) {
           $ArrColumnListItem = $ArrColumnList[$i].Split(',')
           $Property = $ArrColumnListItem[2]
+          $Show = $ArrColumnListItem[0]
+          $Width = ''; If ($ArrColumnListItem[1] -ne '') {$Width = '(' + $ArrColumnListItem[1] + ')'}
+          $AdjustedProperty = 'System.' + $ArrColumnListItem[2]
+          $AdjustedProperty = AdjustPrefix($AdjustedProperty)
           If (($FT -Match 'Search') -Or (-Not ((($SearchOnly -eq 1) -And ($PathItems.ContainsKey($Property))) -Or ($Property -eq 'Search.Rank')))) {
-            $Show = $ArrColumnListItem[0]
-            $Width = ''; If ($ArrColumnListItem[1] -ne '') {$Width = '(' + $ArrColumnListItem[1] + ')'}
-            $Property = 'System.' + $ArrColumnListItem[2]
-            $Property = AdjustPrefix($Property)
-            $ColumnList =  "$ColumnList$Show$Width$Property;"
+            $ColumnList =  "$ColumnList$Show$Width$AdjustedProperty;"
+          }
+          Else {
+            If ($FT -Match 'Downloads') {
+              $Show = 1
+              $ColumnList =  "$ColumnList$Show$Width$AdjustedProperty;"
+            }
           }
         }
         $ColumnList = $ColumnList.Trim(';')
