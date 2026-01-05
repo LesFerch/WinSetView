@@ -12,9 +12,9 @@ This is the complete user manual. See the link below for the quick start guide.
 
 Compatible with Windows 7, 8, 10, and 11.  Click [here](./System-Requirements.md) for system requirements.
 
-Les Ferch, lesferch@gmail.com, 2021 - 2025
+Les Ferch, lesferch@gmail.com, 2021 - 2026
 
-[Version 3.1.6](./VersionHistory.md)
+[Version 3.1.7](./VersionHistory.md)
 
 ## Summary
 
@@ -206,7 +206,7 @@ Pictures\
 Music\
 Videos**
 
-Any folder (or tree of folders) can be set to one of these folder types using Explorer's **Customize this folder...** menu and the view settings for a particular folder type can be updated from the currently viewed folder by using Explorer's **Apply to Folders** button. More information on these options is in the *Background* section later in this document.
+Any folder can be set to one of these folder types using Explorer's **Customize this folder...** menu. But note that "Also apply this template to all subfolders" does not work in Windows 11. The view settings for a particular folder type can be updated from the currently viewed folder by using Explorer's **Apply to Folders** button. More information on these options is in the *Background* section later in this document.
 
 In the Windows 10 *FolderTypes* registry key, there are actually **56** different folder types, of which **38** have view and column heading settings that can be edited by WinSetView. Ten of these folder types do not appear to affect anything useful or visible in Explorer, leaving **28** folder types that are shown in WinSetView.
 
@@ -294,7 +294,7 @@ When this option is checked, path and folder name column headings in Details vie
 
 Tip: Select your preferred search result path column first and then select other headings, such as Date modified and Size. That way, when you do a search, the path of all matches will be visible without having to make the window larger.
 
-Note: The path column will not appear when you search the Downloads folder because the Downloads folder type does not have an associated search results folder type.
+Note: The path column will not appear (by default) when you search the Downloads folder because the Downloads folder type does not have an associated search results folder type. However, Explorer does create a Downloads Search Results view on the fly which remembers your settings for that view. Therefore (starting with WinSetView 3.1.7) whatever path column (i.e. item shown in blue) you have in your Downlaods view will appear in the right-click column property quick pick list. That allows you to easily add the path column after your first search of the Downloads folder and it will be remembered for future searches.
 
 Note: The *Relevance* column heading (*Search.Rank* property) is *only* shown in search results and is therefore always blue in WinSetView, regardless of this setting.
 
@@ -374,7 +374,7 @@ This option sets a registry value that tells Explorer to make all folders to be 
 
 This makes the **Documents**, **Music**, **Pictures**, and **Videos** folders generic. Those folders will retain their special icons, but they will otherwise be generic (e.g. column headings in Details view will be the same as *General Items*). This option has no effect on the **Downloads** folder.
 
-Please note that, even with this setting enabled, you can still change any folders to type **Documents**, **Music**, **Pictures**, or **Videos** using Explorer's **Customize this folder...** option. Any default views, you may have set for these folder types in WinSetView, would then apply.
+Please note that, even with this setting enabled, you can still change any folders to type **Documents**, **Music**, **Pictures**, or **Videos** using Explorer's **Customize this folder...** option (does not work in Windows 11). Any default views, you may have set for these folder types in WinSetView, would then apply.
 
 Checking this option also causes **Folder Type Discovery** to be disabled. That's the windows feature that automatically changes a folder's type based on its contents. If you want your folder views to change with content, don't check this item. If you want a consistent view across all folders, regardless of content, you *may* want to check this option.
 
@@ -1007,8 +1007,6 @@ Thanks to my cat **Puddles** (2009-2022) for keeping me company while I worked o
 
 \
 [![image](https://github.com/LesFerch/WinSetView/assets/79026235/63b7acbc-36ef-4578-b96a-d0b7ea0cba3a)](https://github.com/LesFerch/WinSetView)
-
-
 
 
 
