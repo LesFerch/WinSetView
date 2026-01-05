@@ -1,4 +1,10 @@
-## 3.1.6
+## 3.1.7
+
+Enhancement: Path properties added to right-click pick list for Downloads folder. See manual for details.
+
+Bug Fix: Explorer Options > Detect Current Settings now correctly detects all Windows 11 options.
+
+Bug Fix: Path properties blue highlight corrected on app startup when "Show paths in search results only" is unchecked.## 3.1.6
 
 Bug Fix: Fixed minor bug in Folder View Options Detect current settings.
 
