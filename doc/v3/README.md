@@ -145,6 +145,8 @@ You can always run WinSetView again to change any settings and you can revert ba
 
 **IMPORTANT**: **Reset Views to Windows Defaults** only resets folder views. It does not revert the options listed in **Explorer options**. The **Restore** function will revert your folder views to what they were in the slected backup file and it will revert most of the **Explorer options**. Either way, it's recommended to carefully review the settings in **Explorer options** if you choose to apply them.
 
+**Note**: A major Windows update or a full repair via Windows Update (e.g. running Setup.exe from the Windows ISO) will remove the `FolderTypes` registry key from HKEY_CURRENT_USER (i.e. it will undo the default folder views set by WinSetView). In such cases, simply run WinSetView again and click **Submit** to reapply your view preferences.
+
 [![image](https://github.com/LesFerch/WinSetView/assets/79026235/50c53943-f673-49da-ad3f-419026deea96)<!--[-->See the complete user manual](./Manual.md)
 \
 \
