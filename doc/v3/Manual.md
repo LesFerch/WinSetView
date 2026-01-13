@@ -26,7 +26,7 @@ WinSetView is comprised of two main files: **WinSetView.exe** (HTML application)
 
 Clicking **Submit** passes your choices as an INI file to WinSetView.ps1 which will make the registry changes and then restart Explorer.
 
-Each option, and related Explorer background information, is detailed below, but if you just want to get to it, the interface is pretty much self-explanatory.
+Each option, and related Explorer background information, is detailed below, but if you just want to get to it, please start by following the steps in the [quick start guide](./README.md). If you get stuck on something, you can usually find the answer by searching this manual. It's been expanded over several years to cover everything related to Explorer folder views.
 
 **IMPORTANT**: For best results, close all open applications before running WinSetView. Open applications can prevent open/save dialog views from being updated. Please note that some apps, such as Discord, Steam, and qBittorrent, don't actually close when you click the close box. Instead, they minimize to the System Tray. They're still running and that can prevent the file open/save dialog view from being updated. Fully exit the app (usually by right-clicking the icon in the System Tray and selecting `Exit`) to ensure that the file open/save dialog view will get updated.
 
