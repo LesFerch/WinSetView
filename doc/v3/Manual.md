@@ -14,7 +14,7 @@ Compatible with Windows 7, 8, 10, and 11.  Click [here](./System-Requirements.md
 
 Les Ferch, lesferch@gmail.com, 2021 - 2026
 
-[Version 3.1.7](./VersionHistory.md)
+[Version 3.1.8](./VersionHistory.md)
 
 ## Summary
 
@@ -295,7 +295,7 @@ When this option is checked, path and folder name column headings in Details vie
 
 Tip: Select your preferred search result path column first and then select other headings, such as Date modified and Size. That way, when you do a search, the path of all matches will be visible without having to make the window larger.
 
-Note: The path column will not appear (by default) when you search the Downloads folder because the Downloads folder type does not have an associated search results folder type. However, Explorer does create a Downloads Search Results view on the fly which remembers your settings for that view. Therefore (starting with WinSetView 3.1.7) whatever path column (i.e. item shown in blue) you have in your Downloads view will appear in the right-click column property quick pick list. That allows you to easily add the path column after your first search of the Downloads folder and it will be remembered for future searches.
+Note: The path column will not appear (by default) when you search the Downloads folder because the Downloads folder type does not have an associated search results folder type. However, Explorer does create a Downloads Search Results view on the fly which remembers your settings for that view. Therefore (starting with WinSetView 3.1.8) whatever path column (i.e. item shown in blue) you have in your Downloads view will appear in the right-click column property quick pick list. That allows you to easily add the path column after your first search of the Downloads folder and it will be remembered for future searches.
 
 Note: The *Relevance* column heading (*Search.Rank* property) is *only* shown in search results and is therefore always blue in WinSetView, regardless of this setting.
 
