@@ -1,3 +1,9 @@
+## 3.1.8
+
+Change: Changed some default settings to protect users that ignore documentation. This won't affect current user's settings.
+
+Bug Fix: Fixed error that occurred if Paste was clicked without first clicking Copy.
+
 ## 3.1.7
 
 Enhancement: Path properties added to right-click pick list for Downloads folder. See "Show paths in search results only" section in manual for details
