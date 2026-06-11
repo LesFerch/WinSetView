@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--
 WinSetView (Globally Set Explorer Folder Views)
-Les Ferch, lesferch@gmail.com, 2021 - 2025
+Les Ferch, lesferch@gmail.com, 2021 - 2026
 WinSetView.htm (GUI tool to select desired views)
 -->
 <html>
@@ -19,7 +19,7 @@ WinSetView.htm (GUI tool to select desired views)
 >
 
 <script language="JScript">
-var Version = "3.1.7";
+var Version = "3.1.8";
 var ForReading = 1;
 var ForWriting = 2;
 var Unicode = -1;
@@ -54,7 +54,7 @@ var ArrData = new Array(22), ArrFolderTypeGUID = new Array(61), ArrFolderType = 
 var ArrFolderTypeLang = new Array(61), ArrInherit = new Array(61);
 var ArrColumnLists, ArrGroupBy, ArrInheritFlag, ArrHTML1, ArrHTML2, ArrViewChoice;
 var ArrSortBy, ArrIncludeFlag, ArrIconSize, ArrThemes;
-var ColShowLabels, FTCopyIdx, ThemeFile, SectionList, sTheme, CurBld, LWinVer, UBR;
+var ColShowLabels, FTCopyIdx = "", ThemeFile, SectionList, sTheme, CurBld, LWinVer, UBR;
 var TempArray, RetVal, DialogArgs, DialogOptions, id, GrpUpArrow, GrpDnArrow;
 var Warning, OptIcon, DialogTop, HighContrast, SysRoot, WinWoW, PSDir, PSExe, PSSubDir;
 var Txt1Data, Txt2Data, WinSys, ExeErr, ArrExe, UseLight, DarkMode;
@@ -961,13 +961,13 @@ function Dict2Dom() {
   wd.checked = SetInitial("[Options]Reset", 0);
   bu.checked = SetInitial("[Options]Backup", 1);
   se.checked = SetInitial("[Options]ShowExt", 1);
-  cv.checked = SetInitial("[Options]CompView", 1);
+  cv.checked = SetInitial("[Options]CompView", 0);
   hf.checked = SetInitial("[Options]ShowHidden", 0);
   gn.checked = SetInitial("[Options]Generic", 0);
   so.checked = SetInitial("[Options]SearchOnly", 1);
   vf.checked = SetInitial("[Options]SetVirtualFolders", 0);
   vc.checked = SetInitial("[Options]SetVirtualFolderColumns", 0);
-  ns.checked = SetInitial("[Options]NoSuggestions", 1);
+  ns.checked = SetInitial("[Options]NoSuggestions", 0);
   nn.checked = SetInitial("[Options]NoNumericalSort", 0);
   ts.checked = SetInitial("[Options]Win10Search", 0);
   ee.checked = SetInitial("[Options]Win11Explorer", 0);
@@ -992,7 +992,7 @@ function Dict2Dom() {
   sc.checked = SetInitial("[Options]ClassicSearch", 0);
   hg.checked = SetInitial("[Options]HomeGrouping", 0);
   lg.checked = SetInitial("[Options]LibraryGrouping", 0);
-  cm.checked = SetInitial("[Options]ClassicContextMenu", 1);
+  cm.checked = SetInitial("[Options]ClassicContextMenu", 0);
   mc.checked = SetInitial("[Options]CopyMoveInMenu", 0);
   si.checked = SetInitial("[Options]NoSearchInternet", 0);
   sh.checked = SetInitial("[Options]NoSearchHighlights", 0);
@@ -1008,7 +1008,7 @@ function Dict2Dom() {
   if (eso == 3) rbes3.checked = true;
   if (eso == 4) rbes4.checked = true;
   ApplyViews = SetInitial("[Options]ApplyViews", 1);
-  ApplyOptions = SetInitial("[Options]ApplyOptions", 1);
+  ApplyOptions = SetInitial("[Options]ApplyOptions", 0);
 }
 
 function SetInitial(DictEntry, Default) {

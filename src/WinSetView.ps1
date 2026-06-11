@@ -1,5 +1,5 @@
 # WinSetView (Globally Set Explorer Folder Views)
-# Les Ferch, lesferch@gmail.com, 2021 - 2025
+# Les Ferch, lesferch@gmail.com, 2021 - 2026
 # WinSetView.ps1 (Powershell script to set selected views)
 
 # One command line paramater is supported
