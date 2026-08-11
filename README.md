@@ -1,3 +1,6 @@
+# WARNING: **winsetview<sub>•</sub>com** is a fake website hosted by a third-party. Please do NOT trust them.
+<br>
+
 # WinSetView
 <!--
 To view this document formatted (instead of as raw text) just click the Help button in WinSetView.
