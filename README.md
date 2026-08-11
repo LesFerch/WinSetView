@@ -1,5 +1,6 @@
-# WARNING: **winsetview<sub>•</sub>com** is a fake website hosted by a third-party. Please do NOT trust them.
-<br>
+The official WinSetView site is https://lesferch.github.io/WinSetView
+
+Do NOT go to winsetview.com. It's a fake website hosted by a third-party. Do NOT trust them.
 
 # WinSetView
 <!--
