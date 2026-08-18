@@ -1,13 +1,18 @@
-The official WinSetView site is https://lesferch.github.io/WinSetView
-
-Do NOT go to winsetview.com. It's a fake website hosted by a third-party. Do NOT trust them.
-
 # WinSetView
+
+> **NOTE:**
+>
+> The official WinSetView site is https://lesferch.github.io/WinSetView
+>
+> Do NOT go to winsetview.com. It's a fake website hosted by a third-party. Do NOT trust them.
+>
+
 <!--
 To view this document formatted (instead of as raw text) just click the Help button in WinSetView.
 You can also manually navigate your browser to: https://lesferch.github.io/WinSetView.
 -->
 
+\
 This is the quick start guide. For more details, please see the [complete user manual](./Manual.md).
 
 [![image](https://github.com/LesFerch/WinSetView/assets/79026235/0188480f-ca53-45d5-b9ff-daafff32869e)Download the zip file](https://github.com/LesFerch/WinSetView/releases/download/3.1.8/WinSetView.zip)
