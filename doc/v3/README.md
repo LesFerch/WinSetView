@@ -69,6 +69,8 @@ Simple step by step instructions follow.
 
 **Note**: For best results, close all open applications before running WinSetView. Open applications can prevent open/save dialog views from being updated. Apps that minimize to the System Tray when "closed", such as Discord, Steam, and qBittorrent, must be fully closed (e.g. right-click the app's System Tray icon and select `Exit`).
 
+**Note**: Store apps, such as the Windows 11 Paint and Notepad, are killed automatically by WinSetView to ensure that their file open/save dialog views are refreshed to your new view defaults. Simply closing Store apps is not enough because they often remain running when "closed".
+
 **Note**: Clicking **OK**, in the **Submit** dialog, will apply the registry setting changes and restart Explorer. Do not click OK when Explorer is busy copying/moving/deleting files.
 
 For complete details, please see the [manual](./Manual.md).
