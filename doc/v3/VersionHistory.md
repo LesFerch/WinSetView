@@ -1,3 +1,11 @@
+## 3.1.9
+
+Enhancement: If both options in the Submit dialog are unchecked, the OK button is now disabled instead of toggling between the two options.
+
+Enhancement: Chinese Simplified translation corrections, thanks to GitHub user deepseer.
+
+Enhancement: Uninstaller is now signed.
+
 ## 3.1.8
 
 Change: Changed some default settings to protect users that ignore documentation. This won't affect current user's settings.
