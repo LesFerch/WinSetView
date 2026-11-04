@@ -443,7 +443,7 @@ When checked, hidden files and folders will be displayed in Explorer. This optio
 
 When checked, the registry setting that restores the Windows 10 style context (right-click) menu will be applied.
 
-**Note**: This option will have no effect if you have the latest context menu, which includes the `Customize menu` option.
+> **Note**: This option will have no effect if you have the latest context menu, which includes the `Customize menu` option.
 
 
 #### Enable Copy/Move To folder in the context menu
