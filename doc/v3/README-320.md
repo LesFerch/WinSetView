@@ -81,7 +81,7 @@ For complete details, please see the [manual](./Manual.md).
 
 <img width="761" height="195" alt="image" src="https://github.com/user-attachments/assets/ba552c51-ea18-4550-81f1-b54af5ff21a0" />
 
-WinSetView should open in the same language to which you have Windows set. If not, select the correct language from the drop down menu.
+WinSetView should open in the same language to which you have Windows set. If not, click the gear icon and then select the correct language from the drop down menu.
 
 ### Step 2: Select Your Preferred Default View
 
@@ -147,7 +147,7 @@ You can choose to apply or exclude these options when **Submit** is clicked. Cli
 
 Once you're happy with your selections, click the **Submit** button. This will pop up a dalog where you can choose to **Clear folder views and set new defaults** and/or **Reset Explorer options**. Note that a backup of your current folder views will be made if **Backup** is checked.
 
-**IMPORTANT**: Please uncheck **Reset Explorer options** if you haven't reviewed the **Explorer Options** page, otherwise you may receive undesired changes.
+**IMPORTANT**: Do not check **Reset Explorer options** unless you have reviewed the **Explorer Options** page and are sure of your selections. Otherwise, you may receive unwanted changes.
 
 <img width="383" height="201" alt="image" src="https://github.com/user-attachments/assets/395c8287-bac9-42e1-ab6d-81fc56efc2dc" />
 
