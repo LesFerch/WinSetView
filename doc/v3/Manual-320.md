@@ -50,7 +50,7 @@ Click the **Help** button to bring up a short tutorial for non-technical users. 
 
 ### 🚀 (Version) Button
 
-Click the 🚀 button to to check for a new program version. If a newer version is available, the WinSetView web page will be opened in your browser.
+Click this button to to check for a new program version. If a newer version is available, the WinSetView web page will be opened in your browser.
 
 ### ⛶ (Re-center) Button
 
@@ -58,31 +58,31 @@ WinSetView remembers its window size and position. Click the re-center button to
 
 ### ⚙ (Options) Button
 
-Click the ⚙ button to reveal/hide the settings that adjust the program's interface, as described below.
+Click this button to reveal/hide the drop-down menus that adjust the program's interface. Each of those menus are described below.
 
-### Language Menu
+#### Language
 
 Select an interface language for *WinSetView*. See the **Language Support** section below for details. This option does NOT change the Windows language.
 
 Please note that changing language resets the display and loses any selections that have not been saved to the INI file (see *Save Settings* below).
 
-### Interface Menu
+#### Interface
 
 Select **Standard** for the standard interface.
 
 The **Advanced** interface is of little interest to most users. It shows the feature that lets you peek at the FolderType registry keys and shows buttons that are only useful if you are maintaining multiple INI files.
 
-### Font and Font Size Menus
+#### Font and Font Size
 
 Select a font and font size for the *WinSetView* interface. This has no affect on any setting in Windows.
 
 The font list is read from the file **Fonts.txt** in the **AppParts** folder, which may be edited to include any font that is installed on your computer. The default list includes fonts that are typically found on all Windows computers and includes fonts to optimize the display for certain languages.
 
-### Horizontal Scroll Control Menu
+#### Horizontal Scroll Control
 
 Adjust whether a long line in WinSetView is wrapped or scrolled horizontally. Values range from 1 (no horizontal scroll bar) to 9 (view port 9x wider than window). This has no affect on any setting in Windows.
 
-### Theme Menu
+#### Theme
 
 Select a light or dark theme for the WinSetView display. Theme definitions are located in .\AppParts\Themes.ini. The provided themes can be edited and/or new themes can be added.
 
@@ -167,9 +167,9 @@ The **Group by** and **Sort by** options apply to any view. Their current settin
 
 You can group by any property in ascending or descending order, or turn off grouping altogether, which will be displayed as *(None)*. Sorting can be set on one or more properties. A plus sign indicates ascending order and a minus sign indicates descending order.
 
-The **⚙ (Options)** button allows you to select a _different_ view for File Open/Save dialogs. For example, if you have set **List** as your default view, but want **Details** in File Open/Save dialogs, this is where you would set that up.
+The **📁 (File dialog view)** button allows you to select a _different_ view for File Open/Save dialogs. For example, if you have set **List** as your default view, but want **Details** in File Open/Save dialogs, this is where you would set that up.
 
-![image](https://github.com/user-attachments/assets/897e702b-fec1-4c8f-86f6-bca3ae1a347e)
+<img width="761" height="463" alt="image" src="https://github.com/user-attachments/assets/e77946cb-4707-4fd2-9376-cf30b6fb54d7" />
 
 Separate File Dialog views can be set under Global as well as under any specific folder type.
 
@@ -193,9 +193,9 @@ Please note that there are *groups* of folder types in WinSetView. For example, 
 
 **Inspect (🔍)** (Advanced interface)
 
-The 🔍 button is a feature for *technical users* that provides a quick, synchronized view of the folder type's default values in HKLM compared to the current values (if any) set in HKCU by WinSetView.
+This is a feature for *technical users* that provides a quick, synchronized view of the folder type's default values in HKLM compared to the current values (if any) set in HKCU by WinSetView.
 
-Note: For power users who have their own comparison tool installed, such as WinMerge or Beyond Compare, a before/after comparison can be done by going to the Windows Temp directory and comparing the files *WinSetView1.reg* and *WinSetView2.reg*.
+**Note**: For power users who have their own comparison tool installed, such as WinMerge or Beyond Compare, a before/after comparison can be done by going to the Windows Temp directory and comparing the files *WinSetView1.reg* and *WinSetView2.reg*.
 
 **Copy (📋)**
 
@@ -288,7 +288,7 @@ This folder type controls the view you see for the *Searches* item within your u
 
 ### Folder View Options
 
-![image](https://github.com/user-attachments/assets/7352431f-0dcc-43a3-9dc3-9ae1deb60503)
+<img width="761" height="464" alt="image" src="https://github.com/user-attachments/assets/d8b467bb-0c32-4bb2-9720-c581fde04f14" />
 
 Clicking the 🔍 button detects your current system settings (except for the "This PC" view). Otherwise, this page shows the settings that will be applied when you click **Submit**.
 
@@ -426,7 +426,7 @@ If this option is unchecked, this virtual folder will retain its Windows default
 
 ### Explorer Options
 
-![image](https://github.com/user-attachments/assets/798a3d6f-ec22-412c-a7f6-0c7c4d10d24e)
+<img width="761" height="796" alt="image" src="https://github.com/user-attachments/assets/eaf791d3-cf6e-4cfc-bd6c-8b701f0a75c6" />
 
 ![image](https://github.com/LesFerch/WinSetView/assets/79026235/31d5617f-6617-4e14-9b8e-0efb2c2b9896) **Note**: All options, except those with a shield icon, can be changed by a Standard user. The items with the shield icon require Administrator rights to change. A UAC prompt will appear after clicking **Submit** and **OK** if one or more of those options are being changed.
 
@@ -440,6 +440,11 @@ By default, Windows hides file extensions for known file types. This is generall
 #### Enable compact view in Windows 11
 
 By default, Windows 11 spreads out items in list, details, and small icons views. This makes it easier to select items using a touch interface, at the expense of less information in the same space. Enabling *compact view* sets the spacing back to the tighter spacing used in Windows 10.
+
+
+#### Use check boxes to select items
+
+When checked, Explorer will include check boxes to the left of every item. When unchecked, those check boxes will not appear. 
 
 
 #### Show Hidden Files and Folders
@@ -478,14 +483,14 @@ When checked, the hidden attribute is removed from the current user's AppData fo
 
 When checked, the following "suggestion" notifications (found in "Notifications & Actions") will be turned off.
 
-![image](https://github.com/LesFerch/WinSetView/assets/79026235/4c147f26-d570-470d-bc29-61d5972a1779)
+<img width="491" height="160" alt="image" src="https://github.com/user-attachments/assets/249fe357-ab35-4fbe-9b16-bbcdd616c212" />
 
 
 #### Use Windows 10 Explorer on Windows 11
 
-When checked, a registry setting will be applied that will cause Windows 11 to use the Windows 10 Explorer as its default file manager. That's the Explorer that has the ribbon interface and is normally only used in Windows 11 for the Control Panel. The feature "Also apply this template to all subfolders" works in this Explorer version.
+When checked, a registry setting will be applied that will cause Windows 11 to use the Windows 10 Explorer as its default file manager. That's the Explorer that has the ribbon interface and is normally only used in Windows 11 for the Control Panel. The feature **Also apply this template to all subfolders** works in this Explorer version.
 
-![image](https://github.com/LesFerch/WinSetView/assets/79026235/2aef729f-38ad-469c-b6d7-de796800992a)
+<img width="939" height="561" alt="image" src="https://github.com/user-attachments/assets/c55b1aa8-c283-4e7f-9c29-f96ae7b169bb" />
 
 #### Remove Home in Windows 11
 
@@ -594,7 +599,7 @@ This option allows you to set the start folder for Explorer to "This PC", "Home 
 
 ### Columns
 
-![image](https://github.com/user-attachments/assets/c73b618c-1fb7-4907-966c-18cb564e012f)
+<img width="761" height="640" alt="image" src="https://github.com/user-attachments/assets/adc4f23b-c278-4650-846f-a5e689b24ab1" />
 
 Clicking the **Columns** button brings up the column (properties) selection page for the current folder type. Column headings, in Explorer Details view, correspond to file and folder *properties*.
 
@@ -614,11 +619,13 @@ Next, the currently selected column headings, that will display in File Explorer
 
 Clicking the column re-order button **⮀** will bring up a dialog that will allow you to rearrange the column headings by dragging them up or down in the presented list:
 
-![image](https://github.com/user-attachments/assets/a1909c09-0985-4da2-99b0-9870e93b22ad)
+<img width="760" height="401" alt="image" src="https://github.com/user-attachments/assets/14ae8351-51a2-4165-a82b-17dd1102c149" />
 
-The column order can also be set by removing each column heading and then adding them back in the desired order, but it is easier to use the re-order dialog. Note that the re-order dialog will allow any order, but will display the following warning if the **Name** property is not the first column:
+The column order can also be set by removing each column heading and then adding them back in the desired order, but it is easier to use the re-order dialog.
 
-![image](https://github.com/user-attachments/assets/7bf07a48-a1c0-48fc-8dc4-e234afead769)
+**Note**: The re-order dialog will allow any order, but will display the following warning if the **Name** property is not the first column:
+
+<img width="761" height="260" alt="image" src="https://github.com/user-attachments/assets/e80985c4-9c8a-4cbc-be4a-9fafb832cc92" />
 
 The issue with software that uses the "legacy" type dialogs (such as IrfanView) is that those type of dialogs assume that **Name** is always the first column. So, for example, if **Size** is set as the first column, and you are in any view other than **Details**, you will just see a bunch of icons with sizes and no names.
 
@@ -662,7 +669,7 @@ Please note that you can set the width as small as 1em, but Explorer will expand
 
 If you wish to enter the column width in *pixels*, hold **Alt** and **click** the input width field you wish to adjust. A dialog will open showing the width in pixels:
 
-![image](https://github.com/user-attachments/assets/e38cbdd5-cd64-4361-a446-30fdd15fee59)
+<img width="761" height="287" alt="image" src="https://github.com/user-attachments/assets/ad348429-8421-4876-931c-8f3ff4ab15e4" />
 
 The pixel value will vary depending on screen pixel density, whereas the value in ems will be constant across different display configurations. Please note that WinSetView sets the column *default* width which can only be set to whole (integer) em values. Windows File Explorer lets you set the width down to the pixel, but that is stored as a setting within the volatile *Bags* registry key *overriding* the default value. WinSetView deals with *default* settings only.
 
@@ -689,7 +696,7 @@ This column provides checkboxes to allow you to select which column headings are
 
 The Explorer limit for the quick-pick menu is 21 items, so WinSetView will not allow you to select more than 21 items in this column. If you hit this limit, you will see this message:
 
-![image](https://github.com/user-attachments/assets/6e6477ca-81a2-4e37-9cb6-3bbad60cfeb5)
+<img width="383" height="101" alt="image" src="https://github.com/user-attachments/assets/b98b325d-0cda-4636-9d43-1e3b8b64db54" />
 
 Close the message and adjust your selections as necessary. You can't pick more than 21.
 
@@ -721,9 +728,9 @@ Note: The **File extension** column heading is not available on Windows 7.
 
 ### Search
 
-Press **Ctrl-F** to search for text within any page. This is most useful for finding properties in the **Columns** page. Please note that this function is provided by the MSHTML engine. There is no specific code in WinSetView for the search function, so it cannot be modified or enhanced in any way.
+Press **Ctrl-F** to search for text within any page. This is most useful for finding properties in the **Columns** page. This function is provided by the MSHTML engine. There is no specific code in WinSetView for the search function, so it cannot be modified or enhanced in any way.
 
-![image](https://github.com/user-attachments/assets/a16ebb3a-5228-4e64-9b02-a397155d2006)
+<img width="761" height="456" alt="image" src="https://github.com/user-attachments/assets/4ed0ad6d-ad68-4057-b094-bdab7f894020" />
 
 ## Files
 
