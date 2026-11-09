@@ -121,21 +121,21 @@ For any folder type (e.g. **Pictures**) that you wish to have a *different* defa
 
 ### Step 5: Check and Set Your Desired Folder View Options (Required)
 
-![image](https://github.com/user-attachments/assets/bb81b23b-2be5-49bd-9c1f-8e1ef76ef63b)
+<img width="761" height="360" alt="image" src="https://github.com/user-attachments/assets/abae238b-01aa-465e-829e-e0f1a4185d6c" />
 
 Click The **Folder View Options** button.
 
-![image](https://github.com/user-attachments/assets/7352431f-0dcc-43a3-9dc3-9ae1deb60503)
+<img width="761" height="464" alt="image" src="https://github.com/user-attachments/assets/d8b467bb-0c32-4bb2-9720-c581fde04f14" />
 
-The folder view options are applied together with the folder views on the main page. The default settings match Windows defaults. See the [manual](./Manual.md#options-menu) for full details.
+The folder view options are applied together with the folder views on the main page. The default settings match Windows defaults. Click the 🔍 button to detect your current settings. See the [manual](./Manual.md#options-menu) for full details.
 
 ### Step 6: Check and Set Your Desired Explorer Options (Optional)
 
-![image](https://github.com/user-attachments/assets/bc29e64c-e051-480b-8281-b64bdd6f2bdf)
+<img width="761" height="360" alt="image" src="https://github.com/user-attachments/assets/252745a6-0e67-4e67-8e83-4b8f50e4c6e6" />
 
 Click The **Explorer Options** button.
 
-![image](https://github.com/user-attachments/assets/798a3d6f-ec22-412c-a7f6-0c7c4d10d24e)
+<img width="761" height="796" alt="image" src="https://github.com/user-attachments/assets/eaf791d3-cf6e-4cfc-bd6c-8b701f0a75c6" />
 
 You can choose to apply or exclude these options when **Submit** is clicked. Click the 🔍 button to detect your current settings. See the [manual](./Manual.md#options-menu) for full details.
 
@@ -143,13 +143,13 @@ You can choose to apply or exclude these options when **Submit** is clicked. Cli
 
 ### Step 7: Apply the Selections to Windows File Explorer
 
-![image](https://github.com/user-attachments/assets/962c55ad-717d-4d9b-871e-f00fa556fe75)
+<img width="761" height="360" alt="image" src="https://github.com/user-attachments/assets/bfcbe6ad-a90d-46df-8d17-66f9665d1c0a" />
 
 Once you're happy with your selections, click the **Submit** button. This will pop up a dalog where you can choose to **Clear folder views and set new defaults** and/or **Reset Explorer options**. Note that a backup of your current folder views will be made if **Backup** is checked.
 
 **IMPORTANT**: Please uncheck **Reset Explorer options** if you haven't reviewed the **Explorer Options** page, otherwise you may receive undesired changes.
 
-![image](https://github.com/user-attachments/assets/f0d91756-57a3-4741-ba45-80d068b03e85)
+<img width="383" height="201" alt="image" src="https://github.com/user-attachments/assets/395c8287-bac9-42e1-ab6d-81fc56efc2dc" />
 
 You can always run WinSetView again to change any settings and you can revert back to a previous state using the **Restore** button. You also have the option of setting File Explorer back to Windows defaults by checking **Reset Views to Windows Defaults** and then clicking **Submit**.
 
