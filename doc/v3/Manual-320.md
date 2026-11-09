@@ -883,6 +883,10 @@ Whenever you use the **Apply to Folders** button, on any generic folder, such as
 
 ## FAQ
 
+### Can you add a feature to change the folder view defaults but not reset existing views?
+
+No. I've done extensive testing with only a deleted Streams key (which holds the intermediate default views) and found that Explorer behaves inconsistently in regards to what view it will show. Similar problems occur when only trying to reset the file open/save dialog views. The only way to get predictable behavior is to start with a clean slate.
+
 ### Does WinSetView show my current folder view settings?
 
 No. It shows the view settings that have been configured in the currently loaded settings file (e.g. Win10.ini). The idea is that the app is portable (e.g. run from anywhere such as a flash drive, server, etc.) so that you can easily apply your preferred folder views to a new computer or new user or reapply your preferred views whenever necessary.
