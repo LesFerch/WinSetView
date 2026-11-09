@@ -36,7 +36,7 @@ All changes made by WinSetView are per-user within the HKEY_CURRENT_USER hive in
 
 ## Interface
 
-![image](https://github.com/user-attachments/assets/3e679e19-7444-4d3c-aa54-b5e350818ec7)
+<img width="761" height="868" alt="image" src="https://github.com/user-attachments/assets/43f28d34-d505-4306-bee8-e105a9fb1043" />
 
 **Note**: For Windows 7 and 8, some of the icons used in the program will differ from Windows 10 and 11 due to issues with those older Windows versions being able to display all Unicode characters.
 
@@ -48,9 +48,17 @@ All changes made by WinSetView are per-user within the HKEY_CURRENT_USER hive in
 
 Click the **Help** button to bring up a short tutorial for non-technical users. The tutorial also includes a link to this manual.
 
+### 🚀 (Version) Button
+
+Click the 🚀 button to to check for a new program version. If a newer version is available, the WinSetView web page will be opened in your browser.
+
 ### ⛶ (Re-center) Button
 
 WinSetView remembers its window size and position. Click the re-center button to move and resize the WinSetView window back to its default of centered, full height on the primary display. Pressing any function key (i.e. **F1** - **F12**) will also re-center the window. This can be handy if WinSetView has loaded off-screen (e.g. due to a change of monitors or their position).
+
+### ⚙ (Options) Button
+
+Click the ⚙ button to reveal/hide the settings that adjust the program's interface, as described below.
 
 ### Language Menu
 
