@@ -19,7 +19,7 @@ WinSetView.htm (GUI tool to select desired views)
 >
 
 <script language="JScript">
-var Version = "3.1.9";
+var Version = "3.2.0";
 var ForReading = 1;
 var ForWriting = 2;
 var Unicode = -1;
@@ -56,7 +56,7 @@ var ArrColumnLists, ArrGroupBy, ArrInheritFlag, ArrHTML1, ArrHTML2, ArrViewChoic
 var ArrSortBy, ArrIncludeFlag, ArrIconSize, ArrThemes;
 var ColShowLabels, FTCopyIdx = "", ThemeFile, SectionList, sTheme, CurBld, LWinVer, UBR;
 var TempArray, RetVal, DialogArgs, DialogOptions, id, GrpUpArrow, GrpDnArrow;
-var Warning, OptIcon, DialogTop, HighContrast, SysRoot, WinWoW, PSDir, PSExe, PSSubDir;
+var Warning, DialogSettingsIcon, DialogTop, HighContrast, SysRoot, WinWoW, PSDir, PSExe, PSSubDir;
 var Txt1Data, Txt2Data, WinSys, ExeErr, ArrExe, UseLight, DarkMode;
 var WinSizePos, aWinSizePos, GotError, TaskbarTop, MSHTMLVer, eso;
 var ApplyViews, ApplyOptions, altKey, SystemTextColorHex;
@@ -270,7 +270,7 @@ if (WinVer == "7" || WinVer == "8") {
   GrpUpArrow = "(↑)";
   GrpDnArrow = "(↓)";
   LRArrow = "←→";
-  OptIcon = "☼";
+  DialogSettingsIcon = "☼";
   Warning = "!";
   DetailsIcon = "⋮⋮";
   RightClickIcon = "⋮";
@@ -280,7 +280,7 @@ if (WinVer == "7" || WinVer == "8") {
   GrpUpArrow = "(⮬)";
   GrpDnArrow = "(⮯)";
   LRArrow = "⟷";
-  OptIcon = "⚙";
+  DialogSettingsIcon = "📁";
   Warning = "⚠";
   DetailsIcon = "⋮⋮⋮";
   RightClickIcon = "⋮";
@@ -866,6 +866,8 @@ function UpdateLang(OnChange) {
   xschange();
   
   if (!so.checked) OptionSearchOnly();
+
+  ProgramOptions.style.display = "None";
 }
 
 function ColShowColor(e) {
@@ -962,6 +964,7 @@ function Dict2Dom() {
   bu.checked = SetInitial("[Options]Backup", 1);
   se.checked = SetInitial("[Options]ShowExt", 1);
   cv.checked = SetInitial("[Options]CompView", 0);
+  cb.checked = SetInitial("[Options]Checkboxes", 0);
   hf.checked = SetInitial("[Options]ShowHidden", 0);
   gn.checked = SetInitial("[Options]Generic", 0);
   so.checked = SetInitial("[Options]SearchOnly", 1);
@@ -1082,6 +1085,7 @@ function Var2Ini(INIFile) {
   oFile.WriteLine("Backup=" + Number(bu.checked));
   oFile.WriteLine("ShowExt=" + Number(se.checked));
   oFile.WriteLine("CompView=" + Number(cv.checked));
+  oFile.WriteLine("Checkboxes=" + Number(cb.checked));
   oFile.WriteLine("ShowHidden=" + Number(hf.checked));
   oFile.WriteLine("Generic=" + Number(gn.checked));
   oFile.WriteLine("SearchOnly=" + Number(so.checked));
@@ -1206,7 +1210,7 @@ function Modal(Title, Args, DialogTop) {
 }
 
 function FTOptions(i) {
-  RetVal = Modal(OptIcon, ArrLang[12] + ";" + ArrLang[25] + ";" + ArrView.join("|") + ";" + ArrFD[i] + ";" + ArrFDG[i] + ";" + ArrFDV[i], window.event.clientY);
+  RetVal = Modal(DialogSettingsIcon, ArrLang[12] + ";" + ArrLang[25] + ";" + ArrView.join("|") + ";" + ArrFD[i] + ";" + ArrFDG[i] + ";" + ArrFDV[i], window.event.clientY);
   if (RetVal != "") {
     TempArray = RetVal.split("|");
     ArrFD[i] = Number(TempArray[0]);
@@ -1357,6 +1361,7 @@ function DetectExpOptions() {
     try {oWSH.Run(csregQuery + "HKCU\\Software\\Classes\\CLSID\\{e88865ea-0e1c-4e20-9aa6-edcd0212c87c} /v System.IsPinnedToNameSpaceTree", 0, true);} catch (e) {}
     try {rg.checked = oWSH.RegRead(csregReg) == 0;} catch (e) {rg.checked = false}
   }
+  try {cb.checked = oWSH.RegRead(AdvKey + "AutoCheckSelect") == 1;} catch (e) {}
   try {se.checked = oWSH.RegRead(AdvKey + "HideFileExt") == 0;} catch (e) {}
   try {hf.checked = oWSH.RegRead(AdvKey + "Hidden") == 1;} catch (e) {}
   mc.checked = false;
@@ -2159,6 +2164,10 @@ function RecenterButton() {
   Recenter();
 }
 
+function ProgramOptionsButton() {
+  ProgramOptions.style.display = ProgramOptions.style.display === "none" ? "inline" : "none";
+}
+
 // Resize and position window
 function Recenter() {
   if (WinSizePos == "") {
@@ -2339,7 +2348,7 @@ function BuildPages() {
       "<div class=fo id=" + i + "FTcontrols><select id=" + i + "View onchange=ViewChange(" + i + ")></select>" + Z +
       "<input type=text class=is id=" + i + "IconSize OnChange=IconSizeChange(" + i + ")>" + Z +
       "<input type=button id=" + i + "SelCol value='# 24 #' onclick=SelectColumns(" + i + ")>" + Z +
-      "<div class=tip><input type=button class=icon id=" + i + "Option value=⚙ onclick=FTOptions(" + i + ")><span class=tiptext># 3 #</span></div>" + Z +
+      "<div class=tip><input type=button class=icon id=" + i + "Option value=📁 onclick=FTOptions(" + i + ")><span class=tiptext># 3 #</span></div>" + Z +
       Xcop + Xpas + "</div>" + Z +
       Xvue + Z +
       "<div class=cta id=" + i + "ColShow></div>" + Z +
@@ -2567,6 +2576,11 @@ function OptionGenWarn() {
 
         <div class=tip><input id=bc1 type=button value='⛶' onclick=RecenterButton()>
         <span class=tiptext># 42 #</span></div>
+
+        <div class=tip><input type=button class=icon value='⚙' onclick=ProgramOptionsButton()>
+        <span class=tiptext># 86 #</span></div>
+
+        <span id=ProgramOptions>
         <select id=Lang onchange='UpdateLang(1)'></select>
         <select id=IFace onchange='SetInterface()'>
           <option selected disabled># 32 #</option>
@@ -2578,6 +2592,8 @@ function OptionGenWarn() {
         <select id=xs onchange=xschange()></select>
         <select id=Theme onchange=SetTheme()>
         </select>
+        </span>
+
       </div>
       <br><br>
       <input type=checkbox id=wd onclick=OptionReset()><label for=wd># 7 # &nbsp &nbsp</label>
@@ -2721,6 +2737,7 @@ function OptionGenWarn() {
     <div class=opt id=Sec5>
       <input type=checkbox id=se Checked><label for=se># 8 #</label><br>
       <input type=checkbox id=cv Checked><label for=cv># 27 #</label><br>
+      <input type=checkbox id=cb Checked><label for=cb># 85 #</label><br>
       <input type=checkbox id=hf><label for=hf># 67 #</label><br>
       <input type=checkbox id=cm><label for=cm># 47 #</label><br>
       <input type=checkbox id=mc><label for=mc># 68 #</label><br>

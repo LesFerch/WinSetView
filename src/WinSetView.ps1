@@ -418,6 +418,11 @@ If ($ApplyOptions) {
     & $RegExe Add $Advn /v UseCompactMode /t REG_DWORD /d ($CompView) /f
   }
 
+  # Enable/disable use check boxes to select items
+
+  $Checkboxes = [Int]$iniContent['Options']['Checkboxes']
+  & $RegExe Add $Advn /v AutoCheckSelect /t REG_DWORD /d ($Checkboxes) /f
+
   # Enable/disable show hidden files and folders
 
   $ShowHidden = [Int]$iniContent['Options']['ShowHidden']

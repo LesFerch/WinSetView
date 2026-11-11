@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "WinSetView"
-#define MyAppVersion "3.1.9"
+#define MyAppVersion "3.2.0"
 #define MyAppPublisher "LesFerch"
 #define MyAppURL "https://lesferch.github.io/WinSetView/"
 #define MyAppExeName "WinSetView.exe"
