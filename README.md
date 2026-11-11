@@ -5,7 +5,6 @@
 > The official WinSetView site is https://lesferch.github.io/WinSetView
 >
 > Do NOT go to winsetview.com. It's a fake website hosted by a third-party. Do NOT trust them.
->
 
 <!--
 To view this document formatted (instead of as raw text) just click the Help button in WinSetView.
@@ -15,9 +14,9 @@ You can also manually navigate your browser to: https://lesferch.github.io/WinSe
 \
 This is the quick start guide. For more details, please see the [complete user manual](./Manual.md).
 
-[![image](https://github.com/LesFerch/WinSetView/assets/79026235/0188480f-ca53-45d5-b9ff-daafff32869e)Download the zip file](https://github.com/LesFerch/WinSetView/releases/download/3.1.9/WinSetView.zip)
+[![image](https://github.com/LesFerch/WinSetView/assets/79026235/0188480f-ca53-45d5-b9ff-daafff32869e)Download the zip file](https://github.com/LesFerch/WinSetView/releases/download/3.2.0/WinSetView.zip)
 
-[![image](https://github.com/user-attachments/assets/75e62417-c8ee-43b1-a8a8-a217ce130c91)Download the installer](https://github.com/LesFerch/WinSetView/releases/download/3.1.9/WinSetView-Setup.exe)
+[![image](https://github.com/user-attachments/assets/75e62417-c8ee-43b1-a8a8-a217ce130c91)Download the installer](https://github.com/LesFerch/WinSetView/releases/download/3.2.0/WinSetView-Setup.exe)
 
 \
 **WinGet**: `winget install winsetview`
@@ -27,7 +26,7 @@ This is the quick start guide. For more details, please see the [complete user m
 
 Compatible with Windows 7, 8, 10, and 11.  Click [here](./System-Requirements.md) for system requirements.
 
-[Version 3.1.9](./VersionHistory.md)
+[Version 3.2.0](./VersionHistory.md)
 
 ## Summary
 
@@ -80,13 +79,13 @@ For complete details, please see the [manual](./Manual.md).
 
 ### Step 1: Select Your Interface Language (Optional)
 
-![image](https://github.com/user-attachments/assets/512be01d-ea23-4e43-a5a3-80fa4fd5f8e8)
+<img width="761" height="195" alt="image" src="https://github.com/user-attachments/assets/ba552c51-ea18-4550-81f1-b54af5ff21a0" />
 
-WinSetView should open in the same language to which you have Windows set. If not, select the correct language from the drop down menu.
+WinSetView should open in the same language to which you have Windows set. If not, click the gear icon and then select the correct language from the drop down menu.
 
 ### Step 2: Select Your Preferred Default View
 
-![image](https://github.com/user-attachments/assets/d48d600e-3208-4ec1-9141-55c560ec1cd0)
+<img width="761" height="360" alt="image" src="https://github.com/user-attachments/assets/fa8e5185-f875-45fb-b84e-3dc2151682cd" />
 
 Select the default view you want applied to most (or all) folders from the drop down menu under the **Global** heading. Most users go with **Details**, but pick what *you* like as your default.
 
@@ -94,23 +93,23 @@ Select the default view you want applied to most (or all) folders from the drop 
 
 ### Step 3: Select Your Preferred Default Column Headings (Optional)
 
-![image](https://github.com/user-attachments/assets/41b6ea5a-9647-4dff-96cf-3be2740d55c5)
+<img width="761" height="360" alt="image" src="https://github.com/user-attachments/assets/f58ea6bd-000b-4c47-a09f-facf048ac5b0" />
 
 If you are happy with the default Details-view column headings (as shown on screen) then skip this step.
 
 **Note**: Column headings shown in blue are only displayed in *search results* (by default). It is, therefore, recommended to keep the **Folder path** (**File location** in Windows 11) column heading.
 
-![image](https://github.com/user-attachments/assets/e1c8ed4b-35e8-45a7-a75d-6d15ac8ffc53)
+<img width="761" height="360" alt="image" src="https://github.com/user-attachments/assets/4ceb1665-1849-4c43-ba40-550a0fe56b7d" />
 
 Otherwise, click the **Columns** button to bring up the column headings selection page.
 
-![image](https://github.com/user-attachments/assets/c73b618c-1fb7-4907-966c-18cb564e012f)
+<img width="761" height="640" alt="image" src="https://github.com/user-attachments/assets/adc4f23b-c278-4650-846f-a5e689b24ab1" />
 
 The column headings selection page allows you to select your desired column headings (and their order), group-by options, sort options, and column widths. The [manual](./Manual.md#columns) provides full details, but you can also hover over or click on elements to see how the interface works.
 
 ### Step 4: Set Views for Specific Folder Types (Optional)
 
-![image](https://github.com/user-attachments/assets/2ef4f9a3-f40a-417d-9ba0-5df65809487d)
+<img width="761" height="580" alt="image" src="https://github.com/user-attachments/assets/a01023b8-65e1-46b2-8e51-21e240e35dcc" />
 
 Please note that WinSetView allows you to set the default view for every folder type in Windows, but, by *default*, they will all get the same settings as your **Global** settings, as long as the **Inherit** box is checked.
 
@@ -122,21 +121,21 @@ For any folder type (e.g. **Pictures**) that you wish to have a *different* defa
 
 ### Step 5: Check and Set Your Desired Folder View Options (Required)
 
-![image](https://github.com/user-attachments/assets/bb81b23b-2be5-49bd-9c1f-8e1ef76ef63b)
+<img width="761" height="360" alt="image" src="https://github.com/user-attachments/assets/abae238b-01aa-465e-829e-e0f1a4185d6c" />
 
 Click The **Folder View Options** button.
 
-![image](https://github.com/user-attachments/assets/7352431f-0dcc-43a3-9dc3-9ae1deb60503)
+<img width="761" height="464" alt="image" src="https://github.com/user-attachments/assets/d8b467bb-0c32-4bb2-9720-c581fde04f14" />
 
-The folder view options are applied together with the folder views on the main page. The default settings match Windows defaults. See the [manual](./Manual.md#options-menu) for full details.
+The folder view options are applied together with the folder views on the main page. The default settings match Windows defaults. Click the 🔍 button to detect your current settings. See the [manual](./Manual.md#options-menu) for full details.
 
 ### Step 6: Check and Set Your Desired Explorer Options (Optional)
 
-![image](https://github.com/user-attachments/assets/bc29e64c-e051-480b-8281-b64bdd6f2bdf)
+<img width="761" height="360" alt="image" src="https://github.com/user-attachments/assets/252745a6-0e67-4e67-8e83-4b8f50e4c6e6" />
 
 Click The **Explorer Options** button.
 
-![image](https://github.com/user-attachments/assets/798a3d6f-ec22-412c-a7f6-0c7c4d10d24e)
+<img width="761" height="796" alt="image" src="https://github.com/user-attachments/assets/eaf791d3-cf6e-4cfc-bd6c-8b701f0a75c6" />
 
 You can choose to apply or exclude these options when **Submit** is clicked. Click the 🔍 button to detect your current settings. See the [manual](./Manual.md#options-menu) for full details.
 
@@ -144,13 +143,13 @@ You can choose to apply or exclude these options when **Submit** is clicked. Cli
 
 ### Step 7: Apply the Selections to Windows File Explorer
 
-![image](https://github.com/user-attachments/assets/962c55ad-717d-4d9b-871e-f00fa556fe75)
+<img width="761" height="360" alt="image" src="https://github.com/user-attachments/assets/bfcbe6ad-a90d-46df-8d17-66f9665d1c0a" />
 
 Once you're happy with your selections, click the **Submit** button. This will pop up a dalog where you can choose to **Clear folder views and set new defaults** and/or **Reset Explorer options**. Note that a backup of your current folder views will be made if **Backup** is checked.
 
-**IMPORTANT**: Please uncheck **Reset Explorer options** if you haven't reviewed the **Explorer Options** page, otherwise you may receive undesired changes.
+**IMPORTANT**: Do not check **Reset Explorer options** unless you have reviewed the **Explorer Options** page and are sure of your selections. Otherwise, you may receive unwanted changes.
 
-![image](https://github.com/user-attachments/assets/f0d91756-57a3-4741-ba45-80d068b03e85)
+<img width="383" height="201" alt="image" src="https://github.com/user-attachments/assets/395c8287-bac9-42e1-ab6d-81fc56efc2dc" />
 
 You can always run WinSetView again to change any settings and you can revert back to a previous state using the **Restore** button. You also have the option of setting File Explorer back to Windows defaults by checking **Reset Views to Windows Defaults** and then clicking **Submit**.
 
@@ -163,7 +162,4 @@ You can always run WinSetView again to change any settings and you can revert ba
 \
 \
 [![image](https://github.com/LesFerch/WinSetView/assets/79026235/63b7acbc-36ef-4578-b96a-d0b7ea0cba3a)](https://github.com/LesFerch/WinSetView)
-
-
-
 
