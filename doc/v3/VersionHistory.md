@@ -1,3 +1,11 @@
+## 3.2.0
+
+Feature added: Explorer `Use check boxes to select items` setting added.
+
+Enhancement: Program interface settings collapsed to a gear icon.
+
+Enhancement: File dialog view option icon and label changed for clarity.
+
 ## 3.1.9
 
 Enhancement: If both options in the Submit dialog are unchecked, the OK button is now disabled instead of toggling between the two options.
