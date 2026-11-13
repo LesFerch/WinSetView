@@ -1,3 +1,7 @@
+## 3.02.1
+
+Fix: The `Classic context menu in Windows 11` option now works with the new customizable Windows 11 context menu.
+
 ## 3.02.0
 
 Feature added: Explorer `Use check boxes to select items` setting added.
