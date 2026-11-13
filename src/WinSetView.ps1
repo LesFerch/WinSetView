@@ -110,7 +110,8 @@ $Defs = 'HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Streams\Default
 $CUFT = 'HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\FolderTypes'
 $LMFT = 'HKLM\Software\Microsoft\Windows\CurrentVersion\Explorer\FolderTypes'
 $Advn = 'HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced'
-$Clcm = 'HKCU\Software\Classes\CLSID\{86CA1AA0-34AA-4E8B-A509-50C905BAE2A2}'
+$Clc1 = 'HKCU\Software\Classes\CLSID\{86CA1AA0-34AA-4E8B-A509-50C905BAE2A2}'
+$Clc2 = 'HKCU\Software\Classes\CLSID\{51668040-5e31-4023-bbe3-149163bd80f1}'
 $Srch = 'HKCU\Software\Microsoft\Windows\CurrentVersion\Search'
 $Srhl = 'HKCU\Software\Microsoft\Windows\CurrentVersion\SearchSettings'
 $Srdc = 'HKCU\Software\Microsoft\Windows\CurrentVersion\Feeds\DSB'
@@ -432,8 +433,14 @@ If ($ApplyOptions) {
 
   If ($CurBld -ge 21996) {
     $ClassicContextMenu = [Int]$iniContent['Options']['ClassicContextMenu']
-    If ($ClassicContextMenu -eq 1) {& $RegExe Add "$Clcm\InprocServer32" /reg:64 /f 2>$Null}
-    Else {& $RegExe Delete $Clcm /reg:64 /f 2>$Null}
+    If ($ClassicContextMenu -eq 1) {
+      & $RegExe Add "$Clc1\InprocServer32" /reg:64 /f 2>$Null
+      & $RegExe Add "$Clc2\InprocServer32" /reg:64 /f 2>$Null
+    }
+    Else {
+      & $RegExe Delete $Clc1 /reg:64 /f 2>$Null
+      & $RegExe Delete $Clc2 /reg:64 /f 2>$Null
+    }
   }
 
   # Enable/disable Copy and Move items in context menu
